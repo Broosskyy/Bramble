@@ -1,0 +1,117 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 48,
+  "name": "ember_knight_specialist_male_female",
+  "style": "warm hand-painted chibi mobile isometric fantasy",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "ember_knight_male_front",
+      "file": "ember_knight_male_front.png",
+      "role": "unarmed wingless specialist skin male front",
+      "source_master": "master.png",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        213,
+        15,
+        478,
+        512
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": true
+    },
+    {
+      "id": "ember_knight_male_right",
+      "file": "ember_knight_male_right.png",
+      "role": "unarmed wingless specialist skin male right",
+      "source_master": "master.png",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        160,
+        16,
+        344,
+        512
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": true
+    },
+    {
+      "id": "ember_knight_male_back",
+      "file": "ember_knight_male_back.png",
+      "role": "unarmed wingless specialist skin male back",
+      "source_master": "master.png",
+      "source_cell": [
+        2,
+        0
+      ],
+      "source_bbox": [
+        24,
+        18,
+        294,
+        508
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "ember_knight_female_front",
+      "file": "ember_knight_female_front.png",
+      "role": "unarmed wingless specialist skin female front",
+      "source_master": "master.png",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        233,
+        0,
+        464,
+        498
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": true
+    },
+    {
+      "id": "ember_knight_female_right",
+      "file": "ember_knight_female_right.png",
+      "role": "unarmed wingless specialist skin female right",
+      "source_master": "master.png",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        157,
+        0,
+        353,
+        498
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": true
+    },
+    {
+      "id": "ember_knight_female_back",
+      "file": "ember_knight_female_back.png",
+      "role": "unarmed wingless specialist skin female back",
+      "source_master": "master.png",
+      "source_cell": [
+        2,
+        1
+      ],
+      "source_bbox": [
+        44,
+        4,
+        283,
+        495
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    }
+  ]
+}

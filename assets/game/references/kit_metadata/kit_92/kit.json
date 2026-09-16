@@ -1,0 +1,141 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 92,
+  "kit": "ranged_projectiles_impacts",
+  "category": "catalog",
+  "asset_count": 8,
+  "assets": [
+    {
+      "index": 0,
+      "name": "wood_arrow",
+      "file": "frames/00_wood_arrow.png",
+      "size_px": [
+        416,
+        460
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 1,
+      "name": "reinforced_arrow",
+      "file": "frames/01_reinforced_arrow.png",
+      "size_px": [
+        432,
+        461
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 2,
+      "name": "copper_bolt",
+      "file": "frames/02_copper_bolt.png",
+      "size_px": [
+        432,
+        474
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 3,
+      "name": "leaf_magic_arrow",
+      "file": "frames/03_leaf_magic_arrow.png",
+      "size_px": [
+        414,
+        484
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 4,
+      "name": "speed_trail_short",
+      "file": "frames/04_speed_trail_short.png",
+      "size_px": [
+        394,
+        341
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 5,
+      "name": "speed_trail_long",
+      "file": "frames/05_speed_trail_long.png",
+      "size_px": [
+        432,
+        374
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 6,
+      "name": "arrow_hit",
+      "file": "frames/06_arrow_hit.png",
+      "size_px": [
+        432,
+        409
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 7,
+      "name": "leaf_arrow_impact",
+      "file": "frames/07_leaf_arrow_impact.png",
+      "size_px": [
+        404,
+        497
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    }
+  ],
+  "canvas_px": null,
+  "root_pivot_px": null,
+  "weapons_baked_into_character": false,
+  "notes": "Socket positions are production suggestions and require a final artist calibration per frame."
+}

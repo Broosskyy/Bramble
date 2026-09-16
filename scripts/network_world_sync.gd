@@ -1,0 +1,63 @@
+class_name BrambleNetworkWorldSync
+extends Node
+
+var tick:=0.0
+
+func _ready()->void:
+    add_to_group("network_world_sync")
+
+func _process(delta:float)->void:
+    var net:=get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
+    if net==null or net.mode=="offline":
+        return
+    tick-=delta
+    if tick<=0.0 and net.mode=="host":
+        tick=0.10
+        _send_snapshot()
+
+func _send_snapshot()->void:
+    var pa:=get_tree().get_first_node_in_group("player_authority") as BramblePlayerAuthority
+    var registry:=get_tree().get_first_node_in_group("network_entity_registry") as BrambleNetworkEntityRegistry
+    if pa==null or registry==null:
+        return
+    _rpc_snapshot.rpc({"players":pa.snapshot(),"enemies":registry.enemy_snapshot()})
+
+@rpc("authority","call_remote","unreliable")
+func _rpc_snapshot(snapshot:Dictionary)->void:
+    var local_id:=multiplayer.get_unique_id()
+    var prediction:=get_tree().get_first_node_in_group("prediction_reconciliation") as BramblePredictionReconciliation
+    for s in snapshot.get("players",[]):
+        if int(s.get("peer_id",-1))==local_id and prediction:
+            prediction.reconcile(s)
+    _apply_enemies(snapshot.get("enemies",[]))
+
+func _apply_enemies(arr:Array)->void:
+    var registry:=get_tree().get_first_node_in_group("network_entity_registry") as BrambleNetworkEntityRegistry
+    if registry==null:
+        return
+    var seen:Dictionary={}
+    for s in arr:
+        var entity_id:=int(s.get("entity_id",0))
+        seen[entity_id]=true
+        if registry.entities.has(entity_id) and is_instance_valid(registry.entities[entity_id]):
+            var enemy=registry.entities[entity_id]
+            enemy.global_position=Vector2(float(s.get("x",0)),float(s.get("y",0)))
+            enemy.set("hp",int(s.get("hp",1)))
+    for s in arr:
+        var entity_id:=int(s.get("entity_id",0))
+        if entity_id<=0 or registry.entities.has(entity_id):
+            continue
+        var enemy:=BrambleEnemy.new()
+        enemy.enemy_id=String(s.get("enemy_id","monster_sprout"))
+        enemy.enemy_name=enemy.enemy_id
+        enemy.asset_id="monster_sprout"
+        enemy.max_hp=int(s.get("max_hp",34))
+        enemy.global_position=Vector2(float(s.get("x",0)),float(s.get("y",0)))
+        var parent:=get_tree().current_scene
+        parent.add_child(enemy)
+        enemy.hp=int(s.get("hp",enemy.max_hp))
+        registry.register(enemy,entity_id)
+    for entity_id in registry.entities.keys().duplicate():
+        if not seen.has(entity_id) and is_instance_valid(registry.entities[entity_id]):
+            registry.entities[entity_id].queue_free()
+            registry.entities.erase(entity_id)

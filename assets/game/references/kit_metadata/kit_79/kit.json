@@ -1,0 +1,130 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 79,
+  "kit": "melee_weapons",
+  "category": "weapon",
+  "asset_count": 8,
+  "assets": [
+    {
+      "name": "short_sword",
+      "file": "short_sword.png",
+      "size_px": [
+        362,
+        455
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "longsword",
+      "file": "longsword.png",
+      "size_px": [
+        404,
+        518
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "greatsword",
+      "file": "greatsword.png",
+      "size_px": [
+        369,
+        524
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "rogue_dagger",
+      "file": "rogue_dagger.png",
+      "size_px": [
+        384,
+        544
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "leaf_spear",
+      "file": "leaf_spear.png",
+      "size_px": [
+        368,
+        522
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "forest_axe",
+      "file": "forest_axe.png",
+      "size_px": [
+        385,
+        489
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "copper_warhammer",
+      "file": "copper_warhammer.png",
+      "size_px": [
+        394,
+        503
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "adventurer_sabre",
+      "file": "adventurer_sabre.png",
+      "size_px": [
+        375,
+        537
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

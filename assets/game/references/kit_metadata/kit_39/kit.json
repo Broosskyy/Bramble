@@ -1,0 +1,130 @@
+{
+  "number": 39,
+  "name": "village_buildings",
+  "sheet": "master.png",
+  "grid": [
+    3,
+    3
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "inn",
+      "file": "inn.png",
+      "source_rect_px": [
+        0,
+        0,
+        512,
+        341
+      ],
+      "source_gutter_px": 0,
+      "review_if_zero_gutter": true,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "workshop",
+      "file": "workshop.png",
+      "source_rect_px": [
+        512,
+        0,
+        1024,
+        341
+      ],
+      "source_gutter_px": 0,
+      "review_if_zero_gutter": true,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "watchtower",
+      "file": "watchtower.png",
+      "source_rect_px": [
+        1024,
+        0,
+        1536,
+        341
+      ],
+      "source_gutter_px": 0,
+      "review_if_zero_gutter": true,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "town_fountain",
+      "file": "town_fountain.png",
+      "source_rect_px": [
+        0,
+        341,
+        512,
+        682
+      ],
+      "source_gutter_px": 0,
+      "review_if_zero_gutter": true,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "bakery",
+      "file": "bakery.png",
+      "source_rect_px": [
+        512,
+        341,
+        1024,
+        682
+      ],
+      "source_gutter_px": 0,
+      "review_if_zero_gutter": true,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "footbridge",
+      "file": "footbridge.png",
+      "source_rect_px": [
+        1024,
+        341,
+        1536,
+        682
+      ],
+      "source_gutter_px": 0,
+      "review_if_zero_gutter": true,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "palisade_straight",
+      "file": "palisade_straight.png",
+      "source_rect_px": [
+        0,
+        682,
+        512,
+        1024
+      ],
+      "source_gutter_px": 18,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "palisade_corner",
+      "file": "palisade_corner.png",
+      "source_rect_px": [
+        512,
+        682,
+        1024,
+        1024
+      ],
+      "source_gutter_px": 19,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "town_gate",
+      "file": "town_gate.png",
+      "source_rect_px": [
+        1024,
+        682,
+        1536,
+        1024
+      ],
+      "source_gutter_px": 2,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    }
+  ],
+  "note": "Drawing components, not guaranteed seamless terrain or implemented collision"
+}

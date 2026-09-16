@@ -1,0 +1,1690 @@
+{
+  "schema": 1,
+  "project": "BRAMBLE",
+  "source": "BRAMBLE_10_Asset_Kits",
+  "assets": {
+    "terrain_meadow": {
+      "id": "terrain_meadow",
+      "category": "terrain",
+      "source_sheet": "01_terrain_meadow_earth.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/terrain_meadow.png"
+    },
+    "terrain_meadow_wildflowers": {
+      "id": "terrain_meadow_wildflowers",
+      "category": "terrain",
+      "source_sheet": "01_terrain_meadow_earth.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 385,
+      "file": "png/terrain_meadow_wildflowers.png"
+    },
+    "terrain_dry_grass": {
+      "id": "terrain_dry_grass",
+      "category": "terrain",
+      "source_sheet": "01_terrain_meadow_earth.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        3,
+        3
+      ],
+      "width": 397,
+      "height": 405,
+      "file": "png/terrain_dry_grass.png"
+    },
+    "terrain_dirt": {
+      "id": "terrain_dirt",
+      "category": "terrain",
+      "source_sheet": "01_terrain_meadow_earth.png",
+      "source_index": 3,
+      "grid": [
+        0,
+        1,
+        3,
+        3
+      ],
+      "width": 414,
+      "height": 411,
+      "file": "png/terrain_dirt.png"
+    },
+    "terrain_dark_earth": {
+      "id": "terrain_dark_earth",
+      "category": "terrain",
+      "source_sheet": "01_terrain_meadow_earth.png",
+      "source_index": 4,
+      "grid": [
+        1,
+        1,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 404,
+      "file": "png/terrain_dark_earth.png"
+    },
+    "terrain_flower_meadow": {
+      "id": "terrain_flower_meadow",
+      "category": "terrain",
+      "source_sheet": "01_terrain_meadow_earth.png",
+      "source_index": 5,
+      "grid": [
+        2,
+        1,
+        3,
+        3
+      ],
+      "width": 407,
+      "height": 418,
+      "file": "png/terrain_flower_meadow.png"
+    },
+    "terrain_autumn_leaves": {
+      "id": "terrain_autumn_leaves",
+      "category": "terrain",
+      "source_sheet": "01_terrain_meadow_earth.png",
+      "source_index": 6,
+      "grid": [
+        0,
+        2,
+        3,
+        3
+      ],
+      "width": 415,
+      "height": 418,
+      "file": "png/terrain_autumn_leaves.png"
+    },
+    "terrain_mossy_ground": {
+      "id": "terrain_mossy_ground",
+      "category": "terrain",
+      "source_sheet": "01_terrain_meadow_earth.png",
+      "source_index": 7,
+      "grid": [
+        1,
+        2,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 362,
+      "file": "png/terrain_mossy_ground.png"
+    },
+    "terrain_pebbles": {
+      "id": "terrain_pebbles",
+      "category": "terrain",
+      "source_sheet": "01_terrain_meadow_earth.png",
+      "source_index": 8,
+      "grid": [
+        2,
+        2,
+        3,
+        3
+      ],
+      "width": 406,
+      "height": 402,
+      "file": "png/terrain_pebbles.png"
+    },
+    "path_horizontal": {
+      "id": "path_horizontal",
+      "category": "paths",
+      "source_sheet": "02_terrain_paths_transitions.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/path_horizontal.png"
+    },
+    "path_vertical": {
+      "id": "path_vertical",
+      "category": "paths",
+      "source_sheet": "02_terrain_paths_transitions.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 380,
+      "file": "png/path_vertical.png"
+    },
+    "path_cross": {
+      "id": "path_cross",
+      "category": "paths",
+      "source_sheet": "02_terrain_paths_transitions.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        3,
+        3
+      ],
+      "width": 413,
+      "height": 381,
+      "file": "png/path_cross.png"
+    },
+    "path_corner": {
+      "id": "path_corner",
+      "category": "paths",
+      "source_sheet": "02_terrain_paths_transitions.png",
+      "source_index": 3,
+      "grid": [
+        0,
+        1,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/path_corner.png"
+    },
+    "path_earth_transition": {
+      "id": "path_earth_transition",
+      "category": "paths",
+      "source_sheet": "02_terrain_paths_transitions.png",
+      "source_index": 4,
+      "grid": [
+        1,
+        1,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/path_earth_transition.png"
+    },
+    "path_cobble_vertical": {
+      "id": "path_cobble_vertical",
+      "category": "paths",
+      "source_sheet": "02_terrain_paths_transitions.png",
+      "source_index": 5,
+      "grid": [
+        2,
+        1,
+        3,
+        3
+      ],
+      "width": 404,
+      "height": 415,
+      "file": "png/path_cobble_vertical.png"
+    },
+    "path_cobble_turn": {
+      "id": "path_cobble_turn",
+      "category": "paths",
+      "source_sheet": "02_terrain_paths_transitions.png",
+      "source_index": 6,
+      "grid": [
+        0,
+        2,
+        3,
+        3
+      ],
+      "width": 413,
+      "height": 418,
+      "file": "png/path_cobble_turn.png"
+    },
+    "path_stream_crossing": {
+      "id": "path_stream_crossing",
+      "category": "paths",
+      "source_sheet": "02_terrain_paths_transitions.png",
+      "source_index": 7,
+      "grid": [
+        1,
+        2,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/path_stream_crossing.png"
+    },
+    "bridge_stone": {
+      "id": "bridge_stone",
+      "category": "paths",
+      "source_sheet": "02_terrain_paths_transitions.png",
+      "source_index": 8,
+      "grid": [
+        2,
+        2,
+        3,
+        3
+      ],
+      "width": 404,
+      "height": 362,
+      "file": "png/bridge_stone.png"
+    },
+    "tree_oak_green": {
+      "id": "tree_oak_green",
+      "category": "trees",
+      "source_sheet": "03_trees_woodland.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/tree_oak_green.png"
+    },
+    "tree_birch": {
+      "id": "tree_birch",
+      "category": "trees",
+      "source_sheet": "03_trees_woodland.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/tree_birch.png"
+    },
+    "tree_pine": {
+      "id": "tree_pine",
+      "category": "trees",
+      "source_sheet": "03_trees_woodland.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        3,
+        3
+      ],
+      "width": 406,
+      "height": 409,
+      "file": "png/tree_pine.png"
+    },
+    "tree_oak_orange": {
+      "id": "tree_oak_orange",
+      "category": "trees",
+      "source_sheet": "03_trees_woodland.png",
+      "source_index": 3,
+      "grid": [
+        0,
+        1,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/tree_oak_orange.png"
+    },
+    "tree_oak_red": {
+      "id": "tree_oak_red",
+      "category": "trees",
+      "source_sheet": "03_trees_woodland.png",
+      "source_index": 4,
+      "grid": [
+        1,
+        1,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/tree_oak_red.png"
+    },
+    "tree_cherry": {
+      "id": "tree_cherry",
+      "category": "trees",
+      "source_sheet": "03_trees_woodland.png",
+      "source_index": 5,
+      "grid": [
+        2,
+        1,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/tree_cherry.png"
+    },
+    "tree_ancient": {
+      "id": "tree_ancient",
+      "category": "trees",
+      "source_sheet": "03_trees_woodland.png",
+      "source_index": 6,
+      "grid": [
+        0,
+        2,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 412,
+      "file": "png/tree_ancient.png"
+    },
+    "tree_sapling": {
+      "id": "tree_sapling",
+      "category": "trees",
+      "source_sheet": "03_trees_woodland.png",
+      "source_index": 7,
+      "grid": [
+        1,
+        2,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 408,
+      "file": "png/tree_sapling.png"
+    },
+    "tree_willow": {
+      "id": "tree_willow",
+      "category": "trees",
+      "source_sheet": "03_trees_woodland.png",
+      "source_index": 8,
+      "grid": [
+        2,
+        2,
+        3,
+        3
+      ],
+      "width": 418,
+      "height": 418,
+      "file": "png/tree_willow.png"
+    },
+    "plant_berry_dark": {
+      "id": "plant_berry_dark",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 362,
+      "file": "png/plant_berry_dark.png"
+    },
+    "plant_berry_red": {
+      "id": "plant_berry_red",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 355,
+      "file": "png/plant_berry_red.png"
+    },
+    "plant_wildflowers": {
+      "id": "plant_wildflowers",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 361,
+      "file": "png/plant_wildflowers.png"
+    },
+    "plant_fern": {
+      "id": "plant_fern",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 3,
+      "grid": [
+        3,
+        0,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 347,
+      "file": "png/plant_fern.png"
+    },
+    "plant_grass": {
+      "id": "plant_grass",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 4,
+      "grid": [
+        0,
+        1,
+        4,
+        3
+      ],
+      "width": 346,
+      "height": 359,
+      "file": "png/plant_grass.png"
+    },
+    "harvest_mushrooms": {
+      "id": "harvest_mushrooms",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 5,
+      "grid": [
+        1,
+        1,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 362,
+      "file": "png/harvest_mushrooms.png"
+    },
+    "harvest_red_mushroom": {
+      "id": "harvest_red_mushroom",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 6,
+      "grid": [
+        2,
+        1,
+        4,
+        3
+      ],
+      "width": 353,
+      "height": 362,
+      "file": "png/harvest_red_mushroom.png"
+    },
+    "plant_yellow_flowers": {
+      "id": "plant_yellow_flowers",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 7,
+      "grid": [
+        3,
+        1,
+        4,
+        3
+      ],
+      "width": 349,
+      "height": 362,
+      "file": "png/plant_yellow_flowers.png"
+    },
+    "plant_blue_flowers": {
+      "id": "plant_blue_flowers",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 8,
+      "grid": [
+        0,
+        2,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 362,
+      "file": "png/plant_blue_flowers.png"
+    },
+    "prop_leaf_pile": {
+      "id": "prop_leaf_pile",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 9,
+      "grid": [
+        1,
+        2,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 340,
+      "file": "png/prop_leaf_pile.png"
+    },
+    "plant_berry_green": {
+      "id": "plant_berry_green",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 10,
+      "grid": [
+        2,
+        2,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 362,
+      "file": "png/plant_berry_green.png"
+    },
+    "plant_shrub": {
+      "id": "plant_shrub",
+      "category": "plants",
+      "source_sheet": "04_plants_harvestables.png",
+      "source_index": 11,
+      "grid": [
+        3,
+        2,
+        4,
+        3
+      ],
+      "width": 352,
+      "height": 339,
+      "file": "png/plant_shrub.png"
+    },
+    "building_cottage": {
+      "id": "building_cottage",
+      "category": "buildings",
+      "source_sheet": "05_buildings_village.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ],
+      "width": 512,
+      "height": 507,
+      "file": "png/building_cottage.png"
+    },
+    "building_inn": {
+      "id": "building_inn",
+      "category": "buildings",
+      "source_sheet": "05_buildings_village.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ],
+      "width": 512,
+      "height": 512,
+      "file": "png/building_inn.png"
+    },
+    "building_guildhall": {
+      "id": "building_guildhall",
+      "category": "buildings",
+      "source_sheet": "05_buildings_village.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ],
+      "width": 509,
+      "height": 512,
+      "file": "png/building_guildhall.png"
+    },
+    "building_purple_house": {
+      "id": "building_purple_house",
+      "category": "buildings",
+      "source_sheet": "05_buildings_village.png",
+      "source_index": 3,
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ],
+      "width": 512,
+      "height": 504,
+      "file": "png/building_purple_house.png"
+    },
+    "building_smithy": {
+      "id": "building_smithy",
+      "category": "buildings",
+      "source_sheet": "05_buildings_village.png",
+      "source_index": 4,
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ],
+      "width": 512,
+      "height": 512,
+      "file": "png/building_smithy.png"
+    },
+    "building_shrine": {
+      "id": "building_shrine",
+      "category": "buildings",
+      "source_sheet": "05_buildings_village.png",
+      "source_index": 5,
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ],
+      "width": 500,
+      "height": 512,
+      "file": "png/building_shrine.png"
+    },
+    "prop_chest_closed": {
+      "id": "prop_chest_closed",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        4,
+        3
+      ],
+      "width": 337,
+      "height": 331,
+      "file": "png/prop_chest_closed.png"
+    },
+    "prop_chest_open": {
+      "id": "prop_chest_open",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        4,
+        3
+      ],
+      "width": 337,
+      "height": 339,
+      "file": "png/prop_chest_open.png"
+    },
+    "prop_notice_board": {
+      "id": "prop_notice_board",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 323,
+      "file": "png/prop_notice_board.png"
+    },
+    "prop_street_lamp": {
+      "id": "prop_street_lamp",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 3,
+      "grid": [
+        3,
+        0,
+        4,
+        3
+      ],
+      "width": 329,
+      "height": 362,
+      "file": "png/prop_street_lamp.png"
+    },
+    "prop_well": {
+      "id": "prop_well",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 4,
+      "grid": [
+        0,
+        1,
+        4,
+        3
+      ],
+      "width": 309,
+      "height": 340,
+      "file": "png/prop_well.png"
+    },
+    "prop_barrel": {
+      "id": "prop_barrel",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 5,
+      "grid": [
+        1,
+        1,
+        4,
+        3
+      ],
+      "width": 231,
+      "height": 362,
+      "file": "png/prop_barrel.png"
+    },
+    "prop_crates": {
+      "id": "prop_crates",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 6,
+      "grid": [
+        2,
+        1,
+        4,
+        3
+      ],
+      "width": 343,
+      "height": 362,
+      "file": "png/prop_crates.png"
+    },
+    "prop_cart": {
+      "id": "prop_cart",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 7,
+      "grid": [
+        3,
+        1,
+        4,
+        3
+      ],
+      "width": 346,
+      "height": 361,
+      "file": "png/prop_cart.png"
+    },
+    "prop_bench": {
+      "id": "prop_bench",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 8,
+      "grid": [
+        0,
+        2,
+        4,
+        3
+      ],
+      "width": 337,
+      "height": 326,
+      "file": "png/prop_bench.png"
+    },
+    "prop_fountain": {
+      "id": "prop_fountain",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 9,
+      "grid": [
+        1,
+        2,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 354,
+      "file": "png/prop_fountain.png"
+    },
+    "prop_metal_chest": {
+      "id": "prop_metal_chest",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 10,
+      "grid": [
+        2,
+        2,
+        4,
+        3
+      ],
+      "width": 362,
+      "height": 336,
+      "file": "png/prop_metal_chest.png"
+    },
+    "prop_signpost": {
+      "id": "prop_signpost",
+      "category": "props",
+      "source_sheet": "06_world_props.png",
+      "source_index": 11,
+      "grid": [
+        3,
+        2,
+        4,
+        3
+      ],
+      "width": 354,
+      "height": 354,
+      "file": "png/prop_signpost.png"
+    },
+    "hero_ranger": {
+      "id": "hero_ranger",
+      "category": "heroes",
+      "source_sheet": "07_playable_heroes.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ],
+      "width": 512,
+      "height": 509,
+      "file": "png/hero_ranger.png"
+    },
+    "hero_swordwoman": {
+      "id": "hero_swordwoman",
+      "category": "heroes",
+      "source_sheet": "07_playable_heroes.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ],
+      "width": 512,
+      "height": 512,
+      "file": "png/hero_swordwoman.png"
+    },
+    "hero_mage": {
+      "id": "hero_mage",
+      "category": "heroes",
+      "source_sheet": "07_playable_heroes.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ],
+      "width": 439,
+      "height": 490,
+      "file": "png/hero_mage.png"
+    },
+    "hero_cleric": {
+      "id": "hero_cleric",
+      "category": "heroes",
+      "source_sheet": "07_playable_heroes.png",
+      "source_index": 3,
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ],
+      "width": 457,
+      "height": 503,
+      "file": "png/hero_cleric.png"
+    },
+    "hero_rogue": {
+      "id": "hero_rogue",
+      "category": "heroes",
+      "source_sheet": "07_playable_heroes.png",
+      "source_index": 4,
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ],
+      "width": 502,
+      "height": 504,
+      "file": "png/hero_rogue.png"
+    },
+    "hero_knight": {
+      "id": "hero_knight",
+      "category": "heroes",
+      "source_sheet": "07_playable_heroes.png",
+      "source_index": 5,
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ],
+      "width": 501,
+      "height": 505,
+      "file": "png/hero_knight.png"
+    },
+    "npc_merchant": {
+      "id": "npc_merchant",
+      "category": "npcs",
+      "source_sheet": "08_village_npcs.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ],
+      "width": 389,
+      "height": 634,
+      "file": "png/npc_merchant.png"
+    },
+    "npc_baker": {
+      "id": "npc_baker",
+      "category": "npcs",
+      "source_sheet": "08_village_npcs.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ],
+      "width": 407,
+      "height": 617,
+      "file": "png/npc_baker.png"
+    },
+    "npc_blacksmith": {
+      "id": "npc_blacksmith",
+      "category": "npcs",
+      "source_sheet": "08_village_npcs.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ],
+      "width": 398,
+      "height": 621,
+      "file": "png/npc_blacksmith.png"
+    },
+    "npc_healer": {
+      "id": "npc_healer",
+      "category": "npcs",
+      "source_sheet": "08_village_npcs.png",
+      "source_index": 3,
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ],
+      "width": 408,
+      "height": 621,
+      "file": "png/npc_healer.png"
+    },
+    "npc_guard": {
+      "id": "npc_guard",
+      "category": "npcs",
+      "source_sheet": "08_village_npcs.png",
+      "source_index": 4,
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ],
+      "width": 407,
+      "height": 643,
+      "file": "png/npc_guard.png"
+    },
+    "npc_bard": {
+      "id": "npc_bard",
+      "category": "npcs",
+      "source_sheet": "08_village_npcs.png",
+      "source_index": 5,
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ],
+      "width": 402,
+      "height": 596,
+      "file": "png/npc_bard.png"
+    },
+    "monster_sprout": {
+      "id": "monster_sprout",
+      "category": "monsters",
+      "source_sheet": "09_field_monsters.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "width": 383,
+      "height": 424,
+      "file": "png/monster_sprout.png"
+    },
+    "monster_hornhare": {
+      "id": "monster_hornhare",
+      "category": "monsters",
+      "source_sheet": "09_field_monsters.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        3,
+        3
+      ],
+      "width": 392,
+      "height": 414,
+      "file": "png/monster_hornhare.png"
+    },
+    "monster_mushroom": {
+      "id": "monster_mushroom",
+      "category": "monsters",
+      "source_sheet": "09_field_monsters.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        3,
+        3
+      ],
+      "width": 366,
+      "height": 434,
+      "file": "png/monster_mushroom.png"
+    },
+    "monster_hedgehog": {
+      "id": "monster_hedgehog",
+      "category": "monsters",
+      "source_sheet": "09_field_monsters.png",
+      "source_index": 3,
+      "grid": [
+        0,
+        1,
+        3,
+        3
+      ],
+      "width": 379,
+      "height": 444,
+      "file": "png/monster_hedgehog.png"
+    },
+    "monster_beetle": {
+      "id": "monster_beetle",
+      "category": "monsters",
+      "source_sheet": "09_field_monsters.png",
+      "source_index": 4,
+      "grid": [
+        1,
+        1,
+        3,
+        3
+      ],
+      "width": 390,
+      "height": 446,
+      "file": "png/monster_beetle.png"
+    },
+    "monster_wolf": {
+      "id": "monster_wolf",
+      "category": "monsters",
+      "source_sheet": "09_field_monsters.png",
+      "source_index": 5,
+      "grid": [
+        2,
+        1,
+        3,
+        3
+      ],
+      "width": 374,
+      "height": 420,
+      "file": "png/monster_wolf.png"
+    },
+    "monster_turtle": {
+      "id": "monster_turtle",
+      "category": "monsters",
+      "source_sheet": "09_field_monsters.png",
+      "source_index": 6,
+      "grid": [
+        0,
+        2,
+        3,
+        3
+      ],
+      "width": 373,
+      "height": 446,
+      "file": "png/monster_turtle.png"
+    },
+    "monster_fire_spirit": {
+      "id": "monster_fire_spirit",
+      "category": "monsters",
+      "source_sheet": "09_field_monsters.png",
+      "source_index": 7,
+      "grid": [
+        1,
+        2,
+        3,
+        3
+      ],
+      "width": 392,
+      "height": 430,
+      "file": "png/monster_fire_spirit.png"
+    },
+    "monster_boar": {
+      "id": "monster_boar",
+      "category": "monsters",
+      "source_sheet": "09_field_monsters.png",
+      "source_index": 8,
+      "grid": [
+        2,
+        2,
+        3,
+        3
+      ],
+      "width": 384,
+      "height": 388,
+      "file": "png/monster_boar.png"
+    },
+    "spec_ranger": {
+      "id": "spec_ranger",
+      "category": "specialists",
+      "source_sheet": "10_specialist_cards.png",
+      "source_index": 0,
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ],
+      "width": 338,
+      "height": 712,
+      "file": "png/spec_ranger.png"
+    },
+    "spec_ember": {
+      "id": "spec_ember",
+      "category": "specialists",
+      "source_sheet": "10_specialist_cards.png",
+      "source_index": 1,
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ],
+      "width": 342,
+      "height": 695,
+      "file": "png/spec_ember.png"
+    },
+    "spec_light": {
+      "id": "spec_light",
+      "category": "specialists",
+      "source_sheet": "10_specialist_cards.png",
+      "source_index": 2,
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ],
+      "width": 337,
+      "height": 690,
+      "file": "png/spec_light.png"
+    },
+    "spec_lightning": {
+      "id": "spec_lightning",
+      "category": "specialists",
+      "source_sheet": "10_specialist_cards.png",
+      "source_index": 3,
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ],
+      "width": 337,
+      "height": 709,
+      "file": "png/spec_lightning.png"
+    },
+    "spec_flower": {
+      "id": "spec_flower",
+      "category": "specialists",
+      "source_sheet": "10_specialist_cards.png",
+      "source_index": 4,
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ],
+      "width": 341,
+      "height": 722,
+      "file": "png/spec_flower.png"
+    },
+    "spec_shadow": {
+      "id": "spec_shadow",
+      "category": "specialists",
+      "source_sheet": "10_specialist_cards.png",
+      "source_index": 5,
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ],
+      "width": 335,
+      "height": 720,
+      "file": "png/spec_shadow.png"
+    }
+  },
+  "map_profiles": {
+    "village": {
+      "terrain": [
+        "terrain_meadow",
+        "terrain_flower_meadow"
+      ],
+      "paths": [
+        "path_cobble_vertical",
+        "path_cobble_turn"
+      ],
+      "trees": [
+        "tree_oak_green",
+        "tree_birch",
+        "tree_cherry"
+      ],
+      "plants": [
+        "plant_wildflowers",
+        "plant_yellow_flowers",
+        "plant_fern"
+      ],
+      "monsters": []
+    },
+    "field": {
+      "terrain": [
+        "terrain_meadow",
+        "terrain_dirt",
+        "terrain_dry_grass"
+      ],
+      "paths": [
+        "path_horizontal",
+        "path_vertical",
+        "path_cross"
+      ],
+      "trees": [
+        "tree_oak_green",
+        "tree_birch",
+        "tree_sapling"
+      ],
+      "plants": [
+        "plant_grass",
+        "plant_wildflowers",
+        "plant_berry_red"
+      ],
+      "monsters": [
+        "sproutling",
+        "hornhare",
+        "bramblehog",
+        "boar"
+      ]
+    },
+    "meadow": {
+      "terrain": [
+        "terrain_meadow_wildflowers",
+        "terrain_flower_meadow",
+        "terrain_meadow"
+      ],
+      "paths": [
+        "path_horizontal",
+        "path_corner"
+      ],
+      "trees": [
+        "tree_birch",
+        "tree_oak_green",
+        "tree_cherry"
+      ],
+      "plants": [
+        "plant_wildflowers",
+        "plant_blue_flowers",
+        "plant_yellow_flowers"
+      ],
+      "monsters": [
+        "sproutling",
+        "hornhare",
+        "mushroomling",
+        "boar"
+      ]
+    },
+    "forest": {
+      "terrain": [
+        "terrain_mossy_ground",
+        "terrain_autumn_leaves",
+        "terrain_dark_earth"
+      ],
+      "paths": [
+        "path_corner",
+        "path_earth_transition"
+      ],
+      "trees": [
+        "tree_ancient",
+        "tree_oak_red",
+        "tree_oak_green",
+        "tree_pine"
+      ],
+      "plants": [
+        "plant_fern",
+        "plant_berry_dark",
+        "harvest_mushrooms"
+      ],
+      "monsters": [
+        "gloomwolf",
+        "bramblehog",
+        "acornbeetle",
+        "mushroomling"
+      ]
+    },
+    "marsh": {
+      "terrain": [
+        "terrain_dark_earth",
+        "terrain_mossy_ground"
+      ],
+      "paths": [
+        "path_stream_crossing",
+        "path_earth_transition"
+      ],
+      "trees": [
+        "tree_willow",
+        "tree_ancient"
+      ],
+      "plants": [
+        "plant_fern",
+        "plant_shrub",
+        "harvest_red_mushroom"
+      ],
+      "monsters": [
+        "gloomwolf",
+        "mushroomling",
+        "mossturtle"
+      ]
+    },
+    "ruins": {
+      "terrain": [
+        "terrain_pebbles",
+        "terrain_dark_earth",
+        "terrain_autumn_leaves"
+      ],
+      "paths": [
+        "path_cobble_vertical",
+        "path_cobble_turn"
+      ],
+      "trees": [
+        "tree_pine",
+        "tree_oak_red"
+      ],
+      "plants": [
+        "plant_fern",
+        "prop_leaf_pile"
+      ],
+      "monsters": [
+        "mossturtle",
+        "acornbeetle",
+        "gloomwolf"
+      ]
+    },
+    "mine": {
+      "terrain": [
+        "terrain_dark_earth",
+        "terrain_pebbles"
+      ],
+      "paths": [
+        "path_earth_transition"
+      ],
+      "trees": [
+        "tree_pine"
+      ],
+      "plants": [
+        "plant_shrub"
+      ],
+      "monsters": [
+        "acornbeetle",
+        "mossturtle",
+        "fireling"
+      ]
+    },
+    "cave": {
+      "terrain": [
+        "terrain_pebbles",
+        "terrain_dark_earth"
+      ],
+      "paths": [
+        "path_earth_transition"
+      ],
+      "trees": [],
+      "plants": [
+        "harvest_mushrooms"
+      ],
+      "monsters": [
+        "fireling",
+        "mossturtle"
+      ]
+    }
+  },
+  "building_placements": {
+    "village": [
+      [
+        "building_cottage",
+        720,
+        720,
+        190
+      ],
+      [
+        "building_inn",
+        1350,
+        690,
+        205
+      ],
+      [
+        "building_guildhall",
+        1980,
+        760,
+        215
+      ],
+      [
+        "building_purple_house",
+        760,
+        1980,
+        190
+      ],
+      [
+        "building_smithy",
+        1460,
+        1990,
+        215
+      ],
+      [
+        "building_shrine",
+        2100,
+        1950,
+        175
+      ]
+    ],
+    "field": [
+      [
+        "building_cottage",
+        1750,
+        1280,
+        155
+      ]
+    ],
+    "forest": [
+      [
+        "building_shrine",
+        4300,
+        1650,
+        145
+      ]
+    ],
+    "ruins": [
+      [
+        "building_shrine",
+        6650,
+        1450,
+        150
+      ]
+    ]
+  },
+  "prop_placements": {
+    "village": [
+      [
+        "prop_notice_board",
+        930,
+        1120,
+        68
+      ],
+      [
+        "prop_well",
+        1260,
+        1390,
+        88
+      ],
+      [
+        "prop_street_lamp",
+        760,
+        980,
+        48
+      ],
+      [
+        "prop_street_lamp",
+        1800,
+        1040,
+        48
+      ],
+      [
+        "prop_fountain",
+        1620,
+        1420,
+        110
+      ],
+      [
+        "prop_cart",
+        1970,
+        1740,
+        78
+      ],
+      [
+        "prop_crates",
+        1810,
+        1690,
+        54
+      ],
+      [
+        "prop_signpost",
+        2280,
+        1450,
+        52
+      ],
+      [
+        "prop_bench",
+        1110,
+        1700,
+        75
+      ]
+    ],
+    "field": [
+      [
+        "prop_cart",
+        1770,
+        1400,
+        72
+      ],
+      [
+        "prop_crates",
+        1840,
+        1450,
+        48
+      ],
+      [
+        "prop_signpost",
+        3200,
+        2900,
+        48
+      ]
+    ],
+    "meadow": [
+      [
+        "prop_bench",
+        2060,
+        1760,
+        70
+      ],
+      [
+        "prop_signpost",
+        4100,
+        2900,
+        48
+      ],
+      [
+        "prop_chest_closed",
+        5050,
+        3460,
+        45
+      ]
+    ],
+    "forest": [
+      [
+        "prop_chest_closed",
+        1760,
+        3940,
+        45
+      ],
+      [
+        "prop_signpost",
+        3550,
+        3000,
+        48
+      ]
+    ],
+    "marsh": [
+      [
+        "prop_signpost",
+        2140,
+        2550,
+        48
+      ],
+      [
+        "prop_chest_closed",
+        4560,
+        3980,
+        45
+      ]
+    ],
+    "ruins": [
+      [
+        "prop_metal_chest",
+        4120,
+        3200,
+        50
+      ],
+      [
+        "prop_signpost",
+        3000,
+        3000,
+        48
+      ]
+    ],
+    "mine": [
+      [
+        "prop_crates",
+        1450,
+        1280,
+        52
+      ],
+      [
+        "prop_barrel",
+        1510,
+        1300,
+        42
+      ],
+      [
+        "prop_metal_chest",
+        6700,
+        4230,
+        50
+      ]
+    ],
+    "cave": [
+      [
+        "prop_metal_chest",
+        4470,
+        3600,
+        50
+      ]
+    ]
+  }
+}

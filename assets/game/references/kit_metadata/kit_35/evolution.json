@@ -1,0 +1,1142 @@
+[
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 1,
+    "nominal_wing_width_px": 116,
+    "visible_bbox_px": [
+      262,
+      183,
+      378,
+      261
+    ],
+    "visible_width_px": 116,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_01.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_01_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 2,
+    "nominal_wing_width_px": 144,
+    "visible_bbox_px": [
+      248,
+      174,
+      392,
+      271
+    ],
+    "visible_width_px": 144,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_02.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_02_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 3,
+    "nominal_wing_width_px": 172,
+    "visible_bbox_px": [
+      234,
+      164,
+      406,
+      280
+    ],
+    "visible_width_px": 172,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_03.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_03_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 4,
+    "nominal_wing_width_px": 200,
+    "visible_bbox_px": [
+      220,
+      155,
+      420,
+      290
+    ],
+    "visible_width_px": 200,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_04.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_04_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 5,
+    "nominal_wing_width_px": 228,
+    "visible_bbox_px": [
+      206,
+      145,
+      434,
+      299
+    ],
+    "visible_width_px": 228,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_05.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_05_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 6,
+    "nominal_wing_width_px": 256,
+    "visible_bbox_px": [
+      192,
+      136,
+      448,
+      309
+    ],
+    "visible_width_px": 256,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_06.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_06_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 7,
+    "nominal_wing_width_px": 284,
+    "visible_bbox_px": [
+      178,
+      126,
+      462,
+      318
+    ],
+    "visible_width_px": 284,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_07.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_07_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 8,
+    "nominal_wing_width_px": 312,
+    "visible_bbox_px": [
+      164,
+      117,
+      476,
+      328
+    ],
+    "visible_width_px": 312,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_08.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_08_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 9,
+    "nominal_wing_width_px": 340,
+    "visible_bbox_px": [
+      150,
+      108,
+      490,
+      337
+    ],
+    "visible_width_px": 340,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_09.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_09_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 10,
+    "nominal_wing_width_px": 368,
+    "visible_bbox_px": [
+      136,
+      98,
+      504,
+      346
+    ],
+    "visible_width_px": 368,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_10.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_10_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 11,
+    "nominal_wing_width_px": 396,
+    "visible_bbox_px": [
+      122,
+      89,
+      518,
+      356
+    ],
+    "visible_width_px": 396,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_11.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_11_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 12,
+    "nominal_wing_width_px": 424,
+    "visible_bbox_px": [
+      108,
+      79,
+      532,
+      365
+    ],
+    "visible_width_px": 424,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_12.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_12_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 13,
+    "nominal_wing_width_px": 452,
+    "visible_bbox_px": [
+      94,
+      70,
+      546,
+      375
+    ],
+    "visible_width_px": 452,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_13.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_13_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 14,
+    "nominal_wing_width_px": 480,
+    "visible_bbox_px": [
+      80,
+      60,
+      560,
+      384
+    ],
+    "visible_width_px": 480,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_14.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_14_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moss_guardian",
+    "upgrade": 15,
+    "nominal_wing_width_px": 508,
+    "visible_bbox_px": [
+      66,
+      51,
+      574,
+      394
+    ],
+    "visible_width_px": 508,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moss_guardian_plus_15.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moss_guardian_plus_15_card.png",
+    "visual_tier": "ascended"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 1,
+    "nominal_wing_width_px": 116,
+    "visible_bbox_px": [
+      262,
+      183,
+      378,
+      262
+    ],
+    "visible_width_px": 116,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_01.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_01_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 2,
+    "nominal_wing_width_px": 144,
+    "visible_bbox_px": [
+      248,
+      173,
+      392,
+      271
+    ],
+    "visible_width_px": 144,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_02.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_02_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 3,
+    "nominal_wing_width_px": 172,
+    "visible_bbox_px": [
+      234,
+      164,
+      406,
+      281
+    ],
+    "visible_width_px": 172,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_03.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_03_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 4,
+    "nominal_wing_width_px": 200,
+    "visible_bbox_px": [
+      220,
+      154,
+      420,
+      290
+    ],
+    "visible_width_px": 200,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_04.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_04_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 5,
+    "nominal_wing_width_px": 228,
+    "visible_bbox_px": [
+      206,
+      144,
+      434,
+      300
+    ],
+    "visible_width_px": 228,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_05.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_05_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 6,
+    "nominal_wing_width_px": 256,
+    "visible_bbox_px": [
+      192,
+      135,
+      448,
+      310
+    ],
+    "visible_width_px": 256,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_06.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_06_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 7,
+    "nominal_wing_width_px": 284,
+    "visible_bbox_px": [
+      178,
+      125,
+      462,
+      319
+    ],
+    "visible_width_px": 284,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_07.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_07_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 8,
+    "nominal_wing_width_px": 312,
+    "visible_bbox_px": [
+      164,
+      116,
+      476,
+      329
+    ],
+    "visible_width_px": 312,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_08.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_08_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 9,
+    "nominal_wing_width_px": 340,
+    "visible_bbox_px": [
+      150,
+      106,
+      490,
+      338
+    ],
+    "visible_width_px": 340,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_09.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_09_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 10,
+    "nominal_wing_width_px": 368,
+    "visible_bbox_px": [
+      136,
+      97,
+      504,
+      348
+    ],
+    "visible_width_px": 368,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_10.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_10_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 11,
+    "nominal_wing_width_px": 396,
+    "visible_bbox_px": [
+      122,
+      87,
+      518,
+      357
+    ],
+    "visible_width_px": 396,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_11.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_11_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 12,
+    "nominal_wing_width_px": 424,
+    "visible_bbox_px": [
+      108,
+      78,
+      532,
+      367
+    ],
+    "visible_width_px": 424,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_12.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_12_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 13,
+    "nominal_wing_width_px": 452,
+    "visible_bbox_px": [
+      94,
+      68,
+      546,
+      376
+    ],
+    "visible_width_px": 452,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_13.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_13_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 14,
+    "nominal_wing_width_px": 480,
+    "visible_bbox_px": [
+      80,
+      58,
+      560,
+      386
+    ],
+    "visible_width_px": 480,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_14.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_14_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "ember_knight",
+    "upgrade": 15,
+    "nominal_wing_width_px": 508,
+    "visible_bbox_px": [
+      66,
+      49,
+      574,
+      396
+    ],
+    "visible_width_px": 508,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/ember_knight_plus_15.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/ember_knight_plus_15_card.png",
+    "visual_tier": "ascended"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 1,
+    "nominal_wing_width_px": 116,
+    "visible_bbox_px": [
+      262,
+      182,
+      378,
+      262
+    ],
+    "visible_width_px": 116,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_01.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_01_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 2,
+    "nominal_wing_width_px": 144,
+    "visible_bbox_px": [
+      248,
+      173,
+      392,
+      272
+    ],
+    "visible_width_px": 144,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_02.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_02_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 3,
+    "nominal_wing_width_px": 172,
+    "visible_bbox_px": [
+      234,
+      163,
+      406,
+      281
+    ],
+    "visible_width_px": 172,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_03.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_03_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 4,
+    "nominal_wing_width_px": 200,
+    "visible_bbox_px": [
+      220,
+      154,
+      420,
+      291
+    ],
+    "visible_width_px": 200,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_04.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_04_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 5,
+    "nominal_wing_width_px": 228,
+    "visible_bbox_px": [
+      206,
+      144,
+      434,
+      301
+    ],
+    "visible_width_px": 228,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_05.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_05_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 6,
+    "nominal_wing_width_px": 256,
+    "visible_bbox_px": [
+      192,
+      134,
+      448,
+      310
+    ],
+    "visible_width_px": 256,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_06.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_06_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 7,
+    "nominal_wing_width_px": 284,
+    "visible_bbox_px": [
+      178,
+      125,
+      462,
+      320
+    ],
+    "visible_width_px": 284,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_07.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_07_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 8,
+    "nominal_wing_width_px": 312,
+    "visible_bbox_px": [
+      164,
+      115,
+      476,
+      329
+    ],
+    "visible_width_px": 312,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_08.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_08_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 9,
+    "nominal_wing_width_px": 340,
+    "visible_bbox_px": [
+      150,
+      105,
+      490,
+      339
+    ],
+    "visible_width_px": 340,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_09.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_09_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 10,
+    "nominal_wing_width_px": 368,
+    "visible_bbox_px": [
+      136,
+      96,
+      504,
+      349
+    ],
+    "visible_width_px": 368,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_10.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_10_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 11,
+    "nominal_wing_width_px": 396,
+    "visible_bbox_px": [
+      122,
+      86,
+      518,
+      358
+    ],
+    "visible_width_px": 396,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_11.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_11_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 12,
+    "nominal_wing_width_px": 424,
+    "visible_bbox_px": [
+      108,
+      77,
+      532,
+      368
+    ],
+    "visible_width_px": 424,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_12.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_12_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 13,
+    "nominal_wing_width_px": 452,
+    "visible_bbox_px": [
+      94,
+      67,
+      546,
+      378
+    ],
+    "visible_width_px": 452,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_13.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_13_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 14,
+    "nominal_wing_width_px": 480,
+    "visible_bbox_px": [
+      80,
+      57,
+      560,
+      387
+    ],
+    "visible_width_px": 480,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_14.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_14_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "moon_weaver",
+    "upgrade": 15,
+    "nominal_wing_width_px": 508,
+    "visible_bbox_px": [
+      66,
+      48,
+      574,
+      397
+    ],
+    "visible_width_px": 508,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/moon_weaver_plus_15.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/moon_weaver_plus_15_card.png",
+    "visual_tier": "ascended"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 1,
+    "nominal_wing_width_px": 116,
+    "visible_bbox_px": [
+      262,
+      183,
+      378,
+      262
+    ],
+    "visible_width_px": 116,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_01.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_01_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 2,
+    "nominal_wing_width_px": 144,
+    "visible_bbox_px": [
+      248,
+      173,
+      392,
+      271
+    ],
+    "visible_width_px": 144,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_02.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_02_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 3,
+    "nominal_wing_width_px": 172,
+    "visible_bbox_px": [
+      234,
+      164,
+      406,
+      281
+    ],
+    "visible_width_px": 172,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_03.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_03_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 4,
+    "nominal_wing_width_px": 200,
+    "visible_bbox_px": [
+      220,
+      154,
+      420,
+      290
+    ],
+    "visible_width_px": 200,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_04.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_04_card.png",
+    "visual_tier": "seed"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 5,
+    "nominal_wing_width_px": 228,
+    "visible_bbox_px": [
+      206,
+      145,
+      434,
+      299
+    ],
+    "visible_width_px": 228,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_05.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_05_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 6,
+    "nominal_wing_width_px": 256,
+    "visible_bbox_px": [
+      192,
+      136,
+      448,
+      309
+    ],
+    "visible_width_px": 256,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_06.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_06_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 7,
+    "nominal_wing_width_px": 284,
+    "visible_bbox_px": [
+      178,
+      126,
+      462,
+      318
+    ],
+    "visible_width_px": 284,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_07.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_07_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 8,
+    "nominal_wing_width_px": 312,
+    "visible_bbox_px": [
+      164,
+      117,
+      476,
+      328
+    ],
+    "visible_width_px": 312,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_08.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_08_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 9,
+    "nominal_wing_width_px": 340,
+    "visible_bbox_px": [
+      150,
+      107,
+      490,
+      337
+    ],
+    "visible_width_px": 340,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_09.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_09_card.png",
+    "visual_tier": "aura"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 10,
+    "nominal_wing_width_px": 368,
+    "visible_bbox_px": [
+      136,
+      98,
+      504,
+      347
+    ],
+    "visible_width_px": 368,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_10.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_10_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 11,
+    "nominal_wing_width_px": 396,
+    "visible_bbox_px": [
+      122,
+      88,
+      518,
+      356
+    ],
+    "visible_width_px": 396,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_11.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_11_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 12,
+    "nominal_wing_width_px": 424,
+    "visible_bbox_px": [
+      108,
+      79,
+      532,
+      366
+    ],
+    "visible_width_px": 424,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_12.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_12_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 13,
+    "nominal_wing_width_px": 452,
+    "visible_bbox_px": [
+      94,
+      69,
+      546,
+      375
+    ],
+    "visible_width_px": 452,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_13.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_13_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 14,
+    "nominal_wing_width_px": 480,
+    "visible_bbox_px": [
+      80,
+      60,
+      560,
+      385
+    ],
+    "visible_width_px": 480,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_14.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_14_card.png",
+    "visual_tier": "radiant"
+  },
+  {
+    "specialist": "crystal_keeper",
+    "upgrade": 15,
+    "nominal_wing_width_px": 508,
+    "visible_bbox_px": [
+      66,
+      50,
+      574,
+      394
+    ],
+    "visible_width_px": 508,
+    "attach_anchor_px": [
+      320,
+      222
+    ],
+    "wing_sprite": "35_specialist_wings/evolution/crystal_keeper_plus_15.png",
+    "card_sprite": "35_specialist_wings/evolution_cards/crystal_keeper_plus_15_card.png",
+    "visual_tier": "ascended"
+  }
+]

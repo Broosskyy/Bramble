@@ -1,0 +1,25 @@
+{
+  "build": "BRAMBLE Godot 4.7.2 Playable World V2",
+  "features": {
+    "authored_start_world": true,
+    "player_movement": true,
+    "mobile_touch_controls": true,
+    "basic_attack": true,
+    "enemy_ai": true,
+    "enemy_hp": true,
+    "player_hp": true,
+    "loot_pickups": true,
+    "npc_interaction": true,
+    "starter_quest": true,
+    "xp_leveling": true,
+    "gold": true,
+    "potions": true,
+    "portals": true,
+    "equipment_rig": true,
+    "asset_gallery": true
+  },
+  "missing_scripts": [],
+  "missing_assets": [],
+  "missing_tscn_refs": [],
+  "godot_binary_available_for_runtime_test": false
+}

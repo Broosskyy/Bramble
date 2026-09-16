@@ -1,0 +1,82 @@
+{
+  "village": {
+    "id": "village",
+    "name": "Hainweiler",
+    "ground": "#8b704c",
+    "road": "#c49a67",
+    "safe": true,
+    "range": "Lv 1–5",
+    "level_min": 1,
+    "level_max": 5
+  },
+  "field": {
+    "id": "field",
+    "name": "Östliche Felder",
+    "ground": "#8a7650",
+    "road": "#c29c68",
+    "safe": false,
+    "range": "Lv 1–6",
+    "level_min": 1,
+    "level_max": 6
+  },
+  "meadow": {
+    "id": "meadow",
+    "name": "Sonnenhügel",
+    "ground": "#98794f",
+    "road": "#d0a066",
+    "safe": false,
+    "range": "Lv 3–8",
+    "level_min": 3,
+    "level_max": 8
+  },
+  "forest": {
+    "id": "forest",
+    "name": "Dämmerwald",
+    "ground": "#5f553c",
+    "road": "#8b6c4c",
+    "safe": false,
+    "range": "Lv 5–12",
+    "level_min": 5,
+    "level_max": 12
+  },
+  "marsh": {
+    "id": "marsh",
+    "name": "Nebelbruch",
+    "ground": "#665b45",
+    "road": "#7f684d",
+    "safe": false,
+    "range": "Lv 8–14",
+    "level_min": 8,
+    "level_max": 14
+  },
+  "ruins": {
+    "id": "ruins",
+    "name": "Alte Ruinen",
+    "ground": "#665b52",
+    "road": "#89725d",
+    "safe": false,
+    "range": "Lv 10–16",
+    "level_min": 10,
+    "level_max": 16
+  },
+  "mine": {
+    "id": "mine",
+    "name": "Kupfermine",
+    "ground": "#766a5a",
+    "road": "#8e7659",
+    "safe": false,
+    "range": "Lv 12–18",
+    "level_min": 12,
+    "level_max": 18
+  },
+  "cave": {
+    "id": "cave",
+    "name": "Kristallhöhle",
+    "ground": "#4f5567",
+    "road": "#6f6f82",
+    "safe": false,
+    "range": "Lv 14–20",
+    "level_min": 14,
+    "level_max": 20
+  }
+}

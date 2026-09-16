@@ -1,0 +1,107 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 54,
+  "name": "base_male_8_directions",
+  "purpose": "unarmed male base turnaround",
+  "kind": "sprite_views",
+  "style_lock": "canonical early BRAMBLE kits 07-10 and original gameplay HUD",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "front",
+      "file": "front.png",
+      "source_bbox": [
+        72,
+        29,
+        330,
+        505
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "front_right",
+      "file": "front_right.png",
+      "source_bbox": [
+        447,
+        30,
+        705,
+        506
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "right",
+      "file": "right.png",
+      "source_bbox": [
+        816,
+        32,
+        1068,
+        506
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back_right",
+      "file": "back_right.png",
+      "source_bbox": [
+        1207,
+        30,
+        1461,
+        505
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back",
+      "file": "back.png",
+      "source_bbox": [
+        73,
+        518,
+        325,
+        1000
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back_left",
+      "file": "back_left.png",
+      "source_bbox": [
+        458,
+        520,
+        712,
+        996
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "left",
+      "file": "left.png",
+      "source_bbox": [
+        839,
+        525,
+        1080,
+        1001
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "front_left",
+      "file": "front_left.png",
+      "source_bbox": [
+        1207,
+        519,
+        1466,
+        1001
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

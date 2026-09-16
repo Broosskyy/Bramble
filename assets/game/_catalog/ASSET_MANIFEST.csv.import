@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://0vmyysftchay"
+
+[deps]
+
+files=["res://assets/game/_catalog/ASSET_MANIFEST.canonical.translation", "res://assets/game/_catalog/ASSET_MANIFEST.category.translation", "res://assets/game/_catalog/ASSET_MANIFEST.subcategory.translation", "res://assets/game/_catalog/ASSET_MANIFEST.asset.translation", "res://assets/game/_catalog/ASSET_MANIFEST.entity.translation", "res://assets/game/_catalog/ASSET_MANIFEST.direction.translation", "res://assets/game/_catalog/ASSET_MANIFEST.animation.translation", "res://assets/game/_catalog/ASSET_MANIFEST.frame.translation", "res://assets/game/_catalog/ASSET_MANIFEST.source.translation", "res://assets/game/_catalog/ASSET_MANIFEST.source.translation", "res://assets/game/_catalog/ASSET_MANIFEST.sha256.translation", "res://assets/game/_catalog/ASSET_MANIFEST.status.translation", "res://assets/game/_catalog/ASSET_MANIFEST.notes.translation", "res://assets/game/_catalog/ASSET_MANIFEST.visual.translation"]
+
+source_file="res://assets/game/_catalog/ASSET_MANIFEST.csv"
+dest_files=["res://assets/game/_catalog/ASSET_MANIFEST.canonical.translation", "res://assets/game/_catalog/ASSET_MANIFEST.category.translation", "res://assets/game/_catalog/ASSET_MANIFEST.subcategory.translation", "res://assets/game/_catalog/ASSET_MANIFEST.asset.translation", "res://assets/game/_catalog/ASSET_MANIFEST.entity.translation", "res://assets/game/_catalog/ASSET_MANIFEST.direction.translation", "res://assets/game/_catalog/ASSET_MANIFEST.animation.translation", "res://assets/game/_catalog/ASSET_MANIFEST.frame.translation", "res://assets/game/_catalog/ASSET_MANIFEST.source.translation", "res://assets/game/_catalog/ASSET_MANIFEST.source.translation", "res://assets/game/_catalog/ASSET_MANIFEST.sha256.translation", "res://assets/game/_catalog/ASSET_MANIFEST.status.translation", "res://assets/game/_catalog/ASSET_MANIFEST.notes.translation", "res://assets/game/_catalog/ASSET_MANIFEST.visual.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

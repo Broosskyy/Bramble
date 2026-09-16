@@ -1,0 +1,22 @@
+{
+  "version": "V11",
+  "base": "V10.3R",
+  "architecture_reference": "NosCore concepts; no NosCore runtime/code dependency",
+  "new_scripts": [
+    "identity_service.gd",
+    "character_repository.gd",
+    "session_service.gd",
+    "character_service.gd",
+    "domain_registry.gd"
+  ],
+  "modified": [
+    "scripts/player_authority.gd",
+    "scripts/join_sync_service.gd",
+    "scripts/network_session.gd",
+    "scripts/bootstrap.gd",
+    "scripts/server_bootstrap.gd",
+    "scenes/main.tscn",
+    "data/content/network_protocol.json",
+    "portable_data/network_protocol.json"
+  ]
+}

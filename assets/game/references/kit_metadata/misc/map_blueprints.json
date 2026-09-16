@@ -1,0 +1,383 @@
+{
+  "kind": "reviewable modular scene blueprint",
+  "runtime_status": "visual preview; placement coordinates are preview percentages, not authoritative in-game collision",
+  "map_count": 8,
+  "maps": [
+    {
+      "id": "village",
+      "name": "Hainweiler",
+      "level": "1–5",
+      "theme": "village",
+      "terrain": [
+        "terrain_cobble_grass_01",
+        "terrain_dirt_autumn_01"
+      ],
+      "route": "Dorfplatz → Östliche Felder",
+      "objects": [
+        {
+          "id": "village_cottage_01",
+          "x": 27,
+          "y": 69,
+          "size": 122,
+          "source": "reused/village_cottage_01.png"
+        },
+        {
+          "id": "tree_oak_orange_01",
+          "x": 73,
+          "y": 60,
+          "size": 107,
+          "source": "reused/tree_oak_orange_01.png"
+        },
+        {
+          "id": "well_halloween_01",
+          "x": 54,
+          "y": 72,
+          "size": 61,
+          "source": "reused/well_halloween_01.png"
+        },
+        {
+          "id": "crate_small_01",
+          "x": 83,
+          "y": 84,
+          "size": 50,
+          "source": "reused/crate_small_01.png"
+        }
+      ],
+      "key_art": {
+        "sheet": "world_regions_west.png",
+        "cell": 0
+      }
+    },
+    {
+      "id": "field",
+      "name": "Östliche Felder",
+      "level": "1–6",
+      "theme": "field",
+      "terrain": [
+        "terrain_dirt_autumn_01",
+        "terrain_grass_flowers_01"
+      ],
+      "route": "Hainweiler ↔ Sonnenhügel",
+      "objects": [
+        {
+          "id": "tree_small_orange_01",
+          "x": 70,
+          "y": 55,
+          "size": 94,
+          "source": "reused/tree_small_orange_01.png"
+        },
+        {
+          "id": "hay_bales_01",
+          "x": 28,
+          "y": 72,
+          "size": 67,
+          "source": "reused/hay_bales_01.png"
+        },
+        {
+          "id": "fence_wood_01",
+          "x": 52,
+          "y": 83,
+          "size": 93,
+          "source": "reused/fence_wood_01.png"
+        },
+        {
+          "id": "grass_gold_01",
+          "x": 82,
+          "y": 80,
+          "size": 52,
+          "source": "reused/grass_gold_01.png"
+        }
+      ],
+      "key_art": {
+        "sheet": "world_regions_west.png",
+        "cell": 1
+      }
+    },
+    {
+      "id": "meadow",
+      "name": "Sonnenhügel",
+      "level": "3–8",
+      "theme": "meadow",
+      "terrain": [
+        "terrain_grass_flowers_01",
+        "terrain_dirt_autumn_01"
+      ],
+      "route": "Östliche Felder ↔ Dämmerwald",
+      "objects": [
+        {
+          "id": "tree_oak_gold_01",
+          "x": 71,
+          "y": 65,
+          "size": 110,
+          "source": "reused/tree_oak_gold_01.png"
+        },
+        {
+          "id": "pond_small_01",
+          "x": 28,
+          "y": 70,
+          "size": 80,
+          "source": "reused/pond_small_01.png"
+        },
+        {
+          "id": "flower_orange_01",
+          "x": 49,
+          "y": 84,
+          "size": 49,
+          "source": "reused/flower_orange_01.png"
+        },
+        {
+          "id": "grass_gold_01",
+          "x": 14,
+          "y": 86,
+          "size": 51,
+          "source": "reused/grass_gold_01.png"
+        }
+      ],
+      "key_art": {
+        "sheet": "world_regions_west.png",
+        "cell": 2
+      }
+    },
+    {
+      "id": "forest",
+      "name": "Dämmerwald",
+      "level": "5–12",
+      "theme": "forest",
+      "terrain": [
+        "terrain_grass_flowers_01",
+        "terrain_dirt_autumn_01"
+      ],
+      "route": "Sonnenhügel ↔ Nebelbruch",
+      "objects": [
+        {
+          "id": "tree_conifer_red_01",
+          "x": 70,
+          "y": 66,
+          "size": 125,
+          "source": "reused/tree_conifer_red_01.png"
+        },
+        {
+          "id": "bush_berry_01",
+          "x": 23,
+          "y": 79,
+          "size": 69,
+          "source": "reused/bush_berry_01.png"
+        },
+        {
+          "id": "fern_01",
+          "x": 46,
+          "y": 82,
+          "size": 56,
+          "source": "reused/fern_01.png"
+        },
+        {
+          "id": "mushrooms_red_01",
+          "x": 87,
+          "y": 79,
+          "size": 51,
+          "source": "reused/mushrooms_red_01.png"
+        }
+      ],
+      "key_art": {
+        "sheet": "world_regions_west.png",
+        "cell": 3
+      }
+    },
+    {
+      "id": "marsh",
+      "name": "Nebelbruch",
+      "level": "8–14",
+      "theme": "marsh",
+      "terrain": [
+        "terrain_grass_flowers_01",
+        "terrain_dirt_autumn_01"
+      ],
+      "route": "Dämmerwald ↔ Alte Ruinen",
+      "objects": [
+        {
+          "id": "swamp_willow",
+          "x": 23,
+          "y": 70,
+          "size": 129,
+          "source": "../11_nebelbruch_vegetation/sheet.png",
+          "cell": 0
+        },
+        {
+          "id": "marsh_reeds",
+          "x": 85,
+          "y": 78,
+          "size": 76,
+          "source": "../11_nebelbruch_vegetation/sheet.png",
+          "cell": 1
+        },
+        {
+          "id": "herbalist_hut",
+          "x": 70,
+          "y": 67,
+          "size": 117,
+          "source": "../12_nebelbruch_landmarks/sheet.png",
+          "cell": 1
+        },
+        {
+          "id": "lily_pond",
+          "x": 43,
+          "y": 82,
+          "size": 77,
+          "source": "../12_nebelbruch_landmarks/sheet.png",
+          "cell": 2
+        }
+      ],
+      "key_art": {
+        "sheet": "world_regions_east.png",
+        "cell": 0
+      }
+    },
+    {
+      "id": "ruins",
+      "name": "Alte Ruinen",
+      "level": "10–16",
+      "theme": "ruins",
+      "terrain": [
+        "terrain_cobble_grass_01",
+        "terrain_dirt_autumn_01"
+      ],
+      "route": "Nebelbruch ↔ Kupfermine",
+      "objects": [
+        {
+          "id": "rune_arch",
+          "x": 29,
+          "y": 70,
+          "size": 108,
+          "source": "../13_alte_ruinen/sheet.png",
+          "cell": 0
+        },
+        {
+          "id": "ruin_wall",
+          "x": 72,
+          "y": 64,
+          "size": 101,
+          "source": "../13_alte_ruinen/sheet.png",
+          "cell": 1
+        },
+        {
+          "id": "sentinel_plinth",
+          "x": 53,
+          "y": 77,
+          "size": 68,
+          "source": "../13_alte_ruinen/sheet.png",
+          "cell": 2
+        },
+        {
+          "id": "rune_altar",
+          "x": 82,
+          "y": 83,
+          "size": 66,
+          "source": "../19_resources_quests/sheet.png",
+          "cell": 3
+        }
+      ],
+      "key_art": {
+        "sheet": "world_regions_east.png",
+        "cell": 1
+      }
+    },
+    {
+      "id": "mine",
+      "name": "Kupfermine",
+      "level": "12–18",
+      "theme": "mine",
+      "terrain": [
+        "terrain_dirt_autumn_01",
+        "terrain_cobble_grass_01"
+      ],
+      "route": "Alte Ruinen ↔ Kristallhöhle",
+      "objects": [
+        {
+          "id": "mine_entrance",
+          "x": 25,
+          "y": 68,
+          "size": 121,
+          "source": "../14_kupfermine/sheet.png",
+          "cell": 0
+        },
+        {
+          "id": "copper_cart",
+          "x": 70,
+          "y": 75,
+          "size": 91,
+          "source": "../14_kupfermine/sheet.png",
+          "cell": 1
+        },
+        {
+          "id": "rail_segment",
+          "x": 50,
+          "y": 86,
+          "size": 107,
+          "source": "../14_kupfermine/sheet.png",
+          "cell": 2
+        },
+        {
+          "id": "copper_vein",
+          "x": 83,
+          "y": 57,
+          "size": 69,
+          "source": "../19_resources_quests/sheet.png",
+          "cell": 0
+        }
+      ],
+      "key_art": {
+        "sheet": "world_regions_east.png",
+        "cell": 2
+      }
+    },
+    {
+      "id": "cave",
+      "name": "Kristallhöhle",
+      "level": "14–20",
+      "theme": "cave",
+      "terrain": [
+        "terrain_cobble_grass_01",
+        "terrain_dirt_autumn_01"
+      ],
+      "route": "Kupfermine ↔ Kristallhöhle",
+      "objects": [
+        {
+          "id": "cave_arch",
+          "x": 25,
+          "y": 68,
+          "size": 115,
+          "source": "../15_kristallhoehle/sheet.png",
+          "cell": 2
+        },
+        {
+          "id": "crystal_cluster",
+          "x": 70,
+          "y": 75,
+          "size": 92,
+          "source": "../15_kristallhoehle/sheet.png",
+          "cell": 0
+        },
+        {
+          "id": "crystal_pool",
+          "x": 48,
+          "y": 86,
+          "size": 110,
+          "source": "../15_kristallhoehle/sheet.png",
+          "cell": 3
+        },
+        {
+          "id": "crystal_geode",
+          "x": 85,
+          "y": 53,
+          "size": 70,
+          "source": "../19_resources_quests/sheet.png",
+          "cell": 1
+        }
+      ],
+      "key_art": {
+        "sheet": "world_regions_east.png",
+        "cell": 3
+      }
+    }
+  ]
+}

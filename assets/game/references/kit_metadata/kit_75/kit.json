@@ -1,0 +1,109 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 75,
+  "kit": "combat_hud_states",
+  "category": "ui",
+  "asset_count": 9,
+  "assets": [
+    {
+      "name": "player_status",
+      "file": "player_status.png",
+      "size_px": [
+        514,
+        308
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "target_status",
+      "file": "target_status.png",
+      "size_px": [
+        538,
+        336
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "quest_tracker",
+      "file": "quest_tracker.png",
+      "size_px": [
+        508,
+        298
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "minimap_bezel",
+      "file": "minimap_bezel.png",
+      "size_px": [
+        453,
+        390
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "virtual_joystick",
+      "file": "virtual_joystick.png",
+      "size_px": [
+        362,
+        356
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "primary_attack",
+      "file": "primary_attack.png",
+      "size_px": [
+        358,
+        353
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "skill_normal",
+      "file": "skill_normal.png",
+      "size_px": [
+        297,
+        328
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "skill_cooldown",
+      "file": "skill_cooldown.png",
+      "size_px": [
+        294,
+        295
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "skill_locked",
+      "file": "skill_locked.png",
+      "size_px": [
+        296,
+        297
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

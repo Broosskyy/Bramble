@@ -1,0 +1,66 @@
+{
+  "number": 12,
+  "title_de": "Moorbauwerke",
+  "region": "marsh",
+  "sheet": "12_nebelbruch_landmarks/sheet.png",
+  "grid": [
+    2,
+    2
+  ],
+  "canvas_px": [
+    1254,
+    1254
+  ],
+  "real_alpha": true,
+  "cells": [
+    {
+      "id": "boardwalk_segment",
+      "grid_x": 0,
+      "grid_y": 0,
+      "source_rect_px": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "min_gutter_px_alpha16": 129
+    },
+    {
+      "id": "herbalist_hut",
+      "grid_x": 1,
+      "grid_y": 0,
+      "source_rect_px": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "min_gutter_px_alpha16": 75
+    },
+    {
+      "id": "lily_pond",
+      "grid_x": 0,
+      "grid_y": 1,
+      "source_rect_px": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "min_gutter_px_alpha16": 93
+    },
+    {
+      "id": "marsh_signpost",
+      "grid_x": 1,
+      "grid_y": 1,
+      "source_rect_px": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "min_gutter_px_alpha16": 91
+    }
+  ],
+  "purpose": "modular sprite master, separate runtime collision/foot anchor required"
+}

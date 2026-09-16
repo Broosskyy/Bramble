@@ -1,0 +1,89 @@
+{
+  "number": 38,
+  "name": "ground_materials",
+  "materials": [
+    {
+      "id": "grass",
+      "file": "grass_repeat_256.png",
+      "size_px": [
+        256,
+        256
+      ],
+      "repeat_xy": true,
+      "alpha": 255,
+      "source": "painted_material_master.png"
+    },
+    {
+      "id": "dirt",
+      "file": "dirt_repeat_256.png",
+      "size_px": [
+        256,
+        256
+      ],
+      "repeat_xy": true,
+      "alpha": 255,
+      "source": "painted_material_master.png"
+    },
+    {
+      "id": "cobble",
+      "file": "cobble_repeat_256.png",
+      "size_px": [
+        256,
+        256
+      ],
+      "repeat_xy": true,
+      "alpha": 255,
+      "source": "painted_material_master.png"
+    },
+    {
+      "id": "ash",
+      "file": "ash_repeat_256.png",
+      "size_px": [
+        256,
+        256
+      ],
+      "repeat_xy": true,
+      "alpha": 255,
+      "source": "painted_material_master.png"
+    },
+    {
+      "id": "water",
+      "file": "water_repeat_256.png",
+      "size_px": [
+        256,
+        256
+      ],
+      "repeat_xy": true,
+      "alpha": 255,
+      "source": "periodic water prototype"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "fallen_leaves",
+      "file": "overlay_fallen_leaves_256.png",
+      "repeat_xy": true,
+      "alpha": true
+    },
+    {
+      "id": "grass_clumps",
+      "file": "overlay_grass_clumps_256.png",
+      "repeat_xy": true,
+      "alpha": true
+    },
+    {
+      "id": "ash_cinders",
+      "file": "overlay_ash_cinders_256.png",
+      "repeat_xy": true,
+      "alpha": true
+    },
+    {
+      "id": "water_glints",
+      "file": "overlay_water_glints_256.png",
+      "repeat_xy": true,
+      "alpha": true
+    }
+  ],
+  "geometry": "tile pattern only; project onto ground meshes at h=0,1,2",
+  "important": "same-material tiles repeat exactly; painted biome transitions and cliff joins not supplied"
+}

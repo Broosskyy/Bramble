@@ -1,0 +1,1526 @@
+{
+  "all_pass": true,
+  "file_count": 80,
+  "files": [
+    {
+      "file": "64_male_idle_walk/frames/00_idle_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "64_male_idle_walk/frames/01_idle_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "64_male_idle_walk/frames/02_idle_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "64_male_idle_walk/frames/03_idle_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "64_male_idle_walk/frames/04_walk_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "64_male_idle_walk/frames/05_walk_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "64_male_idle_walk/frames/06_walk_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "64_male_idle_walk/frames/07_walk_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "65_male_run_damage/frames/00_run_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "65_male_run_damage/frames/01_run_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "65_male_run_damage/frames/02_run_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "65_male_run_damage/frames/03_run_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "65_male_run_damage/frames/04_hit_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "65_male_run_damage/frames/05_hit_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "65_male_run_damage/frames/06_defeated_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "65_male_run_damage/frames/07_defeated_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "66_female_idle_walk/frames/00_idle_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "66_female_idle_walk/frames/01_idle_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "66_female_idle_walk/frames/02_idle_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "66_female_idle_walk/frames/03_idle_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "66_female_idle_walk/frames/04_walk_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "66_female_idle_walk/frames/05_walk_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "66_female_idle_walk/frames/06_walk_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "66_female_idle_walk/frames/07_walk_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "67_female_run_damage/frames/00_run_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "67_female_run_damage/frames/01_run_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "67_female_run_damage/frames/02_run_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "67_female_run_damage/frames/03_run_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "67_female_run_damage/frames/04_hit_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "67_female_run_damage/frames/05_hit_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "67_female_run_damage/frames/06_defeated_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "67_female_run_damage/frames/07_defeated_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "68_blacksmith_idle_greet/frames/00_idle_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "68_blacksmith_idle_greet/frames/01_idle_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "68_blacksmith_idle_greet/frames/02_idle_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "68_blacksmith_idle_greet/frames/03_idle_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "68_blacksmith_idle_greet/frames/04_greet_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "68_blacksmith_idle_greet/frames/05_greet_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "68_blacksmith_idle_greet/frames/06_greet_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "68_blacksmith_idle_greet/frames/07_greet_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "69_merchant_idle_talk/frames/00_idle_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "69_merchant_idle_talk/frames/01_idle_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "69_merchant_idle_talk/frames/02_idle_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "69_merchant_idle_talk/frames/03_idle_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "69_merchant_idle_talk/frames/04_talk_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "69_merchant_idle_talk/frames/05_talk_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "69_merchant_idle_talk/frames/06_talk_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "69_merchant_idle_talk/frames/07_talk_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "70_moorling_idle_attack/frames/00_idle_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "70_moorling_idle_attack/frames/01_idle_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "70_moorling_idle_attack/frames/02_idle_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "70_moorling_idle_attack/frames/03_idle_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "70_moorling_idle_attack/frames/04_attack_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "70_moorling_idle_attack/frames/05_attack_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "70_moorling_idle_attack/frames/06_attack_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "70_moorling_idle_attack/frames/07_attack_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "71_moorling_hit_defeated/frames/00_hit_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "71_moorling_hit_defeated/frames/01_hit_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "71_moorling_hit_defeated/frames/02_hit_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "71_moorling_hit_defeated/frames/03_hit_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "71_moorling_hit_defeated/frames/04_defeated_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "71_moorling_hit_defeated/frames/05_defeated_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "71_moorling_hit_defeated/frames/06_defeated_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "71_moorling_hit_defeated/frames/07_defeated_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "72_copper_mole_idle_attack/frames/00_idle_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "72_copper_mole_idle_attack/frames/01_idle_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "72_copper_mole_idle_attack/frames/02_idle_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "72_copper_mole_idle_attack/frames/03_idle_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "72_copper_mole_idle_attack/frames/04_attack_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "72_copper_mole_idle_attack/frames/05_attack_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "72_copper_mole_idle_attack/frames/06_attack_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "72_copper_mole_idle_attack/frames/07_attack_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "73_copper_mole_hit_defeated/frames/00_hit_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "73_copper_mole_hit_defeated/frames/01_hit_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "73_copper_mole_hit_defeated/frames/02_hit_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "73_copper_mole_hit_defeated/frames/03_hit_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "73_copper_mole_hit_defeated/frames/04_defeated_01.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "73_copper_mole_hit_defeated/frames/05_defeated_02.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "73_copper_mole_hit_defeated/frames/06_defeated_03.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    },
+    {
+      "file": "73_copper_mole_hit_defeated/frames/07_defeated_04.png",
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pass": true
+    }
+  ]
+}

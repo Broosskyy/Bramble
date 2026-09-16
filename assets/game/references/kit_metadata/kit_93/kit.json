@@ -1,0 +1,141 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 93,
+  "kit": "magic_support_vfx",
+  "category": "catalog",
+  "asset_count": 8,
+  "assets": [
+    {
+      "index": 0,
+      "name": "mana_gather",
+      "file": "frames/00_mana_gather.png",
+      "size_px": [
+        366,
+        355
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 1,
+      "name": "casting_ring",
+      "file": "frames/01_casting_ring.png",
+      "size_px": [
+        432,
+        463
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 2,
+      "name": "green_projectile",
+      "file": "frames/02_green_projectile.png",
+      "size_px": [
+        414,
+        280
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 3,
+      "name": "violet_star_bolt",
+      "file": "frames/03_violet_star_bolt.png",
+      "size_px": [
+        421,
+        334
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 4,
+      "name": "protective_shield",
+      "file": "frames/04_protective_shield.png",
+      "size_px": [
+        422,
+        423
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 5,
+      "name": "healing_bloom",
+      "file": "frames/05_healing_bloom.png",
+      "size_px": [
+        424,
+        451
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 6,
+      "name": "purification_burst",
+      "file": "frames/06_purification_burst.png",
+      "size_px": [
+        429,
+        479
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    },
+    {
+      "index": 7,
+      "name": "violet_impact",
+      "file": "frames/07_violet_impact.png",
+      "size_px": [
+        419,
+        439
+      ],
+      "sockets": {
+        "pivot_normalized": [
+          0.5,
+          0.5
+        ],
+        "blend_mode": "alpha"
+      }
+    }
+  ],
+  "canvas_px": null,
+  "root_pivot_px": null,
+  "weapons_baked_into_character": false,
+  "notes": "Socket positions are production suggestions and require a final artist calibration per frame."
+}

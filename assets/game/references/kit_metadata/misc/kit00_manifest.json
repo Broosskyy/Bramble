@@ -1,0 +1,303 @@
+{
+  "project": "BRAMBLE",
+  "revision": "v4-unarmed-gender-equipment-specialists-poses",
+  "kit_count": 10,
+  "kits": [
+    {
+      "id": "01",
+      "file": "01_terrain_meadow_earth.png",
+      "title_de": "Terrain: Wiese und Erde",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "02",
+      "file": "02_terrain_paths_transitions.png",
+      "title_de": "Wege und Übergänge",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "03",
+      "file": "03_trees_woodland.png",
+      "title_de": "Bäume",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "04",
+      "file": "04_plants_harvestables.png",
+      "title_de": "Pflanzen und Ressourcen",
+      "grid": [
+        4,
+        3
+      ]
+    },
+    {
+      "id": "05",
+      "file": "05_buildings_village.png",
+      "title_de": "Gebäude und Schrein",
+      "grid": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": "06",
+      "file": "06_world_props.png",
+      "title_de": "Interaktive Weltobjekte",
+      "grid": [
+        4,
+        3
+      ]
+    },
+    {
+      "id": "07",
+      "file": "07_playable_heroes.png",
+      "title_de": "Waffenlose Rüstungslooks: männlich oben, weiblich unten",
+      "grid": [
+        4,
+        2
+      ]
+    },
+    {
+      "id": "08",
+      "file": "08_village_npcs.png",
+      "title_de": "Sechs Dorfbewohner und NPCs ohne Waffen",
+      "grid": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": "09",
+      "file": "09_field_monsters.png",
+      "title_de": "Feldmonster",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "10",
+      "file": "10_specialist_cards.png",
+      "title_de": "Fünf Spezialistenkarten",
+      "grid": [
+        3,
+        2
+      ]
+    }
+  ],
+  "character_base": {
+    "male": "characters/base_male_unarmed_8f.png",
+    "female": "characters/base_female_unarmed_8f.png",
+    "grid": [
+      4,
+      2
+    ],
+    "pose_order": [
+      "idle_open",
+      "idle_blink",
+      "walk_step_a",
+      "walk_step_b",
+      "attack_prepare_empty",
+      "attack_release_empty",
+      "attack_recover_empty",
+      "hit_recoil"
+    ],
+    "directions": 1,
+    "remarks": "Illustrated pose atlas, not a frame-aligned outfit or weapon attachment rig; no hands hold weapons."
+  },
+  "outfits": {
+    "file": "07_playable_heroes.png",
+    "grid": [
+      4,
+      2
+    ],
+    "columns": [
+      "forest",
+      "leather",
+      "knight",
+      "arcane"
+    ],
+    "rows": [
+      "male",
+      "female"
+    ]
+  },
+  "equipment": {
+    "armor_parts": "equipment/armor_parts.png",
+    "armor_parts_grid": [
+      4,
+      3
+    ],
+    "columns": [
+      "forest",
+      "leather",
+      "knight",
+      "arcane"
+    ],
+    "rows": [
+      "torso",
+      "head",
+      "boots_and_gloves"
+    ],
+    "weapons_separate": "equipment/weapons_separate.png",
+    "weapons_grid": [
+      4,
+      2
+    ],
+    "weapons_order": [
+      "sword",
+      "bow",
+      "staff",
+      "daggers",
+      "shield",
+      "hammer",
+      "spear",
+      "curved_sword"
+    ],
+    "equippable_overlay_ready": false
+  },
+  "specialists": {
+    "ids_order": [
+      "starter_sword",
+      "starter_bow",
+      "starter_mage",
+      "ember_knight",
+      "pumpkin_reaper"
+    ],
+    "labels_de": {
+      "starter_sword": "Klingenwächter",
+      "starter_bow": "Windjäger",
+      "starter_mage": "Arkanist",
+      "ember_knight": "Glutritter",
+      "pumpkin_reaper": "Kürbisreaper"
+    },
+    "cards_sheet": "10_specialist_cards.png",
+    "cards_grid": [
+      3,
+      2
+    ],
+    "male_skin_sheet": "specialists/skins_male.png",
+    "female_skin_sheet": "specialists/skins_female.png",
+    "skins_grid": [
+      3,
+      2
+    ],
+    "empty_cell": "row_2_col_3",
+    "hands": "empty; weapons are external",
+    "skin_animation_ready": false,
+    "note": "Card pictures are archetype UI illustrations; the male/female in-world skins match each card by class palette and symbols, not exact portraits."
+  },
+  "npc_animation": {
+    "directory": "animation/",
+    "ids": [
+      "npc_quest_giver",
+      "npc_merchant",
+      "npc_blacksmith",
+      "npc_herbalist",
+      "npc_guard",
+      "npc_musician"
+    ],
+    "grid": [
+      3,
+      2
+    ],
+    "pose_order": [
+      "idle_open",
+      "idle_blink",
+      "walk_step_a",
+      "walk_step_b",
+      "interact_a",
+      "interact_b"
+    ],
+    "directions": 1
+  },
+  "vfx": {
+    "combat": {
+      "file": "vfx/combat.png",
+      "grid": [
+        4,
+        4
+      ],
+      "rows": [
+        "arrow_release",
+        "melee_slash",
+        "arcane_impact",
+        "healing_bloom"
+      ]
+    },
+    "ambient": {
+      "file": "vfx/ambient.png",
+      "grid": [
+        4,
+        4
+      ],
+      "rows": [
+        "footstep_dust",
+        "quest_twinkle",
+        "specialist_ring",
+        "hit_spark"
+      ]
+    },
+    "specialist_starters": {
+      "file": "vfx/specialist_starters.png",
+      "grid": [
+        3,
+        4
+      ],
+      "sequence_order": [
+        "starter_sword",
+        "starter_bow",
+        "starter_mage"
+      ],
+      "four_frames_per_sequence": true
+    },
+    "specialist_advanced": {
+      "file": "vfx/specialist_advanced.png",
+      "grid": [
+        2,
+        4
+      ],
+      "sequence_order": [
+        "ember_knight",
+        "pumpkin_reaper"
+      ],
+      "four_frames_per_sequence": true
+    },
+    "default_frame_ms": 110
+  },
+  "production_notes": [
+    "Individual crop boxes and foot pivots need QA.",
+    "Armor pieces and separate weapons are design atlases; align and rig per animation frame before equipping in engine.",
+    "One viewing angle only; SP sheets have four illustrated poses per gender but need intermediate frames and validated pivots for smooth animation.",
+    "Terrain art is a set of stamps and does not guarantee seamless tiling."
+  ],
+  "specialist_animation": {
+    "directory": "animation/",
+    "file_pattern": "specialist_{card_id}.png",
+    "grid": [
+      4,
+      2
+    ],
+    "rows": [
+      "male",
+      "female"
+    ],
+    "columns": [
+      "idle",
+      "walk_step_a",
+      "walk_step_b",
+      "empty_handed_skill_pose"
+    ],
+    "directions": 1,
+    "status": "illustrated pose sequence; needs foot-pivot normalization, more in-betweens and additional directions for final game"
+  }
+}

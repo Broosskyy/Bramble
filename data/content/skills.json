@@ -1,0 +1,218 @@
+{
+  "adventurer": [
+    {
+      "id": "cut",
+      "name": "Klingenhieb",
+      "unlock": {
+        "lv": 1,
+        "job": 1
+      },
+      "cd": 3.9,
+      "icon": "✦",
+      "action": "skill_1",
+      "role": "damage",
+      "target": "melee_arc"
+    },
+    {
+      "id": "field_aid",
+      "name": "Feldversorgung",
+      "unlock": {
+        "lv": 5,
+        "job": 3
+      },
+      "cd": 7.2,
+      "icon": "✹",
+      "action": "skill_2",
+      "role": "sustain",
+      "target": "self"
+    },
+    {
+      "id": "crescent",
+      "name": "Halbmondhieb",
+      "unlock": {
+        "lv": 10,
+        "job": 8
+      },
+      "cd": 7.5,
+      "icon": "✧",
+      "action": "skill_3",
+      "role": "damage",
+      "target": "melee_aoe"
+    },
+    {
+      "id": "bramble_spirit",
+      "name": "Abenteurergeist",
+      "unlock": {
+        "lv": 15,
+        "job": 15
+      },
+      "cd": 16.0,
+      "icon": "◆",
+      "action": "skill_4",
+      "role": "buff",
+      "target": "self_aoe"
+    }
+  ],
+  "sword": [
+    {
+      "id": "cleave",
+      "name": "Klingenspalter",
+      "unlock": {
+        "lv": 1,
+        "job": 1
+      },
+      "cd": 3.5,
+      "icon": "✦",
+      "action": "skill_1",
+      "role": "damage",
+      "target": "melee_arc"
+    },
+    {
+      "id": "iron_guard",
+      "name": "Eisenwacht",
+      "unlock": {
+        "lv": 1,
+        "job": 5
+      },
+      "cd": 8.0,
+      "icon": "✹",
+      "action": "skill_2",
+      "role": "defense",
+      "target": "self"
+    },
+    {
+      "id": "whirlwind",
+      "name": "Wirbelklinge",
+      "unlock": {
+        "lv": 15,
+        "job": 20
+      },
+      "cd": 7.0,
+      "icon": "✧",
+      "action": "skill_3",
+      "role": "damage",
+      "target": "self_aoe"
+    },
+    {
+      "id": "war_banner",
+      "name": "Sturmbanner",
+      "unlock": {
+        "lv": 20,
+        "job": 25
+      },
+      "cd": 16.0,
+      "icon": "◆",
+      "action": "skill_4",
+      "role": "buff",
+      "target": "self_aoe"
+    }
+  ],
+  "bow": [
+    {
+      "id": "piercing_arrow",
+      "name": "Durchdringender Schuss",
+      "unlock": {
+        "lv": 1,
+        "job": 1
+      },
+      "cd": 3.2,
+      "icon": "✦",
+      "action": "skill_1",
+      "role": "damage",
+      "target": "projectile"
+    },
+    {
+      "id": "wind_step",
+      "name": "Windschritt",
+      "unlock": {
+        "lv": 1,
+        "job": 5
+      },
+      "cd": 7.0,
+      "icon": "✹",
+      "action": "skill_2",
+      "role": "mobility",
+      "target": "self"
+    },
+    {
+      "id": "multi_shot",
+      "name": "Fächerschuss",
+      "unlock": {
+        "lv": 15,
+        "job": 20
+      },
+      "cd": 6.4,
+      "icon": "✧",
+      "action": "skill_3",
+      "role": "damage",
+      "target": "projectile_cone"
+    },
+    {
+      "id": "arrow_rain",
+      "name": "Pfeilregen",
+      "unlock": {
+        "lv": 20,
+        "job": 25
+      },
+      "cd": 15.0,
+      "icon": "◆",
+      "action": "skill_4",
+      "role": "damage",
+      "target": "ground_aoe"
+    }
+  ],
+  "mage": [
+    {
+      "id": "arc_burst",
+      "name": "Arkanschlag",
+      "unlock": {
+        "lv": 1,
+        "job": 1
+      },
+      "cd": 3.6,
+      "icon": "✦",
+      "action": "skill_1",
+      "role": "damage",
+      "target": "projectile"
+    },
+    {
+      "id": "mana_barrier",
+      "name": "Manabarriere",
+      "unlock": {
+        "lv": 1,
+        "job": 5
+      },
+      "cd": 8.0,
+      "icon": "✹",
+      "action": "skill_2",
+      "role": "defense",
+      "target": "self"
+    },
+    {
+      "id": "nova",
+      "name": "Arkannova",
+      "unlock": {
+        "lv": 15,
+        "job": 20
+      },
+      "cd": 7.2,
+      "icon": "✧",
+      "action": "skill_3",
+      "role": "damage",
+      "target": "self_aoe"
+    },
+    {
+      "id": "starfall",
+      "name": "Sternenfall",
+      "unlock": {
+        "lv": 20,
+        "job": 25
+      },
+      "cd": 15.5,
+      "icon": "◆",
+      "action": "skill_4",
+      "role": "damage",
+      "target": "ground_aoe"
+    }
+  ]
+}

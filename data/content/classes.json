@@ -1,0 +1,34 @@
+{
+  "adventurer": {
+    "id": "adventurer",
+    "name": "Abenteurer",
+    "main_stat": "str",
+    "weapon_family": "short_sword",
+    "role": "allrounder",
+    "first_class": false
+  },
+  "sword": {
+    "id": "sword",
+    "name": "Schwertkämpfer",
+    "main_stat": "str",
+    "weapon_family": "sword",
+    "role": "frontline",
+    "first_class": true
+  },
+  "bow": {
+    "id": "bow",
+    "name": "Bogenschütze",
+    "main_stat": "dex",
+    "weapon_family": "bow",
+    "role": "ranged_dps",
+    "first_class": true
+  },
+  "mage": {
+    "id": "mage",
+    "name": "Magier",
+    "main_stat": "int",
+    "weapon_family": "staff",
+    "role": "magic_dps",
+    "first_class": true
+  }
+}

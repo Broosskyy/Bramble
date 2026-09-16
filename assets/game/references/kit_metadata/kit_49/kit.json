@@ -1,0 +1,112 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 49,
+  "name": "elevation_connectors",
+  "style_lock": "canonical kits 01-06",
+  "camera": "fixed oblique/isometric approximately 35 degrees",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "cliff_straight_low",
+      "file": "cliff_straight_low.png",
+      "role": "straight low cliff edge",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        36,
+        92,
+        493,
+        482
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "cliff_outer_corner",
+      "file": "cliff_outer_corner.png",
+      "role": "convex outer cliff corner",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        557,
+        99,
+        994,
+        472
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "cliff_inner_corner",
+      "file": "cliff_inner_corner.png",
+      "role": "concave inner cliff corner",
+      "source_cell": [
+        2,
+        0
+      ],
+      "source_bbox": [
+        1052,
+        95,
+        1505,
+        481
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "earthen_ramp",
+      "file": "earthen_ramp.png",
+      "role": "narrow earthen elevation ramp",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        41,
+        552,
+        532,
+        949
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "embedded_stone_stairs",
+      "file": "embedded_stone_stairs.png",
+      "role": "stone stair elevation connector",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        565,
+        551,
+        1045,
+        948
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "grassy_ledge_endcap",
+      "file": "grassy_ledge_endcap.png",
+      "role": "small grassy ledge end cap",
+      "source_cell": [
+        2,
+        1
+      ],
+      "source_bbox": [
+        1114,
+        575,
+        1497,
+        933
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

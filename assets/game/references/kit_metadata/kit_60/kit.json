@@ -1,0 +1,107 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 60,
+  "name": "moorling_directions_actions",
+  "purpose": "Moorling direction and action set",
+  "kind": "sprite_views",
+  "style_lock": "canonical early BRAMBLE kits 07-10 and original gameplay HUD",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "front",
+      "file": "front.png",
+      "source_bbox": [
+        86,
+        44,
+        393,
+        435
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "right",
+      "file": "right.png",
+      "source_bbox": [
+        513,
+        51,
+        844,
+        438
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back",
+      "file": "back.png",
+      "source_bbox": [
+        941,
+        51,
+        1246,
+        432
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "left",
+      "file": "left.png",
+      "source_bbox": [
+        1372,
+        51,
+        1702,
+        438
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "idle_ready",
+      "file": "idle_ready.png",
+      "source_bbox": [
+        53,
+        463,
+        412,
+        836
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "attack",
+      "file": "attack.png",
+      "source_bbox": [
+        483,
+        467,
+        900,
+        779
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "hit",
+      "file": "hit.png",
+      "source_bbox": [
+        946,
+        491,
+        1281,
+        833
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "defeated",
+      "file": "defeated.png",
+      "source_bbox": [
+        1342,
+        575,
+        1731,
+        823
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

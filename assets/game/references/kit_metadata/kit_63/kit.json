@@ -1,0 +1,83 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 63,
+  "name": "menu_panel_shells",
+  "purpose": "textless reusable mobile menu panel shells",
+  "kind": "ui_shells",
+  "style_lock": "canonical early BRAMBLE kits 07-10 and original gameplay HUD",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "inventory_panel",
+      "file": "inventory_panel.png",
+      "source_bbox": [
+        16,
+        69,
+        548,
+        514
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "character_panel",
+      "file": "character_panel.png",
+      "source_bbox": [
+        555,
+        72,
+        926,
+        517
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "quest_log_panel",
+      "file": "quest_log_panel.png",
+      "source_bbox": [
+        935,
+        68,
+        1522,
+        517
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "shop_panel",
+      "file": "shop_panel.png",
+      "source_bbox": [
+        17,
+        512,
+        478,
+        955
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "confirmation_dialog",
+      "file": "confirmation_dialog.png",
+      "source_bbox": [
+        491,
+        559,
+        979,
+        930
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "tabbed_panel",
+      "file": "tabbed_panel.png",
+      "source_bbox": [
+        985,
+        545,
+        1511,
+        936
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

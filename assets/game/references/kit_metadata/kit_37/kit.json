@@ -1,0 +1,103 @@
+{
+  "number": 37,
+  "name": "nightfall_biome",
+  "grid": [
+    3,
+    3
+  ],
+  "source": "master.png",
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "ash_plateau",
+      "file": "ash_plateau.png",
+      "source_rect": [
+        0,
+        0,
+        512,
+        341
+      ]
+    },
+    {
+      "id": "ash_corner",
+      "file": "ash_corner.png",
+      "source_rect": [
+        512,
+        0,
+        1024,
+        341
+      ]
+    },
+    {
+      "id": "broken_ramp",
+      "file": "broken_ramp.png",
+      "source_rect": [
+        1024,
+        0,
+        1536,
+        341
+      ]
+    },
+    {
+      "id": "dead_tree",
+      "file": "dead_tree.png",
+      "source_rect": [
+        0,
+        341,
+        512,
+        682
+      ]
+    },
+    {
+      "id": "thorn_brambles",
+      "file": "thorn_brambles.png",
+      "source_rect": [
+        512,
+        341,
+        1024,
+        682
+      ]
+    },
+    {
+      "id": "ruin_shrine",
+      "file": "ruin_shrine.png",
+      "source_rect": [
+        1024,
+        341,
+        1536,
+        682
+      ]
+    },
+    {
+      "id": "moon_gate",
+      "file": "moon_gate.png",
+      "source_rect": [
+        0,
+        682,
+        512,
+        1024
+      ]
+    },
+    {
+      "id": "violet_lantern",
+      "file": "violet_lantern.png",
+      "source_rect": [
+        512,
+        682,
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "dark_waterfall",
+      "file": "dark_waterfall.png",
+      "source_rect": [
+        1024,
+        682,
+        1536,
+        1024
+      ]
+    }
+  ],
+  "camera": "orthographic oblique 3/4; single canonical orientation"
+}

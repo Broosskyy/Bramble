@@ -1,0 +1,61 @@
+{
+  "slime": {
+    "id": "slime",
+    "name": "Grünschleim",
+    "asset": "slime",
+    "role": "melee",
+    "tameable": true,
+    "base_tame_chance": 0.55
+  },
+  "boar": {
+    "id": "boar",
+    "name": "Waldkeiler",
+    "asset": "boar",
+    "role": "charger",
+    "tameable": true,
+    "base_tame_chance": 0.38
+  },
+  "spider": {
+    "id": "spider",
+    "name": "Dämmerweber",
+    "asset": "spider",
+    "role": "melee_control",
+    "tameable": true,
+    "base_tame_chance": 0.3
+  },
+  "wisp": {
+    "id": "wisp",
+    "name": "Nebellicht",
+    "asset": "slime",
+    "role": "magic_ranged",
+    "tameable": false
+  },
+  "bat": {
+    "id": "bat",
+    "name": "Höhlenfledermaus",
+    "asset": "boar",
+    "role": "fast_melee",
+    "tameable": false
+  },
+  "guardian": {
+    "id": "guardian",
+    "name": "Steinwächter",
+    "asset": "guardian",
+    "role": "tank",
+    "tameable": false
+  },
+  "ruins_boss": {
+    "id": "ruins_boss",
+    "name": "Ruinenwächter",
+    "asset": "guardian",
+    "role": "boss",
+    "tameable": false
+  },
+  "cave_boss": {
+    "id": "cave_boss",
+    "name": "Kristallkoloss",
+    "asset": "guardian",
+    "role": "boss",
+    "tameable": false
+  }
+}

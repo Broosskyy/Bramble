@@ -1,0 +1,111 @@
+{
+  "number": 30,
+  "name": "roads_riverbank",
+  "source": "master.png",
+  "grid": [
+    3,
+    3
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "road_horizontal",
+      "file": "road_horizontal.png",
+      "source_rect": [
+        0,
+        0,
+        512,
+        341
+      ],
+      "gutter_px": 34
+    },
+    {
+      "id": "road_vertical",
+      "file": "road_vertical.png",
+      "source_rect": [
+        512,
+        0,
+        1024,
+        341
+      ],
+      "gutter_px": 7
+    },
+    {
+      "id": "road_cross",
+      "file": "road_cross.png",
+      "source_rect": [
+        1024,
+        0,
+        1536,
+        341
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "road_bend",
+      "file": "road_bend.png",
+      "source_rect": [
+        0,
+        341,
+        512,
+        682
+      ],
+      "gutter_px": 13
+    },
+    {
+      "id": "road_cobble",
+      "file": "road_cobble.png",
+      "source_rect": [
+        512,
+        341,
+        1024,
+        682
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "stepping_stones",
+      "file": "stepping_stones.png",
+      "source_rect": [
+        1024,
+        341,
+        1536,
+        682
+      ],
+      "gutter_px": 21
+    },
+    {
+      "id": "river_edge",
+      "file": "river_edge.png",
+      "source_rect": [
+        0,
+        682,
+        512,
+        1024
+      ],
+      "gutter_px": 36
+    },
+    {
+      "id": "river_corner",
+      "file": "river_corner.png",
+      "source_rect": [
+        512,
+        682,
+        1024,
+        1024
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "wooden_bridge",
+      "file": "wooden_bridge.png",
+      "source_rect": [
+        1024,
+        682,
+        1536,
+        1024
+      ],
+      "gutter_px": 10
+    }
+  ]
+}

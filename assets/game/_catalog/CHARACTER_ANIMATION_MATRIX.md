@@ -1,0 +1,76 @@
+# Character Animation Matrix
+
+Generated: 2026-09-15T19:14:28.059052+00:00
+
+## Player Base (Male/Female)
+
+### female
+
+| Direction | idle | walk | run | attack | cast | hit | defeated | death |
+|---|---|---|---|---|---|---|---|---|
+| front | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| back | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| left | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| right | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| front_left | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| front_right | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| back_left | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| back_right | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| * | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+
+### male
+
+| Direction | idle | walk | run | attack | cast | hit | defeated | death |
+|---|---|---|---|---|---|---|---|---|
+| front | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| back | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| left | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| right | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| front_left | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| front_right | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| back_left | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| back_right | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+| * | AVAILABLE | PARTIAL | PARTIAL | MISSING | MISSING | PARTIAL | PARTIAL | MISSING |
+
+## NPC
+
+### blacksmith
+
+| Direction | idle | walk | run | attack | cast | hit | defeated | death |
+|---|---|---|---|---|---|---|---|---|
+| front | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| back | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| left | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| right | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| front_left | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| front_right | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| back_left | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| back_right | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| * | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+
+### merchant
+
+| Direction | idle | walk | run | attack | cast | hit | defeated | death |
+|---|---|---|---|---|---|---|---|---|
+| front | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| back | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| left | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| right | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| front_left | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| front_right | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| back_left | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| back_right | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+| * | AVAILABLE | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING | MISSING |
+
+## Visual Master Notes
+
+Updated: 2026-09-15T19:25:13.552530+00:00
+
+Player targets in visual masters require 8-direction idle + readable combat at mobile scale.
+
+| Function | vs gameplay_landscape / gameplay_portrait |
+|---|---|
+| Directional idle | VISUAL_MASTER_READY where AVAILABLE |
+| Walk / run | VISUAL_MASTER_ADJUST (frames exist, not per-direction) |
+| Attack | VISUAL_MASTER_ADJUST (pose frames kits 88-90 / monster kits 60-73) |
+| Hit / defeated | VISUAL_MASTER_ADJUST |

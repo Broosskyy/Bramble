@@ -1,0 +1,91 @@
+{
+  "number": 43,
+  "name": "moss_guardian_male_female",
+  "sheet": "master.png",
+  "grid": [
+    3,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "male_front",
+      "file": "male_front.png",
+      "source_rect_px": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "source_gutter_px": 9,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "male_right",
+      "file": "male_right.png",
+      "source_rect_px": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "source_gutter_px": 6,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "male_back",
+      "file": "male_back.png",
+      "source_rect_px": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "source_gutter_px": 9,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "female_front",
+      "file": "female_front.png",
+      "source_rect_px": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "source_gutter_px": 3,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "female_right",
+      "file": "female_right.png",
+      "source_rect_px": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "source_gutter_px": 7,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "female_back",
+      "file": "female_back.png",
+      "source_rect_px": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "source_gutter_px": 6,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    }
+  ],
+  "note": "Drawing components, not guaranteed seamless terrain or implemented collision"
+}

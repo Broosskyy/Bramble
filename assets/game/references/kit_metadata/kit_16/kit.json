@@ -1,0 +1,66 @@
+{
+  "number": 16,
+  "title_de": "Weltübergänge",
+  "region": "all",
+  "sheet": "16_world_transitions/sheet.png",
+  "grid": [
+    2,
+    2
+  ],
+  "canvas_px": [
+    1536,
+    1024
+  ],
+  "real_alpha": true,
+  "cells": [
+    {
+      "id": "wooden_bridge",
+      "grid_x": 0,
+      "grid_y": 0,
+      "source_rect_px": [
+        0,
+        0,
+        768,
+        512
+      ],
+      "min_gutter_px_alpha16": 48
+    },
+    {
+      "id": "ruin_staircase",
+      "grid_x": 1,
+      "grid_y": 0,
+      "source_rect_px": [
+        768,
+        0,
+        1536,
+        512
+      ],
+      "min_gutter_px_alpha16": 33
+    },
+    {
+      "id": "mine_passage",
+      "grid_x": 0,
+      "grid_y": 1,
+      "source_rect_px": [
+        0,
+        512,
+        768,
+        1024
+      ],
+      "min_gutter_px_alpha16": 25
+    },
+    {
+      "id": "wooden_gate",
+      "grid_x": 1,
+      "grid_y": 1,
+      "source_rect_px": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "min_gutter_px_alpha16": 38
+    }
+  ],
+  "purpose": "modular sprite master, separate runtime collision/foot anchor required"
+}

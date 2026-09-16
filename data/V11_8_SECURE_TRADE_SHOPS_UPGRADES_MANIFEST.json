@@ -1,0 +1,12 @@
+{
+  "version": "V11.8",
+  "title": "NPC Shops / Secure Trade Sessions / Item Upgrades / PostgreSQL Persistence",
+  "mobile_first": true,
+  "changes": [
+    "server-side NPC shop catalog",
+    "offer-lock-confirm-commit trade sessions",
+    "item-instance upgrade metadata",
+    "PostgreSQL trade-session and upgrade schema",
+    "dedicated-server DB boundary retained"
+  ]
+}

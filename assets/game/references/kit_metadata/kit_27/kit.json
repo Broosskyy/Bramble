@@ -1,0 +1,56 @@
+{
+  "number": 27,
+  "name": "touch_controls",
+  "source": "master.png",
+  "grid": [
+    2,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "attack",
+      "file": "attack.png",
+      "source_rect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "gutter_px": 43
+    },
+    {
+      "id": "skill",
+      "file": "skill.png",
+      "source_rect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "gutter_px": 41
+    },
+    {
+      "id": "item_slot",
+      "file": "item_slot.png",
+      "source_rect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "gutter_px": 34
+    },
+    {
+      "id": "bottom_tab",
+      "file": "bottom_tab.png",
+      "source_rect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "gutter_px": 82
+    }
+  ]
+}

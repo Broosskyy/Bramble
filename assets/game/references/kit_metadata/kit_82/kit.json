@@ -1,0 +1,98 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 82,
+  "kit": "shields_offhands_tools",
+  "category": "equipment",
+  "asset_count": 8,
+  "assets": [
+    {
+      "name": "wooden_buckler",
+      "file": "wooden_buckler.png",
+      "size_px": [
+        355,
+        368
+      ],
+      "true_alpha": true,
+      "attachment_socket": "offhand_socket",
+      "separate_from_character": true
+    },
+    {
+      "name": "leaf_kite_shield",
+      "file": "leaf_kite_shield.png",
+      "size_px": [
+        339,
+        534
+      ],
+      "true_alpha": true,
+      "attachment_socket": "offhand_socket",
+      "separate_from_character": true
+    },
+    {
+      "name": "copper_tower_shield",
+      "file": "copper_tower_shield.png",
+      "size_px": [
+        348,
+        539
+      ],
+      "true_alpha": true,
+      "attachment_socket": "offhand_socket",
+      "separate_from_character": true
+    },
+    {
+      "name": "crystal_ward",
+      "file": "crystal_ward.png",
+      "size_px": [
+        359,
+        501
+      ],
+      "true_alpha": true,
+      "attachment_socket": "offhand_socket",
+      "separate_from_character": true
+    },
+    {
+      "name": "potion_holster",
+      "file": "potion_holster.png",
+      "size_px": [
+        328,
+        409
+      ],
+      "true_alpha": true,
+      "attachment_socket": "utility_socket",
+      "separate_from_character": true
+    },
+    {
+      "name": "lantern",
+      "file": "lantern.png",
+      "size_px": [
+        269,
+        478
+      ],
+      "true_alpha": true,
+      "attachment_socket": "utility_socket",
+      "separate_from_character": true
+    },
+    {
+      "name": "mining_pickaxe",
+      "file": "mining_pickaxe.png",
+      "size_px": [
+        389,
+        484
+      ],
+      "true_alpha": true,
+      "attachment_socket": "utility_socket",
+      "separate_from_character": true
+    },
+    {
+      "name": "woodcutting_hatchet",
+      "file": "woodcutting_hatchet.png",
+      "size_px": [
+        369,
+        483
+      ],
+      "true_alpha": true,
+      "attachment_socket": "utility_socket",
+      "separate_from_character": true
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

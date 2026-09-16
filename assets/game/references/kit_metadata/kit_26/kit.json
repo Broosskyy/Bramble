@@ -1,0 +1,56 @@
+{
+  "number": 26,
+  "name": "menu_frames",
+  "source": "master.png",
+  "grid": [
+    2,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "inventory",
+      "file": "inventory.png",
+      "source_rect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "gutter_px": 18
+    },
+    {
+      "id": "equipment",
+      "file": "equipment.png",
+      "source_rect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "gutter_px": 53
+    },
+    {
+      "id": "skills",
+      "file": "skills.png",
+      "source_rect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "gutter_px": 39
+    },
+    {
+      "id": "specialist",
+      "file": "specialist.png",
+      "source_rect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "gutter_px": 29
+    }
+  ]
+}

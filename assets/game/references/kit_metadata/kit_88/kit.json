@@ -1,0 +1,267 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 88,
+  "kit": "unarmed_melee_attack_poses",
+  "category": "character",
+  "asset_count": 8,
+  "assets": [
+    {
+      "index": 0,
+      "name": "male_ready",
+      "file": "frames/00_male_ready.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "hand_left": [
+          205,
+          300
+        ],
+        "hand_right": [
+          307,
+          300
+        ],
+        "weapon_socket": [
+          300,
+          300
+        ],
+        "projectile_origin": [
+          346,
+          278
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "name": "male_windup",
+      "file": "frames/01_male_windup.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "hand_left": [
+          190,
+          250
+        ],
+        "hand_right": [
+          300,
+          250
+        ],
+        "weapon_socket": [
+          245,
+          250
+        ],
+        "projectile_origin": [
+          350,
+          265
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "name": "male_swing",
+      "file": "frames/02_male_swing.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "hand_left": [
+          205,
+          285
+        ],
+        "hand_right": [
+          330,
+          285
+        ],
+        "weapon_socket": [
+          275,
+          285
+        ],
+        "projectile_origin": [
+          365,
+          280
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "name": "male_recover",
+      "file": "frames/03_male_recover.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "hand_left": [
+          190,
+          300
+        ],
+        "hand_right": [
+          350,
+          285
+        ],
+        "weapon_socket": [
+          330,
+          285
+        ],
+        "projectile_origin": [
+          380,
+          280
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "name": "female_ready",
+      "file": "frames/04_female_ready.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "hand_left": [
+          205,
+          300
+        ],
+        "hand_right": [
+          307,
+          300
+        ],
+        "weapon_socket": [
+          300,
+          300
+        ],
+        "projectile_origin": [
+          346,
+          278
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "name": "female_windup",
+      "file": "frames/05_female_windup.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "hand_left": [
+          190,
+          250
+        ],
+        "hand_right": [
+          300,
+          250
+        ],
+        "weapon_socket": [
+          245,
+          250
+        ],
+        "projectile_origin": [
+          350,
+          265
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "name": "female_swing",
+      "file": "frames/06_female_swing.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "hand_left": [
+          205,
+          285
+        ],
+        "hand_right": [
+          330,
+          285
+        ],
+        "weapon_socket": [
+          275,
+          285
+        ],
+        "projectile_origin": [
+          365,
+          280
+        ]
+      }
+    },
+    {
+      "index": 7,
+      "name": "female_recover",
+      "file": "frames/07_female_recover.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "hand_left": [
+          190,
+          300
+        ],
+        "hand_right": [
+          350,
+          285
+        ],
+        "weapon_socket": [
+          330,
+          285
+        ],
+        "projectile_origin": [
+          380,
+          280
+        ]
+      }
+    }
+  ],
+  "canvas_px": [
+    512,
+    512
+  ],
+  "root_pivot_px": [
+    256,
+    464
+  ],
+  "weapons_baked_into_character": false,
+  "notes": "Socket positions are production suggestions and require a final artist calibration per frame."
+}

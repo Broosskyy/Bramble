@@ -1,0 +1,522 @@
+[gd_scene load_steps=64 format=3]
+
+[ext_resource path="res://scripts/bootstrap.gd" type="Script" id="1"]
+[ext_resource path="res://scripts/game_state.gd" type="Script" id="2"]
+[ext_resource path="res://scripts/player_controller.gd" type="Script" id="3"]
+[ext_resource path="res://scripts/player_visual.gd" type="Script" id="4"]
+[ext_resource path="res://scripts/equipment_rig.gd" type="Script" id="5"]
+[ext_resource path="res://scripts/village_builder.gd" type="Script" id="6"]
+[ext_resource path="res://scripts/dev_hud.gd" type="Script" id="7"]
+[ext_resource path="res://scripts/npc.gd" type="Script" id="8"]
+[ext_resource path="res://scripts/enemy.gd" type="Script" id="9"]
+[ext_resource path="res://scripts/loot_pickup.gd" type="Script" id="10"]
+[ext_resource path="res://scripts/portal.gd" type="Script" id="11"]
+[ext_resource path="res://scripts/content_db.gd" type="Script" id="12"]
+[ext_resource path="res://scripts/web_parity_state.gd" type="Script" id="13"]
+[ext_resource path="res://scripts/party_manager.gd" type="Script" id="14"]
+[ext_resource path="res://scripts/network_session.gd" type="Script" id="15"]
+[ext_resource path="res://scripts/player_authority.gd" type="Script" id="16"]
+[ext_resource path="res://scripts/server_collision_validator.gd" type="Script" id="17"]
+[ext_resource path="res://scripts/authoritative_combat.gd" type="Script" id="18"]
+[ext_resource path="res://scripts/network_entity_registry.gd" type="Script" id="19"]
+[ext_resource path="res://scripts/prediction_reconciliation.gd" type="Script" id="20"]
+[ext_resource path="res://scripts/shared_reward_service.gd" type="Script" id="21"]
+[ext_resource path="res://scripts/loot_authority.gd" type="Script" id="22"]
+[ext_resource path="res://scripts/online_action_authority.gd" type="Script" id="23"]
+[ext_resource path="res://scripts/server_authority.gd" type="Script" id="24"]
+[ext_resource path="res://scripts/network_world_sync.gd" type="Script" id="25"]
+[ext_resource path="res://scripts/join_sync_service.gd" type="Script" id="26"]
+[ext_resource path="res://scripts/server_bootstrap.gd" type="Script" id="27"]
+[ext_resource path="res://scripts/authority_status_ui.gd" type="Script" id="28"]
+
+[ext_resource path="res://scripts/identity_service.gd" type="Script" id="29"]
+[ext_resource path="res://scripts/character_repository.gd" type="Script" id="30"]
+[ext_resource path="res://scripts/session_service.gd" type="Script" id="31"]
+[ext_resource path="res://scripts/character_service.gd" type="Script" id="32"]
+[ext_resource path="res://scripts/domain_registry.gd" type="Script" id="33"]
+[ext_resource path="res://scripts/inventory_service.gd" type="Script" id="34"]
+[ext_resource path="res://scripts/equipment_service.gd" type="Script" id="35"]
+[ext_resource path="res://scripts/progression_service.gd" type="Script" id="36"]
+[ext_resource path="res://scripts/auth_gateway.gd" type="Script" id="37"]
+[ext_resource path="res://scripts/persistence_provider.gd" type="Script" id="38"]
+[ext_resource path="res://scripts/postgres_repository_contract.gd" type="Script" id="39"]
+[ext_resource path="res://scripts/player_lifecycle_service.gd" type="Script" id="40"]
+[ext_resource path="res://scripts/item_instance_service.gd" type="Script" id="41"]
+[ext_resource path="res://scripts/transaction_audit_service.gd" type="Script" id="42"]
+[ext_resource path="res://scripts/idempotency_service.gd" type="Script" id="43"]
+[ext_resource path="res://scripts/outbox_service.gd" type="Script" id="44"]
+[ext_resource path="res://scripts/economy_transaction_service.gd" type="Script" id="45"]
+[ext_resource path="res://scripts/mobile_character_select.gd" type="Script" id="46"]
+[ext_resource path="res://scripts/reward_transaction_service.gd" type="Script" id="47"]
+[ext_resource path="res://scripts/shop_transaction_service.gd" type="Script" id="48"]
+[ext_resource path="res://scripts/trade_transaction_service.gd" type="Script" id="49"]
+[ext_resource path="res://scripts/shop_catalog_service.gd" type="Script" id="50"]
+[ext_resource path="res://scripts/trade_session_service.gd" type="Script" id="51"]
+[ext_resource path="res://scripts/item_upgrade_service.gd" type="Script" id="52"]
+[ext_resource path="res://scripts/skill_authority_service.gd" type="Script" id="53"]
+[ext_resource path="res://scripts/quest_authority_service.gd" type="Script" id="54"]
+[ext_resource path="res://scripts/npc_interaction_service.gd" type="Script" id="55"]
+[ext_resource path="res://scripts/status_effect_service.gd" type="Script" id="56"]
+[ext_resource path="res://scripts/combat_validation_service.gd" type="Script" id="57"]
+[ext_resource path="res://scripts/enemy_authority_service.gd" type="Script" id="58"]
+
+[ext_resource path="res://scenes/world/visual_master_world.tscn" type="PackedScene" id="59"]
+[ext_resource path="res://scripts/orientation_service.gd" type="Script" id="60"]
+[ext_resource path="res://scripts/elevation_service.gd" type="Script" id="61"]
+[ext_resource path="res://scripts/occlusion_manager.gd" type="Script" id="62"]
+[ext_resource path="res://scripts/world_camera_controller.gd" type="Script" id="63"]
+[ext_resource path="res://scripts/production_hud.gd" type="Script" id="64"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape_player"]
+radius = 18.0
+height = 44.0
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1")
+
+[node name="GameState" type="Node" parent="." groups=["game_state"]]
+script = ExtResource("2")
+
+[node name="ContentDB" type="Node" parent="." groups=["content_db"]]
+script = ExtResource("12")
+
+[node name="WebParityState" type="Node" parent="." groups=["web_parity_state"]]
+script = ExtResource("13")
+
+[node name="PartyManager" type="Node" parent="." groups=["party_manager"]]
+script = ExtResource("14")
+
+[node name="IdentityService" type="Node" parent="." groups=["identity_service"]]
+script = ExtResource("29")
+
+[node name="CharacterRepository" type="Node" parent="." groups=["character_repository"]]
+script = ExtResource("30")
+
+[node name="SessionService" type="Node" parent="." groups=["session_service"]]
+script = ExtResource("31")
+
+[node name="CharacterService" type="Node" parent="." groups=["character_service"]]
+script = ExtResource("32")
+
+[node name="DomainRegistry" type="Node" parent="." groups=["domain_registry"]]
+script = ExtResource("33")
+
+[node name="InventoryService" type="Node" parent="." groups=["inventory_service"]]
+script = ExtResource("34")
+
+[node name="EquipmentService" type="Node" parent="." groups=["equipment_service"]]
+script = ExtResource("35")
+
+[node name="ProgressionService" type="Node" parent="." groups=["progression_service"]]
+script = ExtResource("36")
+
+[node name="AuthGateway" type="Node" parent="." groups=["auth_gateway"]]
+script = ExtResource("37")
+
+[node name="PersistenceProviderContract" type="Node" parent="." groups=["persistence_provider_contract"]]
+script = ExtResource("38")
+
+[node name="PostgresRepositoryContract" type="Node" parent="." groups=["postgres_repository_contract"]]
+script = ExtResource("39")
+
+[node name="PlayerLifecycleService" type="Node" parent="." groups=["player_lifecycle_service"]]
+script = ExtResource("40")
+
+[node name="ItemInstanceService" type="Node" parent="." groups=["item_instance_service"]]
+script = ExtResource("41")
+
+[node name="TransactionAuditService" type="Node" parent="." groups=["transaction_audit_service"]]
+script = ExtResource("42")
+
+[node name="IdempotencyService" type="Node" parent="." groups=["idempotency_service"]]
+script = ExtResource("43")
+
+[node name="OutboxService" type="Node" parent="." groups=["outbox_service"]]
+script = ExtResource("44")
+
+[node name="EconomyTransactionService" type="Node" parent="." groups=["economy_transaction_service"]]
+script = ExtResource("45")
+
+[node name="MobileCharacterSelect" type="CanvasLayer" parent="." groups=["mobile_character_select"]]
+script = ExtResource("46")
+
+[node name="RewardTransactionService" type="Node" parent="." groups=["reward_transaction_service"]]
+script = ExtResource("47")
+
+[node name="ShopTransactionService" type="Node" parent="." groups=["shop_transaction_service"]]
+script = ExtResource("48")
+
+[node name="TradeTransactionService" type="Node" parent="." groups=["trade_transaction_service"]]
+script = ExtResource("49")
+
+[node name="ShopCatalogService" type="Node" parent="." groups=["shop_catalog_service"]]
+script = ExtResource("50")
+
+[node name="TradeSessionService" type="Node" parent="." groups=["trade_session_service"]]
+script = ExtResource("51")
+
+[node name="ItemUpgradeService" type="Node" parent="." groups=["item_upgrade_service"]]
+script = ExtResource("52")
+
+[node name="SkillAuthorityService" type="Node" parent="." groups=["skill_authority_service"]]
+script = ExtResource("53")
+
+[node name="QuestAuthorityService" type="Node" parent="." groups=["quest_authority_service"]]
+script = ExtResource("54")
+
+[node name="NpcInteractionService" type="Node" parent="." groups=["npc_interaction_service"]]
+script = ExtResource("55")
+
+[node name="StatusEffectService" type="Node" parent="." groups=["status_effect_service"]]
+script = ExtResource("56")
+
+[node name="CombatValidationService" type="Node" parent="." groups=["combat_validation_service"]]
+script = ExtResource("57")
+
+[node name="EnemyAuthorityService" type="Node" parent="." groups=["enemy_authority_service"]]
+script = ExtResource("58")
+
+[node name="NetworkSession" type="Node" parent="." groups=["network_session"]]
+script = ExtResource("15")
+
+[node name="PlayerAuthority" type="Node" parent="." groups=["player_authority"]]
+script = ExtResource("16")
+
+[node name="ServerCollisionValidator" type="Node" parent="." groups=["server_collision_validator"]]
+script = ExtResource("17")
+
+[node name="AuthoritativeCombat" type="Node" parent="." groups=["authoritative_combat"]]
+script = ExtResource("18")
+
+[node name="NetworkEntityRegistry" type="Node" parent="." groups=["network_entity_registry"]]
+script = ExtResource("19")
+
+[node name="PredictionReconciliation" type="Node" parent="." groups=["prediction_reconciliation"]]
+script = ExtResource("20")
+
+[node name="SharedRewardService" type="Node" parent="." groups=["shared_reward_service"]]
+script = ExtResource("21")
+
+[node name="LootAuthority" type="Node" parent="." groups=["loot_authority"]]
+script = ExtResource("22")
+
+[node name="OnlineActionAuthority" type="Node" parent="." groups=["online_action_authority"]]
+script = ExtResource("23")
+
+[node name="ServerAuthority" type="Node" parent="." groups=["server_authority"]]
+script = ExtResource("24")
+
+[node name="NetworkWorldSync" type="Node" parent="." groups=["network_world_sync"]]
+script = ExtResource("25")
+
+[node name="JoinSyncService" type="Node" parent="." groups=["join_sync_service"]]
+script = ExtResource("26")
+
+[node name="ServerBootstrap" type="Node" parent="." groups=["server_bootstrap"]]
+script = ExtResource("27")
+
+[node name="OrientationService" type="Node" parent="." groups=["orientation_service"]]
+script = ExtResource("60")
+
+[node name="ElevationService" type="Node" parent="." groups=["elevation_service"]]
+script = ExtResource("61")
+
+[node name="OcclusionManager" type="Node" parent="." groups=["occlusion_manager"]]
+script = ExtResource("62")
+
+[node name="VisualMasterWorld" parent="." instance=ExtResource("59")]
+
+[node name="Village" type="Node2D" parent="."]
+visible = false
+process_mode = 4
+script = ExtResource("6")
+
+[node name="Ground" type="Node2D" parent="Village"]
+z_index = -20
+
+[node name="Roads" type="Node2D" parent="Village"]
+z_index = -10
+
+[node name="WorldObjects" type="Node2D" parent="Village"]
+y_sort_enabled = true
+
+[node name="NPCs" type="Node2D" parent="Village"]
+y_sort_enabled = true
+
+[node name="Monsters" type="Node2D" parent="Village"]
+y_sort_enabled = true
+
+[node name="Portals" type="Node2D" parent="Village"]
+y_sort_enabled = true
+
+[node name="Collisions" type="Node2D" parent="Village"]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(-120,180)
+z_index = 20
+script = ExtResource("3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CapsuleShape_player")
+
+[node name="Visual" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(0,-58)
+scale = Vector2(0.58,0.58)
+script = ExtResource("4")
+use_production_assets = true
+
+[node name="EquipmentRig" type="Node2D" parent="Player/Visual"]
+script = ExtResource("5")
+
+[node name="Torso" type="Sprite2D" parent="Player/Visual/EquipmentRig"]
+z_index = 2
+
+[node name="Head" type="Sprite2D" parent="Player/Visual/EquipmentRig"]
+z_index = 3
+
+[node name="Lower" type="Sprite2D" parent="Player/Visual/EquipmentRig"]
+z_index = 2
+
+[node name="Weapon" type="Sprite2D" parent="Player/Visual/EquipmentRig"]
+z_index = 4
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+script = ExtResource("63")
+
+[node name="ProductionHUD" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("64")
+
+[node name="HUD" type="CanvasLayer" parent="." groups=["hud"]]
+visible = false
+process_mode = 3
+script = ExtResource("7")
+
+[node name="AuthorityStatus" type="Label" parent="HUD"]
+script = ExtResource("28")
+
+[node name="TopBar" type="HBoxContainer" parent="HUD"]
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 900.0
+offset_bottom = 62.0
+
+[node name="Info" type="Label" parent="HUD/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "BRAMBLE · HAINWEILER"
+
+[node name="Gallery" type="Button" parent="HUD/TopBar"]
+layout_mode = 2
+text = "ASSET GALLERY"
+
+[node name="Stats" type="PanelContainer" parent="HUD"]
+offset_left = 18.0
+offset_top = 72.0
+offset_right = 330.0
+offset_bottom = 145.0
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Stats"]
+layout_mode = 2
+
+[node name="Info" type="Label" parent="HUD/Stats/VBox"]
+layout_mode = 2
+text = "LV 1 · XP 0/100 · 0 G"
+
+[node name="HP" type="ProgressBar" parent="HUD/Stats/VBox"]
+layout_mode = 2
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="Quest" type="PanelContainer" parent="HUD"]
+offset_left = 18.0
+offset_top = 158.0
+offset_right = 355.0
+offset_bottom = 235.0
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Quest"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Quest/VBox"]
+layout_mode = 2
+text = "ERSTER AUFTRAG"
+
+[node name="Text" type="Label" parent="HUD/Quest/VBox"]
+layout_mode = 2
+text = "Sprich mit Lina."
+autowrap_mode = 2
+
+[node name="Toast" type="Label" parent="HUD"]
+visible = false
+offset_left = 420.0
+offset_top = 78.0
+offset_right = 860.0
+offset_bottom = 118.0
+horizontal_alignment = 1
+text = "Toast"
+theme_override_font_sizes/font_size = 18
+
+[node name="Dialogue" type="PanelContainer" parent="HUD"]
+visible = false
+offset_left = 300.0
+offset_top = 430.0
+offset_right = 980.0
+offset_bottom = 650.0
+
+[node name="Margin" type="MarginContainer" parent="HUD/Dialogue"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Dialogue/Margin"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Dialogue/Margin/VBox"]
+layout_mode = 2
+text = "NPC"
+theme_override_font_sizes/font_size = 21
+
+[node name="Text" type="Label" parent="HUD/Dialogue/Margin/VBox"]
+layout_mode = 2
+text = "Dialog"
+autowrap_mode = 2
+
+[node name="Close" type="Button" parent="HUD/Dialogue/Margin/VBox"]
+layout_mode = 2
+text = "WEITER"
+
+[node name="Touch" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Left" type="Button" parent="HUD/Touch"]
+offset_left = 34.0
+offset_top = 540.0
+offset_right = 104.0
+offset_bottom = 610.0
+text = "←"
+
+[node name="Right" type="Button" parent="HUD/Touch"]
+offset_left = 174.0
+offset_top = 540.0
+offset_right = 244.0
+offset_bottom = 610.0
+text = "→"
+
+[node name="Up" type="Button" parent="HUD/Touch"]
+offset_left = 104.0
+offset_top = 470.0
+offset_right = 174.0
+offset_bottom = 540.0
+text = "↑"
+
+[node name="Down" type="Button" parent="HUD/Touch"]
+offset_left = 104.0
+offset_top = 610.0
+offset_right = 174.0
+offset_bottom = 680.0
+text = "↓"
+
+[node name="Attack" type="Button" parent="HUD/Touch"]
+offset_left = 1090.0
+offset_top = 520.0
+offset_right = 1190.0
+offset_bottom = 620.0
+text = "ANGRIFF"
+
+[node name="Interact" type="Button" parent="HUD/Touch"]
+offset_left = 980.0
+offset_top = 570.0
+offset_right = 1070.0
+offset_bottom = 650.0
+text = "AKTION"
+
+[node name="Potion" type="Button" parent="HUD/Touch"]
+offset_left = 1115.0
+offset_top = 635.0
+offset_right = 1190.0
+offset_bottom = 700.0
+text = "TRANK"
+
+[node name="AssetGallery" type="Control" parent="HUD"]
+visible = false
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="ColorRect" parent="HUD/AssetGallery"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02,0.03,0.025,0.94)
+
+[node name="Panel" type="PanelContainer" parent="HUD/AssetGallery"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.04
+anchor_top = 0.05
+anchor_right = 0.96
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="HUD/AssetGallery/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="HUD/AssetGallery/Panel/Margin"]
+layout_mode = 2
+
+[node name="Header" type="Label" parent="HUD/AssetGallery/Panel/Margin/VBox"]
+layout_mode = 2
+text = "BRAMBLE · WORK-CHAT ASSET GALLERY"
+theme_override_font_sizes/font_size = 22
+
+[node name="Close" type="Button" parent="HUD/AssetGallery/Panel/Margin/VBox"]
+layout_mode = 2
+text = "ZURÜCK INS SPIEL"
+
+[node name="Scroll" type="ScrollContainer" parent="HUD/AssetGallery/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0,520)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Grid" type="GridContainer" parent="HUD/AssetGallery/Panel/Margin/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 4
+
+[node name="Nav" type="HBoxContainer" parent="HUD/AssetGallery/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="Prev" type="Button" parent="HUD/AssetGallery/Panel/Margin/VBox/Nav"]
+layout_mode = 2
+text = "← VORHERIGE"
+
+[node name="Page" type="Label" parent="HUD/AssetGallery/Panel/Margin/VBox/Nav"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 1
+text = "Assets"
+
+[node name="Next" type="Button" parent="HUD/AssetGallery/Panel/Margin/VBox/Nav"]
+layout_mode = 2
+text = "NÄCHSTE →"

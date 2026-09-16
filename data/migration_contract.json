@@ -1,0 +1,47 @@
+{
+  "target_engine": "Godot 4.7.2",
+  "source_build": "BRAMBLE V23.30",
+  "equipment": {
+    "source_native_overlay_ready": false,
+    "prototype_overlay_ready": true,
+    "rig_script": "res://scripts/equipment_rig.gd",
+    "armor_families": [
+      "forest",
+      "leather",
+      "knight",
+      "arcane"
+    ],
+    "armor_parts": [
+      "torso",
+      "head",
+      "boots_and_gloves"
+    ],
+    "weapons": [
+      "sword",
+      "bow",
+      "staff",
+      "daggers",
+      "shield",
+      "hammer",
+      "spear",
+      "curved_sword"
+    ],
+    "attachment_strategy": "per-pose explicit sockets"
+  },
+  "collision": {
+    "solid": [
+      "buildings",
+      "major_props",
+      "landmark_bases",
+      "tree_trunks",
+      "water_banks"
+    ],
+    "non_solid": [
+      "grass",
+      "flowers",
+      "small_decor",
+      "tree_canopies"
+    ],
+    "bridge_corridors": true
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 52,
+  "name": "portals_checkpoints",
+  "style_lock": "canonical kits 01-06",
+  "camera": "fixed oblique/isometric approximately 35 degrees",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "waypoint_inactive",
+      "file": "waypoint_inactive.png",
+      "role": "inactive village waypoint stone",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        39,
+        69,
+        437,
+        478
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "waypoint_active",
+      "file": "waypoint_active.png",
+      "role": "active village waypoint stone",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        511,
+        70,
+        910,
+        481
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "portal_arch_inactive",
+      "file": "portal_arch_inactive.png",
+      "role": "inactive ancient portal arch",
+      "source_cell": [
+        2,
+        0
+      ],
+      "source_bbox": [
+        972,
+        23,
+        1490,
+        503
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "portal_arch_active",
+      "file": "portal_arch_active.png",
+      "role": "active turquoise portal arch",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        8,
+        497,
+        522,
+        980
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "region_checkpoint_gate",
+      "file": "region_checkpoint_gate.png",
+      "role": "wooden region checkpoint gate",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        536,
+        507,
+        978,
+        979
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "raid_entrance_seal",
+      "file": "raid_entrance_seal.png",
+      "role": "compact sealed raid entrance",
+      "source_cell": [
+        2,
+        1
+      ],
+      "source_bbox": [
+        997,
+        522,
+        1512,
+        994
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 47,
+  "name": "root_guardian_monster",
+  "style": "warm hand-painted chibi mobile isometric fantasy",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "root_guardian_front",
+      "file": "root_guardian_front.png",
+      "role": "directional sprite front",
+      "source_master": "direction_master.png",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        86,
+        20,
+        621,
+        580
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "root_guardian_right",
+      "file": "root_guardian_right.png",
+      "role": "directional sprite right",
+      "source_master": "direction_master.png",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        166,
+        22,
+        463,
+        585
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "root_guardian_back",
+      "file": "root_guardian_back.png",
+      "role": "directional sprite back",
+      "source_master": "direction_master.png",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        80,
+        2,
+        616,
+        568
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "root_guardian_left",
+      "file": "root_guardian_left.png",
+      "role": "directional sprite left",
+      "source_master": "direction_master.png",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        164,
+        4,
+        469,
+        570
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "root_guardian_idle_keypose",
+      "file": "root_guardian_idle_keypose.png",
+      "role": "animation key pose: idle",
+      "source_master": "action_master.png",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        200,
+        15,
+        652,
+        495
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "root_guardian_attack_keypose",
+      "file": "root_guardian_attack_keypose.png",
+      "role": "animation key pose: attack",
+      "source_master": "action_master.png",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        96,
+        14,
+        693,
+        495
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "root_guardian_hit_keypose",
+      "file": "root_guardian_hit_keypose.png",
+      "role": "animation key pose: hit",
+      "source_master": "action_master.png",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        190,
+        2,
+        685,
+        471
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "root_guardian_defeated_keypose",
+      "file": "root_guardian_defeated_keypose.png",
+      "role": "animation key pose: defeated",
+      "source_master": "action_master.png",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        80,
+        161,
+        693,
+        480
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    }
+  ]
+}

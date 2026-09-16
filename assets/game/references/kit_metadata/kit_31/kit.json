@@ -1,0 +1,111 @@
+{
+  "number": 31,
+  "name": "village_wilds",
+  "source": "master.png",
+  "grid": [
+    3,
+    3
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "cottage",
+      "file": "cottage.png",
+      "source_rect": [
+        0,
+        0,
+        407,
+        428
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "apothecary",
+      "file": "apothecary.png",
+      "source_rect": [
+        407,
+        0,
+        815,
+        428
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "market_stall",
+      "file": "market_stall.png",
+      "source_rect": [
+        815,
+        0,
+        1223,
+        428
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "gate_fence",
+      "file": "gate_fence.png",
+      "source_rect": [
+        0,
+        428,
+        407,
+        857
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "village_well",
+      "file": "village_well.png",
+      "source_rect": [
+        407,
+        428,
+        815,
+        857
+      ],
+      "gutter_px": 14
+    },
+    {
+      "id": "ruined_arch",
+      "file": "ruined_arch.png",
+      "source_rect": [
+        815,
+        428,
+        1223,
+        857
+      ],
+      "gutter_px": 10
+    },
+    {
+      "id": "red_oak",
+      "file": "red_oak.png",
+      "source_rect": [
+        0,
+        857,
+        407,
+        1286
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "golden_shrubs",
+      "file": "golden_shrubs.png",
+      "source_rect": [
+        407,
+        857,
+        815,
+        1286
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "blank_sign",
+      "file": "blank_sign.png",
+      "source_rect": [
+        815,
+        857,
+        1223,
+        1286
+      ],
+      "gutter_px": 4
+    }
+  ]
+}

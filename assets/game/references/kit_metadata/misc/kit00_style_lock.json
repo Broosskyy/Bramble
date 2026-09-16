@@ -1,0 +1,24 @@
+{
+  "canonical_world_references": [
+    "kit_01",
+    "kit_02",
+    "kit_05",
+    "kit_06"
+  ],
+  "projection": "fixed oblique/isometric approximately 35 degrees",
+  "rendering": "warm crisp hand-painted fantasy, natural palette, restrained outlines",
+  "production_rules": [
+    "real transparent alpha",
+    "no presentation background",
+    "generous inter-asset spacing",
+    "weapons, wings, VFX and UI remain separate layers"
+  ],
+  "avoid": [
+    "photorealism",
+    "3D render look",
+    "pixel art",
+    "mobile strategy miniature style",
+    "soft golden airbrush haze",
+    "mixed camera angles"
+  ]
+}

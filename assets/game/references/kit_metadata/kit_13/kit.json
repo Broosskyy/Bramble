@@ -1,0 +1,66 @@
+{
+  "number": 13,
+  "title_de": "Ruinenmodule",
+  "region": "ruins",
+  "sheet": "13_alte_ruinen/sheet.png",
+  "grid": [
+    2,
+    2
+  ],
+  "canvas_px": [
+    1536,
+    1024
+  ],
+  "real_alpha": true,
+  "cells": [
+    {
+      "id": "rune_arch",
+      "grid_x": 0,
+      "grid_y": 0,
+      "source_rect_px": [
+        0,
+        0,
+        768,
+        512
+      ],
+      "min_gutter_px_alpha16": 36
+    },
+    {
+      "id": "ruin_wall",
+      "grid_x": 1,
+      "grid_y": 0,
+      "source_rect_px": [
+        768,
+        0,
+        1536,
+        512
+      ],
+      "min_gutter_px_alpha16": 48
+    },
+    {
+      "id": "sentinel_plinth",
+      "grid_x": 0,
+      "grid_y": 1,
+      "source_rect_px": [
+        0,
+        512,
+        768,
+        1024
+      ],
+      "min_gutter_px_alpha16": 41
+    },
+    {
+      "id": "fallen_pillar",
+      "grid_x": 1,
+      "grid_y": 1,
+      "source_rect_px": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "min_gutter_px_alpha16": 88
+    }
+  ],
+  "purpose": "modular sprite master, separate runtime collision/foot anchor required"
+}

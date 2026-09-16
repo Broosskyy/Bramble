@@ -1,0 +1,2360 @@
+{
+  "project": "BRAMBLE",
+  "target_engine": "Godot 4.7.2",
+  "package": "COMPLETE_WORKCHAT_ASSET_PROJECT",
+  "sources": {
+    "BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01.zip": {
+      "png_assets": 102,
+      "description": "Autumn/Halloween environment, props, UI/world assets created earlier in the BRAMBLE workstream."
+    },
+    "BRAMBLE_ASSET_KIT_ENVIRONMENT_02.zip": {
+      "png_assets": 58,
+      "description": "Environment expansion created earlier in the BRAMBLE workstream."
+    },
+    "BRAMBLE_10_Asset_Kits.zip": {
+      "raw_png_sheets": 31,
+      "description": "Ten core asset kits plus character/NPC/specialist animation, equipment and VFX source sheets."
+    },
+    "legacy_normalized_catalog": {
+      "png_assets": 84,
+      "description": "Previously extracted/normalized individual BRAMBLE motifs used by the browser prototype."
+    },
+    "v4_animation_and_equipment": {
+      "description": "Godot-ready extracted animation frames and equipment cells from the V4 kit."
+    }
+  },
+  "total_png_files_in_project": 387,
+  "unique_png_content_hashes": 387,
+  "counts_by_source": {
+    "v4_animation_frames": 92,
+    "legacy_normalized_catalog": 84,
+    "v4_equipment_extracted": 20,
+    "kit10_v4_raw": 31,
+    "autumn_halloween_01": 102,
+    "environment_02": 58
+  },
+  "files": [
+    {
+      "path": "assets/animation_frames/specialists/pumpkin_reaper/female/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 333660,
+      "sha1": "e07864ef37ebecb60815bdeed96679dacbd0a4c5"
+    },
+    {
+      "path": "assets/animation_frames/specialists/pumpkin_reaper/female/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 333484,
+      "sha1": "3fab81751551781dc906f3d5e81bcac8aeb5c1ef"
+    },
+    {
+      "path": "assets/animation_frames/specialists/pumpkin_reaper/female/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 341826,
+      "sha1": "3f2533946109e53501391eab9e024864e64107a9"
+    },
+    {
+      "path": "assets/animation_frames/specialists/pumpkin_reaper/female/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 334572,
+      "sha1": "1a07813e6703add5b2e554e244028cb67a93da36"
+    },
+    {
+      "path": "assets/animation_frames/specialists/pumpkin_reaper/male/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 307963,
+      "sha1": "38ef8e29cbe5b04d87d6fa185bb0f41dfac08b7d"
+    },
+    {
+      "path": "assets/animation_frames/specialists/pumpkin_reaper/male/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 304264,
+      "sha1": "9dbb0ed5400a0bcd6a1fb17e2a76df61756ec18e"
+    },
+    {
+      "path": "assets/animation_frames/specialists/pumpkin_reaper/male/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 320899,
+      "sha1": "2a18b731b8f8b04789823d4093e7720672a5a412"
+    },
+    {
+      "path": "assets/animation_frames/specialists/pumpkin_reaper/male/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 315459,
+      "sha1": "7965bced816b5a1af752514115c691ef21b9b19d"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_bow/female/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 317509,
+      "sha1": "8e519a0d95b91114177f29f58b66c62bef123444"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_bow/female/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 320909,
+      "sha1": "f592c033fead6bc8ab3a81dcb33fc823bda26c2b"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_bow/female/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 334843,
+      "sha1": "958ed2dfc874740d31d0fe0a9a25ca5b5f271df3"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_bow/female/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 323190,
+      "sha1": "fd3638575c7bbdef17dec8017cd8127ef6876447"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_bow/male/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 299664,
+      "sha1": "8ff09110f09caf9a4afbdc11abb64ed646594247"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_bow/male/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 307837,
+      "sha1": "54c7d5677f4bf406162f7b7540432445c571f45b"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_bow/male/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 320001,
+      "sha1": "52d1953f62c55ebe30b35aa45eccbf9cb9bba95f"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_bow/male/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 305878,
+      "sha1": "626b3bfb98f7a86353647c54e6161a0111895c9e"
+    },
+    {
+      "path": "assets/animation_frames/specialists/ember_knight/female/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 249411,
+      "sha1": "ad678cea00c0b77d8efb9a447378056ae50e1462"
+    },
+    {
+      "path": "assets/animation_frames/specialists/ember_knight/female/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 262555,
+      "sha1": "2dc81585c9ed5f77d5e1b1c304eb76d4f7778073"
+    },
+    {
+      "path": "assets/animation_frames/specialists/ember_knight/female/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 280605,
+      "sha1": "1aec8f7f0b299736ea8e0a3d4f0cb854d5f9346b"
+    },
+    {
+      "path": "assets/animation_frames/specialists/ember_knight/female/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 256503,
+      "sha1": "7a16cb7a5ea2a03acc116f5a616812cf83cb1a34"
+    },
+    {
+      "path": "assets/animation_frames/specialists/ember_knight/male/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 215781,
+      "sha1": "6879ad2ddcf219643b8c99f9101cb9b96461599e"
+    },
+    {
+      "path": "assets/animation_frames/specialists/ember_knight/male/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 222512,
+      "sha1": "8a1c17543b1fc913b582325ada2cb3a2187af1e1"
+    },
+    {
+      "path": "assets/animation_frames/specialists/ember_knight/male/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 249193,
+      "sha1": "f1fa24716ef87d7212739e4c0d7dc2e54680c39e"
+    },
+    {
+      "path": "assets/animation_frames/specialists/ember_knight/male/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 221783,
+      "sha1": "967a3df6c1c1d75ca159d22deed653bc80ff8580"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_sword/female/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 333709,
+      "sha1": "0cd2293744889c037ff7668b54da0cdb943d9322"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_sword/female/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 328080,
+      "sha1": "a7dd276f60270a876c9e8533510b1798280e864d"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_sword/female/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 352112,
+      "sha1": "8eff8a748a23ea762dd82310a7e524180382b627"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_sword/female/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 338187,
+      "sha1": "550754f1b35f2c133791118b244a6126dfe92cc0"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_sword/male/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 316207,
+      "sha1": "5e198e0394927acd3217029e30e3ce90118eba8d"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_sword/male/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 309560,
+      "sha1": "9b09161a1e0c4913f781ae89146828f2b8e51615"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_sword/male/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 336406,
+      "sha1": "0fdab2e4f3a962f9a75087e71103bb9402d7245b"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_sword/male/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 324885,
+      "sha1": "5d1435e141fa313359e4a9c0f06038d0911eb88d"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_mage/female/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 347911,
+      "sha1": "c7684b7bea8dcd33a698c2fa1174caa289b18abd"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_mage/female/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 352407,
+      "sha1": "13599617484f69a995f81429696493a733746dd3"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_mage/female/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 365582,
+      "sha1": "efb7a54df0d14737558816d183931620bb10b515"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_mage/female/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 359258,
+      "sha1": "886ec01ee1e18b1ce4e01b3ad9abd713d4930217"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_mage/male/01_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 345438,
+      "sha1": "039f30a99935e715a197ab53296bc48a7c8ef293"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_mage/male/02_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 341207,
+      "sha1": "3699acaeb0beb45cef04bcc2b2c104d07736ad73"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_mage/male/03_empty_handed_skill_pose.png",
+      "source": "v4_animation_frames",
+      "bytes": 361421,
+      "sha1": "a656233c19bade44165efe718e8410707056a75b"
+    },
+    {
+      "path": "assets/animation_frames/specialists/starter_mage/male/00_idle.png",
+      "source": "v4_animation_frames",
+      "bytes": 350249,
+      "sha1": "c2875ac4f325ffd9244f7d062eb3782141e815ad"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_musician/03_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 381881,
+      "sha1": "c066f67a3e22492dd61419bfd72572173cbb78dc"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_musician/00_idle_open.png",
+      "source": "v4_animation_frames",
+      "bytes": 370688,
+      "sha1": "fb7829b08ee6c39043d19429e9881b0fd0dbba4e"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_musician/01_idle_blink.png",
+      "source": "v4_animation_frames",
+      "bytes": 365465,
+      "sha1": "c62cd6673084bd25529a5aced21730bf1e6c91e3"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_musician/05_interact_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 397114,
+      "sha1": "deae11e2368cb6405f7b4c0410b3ced51698fd20"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_musician/02_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 373537,
+      "sha1": "bebb614fc96e7d5019e8dd833ec7eb766d72eeb1"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_musician/04_interact_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 386742,
+      "sha1": "cb4c778c3f578b02db5cf4c2df9db33ed269c365"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_guard/03_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 306255,
+      "sha1": "624dfd1df27966cfa09c8fb0e47b85c87e24c22d"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_guard/00_idle_open.png",
+      "source": "v4_animation_frames",
+      "bytes": 296802,
+      "sha1": "6510d141d0bd67bef78cb921c801e0a32725c294"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_guard/01_idle_blink.png",
+      "source": "v4_animation_frames",
+      "bytes": 298341,
+      "sha1": "ed500e92089f4363d17e6c11d7c14e4aaa59dea4"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_guard/05_interact_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 309857,
+      "sha1": "562d9a0b0df7fc43ae4fd50768be0084a6729f54"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_guard/02_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 304130,
+      "sha1": "02b781001b1b4d48f44d6fc51ca7e54530f22e50"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_guard/04_interact_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 304791,
+      "sha1": "873697e7e3fbcb760a3a38ac068eb55cfe8ac654"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_quest_giver/03_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 319377,
+      "sha1": "31bc496508894398b6c4efc49b5a6101d9220f24"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_quest_giver/00_idle_open.png",
+      "source": "v4_animation_frames",
+      "bytes": 316929,
+      "sha1": "c98fa48c1b9cc26a40e72cf66dd7839dfc4975d4"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_quest_giver/01_idle_blink.png",
+      "source": "v4_animation_frames",
+      "bytes": 316828,
+      "sha1": "b9dc88588a608b9ec1718bb70dfc439e87490912"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_quest_giver/05_interact_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 320097,
+      "sha1": "53e3c1272939d2e1cd763e1e796eaef029e140b1"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_quest_giver/02_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 318886,
+      "sha1": "a024eeec5a417885fcd06d47e312ef817ddf53c1"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_quest_giver/04_interact_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 331945,
+      "sha1": "8e90df326346c64f5be22ff699c4756806b3cc02"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_blacksmith/03_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 326678,
+      "sha1": "57740b9815354bf28e9a9a8cdf704eab0e575d20"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_blacksmith/00_idle_open.png",
+      "source": "v4_animation_frames",
+      "bytes": 325686,
+      "sha1": "6e1878faa2e39b8a64355482a471794fb7e773f1"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_blacksmith/01_idle_blink.png",
+      "source": "v4_animation_frames",
+      "bytes": 328324,
+      "sha1": "bcfcdcc998016f8d23ace35cfbed0b65f64e8cc6"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_blacksmith/05_interact_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 311754,
+      "sha1": "e13260bb27a8cb361824cb19835db94ceb301fd4"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_blacksmith/02_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 330715,
+      "sha1": "0eab5a1e073859b785b05b8403e9b967e3fffd85"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_blacksmith/04_interact_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 331191,
+      "sha1": "b8322a6087fd555f71363389feeb79b6524a4b18"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_herbalist/03_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 368130,
+      "sha1": "9d1e8fef5224ea7112c33684b19c26219abb4fc7"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_herbalist/00_idle_open.png",
+      "source": "v4_animation_frames",
+      "bytes": 353784,
+      "sha1": "6a66206389d2dea7289ebda492b819255ed7d47f"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_herbalist/01_idle_blink.png",
+      "source": "v4_animation_frames",
+      "bytes": 356307,
+      "sha1": "4e4ef1c995cbf99ab1df1a07b9aae9cdaa1e92e2"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_herbalist/05_interact_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 361944,
+      "sha1": "a8a837cf86d448301751eef52d7ba2968ada80b7"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_herbalist/02_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 367074,
+      "sha1": "757122d5516db1144513a989a1ac69337247eee0"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_herbalist/04_interact_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 360852,
+      "sha1": "bd6b6f0441b935d6dc4238542cd746400a7b5666"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_merchant/03_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 327444,
+      "sha1": "8f977028e096806e6f34907c0f834b2e384594e5"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_merchant/00_idle_open.png",
+      "source": "v4_animation_frames",
+      "bytes": 332955,
+      "sha1": "da21c44ad77939324deb5ad69048f92f36491d76"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_merchant/01_idle_blink.png",
+      "source": "v4_animation_frames",
+      "bytes": 332458,
+      "sha1": "8c5ed43677adec55e2270ace9cf74a085237343b"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_merchant/05_interact_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 336934,
+      "sha1": "76599127316bfa7d31576341f55e7c974c53a0a0"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_merchant/02_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 329441,
+      "sha1": "9e42589e28fab0d380508b5b62a9e397baee1cac"
+    },
+    {
+      "path": "assets/animation_frames/npcs/npc_merchant/04_interact_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 337521,
+      "sha1": "9f4ba9bd9800a027a452788e71e96c4bcd907aa4"
+    },
+    {
+      "path": "assets/animation_frames/characters/female/07_hit_recoil.png",
+      "source": "v4_animation_frames",
+      "bytes": 254914,
+      "sha1": "aca2fa9829d7c2b1d09ba108f7d44eb34ba16389"
+    },
+    {
+      "path": "assets/animation_frames/characters/female/03_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 257820,
+      "sha1": "1d38bd516e2045382aef8d8b9d17fa219086cedf"
+    },
+    {
+      "path": "assets/animation_frames/characters/female/00_idle_open.png",
+      "source": "v4_animation_frames",
+      "bytes": 255674,
+      "sha1": "9811f34aa23f4653e2f22186285a9620f3d8c99a"
+    },
+    {
+      "path": "assets/animation_frames/characters/female/04_attack_prepare_empty.png",
+      "source": "v4_animation_frames",
+      "bytes": 263318,
+      "sha1": "83723bb168db3a9aa23e7faa5a206ee87bfe42d6"
+    },
+    {
+      "path": "assets/animation_frames/characters/female/01_idle_blink.png",
+      "source": "v4_animation_frames",
+      "bytes": 253530,
+      "sha1": "ab76c7a6766b5322210fc2518bd1365f619923ff"
+    },
+    {
+      "path": "assets/animation_frames/characters/female/02_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 258162,
+      "sha1": "87c04b6241dd24bf26bbb4b5614c63b3e8ae75cd"
+    },
+    {
+      "path": "assets/animation_frames/characters/female/05_attack_release_empty.png",
+      "source": "v4_animation_frames",
+      "bytes": 260653,
+      "sha1": "4344a67326a787324a5342512dcc876c96002cd9"
+    },
+    {
+      "path": "assets/animation_frames/characters/female/06_attack_recover_empty.png",
+      "source": "v4_animation_frames",
+      "bytes": 252871,
+      "sha1": "104ec5bfa60a2466cf6febd04df4733f6c76e6e2"
+    },
+    {
+      "path": "assets/animation_frames/characters/male/07_hit_recoil.png",
+      "source": "v4_animation_frames",
+      "bytes": 245454,
+      "sha1": "053fb3f613ee43768257d661b48e756d9f34221b"
+    },
+    {
+      "path": "assets/animation_frames/characters/male/03_walk_step_b.png",
+      "source": "v4_animation_frames",
+      "bytes": 245475,
+      "sha1": "9524c582eb93f483aa9800b8a9208829f227a7f5"
+    },
+    {
+      "path": "assets/animation_frames/characters/male/00_idle_open.png",
+      "source": "v4_animation_frames",
+      "bytes": 242102,
+      "sha1": "f3f46e43a5561ef4362e6cb58c28ee009b260813"
+    },
+    {
+      "path": "assets/animation_frames/characters/male/04_attack_prepare_empty.png",
+      "source": "v4_animation_frames",
+      "bytes": 246856,
+      "sha1": "d5156d8e5e8796a982afb2c5e95761a73aebd62e"
+    },
+    {
+      "path": "assets/animation_frames/characters/male/01_idle_blink.png",
+      "source": "v4_animation_frames",
+      "bytes": 240598,
+      "sha1": "763c824edd6126a5b60a30b2d547bd1fb25a8e7b"
+    },
+    {
+      "path": "assets/animation_frames/characters/male/02_walk_step_a.png",
+      "source": "v4_animation_frames",
+      "bytes": 244430,
+      "sha1": "2ec1814837d3b8cc9fe75bf386e475d664d847a2"
+    },
+    {
+      "path": "assets/animation_frames/characters/male/05_attack_release_empty.png",
+      "source": "v4_animation_frames",
+      "bytes": 248270,
+      "sha1": "8902fcb11dc01caf50122da02593cb74d549fc47"
+    },
+    {
+      "path": "assets/animation_frames/characters/male/06_attack_recover_empty.png",
+      "source": "v4_animation_frames",
+      "bytes": 244026,
+      "sha1": "08705331ff0d4e0ddab57cd7565836da3cc84c36"
+    },
+    {
+      "path": "assets/catalog_legacy/png/building_shrine.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 438939,
+      "sha1": "d22581f5c7dda03af49bbe07c88baf7c5ee9c813"
+    },
+    {
+      "path": "assets/catalog_legacy/png/path_corner.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 245005,
+      "sha1": "65d9bd66a5ef9f5916eedca16e6abfa0edead43e"
+    },
+    {
+      "path": "assets/catalog_legacy/png/tree_birch.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 210427,
+      "sha1": "af95318e2281fa7dd2f01f374a194b0d034a1b33"
+    },
+    {
+      "path": "assets/catalog_legacy/png/path_stream_crossing.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 260126,
+      "sha1": "ac7c2087bee3626d2aa6e31df462cb02d239d9ea"
+    },
+    {
+      "path": "assets/catalog_legacy/png/spec_lightning.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 522705,
+      "sha1": "cc5bfc5b983e073b4aa325919b95fe36371eb90c"
+    },
+    {
+      "path": "assets/catalog_legacy/png/tree_cherry.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 255159,
+      "sha1": "d1303e4d3495c94c63314cecc7fdd6b5c28e71c5"
+    },
+    {
+      "path": "assets/catalog_legacy/png/monster_wolf.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 185732,
+      "sha1": "9e35213047a1464987dfcb4f6f8519a47bfbb427"
+    },
+    {
+      "path": "assets/catalog_legacy/png/tree_ancient.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 320288,
+      "sha1": "ee702e0e789e12e8aef5871241a11351d4876d2f"
+    },
+    {
+      "path": "assets/catalog_legacy/png/hero_knight.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 376709,
+      "sha1": "1eaa3f5ceccf2b7dbff4206b74d4548e89666bb5"
+    },
+    {
+      "path": "assets/catalog_legacy/png/monster_beetle.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 173935,
+      "sha1": "9f1eb587b6d8c26483da689f36f28f2769a92c55"
+    },
+    {
+      "path": "assets/catalog_legacy/png/terrain_meadow.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 281814,
+      "sha1": "8b8c7da4a3933af9ca3cc5cbec0fcc25b7ab32b7"
+    },
+    {
+      "path": "assets/catalog_legacy/png/monster_fire_spirit.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 154897,
+      "sha1": "8093da44fa1b5fc35cf3968c606abed3dbc50253"
+    },
+    {
+      "path": "assets/catalog_legacy/png/monster_hornhare.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 185222,
+      "sha1": "5c3307763af87dae4906fdb3a6a52802a00265e7"
+    },
+    {
+      "path": "assets/catalog_legacy/png/harvest_mushrooms.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 95714,
+      "sha1": "5fd79c4f7d4ad2c2dc7d3bd4aabaa8a1eaf37495"
+    },
+    {
+      "path": "assets/catalog_legacy/png/terrain_autumn_leaves.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 293503,
+      "sha1": "2be13a226656ffab540eff22bce99381a35aba89"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_leaf_pile.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 120482,
+      "sha1": "39a4f6f32a07ccdb8abe6485a6d2b9e3b33a54e6"
+    },
+    {
+      "path": "assets/catalog_legacy/png/hero_ranger.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 342108,
+      "sha1": "105a5e49934a59edbef1b22651a7cf7d1dc09240"
+    },
+    {
+      "path": "assets/catalog_legacy/png/hero_swordwoman.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 348651,
+      "sha1": "291e08c4ea433552c1c47f207808b84607857dab"
+    },
+    {
+      "path": "assets/catalog_legacy/png/tree_willow.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 326999,
+      "sha1": "80e6440137d5f5c2df3545db6a7892c08d176330"
+    },
+    {
+      "path": "assets/catalog_legacy/png/npc_healer.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 280142,
+      "sha1": "ad9bee31fac028af7805eb213695f1c901d93adb"
+    },
+    {
+      "path": "assets/catalog_legacy/png/terrain_pebbles.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 290284,
+      "sha1": "4db4a6fa3ac41f509d7ec2587771c1c15e57f330"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_signpost.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 92678,
+      "sha1": "14e694d280c7f283c6ccdf44556bd77e937bdb0b"
+    },
+    {
+      "path": "assets/catalog_legacy/png/terrain_dry_grass.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 294913,
+      "sha1": "5fefb8a56497355c878082e4352ba429d963cd65"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_fountain.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 178432,
+      "sha1": "41ab1c7dd41df1f83b7eddc344853b5decf7fea5"
+    },
+    {
+      "path": "assets/catalog_legacy/png/tree_oak_orange.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 277996,
+      "sha1": "3a98cbf6fccebe581a11f50b1b4a21a649592cf6"
+    },
+    {
+      "path": "assets/catalog_legacy/png/plant_wildflowers.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 171147,
+      "sha1": "547a7b6d290af20f8ef589e3570b04fffbfba80d"
+    },
+    {
+      "path": "assets/catalog_legacy/png/path_cobble_vertical.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 269289,
+      "sha1": "ea21dee47c115be9aa19d931d091fc12ea5e75ee"
+    },
+    {
+      "path": "assets/catalog_legacy/png/spec_shadow.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 516085,
+      "sha1": "fa55d60597302180d8544e98f5a6f7db23184eba"
+    },
+    {
+      "path": "assets/catalog_legacy/png/plant_berry_dark.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 157514,
+      "sha1": "fee1f1200303c984539d5e4aff943755fdd746f8"
+    },
+    {
+      "path": "assets/catalog_legacy/png/tree_sapling.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 99116,
+      "sha1": "e45e471c6da9bfbd1b5598e42cd887def60971f3"
+    },
+    {
+      "path": "assets/catalog_legacy/png/path_horizontal.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 245078,
+      "sha1": "e276efdd5bb41a514c8ae89c244c9c333c04bea0"
+    },
+    {
+      "path": "assets/catalog_legacy/png/npc_merchant.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 196142,
+      "sha1": "9d107e3915d4b75890a8ef6e9d283445450b64b9"
+    },
+    {
+      "path": "assets/catalog_legacy/png/npc_bard.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 262349,
+      "sha1": "4708052dc392c959a5dd8640b0f33270f4fe6184"
+    },
+    {
+      "path": "assets/catalog_legacy/png/spec_ember.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 509212,
+      "sha1": "b6ea3808795f0d9f0a393779c7d77a8ef20e3b96"
+    },
+    {
+      "path": "assets/catalog_legacy/png/terrain_meadow_wildflowers.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 310257,
+      "sha1": "62a9a3afccfcf96f04af068876b5905ee78af120"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_chest_closed.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 161587,
+      "sha1": "53f9b117d5ded0f212473c78a741b00c37e9cd5d"
+    },
+    {
+      "path": "assets/catalog_legacy/png/hero_rogue.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 331372,
+      "sha1": "bfe5ddaed769501b8745e47227fb3688c75bc36d"
+    },
+    {
+      "path": "assets/catalog_legacy/png/path_cobble_turn.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 259268,
+      "sha1": "25b3017cf57ffb8b650f9b20f9d86585d57858b2"
+    },
+    {
+      "path": "assets/catalog_legacy/png/building_smithy.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 456517,
+      "sha1": "034b2232a0357be6aaf23b6b6da45a6c707cf97a"
+    },
+    {
+      "path": "assets/catalog_legacy/png/plant_shrub.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 138317,
+      "sha1": "2a6a117ce67e1815dd4140bffa440a8fb0a694aa"
+    },
+    {
+      "path": "assets/catalog_legacy/png/path_vertical.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 247118,
+      "sha1": "7525c910becba8b779d5184f4e2b1b9fa44daf63"
+    },
+    {
+      "path": "assets/catalog_legacy/png/monster_sprout.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 148511,
+      "sha1": "16e5bfa8d5eeb6728e278dd8b044252bb43fa3c2"
+    },
+    {
+      "path": "assets/catalog_legacy/png/spec_light.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 510645,
+      "sha1": "a97e65b93f58232a4cf9588efe063ae71c97a464"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_chest_open.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 188548,
+      "sha1": "f04de50068a05e1e242ab970e7836d0ee1a610db"
+    },
+    {
+      "path": "assets/catalog_legacy/png/tree_oak_red.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 263177,
+      "sha1": "64aed98a7a21d31a77ed69871adf04b1641ef3b6"
+    },
+    {
+      "path": "assets/catalog_legacy/png/building_inn.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 458369,
+      "sha1": "975ace3b282f67de601c9d8ad2e1c50d2cf09956"
+    },
+    {
+      "path": "assets/catalog_legacy/png/bridge_stone.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 267285,
+      "sha1": "61ca89991383ae90b7879576be0df2da0247fdf3"
+    },
+    {
+      "path": "assets/catalog_legacy/png/building_guildhall.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 500435,
+      "sha1": "57ebccc7f6c42fd67c6655919c24219cb0894e77"
+    },
+    {
+      "path": "assets/catalog_legacy/png/monster_hedgehog.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 218508,
+      "sha1": "b50487f89b73c2ddd1bd3271d5327983a059a0b1"
+    },
+    {
+      "path": "assets/catalog_legacy/png/monster_mushroom.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 174644,
+      "sha1": "d46c22a0a4a8ea399b031f65b12e8064160a4a85"
+    },
+    {
+      "path": "assets/catalog_legacy/png/tree_pine.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 199320,
+      "sha1": "f9e8c45eaae255fe422535695c7f49a5a7f73278"
+    },
+    {
+      "path": "assets/catalog_legacy/png/spec_ranger.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 522602,
+      "sha1": "e856074bd78639c30abe9e3ce366388ddc811f81"
+    },
+    {
+      "path": "assets/catalog_legacy/png/terrain_dark_earth.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 259553,
+      "sha1": "3d5dd30658024c2e39f6bfcf9fca999fec65b624"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_cart.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 139493,
+      "sha1": "f9470c45dbcfe7ccc186cfa4946843f45b164e59"
+    },
+    {
+      "path": "assets/catalog_legacy/png/hero_cleric.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 351441,
+      "sha1": "418bcade0ccb44121dca51fda279f224412b3fda"
+    },
+    {
+      "path": "assets/catalog_legacy/png/hero_mage.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 320107,
+      "sha1": "a1e8a12360bde7c21945742f2b111f1660ada121"
+    },
+    {
+      "path": "assets/catalog_legacy/png/path_earth_transition.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 249446,
+      "sha1": "8c61c530e9b72a7565cbb1b138f095336601e1d4"
+    },
+    {
+      "path": "assets/catalog_legacy/png/plant_berry_red.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 160422,
+      "sha1": "311470e5dff4be42b1f4b4e107607d33268f61db"
+    },
+    {
+      "path": "assets/catalog_legacy/png/terrain_dirt.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 262522,
+      "sha1": "2be2ef176b393b95429eb0135602bfd9c252ef3d"
+    },
+    {
+      "path": "assets/catalog_legacy/png/building_cottage.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 448088,
+      "sha1": "c26a07a10f1f52c1c92c6ccd30cadf17e9a82ba5"
+    },
+    {
+      "path": "assets/catalog_legacy/png/path_cross.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 247898,
+      "sha1": "99dcd0b8bb2849f7461f8a153f99b276d119d909"
+    },
+    {
+      "path": "assets/catalog_legacy/png/plant_blue_flowers.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 144048,
+      "sha1": "5280a83c2114f3c482c826e45a1c27e34517d8dc"
+    },
+    {
+      "path": "assets/catalog_legacy/png/terrain_flower_meadow.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 327879,
+      "sha1": "0c86589a22be2967fb0469dfbd82c94ade9ee5ee"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_street_lamp.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 96806,
+      "sha1": "ea6372ab8362060bf3279377eff70e3662eaa4ba"
+    },
+    {
+      "path": "assets/catalog_legacy/png/monster_boar.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 207827,
+      "sha1": "acf44f8f273aaa90570a2600fda513daa4f6fd2f"
+    },
+    {
+      "path": "assets/catalog_legacy/png/npc_guard.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 271035,
+      "sha1": "80dff960960383c61b90a50c6fb1e1a13c4e52eb"
+    },
+    {
+      "path": "assets/catalog_legacy/png/plant_berry_green.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 147468,
+      "sha1": "897fa877ca83c3b9b80d6e18f4095cabfd3f4956"
+    },
+    {
+      "path": "assets/catalog_legacy/png/harvest_red_mushroom.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 127848,
+      "sha1": "51358759b5075d9c47833f02a91174f6a736f612"
+    },
+    {
+      "path": "assets/catalog_legacy/png/tree_oak_green.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 314907,
+      "sha1": "7b461d3f1345f37565d561d5f867d7919188b6fd"
+    },
+    {
+      "path": "assets/catalog_legacy/png/monster_turtle.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 250943,
+      "sha1": "6e2dd06b49e6ad76642a84183a550c45ba4a351f"
+    },
+    {
+      "path": "assets/catalog_legacy/png/plant_grass.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 161220,
+      "sha1": "a4b57b1677f7151ed3468b4f565a757d025850c5"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_well.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 188082,
+      "sha1": "44577aeb6b2f8d76d4f2e06896d044de7bdc5e15"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_barrel.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 116872,
+      "sha1": "ebbe384ecd91bfb621c0593d566adbf9bddb62ec"
+    },
+    {
+      "path": "assets/catalog_legacy/png/plant_yellow_flowers.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 156331,
+      "sha1": "7e6265968891c2aeebd75a86dd41686a100271ef"
+    },
+    {
+      "path": "assets/catalog_legacy/png/npc_blacksmith.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 231753,
+      "sha1": "77075ca3d5059f6c87a93c2465c51412eee8f5c0"
+    },
+    {
+      "path": "assets/catalog_legacy/png/terrain_mossy_ground.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 295428,
+      "sha1": "88e8873606741366884fa8104730d57ca4888b64"
+    },
+    {
+      "path": "assets/catalog_legacy/png/spec_flower.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 532366,
+      "sha1": "a36c2f34d1b4dce7a4fd8936f4b6d2ec00a056d0"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_bench.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 146040,
+      "sha1": "a80eeac03d2c0ade3c39c63d1f8bece15ae8e6f7"
+    },
+    {
+      "path": "assets/catalog_legacy/png/plant_fern.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 173716,
+      "sha1": "fee5a12f474215dd6b549b93e151a4f9999fc8d0"
+    },
+    {
+      "path": "assets/catalog_legacy/png/npc_baker.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 284241,
+      "sha1": "57a729c220e33799c1751bd66a5597626a7c587e"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_metal_chest.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 131658,
+      "sha1": "248b73d39a148b7f20e93a525a1fb47b7346c3fb"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_notice_board.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 148082,
+      "sha1": "62d1178075446b757298270a500feafb69c9e329"
+    },
+    {
+      "path": "assets/catalog_legacy/png/building_purple_house.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 449994,
+      "sha1": "e4a13ad5411427435ddc16b0013985e64335a4b6"
+    },
+    {
+      "path": "assets/catalog_legacy/png/prop_crates.png",
+      "source": "legacy_normalized_catalog",
+      "bytes": 152088,
+      "sha1": "1664a2a06bd2d48d8fce15fc9e732c57f4b094cf"
+    },
+    {
+      "path": "assets/equipment/armor/forest_boots_and_gloves.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 179099,
+      "sha1": "2e1a8ff9384178b901e882d61ca3eefb81e1fbdc"
+    },
+    {
+      "path": "assets/equipment/armor/knight_boots_and_gloves.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 208688,
+      "sha1": "74129472397817b247dccebf5fd47314a895275c"
+    },
+    {
+      "path": "assets/equipment/armor/arcane_torso.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 221181,
+      "sha1": "e337f1c836bdd2bdcae2779960628bebb9c8fc22"
+    },
+    {
+      "path": "assets/equipment/armor/arcane_boots_and_gloves.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 191935,
+      "sha1": "9e66191a762e770553b515cf5bfa624c745fd41b"
+    },
+    {
+      "path": "assets/equipment/armor/arcane_head.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 201412,
+      "sha1": "550a428fc3c35508417ab76342eb9905b5fd6bff"
+    },
+    {
+      "path": "assets/equipment/armor/leather_head.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 163746,
+      "sha1": "d86d468e00674402eb96b03c7f5c9561118aa061"
+    },
+    {
+      "path": "assets/equipment/armor/knight_torso.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 247001,
+      "sha1": "b40814dcb71a76af45ecaf76d92697e1a3d7761e"
+    },
+    {
+      "path": "assets/equipment/armor/leather_boots_and_gloves.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 174279,
+      "sha1": "4f12c50c86fc69a431fa08c37a051a2f14908e37"
+    },
+    {
+      "path": "assets/equipment/armor/knight_head.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 188323,
+      "sha1": "2da86aa8f33a259ab71a32f5a81925fdfe21b3ca"
+    },
+    {
+      "path": "assets/equipment/armor/leather_torso.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 221630,
+      "sha1": "810109be0bc38998cac2db0ee972fc265ef60a64"
+    },
+    {
+      "path": "assets/equipment/armor/forest_head.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 170758,
+      "sha1": "5930053c7b6b1154d79b3b4f867d597f19e8502c"
+    },
+    {
+      "path": "assets/equipment/armor/forest_torso.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 232990,
+      "sha1": "d6d9aca4fafd7ea27f3f3dec2ff2c6564305abb6"
+    },
+    {
+      "path": "assets/equipment/weapons/bow.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 223472,
+      "sha1": "10b903e1affaa71ef00b8dc202d53d12f755836b"
+    },
+    {
+      "path": "assets/equipment/weapons/sword.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 239151,
+      "sha1": "6bf044cc0a743604c6b2c99384f5caca648b155b"
+    },
+    {
+      "path": "assets/equipment/weapons/shield.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 314617,
+      "sha1": "c9135286a76e84cf1878f3939677c9f329d214f1"
+    },
+    {
+      "path": "assets/equipment/weapons/spear.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 212168,
+      "sha1": "9209d299e5923e54b9d9701029b0d551c2ff3762"
+    },
+    {
+      "path": "assets/equipment/weapons/hammer.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 256423,
+      "sha1": "f32f3b878ab9cef6bbdf3658053f552b858bf5d9"
+    },
+    {
+      "path": "assets/equipment/weapons/staff.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 239762,
+      "sha1": "e8743b227d85667aeecfddfc2f542ac31c8e58d0"
+    },
+    {
+      "path": "assets/equipment/weapons/daggers.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 248029,
+      "sha1": "6c2c7ec5ff3c38f955f6db30bd0d15a50d49bea6"
+    },
+    {
+      "path": "assets/equipment/weapons/curved_sword.png",
+      "source": "v4_equipment_extracted",
+      "bytes": 233073,
+      "sha1": "b731fdc5a907326a65b264a90779b162c28de611"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/10_specialist_cards.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2632994,
+      "sha1": "d0fa8cf341d509116f584d442901af810ceeeb05"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/01_terrain_meadow_earth.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2669446,
+      "sha1": "ebea51834a156130609e419cf05b62f8d2e9d59c"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/08_village_npcs.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1546310,
+      "sha1": "8febaf5ae01a7e0670f60ad8db88a3ad99581c62"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/02_terrain_paths_transitions.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2319805,
+      "sha1": "6937fc6f486a1aa50fae08dfca83d9381b87dcc1"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/09_field_monsters.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1752959,
+      "sha1": "df3dd871d1fc15c75149c9a7481832cba2e02101"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/03_trees_woodland.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2315562,
+      "sha1": "30e547e119e777f92bee0ad593ce776e7c8b0d93"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/06_world_props.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1793752,
+      "sha1": "f752f0cf0ac3f8c468b315d4acc5df03e63b1619"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/04_plants_harvestables.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1789256,
+      "sha1": "92ea48fd863324571bd61072013c33c66ac4034b"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/05_buildings_village.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2859214,
+      "sha1": "13c6ef88481b727092f6287269cf4b01d87d03a3"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/07_playable_heroes.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2498467,
+      "sha1": "3f5d7a463953691fc0a620da593fea941101dc14"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/npc_quest_giver.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1939312,
+      "sha1": "8e6bf9fe19970b706477003029e42f0542d84d8a"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/npc_musician.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2293209,
+      "sha1": "8f273be31e3d62bac460aab936f1934601908b9b"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/specialist_starter_sword.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2650787,
+      "sha1": "92fd27bdf5afdebb4664d8d0036029f00122da43"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/specialist_starter_bow.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2538197,
+      "sha1": "8dfedb4eddcb227e7b885e307ca3eba637eb562a"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/npc_herbalist.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2187010,
+      "sha1": "da28e1b95d66ca4badac2cf7fb330029c9aeb4b7"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/npc_merchant.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2009788,
+      "sha1": "deff0d4cded3dd95899691a9441e3e3f571bca1a"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/specialist_starter_mage.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2836414,
+      "sha1": "15fc78204469c4d58f5701d4655def285f3a94b0"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/specialist_pumpkin_reaper.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2606893,
+      "sha1": "ebe73d8fd2f95cd55b8c1f8be3252b3d31d6f7c4"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/npc_guard.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1830398,
+      "sha1": "eb829b7f9c4255ff44174751ef79660c010e8e55"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/specialist_ember_knight.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1973249,
+      "sha1": "ee3dc5eb10c5ec51e41c5615c3001159f23a8613"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/animation/npc_blacksmith.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1968563,
+      "sha1": "91b5931c62b4f762c1f6e376454ed6438f0c2f02"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/characters/base_male_unarmed_8f.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1961588,
+      "sha1": "553bad088ecaf6625f193b171a068106cda8ef27"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/characters/base_female_unarmed_8f.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2060603,
+      "sha1": "eaec8042b8eebbeeb332186f563c8c979c63c211"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/specialists/skins_male.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2262127,
+      "sha1": "30076e6ae094ec47a6b0418bb8256a7314f0fd83"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/specialists/skins_female.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1679531,
+      "sha1": "31aae7d833cc95970b00fe2367112b5c310fc3e7"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/equipment/armor_parts.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2433967,
+      "sha1": "c28028ddfa0437894a46bb51504a52ca9a8e3e31"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/equipment/weapons_separate.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2012777,
+      "sha1": "8b2bdb324e5bfef7af1cc23725f3005fd58fbe73"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/vfx/combat.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1882649,
+      "sha1": "efa8a1a73f0ff373ed4670d40caf7a18b57255a2"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/vfx/specialist_advanced.png",
+      "source": "kit10_v4_raw",
+      "bytes": 2043722,
+      "sha1": "fbcea32a906e69211211786fd169c0771e602db3"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/vfx/specialist_starters.png",
+      "source": "kit10_v4_raw",
+      "bytes": 1193179,
+      "sha1": "c410c07e53d43253b91945c879596aa050517489"
+    },
+    {
+      "path": "assets/workchat_kits/kit10_v4/BRAMBLE_10_Asset_Kits/vfx/ambient.png",
+      "source": "kit10_v4_raw",
+      "bytes": 693275,
+      "sha1": "8d7205c63871770f313ab8094e1f6d1a52d79cb2"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/misc/asset_099.png",
+      "source": "autumn_halloween_01",
+      "bytes": 7321,
+      "sha1": "4bc9a7e5c914bf93c7a17c8312f70d4b503338fd"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/misc/ground_moss_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 1618,
+      "sha1": "652b45d278ae7013c97f37b0201dad5ad9b88dd5"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/misc/lantern_small_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 6516,
+      "sha1": "0573dee8a87e1a20f741b93979ce03007c56d9ad"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/misc/asset_102.png",
+      "source": "autumn_halloween_01",
+      "bytes": 2070,
+      "sha1": "c212481f81cdd8b1f5c6e419744a2e8874759f20"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/misc/asset_100.png",
+      "source": "autumn_halloween_01",
+      "bytes": 2339,
+      "sha1": "4cd0d67a325c0939ee70626faa4bd12b404c0ca3"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/misc/asset_101.png",
+      "source": "autumn_halloween_01",
+      "bytes": 4645,
+      "sha1": "0d268584a2e81f57d3bb3fb0ae43a4fd06506d4a"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/lighting/lamp_street_02.png",
+      "source": "autumn_halloween_01",
+      "bytes": 9858,
+      "sha1": "8402d304e97a145840da7e6fa081de504aa3b2dc"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/lighting/lamp_street_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 12285,
+      "sha1": "743ef64bace0f18497fdb69b38619df97f5cb1ac"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/lighting/campfire_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 15217,
+      "sha1": "a9c0fa60b5f0bf9bb4c67bb21bf593faae2066fc"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/lighting/lamp_gallows_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 18496,
+      "sha1": "ffe732163afa420d1cd7ecd58b21b6715557f8af"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/lighting/lamp_hanging_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 16242,
+      "sha1": "7c3278c0cc89c09f600c3ad1fdc0d6d6650555cb"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/lighting/brazier_lantern_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 15194,
+      "sha1": "ff4fb965b65d610ff2e772578f2a32d3e3ef8cb6"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/terrain_dirt_flowers_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 25053,
+      "sha1": "4ca38c726de2f6b0846519f5248a0c83038f7b96"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/pond_small_02.png",
+      "source": "autumn_halloween_01",
+      "bytes": 26950,
+      "sha1": "f2a005a3d4fd6b7da0b11cb4b72aee8dc30bfda1"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/bridge_wood_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 21121,
+      "sha1": "f7b8a637dacff52e9cd808c989ca57b418f9a275"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/terrain_dirt_autumn_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 26554,
+      "sha1": "ef486241e97c1d996a506e7420e7dbd0a0c108d9"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/terrain_cobble_grass_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 26791,
+      "sha1": "7ac1f43a0379e65903d9ebc8894e6cecc8bf0c58"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/terrain_cliff_autumn_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 25685,
+      "sha1": "25484e61ecc3a4633442668e51f0a4fcdd780776"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/pond_small_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 8625,
+      "sha1": "27aaa3cfee1979a32e8c054f8c359584acf6ecec"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/terrain_leaves_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 26842,
+      "sha1": "98548ee2077ef2c8ca07ced387405786be4b8c87"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/terrain_cliff_grass_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 26453,
+      "sha1": "77f3a5201436b16c8a63d8adf3747107161ca4cf"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/terrain_cliff_leaves_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 21034,
+      "sha1": "fcac2c641790aaad21d087bf47821226afad24b0"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/terrain/terrain_grass_flowers_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 25174,
+      "sha1": "51b6b08f39ae18122bfb3446089176ffc8f1191a"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/leaf_gold_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 2461,
+      "sha1": "4b968f2fd8a961f91ac45f1931596fed7cfe3f5b"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/shrub_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 15759,
+      "sha1": "2ae8185293b39e95d50d4b6303aac1fc8195b515"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/fern_small_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 13426,
+      "sha1": "bfedba98cafad24ffaeed4b5730f09c91125e1d2"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/branch_dead_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 6833,
+      "sha1": "c31c8f2c1100e8c13d7b3df4824c3f030216da40"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/leaf_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 2127,
+      "sha1": "117185718a33692ce208a54902632d90e3384301"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/leaves_pile_small_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 11627,
+      "sha1": "a0605e94d061880e1ac24221b3843c243e9dffa4"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/leaf_red_02.png",
+      "source": "autumn_halloween_01",
+      "bytes": 6493,
+      "sha1": "1891dbc8f9b0fdca846b8e63df7aadf565c168fe"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/flower_orange_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 6579,
+      "sha1": "8490156d2eb530532426f8179f63ae00cf60ce5c"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/bush_berry_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 20581,
+      "sha1": "faf8c26a4aa31b8ff72462b821ff1c1e14a4625d"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/grass_dry_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 15552,
+      "sha1": "4df1bdb4100eb1c906c7ad0178f6a807fade089a"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/berries_orange_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 7446,
+      "sha1": "1c6d2afc81d830212d628e407dc358561689494a"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/leaf_brown_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 2775,
+      "sha1": "e8e7f9d0143c9f7069cfe5303ebd5a152977a85b"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/log_hollow_autumn_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 27793,
+      "sha1": "146f44b7c3d6610fa5bccd4e0678830f6608a842"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/berries_small_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 6493,
+      "sha1": "b96a45fee76d009169b927b68b291251be47a299"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/fern_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 5042,
+      "sha1": "54c2a7904a1eb316b7327424f48e453931e9ed60"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/grass_orange_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 18301,
+      "sha1": "ffb1d973ba94e297307b9ad968238b776828ca91"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/stump_rock_autumn_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 27053,
+      "sha1": "2bf2d8982e4e100deddeb1ca6b705dd08f47d6c7"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/mushrooms_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 4151,
+      "sha1": "9a40f40fb73cd3fdae9d7cf89d1a5a13d7dc1768"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/bush_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 23835,
+      "sha1": "5942225154a5603471483500dc239c7cb76de25e"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/mushroom_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 2640,
+      "sha1": "a088ec69afab74dab8cb105f4ac9092cf8a975d1"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/flower_small_orange_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 5680,
+      "sha1": "d6442b23f84f26a108b51949b2a2c45586dbee3c"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/reeds_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 17841,
+      "sha1": "73af815b935af651c61a2c85cba90c01ac3fbb89"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/berries_crimson_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 5479,
+      "sha1": "a5201e1c11c730dfc79de27ef5cb84151486ebc4"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/grass_gold_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 21632,
+      "sha1": "061c25acf299aa9ed6932fef82ceedf56f775421"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/leaf_pile_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 24988,
+      "sha1": "3d15094a7c5cb08383dd818d6958d65c74e6e470"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/vegetation/berries_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 1688,
+      "sha1": "713584dbb1592fd12984deb4928ad3538fcdf7b5"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_willow_orange_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 81231,
+      "sha1": "b16f7ff413b8eb4dae4ce6ecb2e6bedcb237d0cb"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_small_orange_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 17357,
+      "sha1": "f077f8d4da55225697c5561b8d1a4cf89c93f433"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_birch_gold_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 62103,
+      "sha1": "b0ed2360e6715cbbcbde01ff65193bc0d0849b0a"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_small_gold_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 17612,
+      "sha1": "16f2d45e43cb3826af3cd335364969c696417ae6"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_conifer_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 60152,
+      "sha1": "22fc11cf411319d43ecd870e330ef6206e938be1"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_oak_orange_02.png",
+      "source": "autumn_halloween_01",
+      "bytes": 73834,
+      "sha1": "c77e717073301156962463f7516e23bd4ecd407c"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_oak_gold_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 64116,
+      "sha1": "32cdece5dfd4f48cee96c64c1dded1cd272572c0"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_small_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 18635,
+      "sha1": "dbd4b9b38751461e3f84ad150c80a3ac672bd57c"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_dead_pumpkin_lantern_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 105246,
+      "sha1": "43ffebc3bb1dc34c07e26d21a7666cf6d83e0858"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_oak_orange_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 88344,
+      "sha1": "f8d1b052be03ee1514431c0783e7323fbcd6c866"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/trees/tree_oak_red_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 83681,
+      "sha1": "3983da2b5f5b959393e7d452aa66d1b65d197e14"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/well_halloween_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 41792,
+      "sha1": "3c869fac75268f8be463c1130b2681e12e19984e"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/barrel_pumpkin_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 17213,
+      "sha1": "18c5f4c3e99dff46526b2ec5a9d8bae96dea9aff"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/well_pumpkin_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 16399,
+      "sha1": "5da4f0ad69a0d4a5f92da15ca9a0fba45982a649"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/crate_small_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 5748,
+      "sha1": "4d164621fc142c81c98760f8bc67035e65e9a156"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/fence_wood_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 14145,
+      "sha1": "f433e5fc4300caa9bb121cf4980356191709fbc7"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/fence_rope_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 10431,
+      "sha1": "4c2c34b7673f4c8026d39cc931ff54a75cf23dc3"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/signpost_wood_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 16141,
+      "sha1": "9257567ad8e956208a80d5189f268d30b9123c7d"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/market_stall_pumpkin_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 37339,
+      "sha1": "46de02e4dd70a35fc08ad01013f77d1ef554e6de"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/fence_rope_short_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 12522,
+      "sha1": "963aa5cbf9374d0cc8471cbb4f763df6da00ba51"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/notice_board_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 16612,
+      "sha1": "7f8e38be7a68ad7e57ce4163effedc1129019f18"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/hay_bales_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 35827,
+      "sha1": "cb02a13e2d48691acd9c3aea27347c3646a35386"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/crate_large_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 12840,
+      "sha1": "5beb84ae4ed354be69661a12eef6703a4e6fabf7"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/town_props/fence_palisade_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 20113,
+      "sha1": "5e231bde053c7f198e7d1f1acf7c20450230014c"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/rock_waterfall_autumn_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 30806,
+      "sha1": "36085bbc96a251a8470fcdeef5a5485dd76383f6"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/tombstone_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 28641,
+      "sha1": "cda03bbcd9503ff278a8cdef92b9c2f076dd5a1c"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/ruin_block_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 13128,
+      "sha1": "abc0182955103a38159f9324ea1dc5d98fc8e815"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/rock_cluster_autumn_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 26066,
+      "sha1": "3734eef40ad61698a7d0e3b3257b145c38a901fd"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/rock_small_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 5327,
+      "sha1": "cc34c5581c6bfb41e4ebccce9cfe130a368526a5"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/ruin_pillar_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 25347,
+      "sha1": "1e6ab67829d82749393b5539bb5592268a2e13f0"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/rock_cluster_small_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 3821,
+      "sha1": "ad43ffa216aa096016a257d05670d9fc53832e38"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/ruin_wall_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 36824,
+      "sha1": "87921d96fa9ada9d211d7a4c1a926142b5762f30"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/ruin_pillar_03.png",
+      "source": "autumn_halloween_01",
+      "bytes": 18674,
+      "sha1": "82e1af65e0ad9ad57d748c1fa95b6537250a39b6"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/rock_pillar_autumn_02.png",
+      "source": "autumn_halloween_01",
+      "bytes": 14068,
+      "sha1": "7381480df76e51f7d0dd738882ff12541509318c"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/tombstone_round_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 25372,
+      "sha1": "d745ff554a37785c7e2607039c22b574851eca43"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/ruin_arch_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 19938,
+      "sha1": "628001fed218a2f1666483364df8dc49cf7c6a0b"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/ruin_wall_corner_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 26675,
+      "sha1": "4d8069e44a1f93c1b4746db8c2f0e65ca7b1118d"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/ruin_debris_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 7276,
+      "sha1": "d6832c78fb3e11104d57c230bd06cf35d9cea5e1"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/ruin_pillar_02.png",
+      "source": "autumn_halloween_01",
+      "bytes": 38092,
+      "sha1": "9669a4376e565211452f1e691782cf1b48d3718d"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/environment/rocks_ruins/rock_pillar_autumn_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 17735,
+      "sha1": "88db58ef8677ca7180bd5d5d54428018d76f1b29"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/jackolantern_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 10212,
+      "sha1": "3bd6f3087745e3dfb149887d1a55d96d9f2306af"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/crow_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 6708,
+      "sha1": "e0bdb62366cebd330ace6e7d7e1f6fde756471bd"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/scarecrow_pumpkin_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 22443,
+      "sha1": "ecd70f93283d477d2c33e6251458b45ca81f2c47"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/skull_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 6803,
+      "sha1": "49aa21368fbf3fbb3eca9d79f7e2a10e903d2155"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/banner_halloween_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 18175,
+      "sha1": "721033053f1deae30fe5a814a50e49ca3282641d"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/pumpkin_pair_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 9929,
+      "sha1": "d835b767bc5e6bc254876a8c4a4c64c67a08ce1c"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/bones_02.png",
+      "source": "autumn_halloween_01",
+      "bytes": 5173,
+      "sha1": "a7663acd70f2c38629358f25299d1552b346f5d6"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/pumpkin_barrels_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 16757,
+      "sha1": "5ff4cf1fb168acbf32c50d892c202437cc463dba"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/bones_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 5640,
+      "sha1": "c27cd848461114806a512a6003ad8c92a9bbe63d"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/arch_halloween_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 58262,
+      "sha1": "33ba704f5c6c6a8618c048280adfc1741ea16878"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/banner_autumn_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 9234,
+      "sha1": "ec1167e60e3a0273e70fa800bd986227abfdd8f2"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/pumpkin_cart_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 32274,
+      "sha1": "41b2b6059cf8442d8dcc185dc478b667d0235759"
+    },
+    {
+      "path": "assets/workchat_kits/autumn_halloween_01/BRAMBLE_ASSET_KIT_AUTUMN_HALLOWEEN_01/event/halloween/candles_pumpkin_01.png",
+      "source": "autumn_halloween_01",
+      "bytes": 3770,
+      "sha1": "f1ae02c08d88c68db761831aeed1dee4ee9e912c"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/buildings_halloween/env02_049.png",
+      "source": "environment_02",
+      "bytes": 81003,
+      "sha1": "235c0e2681814be272896c8e2fd35856e97787eb"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/buildings_halloween/env02_046.png",
+      "source": "environment_02",
+      "bytes": 113703,
+      "sha1": "fd9a62bd6b42742c797fd5249af84c6ec262d57a"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/buildings_halloween/env02_045.png",
+      "source": "environment_02",
+      "bytes": 64733,
+      "sha1": "744cf4f198afdd947cb5173e6ce92fd14ea1e78a"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/buildings_halloween/env02_042.png",
+      "source": "environment_02",
+      "bytes": 15605,
+      "sha1": "7e8ef4c8829b06aa8a5614a2544b4e11a8fefe26"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/buildings_halloween/env02_043.png",
+      "source": "environment_02",
+      "bytes": 26698,
+      "sha1": "b907e0eaf66c92b9521a36c9f7ba65f1fd75c7c6"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/buildings_halloween/env02_048.png",
+      "source": "environment_02",
+      "bytes": 44507,
+      "sha1": "4174fe30af2807908df186e971b43a042540b07e"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/buildings_halloween/env02_050.png",
+      "source": "environment_02",
+      "bytes": 86145,
+      "sha1": "a9fa3c4e1a61fb6c5b17e32475989557cd8d6f7a"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/buildings_halloween/env02_047.png",
+      "source": "environment_02",
+      "bytes": 82026,
+      "sha1": "dd0fdce0b78a3b854f78f9ca1c7659d28347758d"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/buildings_halloween/env02_044.png",
+      "source": "environment_02",
+      "bytes": 29390,
+      "sha1": "b43daba4fdd826f06910448987e933e30c9a2278"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/terrain_bridges/env02_056.png",
+      "source": "environment_02",
+      "bytes": 43474,
+      "sha1": "75d1747ed8073c6462cd13132306b40702111f82"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/terrain_bridges/env02_052.png",
+      "source": "environment_02",
+      "bytes": 36687,
+      "sha1": "4e3be4607d51c7e1d5b692a7f7d6899a5cbdb710"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/terrain_bridges/env02_058.png",
+      "source": "environment_02",
+      "bytes": 66677,
+      "sha1": "55797283177734b36de10e8945f11d57a7f111c8"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/terrain_bridges/env02_055.png",
+      "source": "environment_02",
+      "bytes": 37065,
+      "sha1": "f45d6e4a4ab87ff149f9b8b6eb954f806f3306c7"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/terrain_bridges/env02_057.png",
+      "source": "environment_02",
+      "bytes": 84618,
+      "sha1": "8914eb4260264a3581869477893c51723f82a869"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/terrain_bridges/env02_054.png",
+      "source": "environment_02",
+      "bytes": 36820,
+      "sha1": "2320282791ffe8b9a9348f8de7c6defd61fe0c69"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/terrain_bridges/env02_053.png",
+      "source": "environment_02",
+      "bytes": 33745,
+      "sha1": "f8cd703feb0d92294b6c76c738d86d47547eac0c"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/terrain_bridges/env02_051.png",
+      "source": "environment_02",
+      "bytes": 36123,
+      "sha1": "f5e66d31d499b725607bbb515696e96cfddb047c"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_040.png",
+      "source": "environment_02",
+      "bytes": 52372,
+      "sha1": "3ff72695d9e34970b3a3d30772cd1eeb68129ed9"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_037.png",
+      "source": "environment_02",
+      "bytes": 37850,
+      "sha1": "2a9ad8e247aef713f7218be448390f54a783009c"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_041.png",
+      "source": "environment_02",
+      "bytes": 43454,
+      "sha1": "287cab498d79250f2155145d0700d377b8328eb0"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_034.png",
+      "source": "environment_02",
+      "bytes": 20427,
+      "sha1": "3e3be5b6e5f9025f789c670a4fddd03a76462e62"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_032.png",
+      "source": "environment_02",
+      "bytes": 26061,
+      "sha1": "44dbd60ad7d4a972b03ec834ec833cc4256d4c1e"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_035.png",
+      "source": "environment_02",
+      "bytes": 21130,
+      "sha1": "180cc302714661820fef700a9eb7807e3d04ce1f"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_038.png",
+      "source": "environment_02",
+      "bytes": 20372,
+      "sha1": "89e74b1b71b4254ebdabbb93bf836876026af466"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_036.png",
+      "source": "environment_02",
+      "bytes": 22222,
+      "sha1": "9cc8f0f66631fcea982c9815c18e7909389232f5"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_039.png",
+      "source": "environment_02",
+      "bytes": 40757,
+      "sha1": "7055fae169fff52fa724c1abc445aa5b5fce93ac"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/town_props/env02_033.png",
+      "source": "environment_02",
+      "bytes": 24939,
+      "sha1": "aa686e2af9efdc1e79ee23a4b3d1e0226efe9210"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_010.png",
+      "source": "environment_02",
+      "bytes": 21492,
+      "sha1": "0d3774c2ea17b5b58791ce266ba8b6904b0a4960"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_012.png",
+      "source": "environment_02",
+      "bytes": 15493,
+      "sha1": "29bc1a5c0fdb4fb0791d968387eadde60b0f09e4"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_025.png",
+      "source": "environment_02",
+      "bytes": 35769,
+      "sha1": "0881cacb2f18567fa68822a58588429769562b01"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_021.png",
+      "source": "environment_02",
+      "bytes": 21980,
+      "sha1": "c2d7a3c180b25eb674af7bb13a66beb8d549daa6"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_018.png",
+      "source": "environment_02",
+      "bytes": 4508,
+      "sha1": "950a259cdbdd12b8f22931fdfa35dd48ea64a0fa"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_020.png",
+      "source": "environment_02",
+      "bytes": 19413,
+      "sha1": "a8df7753a8f37907d4c9f0f2586eb83f9f8d97a1"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_016.png",
+      "source": "environment_02",
+      "bytes": 16780,
+      "sha1": "4060823b3193f13f0730431721b6631f02f6495c"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_013.png",
+      "source": "environment_02",
+      "bytes": 11577,
+      "sha1": "1089e8f787e547efbcb722b3d22cc672af2513f5"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_028.png",
+      "source": "environment_02",
+      "bytes": 24066,
+      "sha1": "8612ac9703653521c071302fdcf56514672b2dd2"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_008.png",
+      "source": "environment_02",
+      "bytes": 23463,
+      "sha1": "3f1ff230d9bb93b134e731576e7e9411cc2d5e19"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_019.png",
+      "source": "environment_02",
+      "bytes": 20256,
+      "sha1": "d137d79746af9d1780981a885d80a3481237f0a7"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_031.png",
+      "source": "environment_02",
+      "bytes": 32455,
+      "sha1": "386715942efd0f966070cee7f0265e34f99ba66a"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_030.png",
+      "source": "environment_02",
+      "bytes": 30624,
+      "sha1": "06c77f34b528ee391b13ce2503e0368a40b667a7"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_024.png",
+      "source": "environment_02",
+      "bytes": 44443,
+      "sha1": "25dfc076e23988fc499d4c9ea3979ca3e850abab"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_022.png",
+      "source": "environment_02",
+      "bytes": 36702,
+      "sha1": "c9b79359c195a5fa68550aead601a2033b2d5843"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_027.png",
+      "source": "environment_02",
+      "bytes": 22214,
+      "sha1": "3c014ff7d688ad0af7e69a5db25e3f6d7aa0b94e"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_011.png",
+      "source": "environment_02",
+      "bytes": 16324,
+      "sha1": "bfda7af61f1b6bb70c684bcb96f2e27f7e596ef4"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_026.png",
+      "source": "environment_02",
+      "bytes": 62585,
+      "sha1": "addd530737697886161c79e7c2812a43231db829"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_015.png",
+      "source": "environment_02",
+      "bytes": 15782,
+      "sha1": "375dc18d08b2202a43749e1acdfd865da708df12"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_029.png",
+      "source": "environment_02",
+      "bytes": 18149,
+      "sha1": "9d0032fdd4cc94c07549edc249fc9c09c4d18aad"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_023.png",
+      "source": "environment_02",
+      "bytes": 43856,
+      "sha1": "523ca9820adfc52e047ef7d514edbb349e4d9548"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_014.png",
+      "source": "environment_02",
+      "bytes": 16478,
+      "sha1": "7ff4156614eed566b5bab47790ae49fbfacb8cc2"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_009.png",
+      "source": "environment_02",
+      "bytes": 22464,
+      "sha1": "18eebefefb86ead79f36abbcc889f44847b3369f"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/rocks_ruins/env02_017.png",
+      "source": "environment_02",
+      "bytes": 8436,
+      "sha1": "cde0a5e79435b563a980019fc23d96e73cd6a662"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/trees_vegetation/env02_006.png",
+      "source": "environment_02",
+      "bytes": 143535,
+      "sha1": "6c26009e72552ade53b34bd18b691990cee9cacb"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/trees_vegetation/env02_007.png",
+      "source": "environment_02",
+      "bytes": 116717,
+      "sha1": "ae399545fd479c5090eed763a2a32382bca4e2c3"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/trees_vegetation/env02_003.png",
+      "source": "environment_02",
+      "bytes": 84484,
+      "sha1": "f492fd114f0ec5e72d59cb7c20358d2521271074"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/trees_vegetation/env02_001.png",
+      "source": "environment_02",
+      "bytes": 121896,
+      "sha1": "dd7e0e6080d9c86e1f41ef2dbcec22e2bb5b8578"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/trees_vegetation/env02_004.png",
+      "source": "environment_02",
+      "bytes": 78302,
+      "sha1": "35ec530b20af1301f1c7f4caa69dbaac22a4eee6"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/trees_vegetation/env02_005.png",
+      "source": "environment_02",
+      "bytes": 131043,
+      "sha1": "cda14b9b8cdd500405b4888ed8eae66b66398c59"
+    },
+    {
+      "path": "assets/workchat_kits/environment_02/BRAMBLE_ASSET_KIT_ENVIRONMENT_02/trees_vegetation/env02_002.png",
+      "source": "environment_02",
+      "bytes": 104491,
+      "sha1": "51da6153bbce2ca74c46d7ae6efc86fc55304f3d"
+    }
+  ]
+}

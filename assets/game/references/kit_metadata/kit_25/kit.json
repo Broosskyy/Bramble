@@ -1,0 +1,56 @@
+{
+  "number": 25,
+  "name": "hud_frames",
+  "source": "master.png",
+  "grid": [
+    2,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "player_status",
+      "file": "player_status.png",
+      "source_rect": [
+        0,
+        0,
+        768,
+        512
+      ],
+      "gutter_px": 28
+    },
+    {
+      "id": "quest_panel",
+      "file": "quest_panel.png",
+      "source_rect": [
+        768,
+        0,
+        1536,
+        512
+      ],
+      "gutter_px": 40
+    },
+    {
+      "id": "minimap_frame",
+      "file": "minimap_frame.png",
+      "source_rect": [
+        0,
+        512,
+        768,
+        1024
+      ],
+      "gutter_px": 33
+    },
+    {
+      "id": "target_bar",
+      "file": "target_bar.png",
+      "source_rect": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "gutter_px": 80
+    }
+  ]
+}

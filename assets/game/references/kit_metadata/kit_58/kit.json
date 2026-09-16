@@ -1,0 +1,107 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 58,
+  "name": "blacksmith_8_directions",
+  "purpose": "unarmed blacksmith NPC turnaround",
+  "kind": "sprite_views",
+  "style_lock": "canonical early BRAMBLE kits 07-10 and original gameplay HUD",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "front",
+      "file": "front.png",
+      "source_bbox": [
+        41,
+        38,
+        358,
+        519
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "front_right",
+      "file": "front_right.png",
+      "source_bbox": [
+        440,
+        35,
+        738,
+        525
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "right",
+      "file": "right.png",
+      "source_bbox": [
+        836,
+        32,
+        1064,
+        525
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back_right",
+      "file": "back_right.png",
+      "source_bbox": [
+        1202,
+        37,
+        1482,
+        522
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back",
+      "file": "back.png",
+      "source_bbox": [
+        46,
+        523,
+        351,
+        987
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back_left",
+      "file": "back_left.png",
+      "source_bbox": [
+        440,
+        522,
+        714,
+        987
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "left",
+      "file": "left.png",
+      "source_bbox": [
+        839,
+        520,
+        1060,
+        991
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "front_left",
+      "file": "front_left.png",
+      "source_bbox": [
+        1183,
+        525,
+        1471,
+        993
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

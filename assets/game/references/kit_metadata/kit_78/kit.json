@@ -1,0 +1,98 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 78,
+  "kit": "quest_map_portal_raid_ui",
+  "category": "ui",
+  "asset_count": 8,
+  "assets": [
+    {
+      "name": "quest_log_panel",
+      "file": "quest_log_panel.png",
+      "size_px": [
+        414,
+        427
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "npc_dialog_panel",
+      "file": "npc_dialog_panel.png",
+      "size_px": [
+        432,
+        454
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "world_map_frame",
+      "file": "world_map_frame.png",
+      "size_px": [
+        432,
+        446
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "minimap_controls",
+      "file": "minimap_controls.png",
+      "size_px": [
+        414,
+        386
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "portal_selection_panel",
+      "file": "portal_selection_panel.png",
+      "size_px": [
+        410,
+        453
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "dungeon_difficulty_panel",
+      "file": "dungeon_difficulty_panel.png",
+      "size_px": [
+        407,
+        465
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "raid_lobby_panel",
+      "file": "raid_lobby_panel.png",
+      "size_px": [
+        425,
+        474
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "raid_reward_panel",
+      "file": "raid_reward_panel.png",
+      "size_px": [
+        421,
+        432
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

@@ -1,0 +1,130 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 81,
+  "kit": "magic_weapons_focuses",
+  "category": "weapon",
+  "asset_count": 8,
+  "assets": [
+    {
+      "name": "apprentice_staff",
+      "file": "apprentice_staff.png",
+      "size_px": [
+        392,
+        531
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "leaf_mage_staff",
+      "file": "leaf_mage_staff.png",
+      "size_px": [
+        432,
+        537
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "amber_wand",
+      "file": "amber_wand.png",
+      "size_px": [
+        403,
+        489
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "violet_orb",
+      "file": "violet_orb.png",
+      "size_px": [
+        387,
+        476
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "closed_spellbook",
+      "file": "closed_spellbook.png",
+      "size_px": [
+        413,
+        465
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "open_spellbook",
+      "file": "open_spellbook.png",
+      "size_px": [
+        432,
+        416
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "moon_talisman",
+      "file": "moon_talisman.png",
+      "size_px": [
+        432,
+        540
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "healer_sceptre",
+      "file": "healer_sceptre.png",
+      "size_px": [
+        411,
+        513
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

@@ -1,0 +1,107 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 61,
+  "name": "copper_mole_directions_actions",
+  "purpose": "Copper Mole direction and action set",
+  "kind": "sprite_views",
+  "style_lock": "canonical early BRAMBLE kits 07-10 and original gameplay HUD",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "front",
+      "file": "front.png",
+      "source_bbox": [
+        65,
+        113,
+        397,
+        420
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "right",
+      "file": "right.png",
+      "source_bbox": [
+        491,
+        116,
+        888,
+        420
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back",
+      "file": "back.png",
+      "source_bbox": [
+        941,
+        113,
+        1285,
+        414
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "left",
+      "file": "left.png",
+      "source_bbox": [
+        1337,
+        116,
+        1724,
+        421
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "idle_ready",
+      "file": "idle_ready.png",
+      "source_bbox": [
+        50,
+        494,
+        429,
+        811
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "attack",
+      "file": "attack.png",
+      "source_bbox": [
+        489,
+        496,
+        886,
+        798
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "hit",
+      "file": "hit.png",
+      "source_bbox": [
+        939,
+        501,
+        1280,
+        820
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "defeated",
+      "file": "defeated.png",
+      "source_bbox": [
+        1319,
+        566,
+        1754,
+        799
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

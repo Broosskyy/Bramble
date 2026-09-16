@@ -1,0 +1,76 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 77,
+  "kit": "skills_specialist_progression_ui",
+  "category": "ui",
+  "asset_count": 6,
+  "assets": [
+    {
+      "name": "specialist_frame_tier_01",
+      "file": "specialist_frame_tier_01.png",
+      "size_px": [
+        383,
+        541
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "specialist_frame_tier_05",
+      "file": "specialist_frame_tier_05.png",
+      "size_px": [
+        432,
+        558
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "specialist_frame_tier_10",
+      "file": "specialist_frame_tier_10.png",
+      "size_px": [
+        432,
+        574
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "specialist_frame_tier_15",
+      "file": "specialist_frame_tier_15.png",
+      "size_px": [
+        412,
+        612
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "skill_tree_panel",
+      "file": "skill_tree_panel.png",
+      "size_px": [
+        714,
+        447
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "specialist_upgrade_panel",
+      "file": "specialist_upgrade_panel.png",
+      "size_px": [
+        723,
+        445
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

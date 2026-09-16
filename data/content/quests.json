@@ -1,0 +1,121 @@
+[
+  {
+    "id": "q00",
+    "index": 0,
+    "title": "Ein neuer Anfang",
+    "type": "talk",
+    "target": "lina",
+    "text": "Sprich mit Lina in Hainweiler."
+  },
+  {
+    "id": "q01",
+    "index": 1,
+    "title": "Die ersten Monster",
+    "type": "kill",
+    "target": "slime",
+    "count": 5,
+    "counter": "slimeKills",
+    "text": "Besiege 5 Schleime auf den Östlichen Feldern."
+  },
+  {
+    "id": "q02",
+    "index": 2,
+    "title": "Frische Kräuter",
+    "type": "collect",
+    "target": "herb",
+    "count": 3,
+    "counter": "herbs",
+    "text": "Sammle 3 Heilkräuter."
+  },
+  {
+    "id": "q03",
+    "index": 3,
+    "title": "Training",
+    "type": "level_and_talk",
+    "target": "teo",
+    "requirements": {
+      "lv": 5
+    },
+    "text": "Erreiche Charakterlevel 5 und sprich mit Teo."
+  },
+  {
+    "id": "q04",
+    "index": 4,
+    "title": "Sonnenhügel",
+    "type": "kill_map",
+    "map": "meadow",
+    "count": 6,
+    "counter": "meadowKills",
+    "text": "Besiege 6 Gegner auf den Sonnenhügeln."
+  },
+  {
+    "id": "q05",
+    "index": 5,
+    "title": "Dämmerwald",
+    "type": "kill_map",
+    "map": "forest",
+    "count": 8,
+    "counter": "forestKills",
+    "text": "Besiege 8 Gegner im Dämmerwald."
+  },
+  {
+    "id": "q06",
+    "index": 6,
+    "title": "Nebelbruch",
+    "type": "kill_map",
+    "map": "marsh",
+    "count": 8,
+    "counter": "marshKills",
+    "text": "Besiege 8 Kreaturen im Nebelbruch."
+  },
+  {
+    "id": "q07",
+    "index": 7,
+    "title": "Alte Ruinen",
+    "type": "boss",
+    "map": "ruins",
+    "target": "ruins_boss",
+    "text": "Besiege den Ruinenwächter."
+  },
+  {
+    "id": "q08",
+    "index": 8,
+    "title": "Kupfermine",
+    "type": "kill_map",
+    "map": "mine",
+    "count": 10,
+    "counter": "mineKills",
+    "text": "Besiege 10 Gegner in der Kupfermine."
+  },
+  {
+    "id": "q09",
+    "index": 9,
+    "title": "Kristallhöhle",
+    "type": "kill_map",
+    "map": "cave",
+    "count": 8,
+    "counter": "caveKills",
+    "text": "Besiege 8 Höhlenkreaturen."
+  },
+  {
+    "id": "q10",
+    "index": 10,
+    "title": "Kristallkoloss",
+    "type": "boss",
+    "map": "cave",
+    "target": "cave_boss",
+    "text": "Besiege den Boss tief in der Kristallhöhle."
+  },
+  {
+    "id": "q11",
+    "index": 11,
+    "title": "Abenteurerprüfung",
+    "type": "class_unlock",
+    "target": "teo",
+    "requirements": {
+      "lv": 15,
+      "job": 20
+    },
+    "text": "Erreiche Level 15 und Joblevel 20 und sprich mit Teo."
+  }
+]

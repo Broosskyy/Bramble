@@ -1,0 +1,107 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 59,
+  "name": "merchant_8_directions",
+  "purpose": "unarmed merchant NPC turnaround",
+  "kind": "sprite_views",
+  "style_lock": "canonical early BRAMBLE kits 07-10 and original gameplay HUD",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "front",
+      "file": "front.png",
+      "source_bbox": [
+        89,
+        14,
+        342,
+        505
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "front_right",
+      "file": "front_right.png",
+      "source_bbox": [
+        459,
+        16,
+        719,
+        505
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "right",
+      "file": "right.png",
+      "source_bbox": [
+        810,
+        13,
+        1059,
+        507
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back_right",
+      "file": "back_right.png",
+      "source_bbox": [
+        1161,
+        15,
+        1427,
+        502
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back",
+      "file": "back.png",
+      "source_bbox": [
+        95,
+        510,
+        339,
+        992
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back_left",
+      "file": "back_left.png",
+      "source_bbox": [
+        451,
+        510,
+        708,
+        992
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "left",
+      "file": "left.png",
+      "source_bbox": [
+        798,
+        511,
+        1052,
+        996
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "front_left",
+      "file": "front_left.png",
+      "source_bbox": [
+        1165,
+        508,
+        1424,
+        996
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

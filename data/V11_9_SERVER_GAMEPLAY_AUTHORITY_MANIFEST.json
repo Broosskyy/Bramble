@@ -1,0 +1,12 @@
+{
+  "version": "V11.9",
+  "title": "Server Skills / Combat Cooldowns / NPC Interactions / Quest State",
+  "mobile_first": true,
+  "changes": [
+    "server-authoritative skill unlock and cooldown validation",
+    "NPC interaction authority boundary",
+    "persistent server quest progression",
+    "quest kill/NPC hooks foundation",
+    "bramble-v11.9 protocol"
+  ]
+}

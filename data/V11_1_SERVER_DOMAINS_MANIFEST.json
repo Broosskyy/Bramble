@@ -1,0 +1,22 @@
+{
+  "version": "V11.1",
+  "base": "V11",
+  "architecture_reference": "NosCore concepts; original BRAMBLE implementation",
+  "mobile_first": true,
+  "added_scripts": [
+    "inventory_service.gd",
+    "equipment_service.gd",
+    "progression_service.gd"
+  ],
+  "integrations": [
+    "reward -> progression/inventory",
+    "potion -> inventory",
+    "character repository persistence"
+  ],
+  "protocol": "bramble-v11.1",
+  "next": [
+    "repository interface + PostgreSQL adapter contract",
+    "account/auth gateway",
+    "inventory transaction validation and equipment ownership validation"
+  ]
+}

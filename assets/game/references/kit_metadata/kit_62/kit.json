@@ -1,0 +1,119 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 62,
+  "name": "mobile_hud_components",
+  "purpose": "textless landscape mobile HUD components",
+  "kind": "ui_shells",
+  "style_lock": "canonical early BRAMBLE kits 07-10 and original gameplay HUD",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "player_status_panel",
+      "file": "player_status_panel.png",
+      "source_bbox": [
+        39,
+        114,
+        500,
+        296
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "target_status_panel",
+      "file": "target_status_panel.png",
+      "source_bbox": [
+        537,
+        91,
+        1001,
+        288
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "quest_tracker_panel",
+      "file": "quest_tracker_panel.png",
+      "source_bbox": [
+        1040,
+        128,
+        1497,
+        286
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "minimap_bezel",
+      "file": "minimap_bezel.png",
+      "source_bbox": [
+        84,
+        312,
+        492,
+        714
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "virtual_joystick",
+      "file": "virtual_joystick.png",
+      "source_bbox": [
+        652,
+        377,
+        960,
+        681
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "primary_attack_button",
+      "file": "primary_attack_button.png",
+      "source_bbox": [
+        1160,
+        393,
+        1449,
+        681
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "skill_button",
+      "file": "skill_button.png",
+      "source_bbox": [
+        163,
+        735,
+        400,
+        970
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "chat_bar",
+      "file": "chat_bar.png",
+      "source_bbox": [
+        518,
+        789,
+        1023,
+        934
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "quick_use_bar",
+      "file": "quick_use_bar.png",
+      "source_bbox": [
+        1125,
+        779,
+        1466,
+        945
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

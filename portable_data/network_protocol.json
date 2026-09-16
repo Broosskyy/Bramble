@@ -1,0 +1,195 @@
+{
+  "version": "bramble-v11.10",
+  "authority": "server_authoritative",
+  "client_intents": [
+    {
+      "id": "move",
+      "payload": [
+        "seq",
+        "client_time",
+        "direction_x",
+        "direction_y"
+      ]
+    },
+    {
+      "id": "basic_attack",
+      "payload": [
+        "seq",
+        "client_time",
+        "target_entity_id",
+        "aim_x",
+        "aim_y"
+      ]
+    },
+    {
+      "id": "skill",
+      "payload": [
+        "seq",
+        "client_time",
+        "skill_id",
+        "target_entity_id",
+        "aim_x",
+        "aim_y"
+      ]
+    },
+    {
+      "id": "dash",
+      "payload": [
+        "seq",
+        "client_time",
+        "direction_x",
+        "direction_y"
+      ]
+    },
+    {
+      "id": "interact",
+      "payload": [
+        "seq",
+        "client_time",
+        "entity_id"
+      ]
+    },
+    {
+      "id": "target_next",
+      "payload": [
+        "seq",
+        "client_time"
+      ]
+    },
+    {
+      "id": "use_potion",
+      "payload": [
+        "seq",
+        "client_time",
+        "item_id"
+      ]
+    }
+  ],
+  "server_events": [
+    "snapshot",
+    "entity_spawned",
+    "entity_removed",
+    "combat_result",
+    "loot_spawned",
+    "quest_updated",
+    "party_updated",
+    "chat_message",
+    "auth_result",
+    "session_opened",
+    "character_resolved",
+    "world_joined",
+    "transaction_audit"
+  ],
+  "snapshot_domains": [
+    "player",
+    "enemies",
+    "drops",
+    "party",
+    "map",
+    "quest",
+    "combat"
+  ],
+  "rules": [
+    "Client requests actions; server validates movement, cooldown, range, damage, loot and progression.",
+    "Stable entity_id/content_id are mandatory across clients and saves.",
+    "Presentation state is not authoritative."
+  ],
+  "party_v23_23": {
+    "max_party_size": 5,
+    "reward_range": 900,
+    "shared_rewards": [
+      "xp",
+      "job_xp",
+      "reputation",
+      "farm_gold",
+      "farm_items"
+    ],
+    "activities": [
+      "raid",
+      "event"
+    ],
+    "activity_authority": "server"
+  },
+  "architecture": {
+    "authority": "server",
+    "identity": "stable-account-character-session-ids",
+    "persistence": "provider-contract-local-adapter-postgresql-ready",
+    "reconnect_grace_seconds": 120,
+    "domains": [
+      "identity",
+      "session",
+      "character",
+      "world",
+      "combat",
+      "inventory",
+      "equipment",
+      "progression",
+      "loot",
+      "quest",
+      "party",
+      "social",
+      "liveops",
+      "economy",
+      "shop",
+      "trade"
+    ],
+    "auth": "gateway-boundary-server-only-secrets",
+    "inventory": "transactional-ownership-validated",
+    "equipment": "ownership-and-slot-validated",
+    "lifecycle": "connect-authenticate-session-character-world_join-disconnect-resume",
+    "item_instances": "stable-instance-id-for-non-stackable-equipment",
+    "audit": "server-side-domain-transaction-audit",
+    "shop": "server-content-catalog-pricing",
+    "trade": "instance-aware-ownership-transfer"
+  },
+  "character_lifecycle": {
+    "network_commands": [
+      "list",
+      "create",
+      "select",
+      "delete"
+    ],
+    "max_characters_per_account": 4,
+    "mobile_character_select": true
+  },
+  "transaction_safety": {
+    "idempotency": true,
+    "audit_outbox": true,
+    "economy_service": true,
+    "item_instances": true,
+    "reward_pipeline": true,
+    "loot_pipeline": true,
+    "shop_pipeline": true,
+    "trade_pipeline": true,
+    "server_catalog_pricing": true,
+    "instance_trade": true,
+    "postgres_dedicated_adapter_boundary": true
+  },
+  "trade_session": {
+    "flow": [
+      "offer",
+      "lock",
+      "confirm",
+      "commit"
+    ],
+    "server_authoritative": true,
+    "offer_revision_invalidates_lock": true
+  },
+  "shops": {
+    "npc_catalog": "server_only",
+    "client_price_authority": false
+  },
+  "item_instance_upgrades": {
+    "enabled": true,
+    "server_authoritative": true,
+    "max_upgrade": 15
+  },
+  "combat_authority_v11_10": {
+    "target_validation": true,
+    "range_validation": true,
+    "server_hit_resolution": true,
+    "skill_resources": true,
+    "status_effects": true,
+    "enemy_ai_authority": true
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "preview": "map_preview.jpg",
+  "grid_px": 128,
+  "world_cells": [
+    12,
+    8
+  ],
+  "route": "Hainweiler -> Waldsaum -> Flussfurt",
+  "terrain": "seamless_terrain/*.png (edge-matched prototypes)",
+  "placements": [
+    {
+      "asset": "31_village_wilds/cottage.png",
+      "x": 90,
+      "y": 155,
+      "max_width": 300
+    },
+    {
+      "asset": "31_village_wilds/apothecary.png",
+      "x": 385,
+      "y": 92,
+      "max_width": 210
+    },
+    {
+      "asset": "31_village_wilds/market_stall.png",
+      "x": 120,
+      "y": 570,
+      "max_width": 210
+    },
+    {
+      "asset": "31_village_wilds/village_well.png",
+      "x": 482,
+      "y": 646,
+      "max_width": 125
+    },
+    {
+      "asset": "31_village_wilds/gate_fence.png",
+      "x": 648,
+      "y": 320,
+      "max_width": 208
+    },
+    {
+      "asset": "31_village_wilds/red_oak.png",
+      "x": 815,
+      "y": 135,
+      "max_width": 254
+    },
+    {
+      "asset": "31_village_wilds/golden_shrubs.png",
+      "x": 906,
+      "y": 697,
+      "max_width": 165
+    },
+    {
+      "asset": "31_village_wilds/ruined_arch.png",
+      "x": 1058,
+      "y": 166,
+      "max_width": 183
+    },
+    {
+      "asset": "31_village_wilds/blank_sign.png",
+      "x": 704,
+      "y": 680,
+      "max_width": 116
+    },
+    {
+      "asset": "30_roads_riverbank/wooden_bridge.png",
+      "x": 1200,
+      "y": 430,
+      "max_width": 294
+    }
+  ],
+  "status": "visual composition; collision, walkmesh and runtime map not authored"
+}

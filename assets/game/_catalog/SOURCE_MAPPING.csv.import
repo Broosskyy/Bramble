@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bd1oc4wpb5ld7"
+
+[deps]
+
+files=["res://assets/game/_catalog/SOURCE_MAPPING.source.translation", "res://assets/game/_catalog/SOURCE_MAPPING.source.translation", "res://assets/game/_catalog/SOURCE_MAPPING.source.translation", "res://assets/game/_catalog/SOURCE_MAPPING.sha256.translation"]
+
+source_file="res://assets/game/_catalog/SOURCE_MAPPING.csv"
+dest_files=["res://assets/game/_catalog/SOURCE_MAPPING.source.translation", "res://assets/game/_catalog/SOURCE_MAPPING.source.translation", "res://assets/game/_catalog/SOURCE_MAPPING.source.translation", "res://assets/game/_catalog/SOURCE_MAPPING.sha256.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

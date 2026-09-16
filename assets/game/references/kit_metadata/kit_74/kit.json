@@ -1,0 +1,142 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 74,
+  "kit": "ui_core_controls",
+  "category": "ui",
+  "asset_count": 12,
+  "assets": [
+    {
+      "name": "primary_button",
+      "file": "primary_button.png",
+      "size_px": [
+        384,
+        187
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "secondary_button",
+      "file": "secondary_button.png",
+      "size_px": [
+        432,
+        175
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "destructive_button",
+      "file": "destructive_button.png",
+      "size_px": [
+        432,
+        183
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "icon_button",
+      "file": "icon_button.png",
+      "size_px": [
+        370,
+        248
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "tab_active",
+      "file": "tab_active.png",
+      "size_px": [
+        386,
+        205
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "tab_inactive",
+      "file": "tab_inactive.png",
+      "size_px": [
+        432,
+        204
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "checkbox_checked",
+      "file": "checkbox_checked.png",
+      "size_px": [
+        399,
+        216
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "checkbox_empty",
+      "file": "checkbox_empty.png",
+      "size_px": [
+        223,
+        326
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "slider",
+      "file": "slider.png",
+      "size_px": [
+        384,
+        147
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "toggle_on",
+      "file": "toggle_on.png",
+      "size_px": [
+        432,
+        166
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "toggle_off",
+      "file": "toggle_off.png",
+      "size_px": [
+        432,
+        169
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "dropdown_shell",
+      "file": "dropdown_shell.png",
+      "size_px": [
+        399,
+        169
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

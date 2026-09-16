@@ -1,0 +1,103 @@
+{
+  "number": 36,
+  "name": "raised_village",
+  "grid": [
+    3,
+    3
+  ],
+  "source": "master.png",
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "grass_edge",
+      "file": "grass_edge.png",
+      "source_rect": [
+        0,
+        0,
+        415,
+        421
+      ]
+    },
+    {
+      "id": "outer_corner",
+      "file": "outer_corner.png",
+      "source_rect": [
+        415,
+        0,
+        830,
+        421
+      ]
+    },
+    {
+      "id": "inner_corner",
+      "file": "inner_corner.png",
+      "source_rect": [
+        830,
+        0,
+        1246,
+        421
+      ]
+    },
+    {
+      "id": "earth_ledge",
+      "file": "earth_ledge.png",
+      "source_rect": [
+        0,
+        421,
+        415,
+        842
+      ]
+    },
+    {
+      "id": "ramp",
+      "file": "ramp.png",
+      "source_rect": [
+        415,
+        421,
+        830,
+        842
+      ]
+    },
+    {
+      "id": "staircase",
+      "file": "staircase.png",
+      "source_rect": [
+        830,
+        421,
+        1246,
+        842
+      ]
+    },
+    {
+      "id": "cliff_wall",
+      "file": "cliff_wall.png",
+      "source_rect": [
+        0,
+        842,
+        415,
+        1263
+      ]
+    },
+    {
+      "id": "cliff_tunnel",
+      "file": "cliff_tunnel.png",
+      "source_rect": [
+        415,
+        842,
+        830,
+        1263
+      ]
+    },
+    {
+      "id": "waterfall",
+      "file": "waterfall.png",
+      "source_rect": [
+        830,
+        842,
+        1246,
+        1263
+      ]
+    }
+  ],
+  "camera": "orthographic oblique 3/4; single canonical orientation"
+}

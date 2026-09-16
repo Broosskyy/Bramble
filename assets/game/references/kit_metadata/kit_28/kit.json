@@ -1,0 +1,56 @@
+{
+  "number": 28,
+  "name": "raid_loot_ui",
+  "source": "master.png",
+  "grid": [
+    2,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "raid_title",
+      "file": "raid_title.png",
+      "source_rect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "gutter_px": 84
+    },
+    {
+      "id": "boss_health",
+      "file": "boss_health.png",
+      "source_rect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "gutter_px": 66
+    },
+    {
+      "id": "loot_reward",
+      "file": "loot_reward.png",
+      "source_rect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "gutter_px": 60
+    },
+    {
+      "id": "results",
+      "file": "results.png",
+      "source_rect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "gutter_px": 50
+    }
+  ]
+}

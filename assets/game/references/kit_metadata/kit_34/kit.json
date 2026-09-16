@@ -1,0 +1,100 @@
+{
+  "number": 34,
+  "name": "leaf_bloom_vfx",
+  "source": "master.png",
+  "grid": [
+    4,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "frame_00",
+      "file": "frame_00.png",
+      "source_rect": [
+        0,
+        0,
+        443,
+        443
+      ],
+      "gutter_px": 148
+    },
+    {
+      "id": "frame_01",
+      "file": "frame_01.png",
+      "source_rect": [
+        443,
+        0,
+        887,
+        443
+      ],
+      "gutter_px": 92
+    },
+    {
+      "id": "frame_02",
+      "file": "frame_02.png",
+      "source_rect": [
+        887,
+        0,
+        1330,
+        443
+      ],
+      "gutter_px": 59
+    },
+    {
+      "id": "frame_03",
+      "file": "frame_03.png",
+      "source_rect": [
+        1330,
+        0,
+        1774,
+        443
+      ],
+      "gutter_px": 34
+    },
+    {
+      "id": "frame_04",
+      "file": "frame_04.png",
+      "source_rect": [
+        0,
+        443,
+        443,
+        887
+      ],
+      "gutter_px": 60
+    },
+    {
+      "id": "frame_05",
+      "file": "frame_05.png",
+      "source_rect": [
+        443,
+        443,
+        887,
+        887
+      ],
+      "gutter_px": 17
+    },
+    {
+      "id": "frame_06",
+      "file": "frame_06.png",
+      "source_rect": [
+        887,
+        443,
+        1330,
+        887
+      ],
+      "gutter_px": 35
+    },
+    {
+      "id": "frame_07",
+      "file": "frame_07.png",
+      "source_rect": [
+        1330,
+        443,
+        1774,
+        887
+      ],
+      "gutter_px": 57
+    }
+  ]
+}

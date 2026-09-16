@@ -1,0 +1,95 @@
+{
+  "starter_sword": {
+    "id": "starter_sword",
+    "name": "Abenteurerschwert",
+    "type": "weapon",
+    "icon": "sword_icon",
+    "power": 4,
+    "weapon_family": "short_sword",
+    "shop": {
+      "buy_price": 0,
+      "sell_price": 0,
+      "currency": "gold",
+      "enabled": false
+    }
+  },
+  "class_sword": {
+    "id": "class_sword",
+    "name": "Klingenlehrschwert",
+    "type": "weapon",
+    "icon": "sword_icon",
+    "power": 12,
+    "weapon_family": "sword",
+    "shop": {
+      "buy_price": 120,
+      "sell_price": 36,
+      "currency": "gold",
+      "enabled": true
+    }
+  },
+  "class_bow": {
+    "id": "class_bow",
+    "name": "Waldläuferbogen",
+    "type": "weapon",
+    "icon": "bow_icon",
+    "power": 11,
+    "weapon_family": "bow",
+    "shop": {
+      "buy_price": 120,
+      "sell_price": 36,
+      "currency": "gold",
+      "enabled": true
+    }
+  },
+  "class_staff": {
+    "id": "class_staff",
+    "name": "Arkanstab",
+    "type": "weapon",
+    "icon": "staff_icon",
+    "power": 12,
+    "weapon_family": "staff",
+    "shop": {
+      "buy_price": 120,
+      "sell_price": 36,
+      "currency": "gold",
+      "enabled": true
+    }
+  },
+  "potion": {
+    "id": "potion",
+    "name": "Heiltrank",
+    "type": "consumable",
+    "icon": "potion_icon",
+    "heal": 150,
+    "shop": {
+      "enabled": true,
+      "buy_price": 25,
+      "sell_price": 10,
+      "currency": "gold"
+    }
+  },
+  "herb": {
+    "id": "herb",
+    "name": "Heilkraut",
+    "type": "material",
+    "icon": "ore_icon",
+    "shop": {
+      "enabled": true,
+      "buy_price": 8,
+      "sell_price": 3,
+      "currency": "gold"
+    }
+  },
+  "ore": {
+    "id": "ore",
+    "name": "Eisenerz",
+    "type": "material",
+    "icon": "ore_icon",
+    "shop": {
+      "enabled": true,
+      "buy_price": 12,
+      "sell_price": 5,
+      "currency": "gold"
+    }
+  }
+}

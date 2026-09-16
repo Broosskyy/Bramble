@@ -1,0 +1,441 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 65,
+  "kit": "male_run_damage",
+  "kind": "character",
+  "weapon_policy": "unarmed; weapons are separate layered assets",
+  "canvas_px": [
+    512,
+    512
+  ],
+  "atlas_grid": [
+    4,
+    2
+  ],
+  "atlas_file": "atlas_4x2_512.png",
+  "origin": "top_left",
+  "root_pivot_px": [
+    256,
+    464
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "name": "run_01",
+      "file": "frames/00_run_01.png",
+      "canvas": [
+        512,
+        512
+      ],
+      "pivot_px": [
+        256,
+        464
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.90625
+      ],
+      "sockets_px": {
+        "root": [
+          256,
+          464
+        ],
+        "center": [
+          256,
+          300
+        ],
+        "head": [
+          256,
+          145
+        ],
+        "hand_left": [
+          184,
+          300
+        ],
+        "hand_right": [
+          328,
+          300
+        ],
+        "weapon_socket": [
+          328,
+          300
+        ],
+        "vfx_center": [
+          256,
+          290
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "name": "run_02",
+      "file": "frames/01_run_02.png",
+      "canvas": [
+        512,
+        512
+      ],
+      "pivot_px": [
+        256,
+        464
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.90625
+      ],
+      "sockets_px": {
+        "root": [
+          256,
+          464
+        ],
+        "center": [
+          256,
+          300
+        ],
+        "head": [
+          256,
+          145
+        ],
+        "hand_left": [
+          184,
+          300
+        ],
+        "hand_right": [
+          328,
+          300
+        ],
+        "weapon_socket": [
+          328,
+          300
+        ],
+        "vfx_center": [
+          256,
+          290
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "name": "run_03",
+      "file": "frames/02_run_03.png",
+      "canvas": [
+        512,
+        512
+      ],
+      "pivot_px": [
+        256,
+        464
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.90625
+      ],
+      "sockets_px": {
+        "root": [
+          256,
+          464
+        ],
+        "center": [
+          256,
+          300
+        ],
+        "head": [
+          256,
+          145
+        ],
+        "hand_left": [
+          184,
+          300
+        ],
+        "hand_right": [
+          328,
+          300
+        ],
+        "weapon_socket": [
+          328,
+          300
+        ],
+        "vfx_center": [
+          256,
+          290
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "name": "run_04",
+      "file": "frames/03_run_04.png",
+      "canvas": [
+        512,
+        512
+      ],
+      "pivot_px": [
+        256,
+        464
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.90625
+      ],
+      "sockets_px": {
+        "root": [
+          256,
+          464
+        ],
+        "center": [
+          256,
+          300
+        ],
+        "head": [
+          256,
+          145
+        ],
+        "hand_left": [
+          184,
+          300
+        ],
+        "hand_right": [
+          328,
+          300
+        ],
+        "weapon_socket": [
+          328,
+          300
+        ],
+        "vfx_center": [
+          256,
+          290
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "name": "hit_01",
+      "file": "frames/04_hit_01.png",
+      "canvas": [
+        512,
+        512
+      ],
+      "pivot_px": [
+        256,
+        464
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.90625
+      ],
+      "sockets_px": {
+        "root": [
+          256,
+          464
+        ],
+        "center": [
+          256,
+          300
+        ],
+        "head": [
+          256,
+          145
+        ],
+        "hand_left": [
+          184,
+          300
+        ],
+        "hand_right": [
+          328,
+          300
+        ],
+        "weapon_socket": [
+          328,
+          300
+        ],
+        "vfx_center": [
+          256,
+          290
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "name": "hit_02",
+      "file": "frames/05_hit_02.png",
+      "canvas": [
+        512,
+        512
+      ],
+      "pivot_px": [
+        256,
+        464
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.90625
+      ],
+      "sockets_px": {
+        "root": [
+          256,
+          464
+        ],
+        "center": [
+          256,
+          300
+        ],
+        "head": [
+          256,
+          145
+        ],
+        "hand_left": [
+          184,
+          300
+        ],
+        "hand_right": [
+          328,
+          300
+        ],
+        "weapon_socket": [
+          328,
+          300
+        ],
+        "vfx_center": [
+          256,
+          290
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "name": "defeated_01",
+      "file": "frames/06_defeated_01.png",
+      "canvas": [
+        512,
+        512
+      ],
+      "pivot_px": [
+        256,
+        464
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.90625
+      ],
+      "sockets_px": {
+        "root": [
+          256,
+          464
+        ],
+        "center": [
+          256,
+          300
+        ],
+        "head": [
+          256,
+          145
+        ],
+        "hand_left": [
+          184,
+          300
+        ],
+        "hand_right": [
+          328,
+          300
+        ],
+        "weapon_socket": [
+          328,
+          300
+        ],
+        "vfx_center": [
+          256,
+          290
+        ]
+      }
+    },
+    {
+      "index": 7,
+      "name": "defeated_02",
+      "file": "frames/07_defeated_02.png",
+      "canvas": [
+        512,
+        512
+      ],
+      "pivot_px": [
+        256,
+        464
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.90625
+      ],
+      "sockets_px": {
+        "root": [
+          256,
+          464
+        ],
+        "center": [
+          256,
+          300
+        ],
+        "head": [
+          256,
+          145
+        ],
+        "hand_left": [
+          184,
+          300
+        ],
+        "hand_right": [
+          328,
+          300
+        ],
+        "weapon_socket": [
+          328,
+          300
+        ],
+        "vfx_center": [
+          256,
+          290
+        ]
+      }
+    }
+  ],
+  "clips": {
+    "run": {
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "duration_per_frame_ms": 85,
+      "fps": 11.76,
+      "loop": true,
+      "hold_last_frame": false
+    },
+    "hit": {
+      "frame_indices": [
+        4,
+        5
+      ],
+      "duration_per_frame_ms": 90,
+      "fps": 11.11,
+      "loop": false,
+      "hold_last_frame": false
+    },
+    "defeated": {
+      "frame_indices": [
+        6,
+        7
+      ],
+      "duration_per_frame_ms": 160,
+      "fps": 6.25,
+      "loop": false,
+      "hold_last_frame": true
+    }
+  },
+  "import_notes": {
+    "filtering": "linear",
+    "mipmaps": false,
+    "repeat": false,
+    "premultiplied_alpha": false,
+    "trim": false,
+    "pixels_per_unit_suggestion": 256
+  }
+}

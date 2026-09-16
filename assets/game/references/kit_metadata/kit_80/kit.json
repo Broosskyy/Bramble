@@ -1,0 +1,130 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 80,
+  "kit": "ranged_weapons",
+  "category": "weapon",
+  "asset_count": 8,
+  "assets": [
+    {
+      "name": "trainee_bow",
+      "file": "trainee_bow.png",
+      "size_px": [
+        260,
+        481
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "recurve_bow",
+      "file": "recurve_bow.png",
+      "size_px": [
+        272,
+        490
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "woodland_longbow",
+      "file": "woodland_longbow.png",
+      "size_px": [
+        247,
+        555
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "copper_crossbow",
+      "file": "copper_crossbow.png",
+      "size_px": [
+        372,
+        371
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "agile_shortbow",
+      "file": "agile_shortbow.png",
+      "size_px": [
+        250,
+        493
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "hand_crossbow",
+      "file": "hand_crossbow.png",
+      "size_px": [
+        363,
+        390
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "leaf_quiver",
+      "file": "leaf_quiver.png",
+      "size_px": [
+        318,
+        523
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    },
+    {
+      "name": "dual_throwing_blades",
+      "file": "dual_throwing_blades.png",
+      "size_px": [
+        374,
+        459
+      ],
+      "true_alpha": true,
+      "attachment_socket": "weapon_socket",
+      "suggested_handle_anchor_normalized": [
+        0.27,
+        0.76
+      ],
+      "separate_from_character": true
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

@@ -1,0 +1,56 @@
+{
+  "number": 21,
+  "name": "moorling_directions",
+  "source": "master.png",
+  "grid": [
+    2,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "front",
+      "file": "front.png",
+      "source_rect": [
+        0,
+        0,
+        687,
+        572
+      ],
+      "gutter_px": 7
+    },
+    {
+      "id": "right",
+      "file": "right.png",
+      "source_rect": [
+        687,
+        0,
+        1374,
+        572
+      ],
+      "gutter_px": 10
+    },
+    {
+      "id": "back",
+      "file": "back.png",
+      "source_rect": [
+        0,
+        572,
+        687,
+        1145
+      ],
+      "gutter_px": 61
+    },
+    {
+      "id": "left",
+      "file": "left.png",
+      "source_rect": [
+        687,
+        572,
+        1374,
+        1145
+      ],
+      "gutter_px": 36
+    }
+  ]
+}

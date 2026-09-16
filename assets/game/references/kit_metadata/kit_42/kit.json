@@ -1,0 +1,65 @@
+{
+  "number": 42,
+  "name": "lantern_moth_directions",
+  "sheet": "master.png",
+  "grid": [
+    2,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "front",
+      "file": "front.png",
+      "source_rect_px": [
+        0,
+        0,
+        656,
+        599
+      ],
+      "source_gutter_px": 52,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "right",
+      "file": "right.png",
+      "source_rect_px": [
+        656,
+        0,
+        1312,
+        599
+      ],
+      "source_gutter_px": 40,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "back",
+      "file": "back.png",
+      "source_rect_px": [
+        0,
+        599,
+        656,
+        1199
+      ],
+      "source_gutter_px": 46,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    },
+    {
+      "id": "left",
+      "file": "left.png",
+      "source_rect_px": [
+        656,
+        599,
+        1312,
+        1199
+      ],
+      "source_gutter_px": 36,
+      "review_if_zero_gutter": false,
+      "runtime_anchor": "bottom_center_footpoint"
+    }
+  ],
+  "note": "Drawing components, not guaranteed seamless terrain or implemented collision"
+}

@@ -1,0 +1,20 @@
+{
+  "schema": 10,
+  "authority": "server_authoritative",
+  "transport": "ENet UDP",
+  "default_port": 27840,
+  "party_max": 5,
+  "reward_range": 900,
+  "snapshot_hz": 10,
+  "reconnect_grace_seconds": 120,
+  "loot_modes": [
+    "personal",
+    "shared",
+    "need_greed"
+  ],
+  "dedicated_cmd": "godot --headless --path <project> -- --bramble-server --port=27840",
+  "relay": {
+    "status": "adapter_boundary_only",
+    "backend_bundled": false
+  }
+}

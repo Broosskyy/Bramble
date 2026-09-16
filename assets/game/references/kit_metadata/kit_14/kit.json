@@ -1,0 +1,66 @@
+{
+  "number": 14,
+  "title_de": "Minenmodule",
+  "region": "mine",
+  "sheet": "14_kupfermine/sheet.png",
+  "grid": [
+    2,
+    2
+  ],
+  "canvas_px": [
+    1254,
+    1254
+  ],
+  "real_alpha": true,
+  "cells": [
+    {
+      "id": "mine_entrance",
+      "grid_x": 0,
+      "grid_y": 0,
+      "source_rect_px": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "min_gutter_px_alpha16": 26
+    },
+    {
+      "id": "copper_cart",
+      "grid_x": 1,
+      "grid_y": 0,
+      "source_rect_px": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "min_gutter_px_alpha16": 61
+    },
+    {
+      "id": "rail_segment",
+      "grid_x": 0,
+      "grid_y": 1,
+      "source_rect_px": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "min_gutter_px_alpha16": 47
+    },
+    {
+      "id": "miner_lantern",
+      "grid_x": 1,
+      "grid_y": 1,
+      "source_rect_px": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "min_gutter_px_alpha16": 37
+    }
+  ],
+  "purpose": "modular sprite master, separate runtime collision/foot anchor required"
+}

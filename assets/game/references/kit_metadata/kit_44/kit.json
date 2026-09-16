@@ -1,0 +1,81 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 44,
+  "name": "autumn_cliff_modules",
+  "style": "warm hand-painted chibi mobile isometric fantasy",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "cliff_straight",
+      "file": "cliff_straight.png",
+      "role": "straight raised terrain edge",
+      "source_master": "master.png",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        118,
+        64,
+        687,
+        496
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "cliff_outer_corner",
+      "file": "cliff_outer_corner.png",
+      "role": "convex terrain corner",
+      "source_master": "master.png",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        114,
+        101,
+        641,
+        463
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "cliff_inner_corner",
+      "file": "cliff_inner_corner.png",
+      "role": "concave terrain corner",
+      "source_master": "master.png",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        131,
+        28,
+        656,
+        388
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "cliff_ramp",
+      "file": "cliff_ramp.png",
+      "role": "walkable visual ramp",
+      "source_master": "master.png",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        99,
+        38,
+        664,
+        427
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 45,
+  "name": "layered_autumn_cottage",
+  "style": "warm hand-painted chibi mobile isometric fantasy",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "cottage_complete",
+      "file": "cottage_complete.png",
+      "role": "complete reference building",
+      "source_master": "master.png",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        46,
+        58,
+        605,
+        609
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "roof_layer",
+      "file": "roof_layer.png",
+      "role": "separate roof/occlusion layer",
+      "source_master": "master.png",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        58,
+        128,
+        597,
+        517
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": false
+    },
+    {
+      "id": "walls_layer",
+      "file": "walls_layer.png",
+      "role": "walls and interior footprint layer",
+      "source_master": "master.png",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        79,
+        80,
+        627,
+        539
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": true
+    },
+    {
+      "id": "porch_foreground_layer",
+      "file": "porch_foreground_layer.png",
+      "role": "foreground porch occlusion layer",
+      "source_master": "master.png",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        0,
+        119,
+        519,
+        529
+      ],
+      "transparent_padding_px": 24,
+      "review_if_zero_gutter": true
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 57,
+  "name": "base_female_locomotion_damage",
+  "purpose": "unarmed female animation key poses",
+  "kind": "animation_keyposes",
+  "style_lock": "canonical early BRAMBLE kits 07-10 and original gameplay HUD",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "idle_a",
+      "file": "idle_a.png",
+      "source_bbox": [
+        76,
+        26,
+        365,
+        519
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "idle_b",
+      "file": "idle_b.png",
+      "source_bbox": [
+        441,
+        26,
+        734,
+        519
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "walk_a",
+      "file": "walk_a.png",
+      "source_bbox": [
+        816,
+        27,
+        1099,
+        522
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "walk_b",
+      "file": "walk_b.png",
+      "source_bbox": [
+        1172,
+        27,
+        1469,
+        520
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "run_a",
+      "file": "run_a.png",
+      "source_bbox": [
+        49,
+        522,
+        365,
+        992
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "run_b",
+      "file": "run_b.png",
+      "source_bbox": [
+        414,
+        521,
+        743,
+        988
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "hit",
+      "file": "hit.png",
+      "source_bbox": [
+        797,
+        541,
+        1093,
+        986
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "defeated",
+      "file": "defeated.png",
+      "source_bbox": [
+        1064,
+        727,
+        1515,
+        966
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

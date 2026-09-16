@@ -1,0 +1,52 @@
+{
+  "number": 23,
+  "name": "copper_mole_directions",
+  "source": "master.png",
+  "grid": [
+    2,
+    2
+  ],
+  "alpha_verified": false,
+  "assets": [
+    {
+      "id": "front",
+      "source_rect": [
+        0,
+        0,
+        768,
+        512
+      ],
+      "status": "concept_only_opaque"
+    },
+    {
+      "id": "right",
+      "source_rect": [
+        768,
+        0,
+        1536,
+        512
+      ],
+      "status": "concept_only_opaque"
+    },
+    {
+      "id": "back",
+      "source_rect": [
+        0,
+        512,
+        768,
+        1024
+      ],
+      "status": "concept_only_opaque"
+    },
+    {
+      "id": "left",
+      "source_rect": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "status": "concept_only_opaque"
+    }
+  ]
+}

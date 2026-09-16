@@ -1,0 +1,92 @@
+{
+  "instant_green_wave": {
+    "type": "instant",
+    "name": "Instant Combat · Grüne Welle",
+    "level_min": 3,
+    "waves": 5,
+    "time_limit": 180,
+    "reward": {
+      "gold": 180,
+      "xp": 160,
+      "jxp": 90,
+      "items": [
+        {
+          "id": "ore",
+          "qty": 3,
+          "rarity": "uncommon"
+        }
+      ]
+    }
+  },
+  "raid_ruins": {
+    "type": "raid",
+    "name": "Raid · Siegel der Alten Ruinen",
+    "level_min": 10,
+    "waves": 4,
+    "time_limit": 420,
+    "boss": "ruins_boss",
+    "reward": {
+      "gold": 520,
+      "xp": 420,
+      "jxp": 260,
+      "items": [
+        {
+          "id": "class_sword",
+          "qty": 1,
+          "rarity": "rare"
+        },
+        {
+          "id": "ore",
+          "qty": 5,
+          "rarity": "rare"
+        }
+      ]
+    }
+  },
+  "raid_crystal": {
+    "type": "raid",
+    "name": "Raid · Kristallkoloss",
+    "level_min": 14,
+    "waves": 5,
+    "time_limit": 540,
+    "boss": "cave_boss",
+    "reward": {
+      "gold": 760,
+      "xp": 620,
+      "jxp": 390,
+      "items": [
+        {
+          "id": "class_staff",
+          "qty": 1,
+          "rarity": "epic"
+        },
+        {
+          "id": "ore",
+          "qty": 8,
+          "rarity": "rare"
+        }
+      ]
+    }
+  },
+  "event_pumpkin": {
+    "type": "event",
+    "name": "Event · Kürbisernte",
+    "level_min": 5,
+    "waves": 6,
+    "time_limit": 360,
+    "boss": "ruins_boss",
+    "reward": {
+      "gold": 320,
+      "xp": 300,
+      "jxp": 170,
+      "pumpkins": 25,
+      "items": [
+        {
+          "id": "potion",
+          "qty": 4,
+          "rarity": "uncommon"
+        }
+      ]
+    }
+  }
+}

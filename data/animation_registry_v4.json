@@ -1,0 +1,1081 @@
+{
+  "source_revision": "v4-unarmed-gender-equipment-specialists-poses",
+  "godot_target": "4.7.2",
+  "characters": {
+    "male": [
+      {
+        "pose": "idle_open",
+        "row": 0,
+        "col": 0,
+        "file": "assets/animation_frames/characters/male/00_idle_open.png",
+        "alpha_bbox": [
+          33,
+          31,
+          384,
+          511
+        ]
+      },
+      {
+        "pose": "idle_blink",
+        "row": 0,
+        "col": 1,
+        "file": "assets/animation_frames/characters/male/01_idle_blink.png",
+        "alpha_bbox": [
+          0,
+          19,
+          384,
+          496
+        ]
+      },
+      {
+        "pose": "walk_step_a",
+        "row": 0,
+        "col": 2,
+        "file": "assets/animation_frames/characters/male/02_walk_step_a.png",
+        "alpha_bbox": [
+          0,
+          21,
+          378,
+          512
+        ]
+      },
+      {
+        "pose": "walk_step_b",
+        "row": 0,
+        "col": 3,
+        "file": "assets/animation_frames/characters/male/03_walk_step_b.png",
+        "alpha_bbox": [
+          1,
+          23,
+          368,
+          512
+        ]
+      },
+      {
+        "pose": "attack_prepare_empty",
+        "row": 1,
+        "col": 0,
+        "file": "assets/animation_frames/characters/male/04_attack_prepare_empty.png",
+        "alpha_bbox": [
+          0,
+          1,
+          380,
+          480
+        ]
+      },
+      {
+        "pose": "attack_release_empty",
+        "row": 1,
+        "col": 1,
+        "file": "assets/animation_frames/characters/male/05_attack_release_empty.png",
+        "alpha_bbox": [
+          1,
+          15,
+          384,
+          472
+        ]
+      },
+      {
+        "pose": "attack_recover_empty",
+        "row": 1,
+        "col": 2,
+        "file": "assets/animation_frames/characters/male/06_attack_recover_empty.png",
+        "alpha_bbox": [
+          1,
+          1,
+          384,
+          472
+        ]
+      },
+      {
+        "pose": "hit_recoil",
+        "row": 1,
+        "col": 3,
+        "file": "assets/animation_frames/characters/male/07_hit_recoil.png",
+        "alpha_bbox": [
+          1,
+          1,
+          362,
+          476
+        ]
+      }
+    ],
+    "female": [
+      {
+        "pose": "idle_open",
+        "row": 0,
+        "col": 0,
+        "file": "assets/animation_frames/characters/female/00_idle_open.png",
+        "alpha_bbox": [
+          43,
+          17,
+          384,
+          505
+        ]
+      },
+      {
+        "pose": "idle_blink",
+        "row": 0,
+        "col": 1,
+        "file": "assets/animation_frames/characters/female/01_idle_blink.png",
+        "alpha_bbox": [
+          0,
+          49,
+          384,
+          504
+        ]
+      },
+      {
+        "pose": "walk_step_a",
+        "row": 0,
+        "col": 2,
+        "file": "assets/animation_frames/characters/female/02_walk_step_a.png",
+        "alpha_bbox": [
+          1,
+          55,
+          378,
+          512
+        ]
+      },
+      {
+        "pose": "walk_step_b",
+        "row": 0,
+        "col": 3,
+        "file": "assets/animation_frames/characters/female/03_walk_step_b.png",
+        "alpha_bbox": [
+          1,
+          21,
+          342,
+          512
+        ]
+      },
+      {
+        "pose": "attack_prepare_empty",
+        "row": 1,
+        "col": 0,
+        "file": "assets/animation_frames/characters/female/04_attack_prepare_empty.png",
+        "alpha_bbox": [
+          31,
+          1,
+          384,
+          474
+        ]
+      },
+      {
+        "pose": "attack_release_empty",
+        "row": 1,
+        "col": 1,
+        "file": "assets/animation_frames/characters/female/05_attack_release_empty.png",
+        "alpha_bbox": [
+          15,
+          17,
+          384,
+          467
+        ]
+      },
+      {
+        "pose": "attack_recover_empty",
+        "row": 1,
+        "col": 2,
+        "file": "assets/animation_frames/characters/female/06_attack_recover_empty.png",
+        "alpha_bbox": [
+          53,
+          0,
+          374,
+          469
+        ]
+      },
+      {
+        "pose": "hit_recoil",
+        "row": 1,
+        "col": 3,
+        "file": "assets/animation_frames/characters/female/07_hit_recoil.png",
+        "alpha_bbox": [
+          17,
+          35,
+          366,
+          493
+        ]
+      }
+    ]
+  },
+  "npcs": {
+    "npc_quest_giver": [
+      {
+        "pose": "idle_open",
+        "row": 0,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_quest_giver/00_idle_open.png",
+        "alpha_bbox": [
+          27,
+          11,
+          506,
+          512
+        ]
+      },
+      {
+        "pose": "idle_blink",
+        "row": 0,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_quest_giver/01_idle_blink.png",
+        "alpha_bbox": [
+          3,
+          7,
+          512,
+          497
+        ]
+      },
+      {
+        "pose": "walk_step_a",
+        "row": 0,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_quest_giver/02_walk_step_a.png",
+        "alpha_bbox": [
+          1,
+          8,
+          484,
+          504
+        ]
+      },
+      {
+        "pose": "walk_step_b",
+        "row": 1,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_quest_giver/03_walk_step_b.png",
+        "alpha_bbox": [
+          55,
+          1,
+          504,
+          486
+        ]
+      },
+      {
+        "pose": "interact_a",
+        "row": 1,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_quest_giver/04_interact_a.png",
+        "alpha_bbox": [
+          5,
+          7,
+          512,
+          512
+        ]
+      },
+      {
+        "pose": "interact_b",
+        "row": 1,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_quest_giver/05_interact_b.png",
+        "alpha_bbox": [
+          0,
+          10,
+          500,
+          494
+        ]
+      }
+    ],
+    "npc_merchant": [
+      {
+        "pose": "idle_open",
+        "row": 0,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_merchant/00_idle_open.png",
+        "alpha_bbox": [
+          40,
+          32,
+          506,
+          512
+        ]
+      },
+      {
+        "pose": "idle_blink",
+        "row": 0,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_merchant/01_idle_blink.png",
+        "alpha_bbox": [
+          5,
+          31,
+          512,
+          494
+        ]
+      },
+      {
+        "pose": "walk_step_a",
+        "row": 0,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_merchant/02_walk_step_a.png",
+        "alpha_bbox": [
+          1,
+          30,
+          460,
+          496
+        ]
+      },
+      {
+        "pose": "walk_step_b",
+        "row": 1,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_merchant/03_walk_step_b.png",
+        "alpha_bbox": [
+          27,
+          1,
+          508,
+          512
+        ]
+      },
+      {
+        "pose": "interact_a",
+        "row": 1,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_merchant/04_interact_a.png",
+        "alpha_bbox": [
+          1,
+          9,
+          512,
+          488
+        ]
+      },
+      {
+        "pose": "interact_b",
+        "row": 1,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_merchant/05_interact_b.png",
+        "alpha_bbox": [
+          5,
+          16,
+          498,
+          465
+        ]
+      }
+    ],
+    "npc_blacksmith": [
+      {
+        "pose": "idle_open",
+        "row": 0,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_blacksmith/00_idle_open.png",
+        "alpha_bbox": [
+          63,
+          12,
+          506,
+          498
+        ]
+      },
+      {
+        "pose": "idle_blink",
+        "row": 0,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_blacksmith/01_idle_blink.png",
+        "alpha_bbox": [
+          1,
+          10,
+          512,
+          504
+        ]
+      },
+      {
+        "pose": "walk_step_a",
+        "row": 0,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_blacksmith/02_walk_step_a.png",
+        "alpha_bbox": [
+          0,
+          13,
+          456,
+          496
+        ]
+      },
+      {
+        "pose": "walk_step_b",
+        "row": 1,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_blacksmith/03_walk_step_b.png",
+        "alpha_bbox": [
+          111,
+          2,
+          510,
+          482
+        ]
+      },
+      {
+        "pose": "interact_a",
+        "row": 1,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_blacksmith/04_interact_a.png",
+        "alpha_bbox": [
+          1,
+          17,
+          512,
+          486
+        ]
+      },
+      {
+        "pose": "interact_b",
+        "row": 1,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_blacksmith/05_interact_b.png",
+        "alpha_bbox": [
+          0,
+          1,
+          476,
+          483
+        ]
+      }
+    ],
+    "npc_herbalist": [
+      {
+        "pose": "idle_open",
+        "row": 0,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_herbalist/00_idle_open.png",
+        "alpha_bbox": [
+          0,
+          0,
+          512,
+          506
+        ]
+      },
+      {
+        "pose": "idle_blink",
+        "row": 0,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_herbalist/01_idle_blink.png",
+        "alpha_bbox": [
+          0,
+          14,
+          512,
+          512
+        ]
+      },
+      {
+        "pose": "walk_step_a",
+        "row": 0,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_herbalist/02_walk_step_a.png",
+        "alpha_bbox": [
+          1,
+          13,
+          492,
+          512
+        ]
+      },
+      {
+        "pose": "walk_step_b",
+        "row": 1,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_herbalist/03_walk_step_b.png",
+        "alpha_bbox": [
+          0,
+          1,
+          506,
+          512
+        ]
+      },
+      {
+        "pose": "interact_a",
+        "row": 1,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_herbalist/04_interact_a.png",
+        "alpha_bbox": [
+          1,
+          0,
+          512,
+          512
+        ]
+      },
+      {
+        "pose": "interact_b",
+        "row": 1,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_herbalist/05_interact_b.png",
+        "alpha_bbox": [
+          1,
+          1,
+          498,
+          512
+        ]
+      }
+    ],
+    "npc_guard": [
+      {
+        "pose": "idle_open",
+        "row": 0,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_guard/00_idle_open.png",
+        "alpha_bbox": [
+          0,
+          23,
+          504,
+          512
+        ]
+      },
+      {
+        "pose": "idle_blink",
+        "row": 0,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_guard/01_idle_blink.png",
+        "alpha_bbox": [
+          1,
+          45,
+          512,
+          512
+        ]
+      },
+      {
+        "pose": "walk_step_a",
+        "row": 0,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_guard/02_walk_step_a.png",
+        "alpha_bbox": [
+          0,
+          32,
+          488,
+          512
+        ]
+      },
+      {
+        "pose": "walk_step_b",
+        "row": 1,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_guard/03_walk_step_b.png",
+        "alpha_bbox": [
+          39,
+          0,
+          512,
+          466
+        ]
+      },
+      {
+        "pose": "interact_a",
+        "row": 1,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_guard/04_interact_a.png",
+        "alpha_bbox": [
+          1,
+          0,
+          512,
+          488
+        ]
+      },
+      {
+        "pose": "interact_b",
+        "row": 1,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_guard/05_interact_b.png",
+        "alpha_bbox": [
+          0,
+          0,
+          464,
+          463
+        ]
+      }
+    ],
+    "npc_musician": [
+      {
+        "pose": "idle_open",
+        "row": 0,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_musician/00_idle_open.png",
+        "alpha_bbox": [
+          63,
+          18,
+          504,
+          512
+        ]
+      },
+      {
+        "pose": "idle_blink",
+        "row": 0,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_musician/01_idle_blink.png",
+        "alpha_bbox": [
+          9,
+          18,
+          496,
+          500
+        ]
+      },
+      {
+        "pose": "walk_step_a",
+        "row": 0,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_musician/02_walk_step_a.png",
+        "alpha_bbox": [
+          5,
+          15,
+          488,
+          512
+        ]
+      },
+      {
+        "pose": "walk_step_b",
+        "row": 1,
+        "col": 0,
+        "file": "assets/animation_frames/npcs/npc_musician/03_walk_step_b.png",
+        "alpha_bbox": [
+          25,
+          0,
+          510,
+          492
+        ]
+      },
+      {
+        "pose": "interact_a",
+        "row": 1,
+        "col": 1,
+        "file": "assets/animation_frames/npcs/npc_musician/04_interact_a.png",
+        "alpha_bbox": [
+          7,
+          1,
+          490,
+          480
+        ]
+      },
+      {
+        "pose": "interact_b",
+        "row": 1,
+        "col": 2,
+        "file": "assets/animation_frames/npcs/npc_musician/05_interact_b.png",
+        "alpha_bbox": [
+          13,
+          0,
+          482,
+          468
+        ]
+      }
+    ]
+  },
+  "specialists": {
+    "starter_sword": {
+      "male": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/starter_sword/male/00_idle.png",
+          "alpha_bbox": [
+            46,
+            16,
+            382,
+            508
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/starter_sword/male/01_walk_step_a.png",
+          "alpha_bbox": [
+            28,
+            23,
+            384,
+            512
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/starter_sword/male/02_walk_step_b.png",
+          "alpha_bbox": [
+            15,
+            19,
+            384,
+            496
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/starter_sword/male/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            0,
+            19,
+            368,
+            508
+          ]
+        }
+      ],
+      "female": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/starter_sword/female/00_idle.png",
+          "alpha_bbox": [
+            47,
+            3,
+            353,
+            494
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/starter_sword/female/01_walk_step_a.png",
+          "alpha_bbox": [
+            35,
+            16,
+            356,
+            494
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/starter_sword/female/02_walk_step_b.png",
+          "alpha_bbox": [
+            31,
+            6,
+            354,
+            492
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/starter_sword/female/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            6,
+            7,
+            368,
+            492
+          ]
+        }
+      ]
+    },
+    "starter_bow": {
+      "male": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/starter_bow/male/00_idle.png",
+          "alpha_bbox": [
+            17,
+            21,
+            384,
+            500
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/starter_bow/male/01_walk_step_a.png",
+          "alpha_bbox": [
+            1,
+            30,
+            358,
+            498
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/starter_bow/male/02_walk_step_b.png",
+          "alpha_bbox": [
+            3,
+            24,
+            384,
+            507
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/starter_bow/male/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            0,
+            18,
+            378,
+            504
+          ]
+        }
+      ],
+      "female": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/starter_bow/female/00_idle.png",
+          "alpha_bbox": [
+            33,
+            3,
+            378,
+            494
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/starter_bow/female/01_walk_step_a.png",
+          "alpha_bbox": [
+            15,
+            4,
+            384,
+            487
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/starter_bow/female/02_walk_step_b.png",
+          "alpha_bbox": [
+            5,
+            6,
+            366,
+            490
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/starter_bow/female/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            1,
+            1,
+            384,
+            496
+          ]
+        }
+      ]
+    },
+    "starter_mage": {
+      "male": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/starter_mage/male/00_idle.png",
+          "alpha_bbox": [
+            28,
+            9,
+            367,
+            512
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/starter_mage/male/01_walk_step_a.png",
+          "alpha_bbox": [
+            17,
+            1,
+            370,
+            512
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/starter_mage/male/02_walk_step_b.png",
+          "alpha_bbox": [
+            15,
+            12,
+            384,
+            511
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/starter_mage/male/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            0,
+            27,
+            383,
+            512
+          ]
+        }
+      ],
+      "female": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/starter_mage/female/00_idle.png",
+          "alpha_bbox": [
+            15,
+            3,
+            373,
+            502
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/starter_mage/female/01_walk_step_a.png",
+          "alpha_bbox": [
+            27,
+            10,
+            384,
+            497
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/starter_mage/female/02_walk_step_b.png",
+          "alpha_bbox": [
+            19,
+            8,
+            384,
+            496
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/starter_mage/female/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            0,
+            0,
+            383,
+            499
+          ]
+        }
+      ]
+    },
+    "ember_knight": {
+      "male": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/ember_knight/male/00_idle.png",
+          "alpha_bbox": [
+            41,
+            18,
+            431,
+            444
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/ember_knight/male/01_walk_step_a.png",
+          "alpha_bbox": [
+            28,
+            16,
+            413,
+            444
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/ember_knight/male/02_walk_step_b.png",
+          "alpha_bbox": [
+            5,
+            15,
+            443,
+            444
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/ember_knight/male/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            0,
+            18,
+            410,
+            444
+          ]
+        }
+      ],
+      "female": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/ember_knight/female/00_idle.png",
+          "alpha_bbox": [
+            37,
+            0,
+            389,
+            434
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/ember_knight/female/01_walk_step_a.png",
+          "alpha_bbox": [
+            20,
+            0,
+            385,
+            429
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/ember_knight/female/02_walk_step_b.png",
+          "alpha_bbox": [
+            31,
+            0,
+            376,
+            432
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/ember_knight/female/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            14,
+            0,
+            436,
+            434
+          ]
+        }
+      ]
+    },
+    "pumpkin_reaper": {
+      "male": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/pumpkin_reaper/male/00_idle.png",
+          "alpha_bbox": [
+            33,
+            26,
+            384,
+            510
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/pumpkin_reaper/male/01_walk_step_a.png",
+          "alpha_bbox": [
+            0,
+            39,
+            376,
+            496
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/pumpkin_reaper/male/02_walk_step_b.png",
+          "alpha_bbox": [
+            9,
+            38,
+            384,
+            496
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/pumpkin_reaper/male/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            0,
+            50,
+            366,
+            512
+          ]
+        }
+      ],
+      "female": [
+        {
+          "pose": "idle",
+          "file": "assets/animation_frames/specialists/pumpkin_reaper/female/00_idle.png",
+          "alpha_bbox": [
+            34,
+            7,
+            384,
+            494
+          ]
+        },
+        {
+          "pose": "walk_step_a",
+          "file": "assets/animation_frames/specialists/pumpkin_reaper/female/01_walk_step_a.png",
+          "alpha_bbox": [
+            0,
+            11,
+            360,
+            488
+          ]
+        },
+        {
+          "pose": "walk_step_b",
+          "file": "assets/animation_frames/specialists/pumpkin_reaper/female/02_walk_step_b.png",
+          "alpha_bbox": [
+            15,
+            13,
+            384,
+            488
+          ]
+        },
+        {
+          "pose": "empty_handed_skill_pose",
+          "file": "assets/animation_frames/specialists/pumpkin_reaper/female/03_empty_handed_skill_pose.png",
+          "alpha_bbox": [
+            0,
+            26,
+            366,
+            492
+          ]
+        }
+      ]
+    }
+  },
+  "vfx": {}
+}

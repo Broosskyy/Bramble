@@ -1,0 +1,112 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 51,
+  "name": "hainweiler_building_modules",
+  "style_lock": "canonical kits 01-06",
+  "camera": "fixed oblique/isometric approximately 35 degrees",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "timber_wall_straight",
+      "file": "timber_wall_straight.png",
+      "role": "plaster and timber straight wall",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        39,
+        23,
+        465,
+        492
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "timber_wall_outer_corner",
+      "file": "timber_wall_outer_corner.png",
+      "role": "matching outside wall corner",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        528,
+        56,
+        994,
+        521
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "timber_door_wall",
+      "file": "timber_door_wall.png",
+      "role": "matching wall with arched door",
+      "source_cell": [
+        2,
+        0
+      ],
+      "source_bbox": [
+        1063,
+        22,
+        1487,
+        516
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "timber_window_wall",
+      "file": "timber_window_wall.png",
+      "role": "matching wall with shuttered window",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        38,
+        507,
+        480,
+        992
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "teal_roof_straight",
+      "file": "teal_roof_straight.png",
+      "role": "teal shingle straight roof section",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        509,
+        548,
+        1040,
+        972
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "teal_roof_end",
+      "file": "teal_roof_end.png",
+      "role": "teal shingle roof end section",
+      "source_cell": [
+        2,
+        1
+      ],
+      "source_bbox": [
+        1061,
+        563,
+        1511,
+        952
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

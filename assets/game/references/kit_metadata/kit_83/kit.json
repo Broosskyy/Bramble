@@ -1,0 +1,162 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 83,
+  "kit": "armor_outfit_layers",
+  "category": "armor",
+  "asset_count": 8,
+  "assets": [
+    {
+      "name": "forest_male",
+      "file": "forest_male.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "true_alpha": true,
+      "canvas_px": [
+        512,
+        512
+      ],
+      "root_pivot_px": [
+        256,
+        480
+      ],
+      "base_character_alignment": "three_quarter_front",
+      "body_baked_in": false
+    },
+    {
+      "name": "forest_female",
+      "file": "forest_female.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "true_alpha": true,
+      "canvas_px": [
+        512,
+        512
+      ],
+      "root_pivot_px": [
+        256,
+        480
+      ],
+      "base_character_alignment": "three_quarter_front",
+      "body_baked_in": false
+    },
+    {
+      "name": "leather_male",
+      "file": "leather_male.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "true_alpha": true,
+      "canvas_px": [
+        512,
+        512
+      ],
+      "root_pivot_px": [
+        256,
+        480
+      ],
+      "base_character_alignment": "three_quarter_front",
+      "body_baked_in": false
+    },
+    {
+      "name": "leather_female",
+      "file": "leather_female.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "true_alpha": true,
+      "canvas_px": [
+        512,
+        512
+      ],
+      "root_pivot_px": [
+        256,
+        480
+      ],
+      "base_character_alignment": "three_quarter_front",
+      "body_baked_in": false
+    },
+    {
+      "name": "knight_male",
+      "file": "knight_male.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "true_alpha": true,
+      "canvas_px": [
+        512,
+        512
+      ],
+      "root_pivot_px": [
+        256,
+        480
+      ],
+      "base_character_alignment": "three_quarter_front",
+      "body_baked_in": false
+    },
+    {
+      "name": "knight_female",
+      "file": "knight_female.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "true_alpha": true,
+      "canvas_px": [
+        512,
+        512
+      ],
+      "root_pivot_px": [
+        256,
+        480
+      ],
+      "base_character_alignment": "three_quarter_front",
+      "body_baked_in": false
+    },
+    {
+      "name": "arcane_male",
+      "file": "arcane_male.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "true_alpha": true,
+      "canvas_px": [
+        512,
+        512
+      ],
+      "root_pivot_px": [
+        256,
+        480
+      ],
+      "base_character_alignment": "three_quarter_front",
+      "body_baked_in": false
+    },
+    {
+      "name": "arcane_female",
+      "file": "arcane_female.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "true_alpha": true,
+      "canvas_px": [
+        512,
+        512
+      ],
+      "root_pivot_px": [
+        256,
+        480
+      ],
+      "base_character_alignment": "three_quarter_front",
+      "body_baked_in": false
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

@@ -1,0 +1,83 @@
+{
+  "build": "BRAMBLE Godot 4.7.2 Parity V10",
+  "source_web": "V23.28 Combat Depth / Loot / Flow",
+  "strategy": "Web gameplay/content is specification; Godot is the execution/runtime migration, not a reduced rewrite.",
+  "portable_import": {
+    "classes": true,
+    "skills": true,
+    "items": true,
+    "quests": true,
+    "enemies": true,
+    "maps": true,
+    "npcs": true,
+    "portals": true,
+    "input_actions": true,
+    "network_protocol": true,
+    "content_registry": true
+  },
+  "systems": {
+    "classes_job_stats": {
+      "status": "data-imported + authoritative schema"
+    },
+    "skills_cooldowns": {
+      "status": "data-imported + host validation foundation"
+    },
+    "combo_flow": {
+      "status": "parity state foundation"
+    },
+    "stagger": {
+      "status": "content/runtime follow-up"
+    },
+    "enemy_archetypes": {
+      "status": "web data imported; visual AI baseline retained"
+    },
+    "loot_pity": {
+      "status": "parity state imported"
+    },
+    "equipment_upgrades": {
+      "status": "authoritative damage consumes weapon/rarity/enhance"
+    },
+    "specialists": {
+      "status": "authoritative ownership/state foundation; production assets retained"
+    },
+    "pets_taming": {
+      "status": "authoritative tame foundation; production assets retained"
+    },
+    "quests_reputation": {
+      "status": "portable quests/profile counters imported"
+    },
+    "events_raids": {
+      "status": "encounter definitions restored in data; full encounter UI/runtime remains to wire"
+    },
+    "party": {
+      "status": "max 5/reward range 900 foundation"
+    },
+    "server_authority": {
+      "status": "movement/dash/collision/combat/potion foundation"
+    },
+    "prediction_reconciliation": {
+      "status": "unacked move/dash replay foundation"
+    },
+    "shared_rewards": {
+      "status": "service foundation"
+    },
+    "loot_modes": {
+      "status": "personal/shared/need-greed foundation"
+    },
+    "join_in_progress": {
+      "status": "player state foundation + 10Hz enemy snapshot spawn/update/remove"
+    },
+    "reconnect": {
+      "status": "token/grace foundation"
+    },
+    "dedicated_server": {
+      "status": "headless bootstrap foundation"
+    },
+    "internet_relay": {
+      "status": "boundary only; external backend required"
+    },
+    "admin_staff": {
+      "status": "web reference retained; not yet reimplemented as Godot UI"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "version": "V11.2",
+  "name": "Secure Inventory + Persistence Boundary",
+  "mobile_first": true,
+  "changes": [
+    "Inventory validates content IDs, quantities and ownership; transfer has rollback semantics.",
+    "Equipment validates ownership, content existence and slot compatibility.",
+    "Persistence provider and PostgreSQL repository contracts added without shipping DB secrets/drivers to mobile clients.",
+    "Auth gateway boundary added for future dedicated account/token verification.",
+    "Existing Godot/ENet mobile gameplay and V11.1 domains retained."
+  ],
+  "next": [
+    "Wire authenticated join lifecycle to session/character resolution.",
+    "Implement dedicated PostgreSQL adapter outside mobile client.",
+    "Introduce item instance IDs for non-stackable equipment and transactional audit log."
+  ]
+}

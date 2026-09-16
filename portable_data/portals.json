@@ -1,0 +1,156 @@
+[
+  {
+    "id": "v_field",
+    "from": "village",
+    "name": "Östliche Felder",
+    "x": 2550,
+    "y": 1450,
+    "to": "field",
+    "tx": 420,
+    "ty": 3000,
+    "req": 1
+  },
+  {
+    "id": "f_home",
+    "from": "field",
+    "name": "Hainweiler",
+    "x": 280,
+    "y": 3000,
+    "to": "village",
+    "tx": 2250,
+    "ty": 1450,
+    "req": 1
+  },
+  {
+    "id": "f_meadow",
+    "from": "field",
+    "name": "Sonnenhügel",
+    "x": 7850,
+    "y": 3000,
+    "to": "meadow",
+    "tx": 420,
+    "ty": 3000,
+    "req": 3
+  },
+  {
+    "id": "m_field",
+    "from": "meadow",
+    "name": "Östliche Felder",
+    "x": 280,
+    "y": 3000,
+    "to": "field",
+    "tx": 7600,
+    "ty": 3000,
+    "req": 1
+  },
+  {
+    "id": "m_forest",
+    "from": "meadow",
+    "name": "Dämmerwald",
+    "x": 7850,
+    "y": 3000,
+    "to": "forest",
+    "tx": 420,
+    "ty": 3000,
+    "req": 5
+  },
+  {
+    "id": "fo_meadow",
+    "from": "forest",
+    "name": "Sonnenhügel",
+    "x": 280,
+    "y": 3000,
+    "to": "meadow",
+    "tx": 7600,
+    "ty": 3000,
+    "req": 3
+  },
+  {
+    "id": "fo_marsh",
+    "from": "forest",
+    "name": "Nebelbruch",
+    "x": 7850,
+    "y": 4500,
+    "to": "marsh",
+    "tx": 420,
+    "ty": 4100,
+    "req": 8
+  },
+  {
+    "id": "ma_forest",
+    "from": "marsh",
+    "name": "Dämmerwald",
+    "x": 280,
+    "y": 4100,
+    "to": "forest",
+    "tx": 7600,
+    "ty": 4400,
+    "req": 5
+  },
+  {
+    "id": "ma_ruins",
+    "from": "marsh",
+    "name": "Alte Ruinen",
+    "x": 7850,
+    "y": 1500,
+    "to": "ruins",
+    "tx": 420,
+    "ty": 1300,
+    "req": 10
+  },
+  {
+    "id": "r_marsh",
+    "from": "ruins",
+    "name": "Nebelbruch",
+    "x": 280,
+    "y": 1300,
+    "to": "marsh",
+    "tx": 7600,
+    "ty": 1500,
+    "req": 8
+  },
+  {
+    "id": "r_mine",
+    "from": "ruins",
+    "name": "Kupfermine",
+    "x": 7600,
+    "y": 5200,
+    "to": "mine",
+    "tx": 520,
+    "ty": 5000,
+    "req": 12
+  },
+  {
+    "id": "mi_ruins",
+    "from": "mine",
+    "name": "Alte Ruinen",
+    "x": 320,
+    "y": 5000,
+    "to": "ruins",
+    "tx": 7300,
+    "ty": 5000,
+    "req": 10
+  },
+  {
+    "id": "mi_cave",
+    "from": "mine",
+    "name": "Kristallhöhle",
+    "x": 7850,
+    "y": 850,
+    "to": "cave",
+    "tx": 520,
+    "ty": 900,
+    "req": 14
+  },
+  {
+    "id": "c_mine",
+    "from": "cave",
+    "name": "Kupfermine",
+    "x": 300,
+    "y": 900,
+    "to": "mine",
+    "tx": 7600,
+    "ty": 900,
+    "req": 12
+  }
+]

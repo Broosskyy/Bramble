@@ -1,0 +1,426 @@
+{
+  "schema": 1,
+  "maps": {
+    "village": {
+      "terrain": [
+        "terrain_meadow",
+        "terrain_flower_meadow"
+      ],
+      "paths": [
+        "path_cobble_vertical",
+        "path_cobble_turn"
+      ],
+      "trees": [
+        "tree_oak_green",
+        "tree_birch",
+        "tree_cherry"
+      ],
+      "plants": [
+        "plant_wildflowers",
+        "plant_yellow_flowers",
+        "plant_fern"
+      ],
+      "monsters": []
+    },
+    "field": {
+      "terrain": [
+        "terrain_meadow",
+        "terrain_dirt",
+        "terrain_dry_grass"
+      ],
+      "paths": [
+        "path_horizontal",
+        "path_vertical",
+        "path_cross"
+      ],
+      "trees": [
+        "tree_oak_green",
+        "tree_birch",
+        "tree_sapling"
+      ],
+      "plants": [
+        "plant_grass",
+        "plant_wildflowers",
+        "plant_berry_red"
+      ],
+      "monsters": [
+        "sproutling",
+        "hornhare",
+        "bramblehog",
+        "boar"
+      ]
+    },
+    "meadow": {
+      "terrain": [
+        "terrain_meadow_wildflowers",
+        "terrain_flower_meadow",
+        "terrain_meadow"
+      ],
+      "paths": [
+        "path_horizontal",
+        "path_corner"
+      ],
+      "trees": [
+        "tree_birch",
+        "tree_oak_green",
+        "tree_cherry"
+      ],
+      "plants": [
+        "plant_wildflowers",
+        "plant_blue_flowers",
+        "plant_yellow_flowers"
+      ],
+      "monsters": [
+        "sproutling",
+        "hornhare",
+        "mushroomling",
+        "boar"
+      ]
+    },
+    "forest": {
+      "terrain": [
+        "terrain_mossy_ground",
+        "terrain_autumn_leaves",
+        "terrain_dark_earth"
+      ],
+      "paths": [
+        "path_corner",
+        "path_earth_transition"
+      ],
+      "trees": [
+        "tree_ancient",
+        "tree_oak_red",
+        "tree_oak_green",
+        "tree_pine"
+      ],
+      "plants": [
+        "plant_fern",
+        "plant_berry_dark",
+        "harvest_mushrooms"
+      ],
+      "monsters": [
+        "gloomwolf",
+        "bramblehog",
+        "acornbeetle",
+        "mushroomling"
+      ]
+    },
+    "marsh": {
+      "terrain": [
+        "terrain_dark_earth",
+        "terrain_mossy_ground"
+      ],
+      "paths": [
+        "path_stream_crossing",
+        "path_earth_transition"
+      ],
+      "trees": [
+        "tree_willow",
+        "tree_ancient"
+      ],
+      "plants": [
+        "plant_fern",
+        "plant_shrub",
+        "harvest_red_mushroom"
+      ],
+      "monsters": [
+        "gloomwolf",
+        "mushroomling",
+        "mossturtle"
+      ]
+    },
+    "ruins": {
+      "terrain": [
+        "terrain_pebbles",
+        "terrain_dark_earth",
+        "terrain_autumn_leaves"
+      ],
+      "paths": [
+        "path_cobble_vertical",
+        "path_cobble_turn"
+      ],
+      "trees": [
+        "tree_pine",
+        "tree_oak_red"
+      ],
+      "plants": [
+        "plant_fern",
+        "prop_leaf_pile"
+      ],
+      "monsters": [
+        "mossturtle",
+        "acornbeetle",
+        "gloomwolf"
+      ]
+    },
+    "mine": {
+      "terrain": [
+        "terrain_dark_earth",
+        "terrain_pebbles"
+      ],
+      "paths": [
+        "path_earth_transition"
+      ],
+      "trees": [
+        "tree_pine"
+      ],
+      "plants": [
+        "plant_shrub"
+      ],
+      "monsters": [
+        "acornbeetle",
+        "mossturtle",
+        "fireling"
+      ]
+    },
+    "cave": {
+      "terrain": [
+        "terrain_pebbles",
+        "terrain_dark_earth"
+      ],
+      "paths": [
+        "path_earth_transition"
+      ],
+      "trees": [],
+      "plants": [
+        "harvest_mushrooms"
+      ],
+      "monsters": [
+        "fireling",
+        "mossturtle"
+      ]
+    }
+  },
+  "buildings": {
+    "village": [
+      [
+        "building_cottage",
+        720,
+        720,
+        190
+      ],
+      [
+        "building_inn",
+        1350,
+        690,
+        205
+      ],
+      [
+        "building_guildhall",
+        1980,
+        760,
+        215
+      ],
+      [
+        "building_purple_house",
+        760,
+        1980,
+        190
+      ],
+      [
+        "building_smithy",
+        1460,
+        1990,
+        215
+      ],
+      [
+        "building_shrine",
+        2100,
+        1950,
+        175
+      ]
+    ],
+    "field": [
+      [
+        "building_cottage",
+        1750,
+        1280,
+        155
+      ]
+    ],
+    "forest": [
+      [
+        "building_shrine",
+        4300,
+        1650,
+        145
+      ]
+    ],
+    "ruins": [
+      [
+        "building_shrine",
+        6650,
+        1450,
+        150
+      ]
+    ]
+  },
+  "props": {
+    "village": [
+      [
+        "prop_notice_board",
+        930,
+        1120,
+        68
+      ],
+      [
+        "prop_well",
+        1260,
+        1390,
+        88
+      ],
+      [
+        "prop_street_lamp",
+        760,
+        980,
+        48
+      ],
+      [
+        "prop_street_lamp",
+        1800,
+        1040,
+        48
+      ],
+      [
+        "prop_fountain",
+        1620,
+        1420,
+        110
+      ],
+      [
+        "prop_cart",
+        1970,
+        1740,
+        78
+      ],
+      [
+        "prop_crates",
+        1810,
+        1690,
+        54
+      ],
+      [
+        "prop_signpost",
+        2280,
+        1450,
+        52
+      ],
+      [
+        "prop_bench",
+        1110,
+        1700,
+        75
+      ]
+    ],
+    "field": [
+      [
+        "prop_cart",
+        1770,
+        1400,
+        72
+      ],
+      [
+        "prop_crates",
+        1840,
+        1450,
+        48
+      ],
+      [
+        "prop_signpost",
+        3200,
+        2900,
+        48
+      ]
+    ],
+    "meadow": [
+      [
+        "prop_bench",
+        2060,
+        1760,
+        70
+      ],
+      [
+        "prop_signpost",
+        4100,
+        2900,
+        48
+      ],
+      [
+        "prop_chest_closed",
+        5050,
+        3460,
+        45
+      ]
+    ],
+    "forest": [
+      [
+        "prop_chest_closed",
+        1760,
+        3940,
+        45
+      ],
+      [
+        "prop_signpost",
+        3550,
+        3000,
+        48
+      ]
+    ],
+    "marsh": [
+      [
+        "prop_signpost",
+        2140,
+        2550,
+        48
+      ],
+      [
+        "prop_chest_closed",
+        4560,
+        3980,
+        45
+      ]
+    ],
+    "ruins": [
+      [
+        "prop_metal_chest",
+        4120,
+        3200,
+        50
+      ],
+      [
+        "prop_signpost",
+        3000,
+        3000,
+        48
+      ]
+    ],
+    "mine": [
+      [
+        "prop_crates",
+        1450,
+        1280,
+        52
+      ],
+      [
+        "prop_barrel",
+        1510,
+        1300,
+        42
+      ],
+      [
+        "prop_metal_chest",
+        6700,
+        4230,
+        50
+      ]
+    ],
+    "cave": [
+      [
+        "prop_metal_chest",
+        4470,
+        3600,
+        50
+      ]
+    ]
+  }
+}

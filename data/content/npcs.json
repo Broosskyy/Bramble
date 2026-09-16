@@ -1,0 +1,138 @@
+{
+  "village": [
+    {
+      "id": "lina",
+      "name": "Lina",
+      "role": "Questgeberin",
+      "x": 1080,
+      "y": 1120,
+      "c": "#c96072",
+      "h": "#aa4351",
+      "interaction": "quest"
+    },
+    {
+      "id": "ferro",
+      "name": "Ferro",
+      "role": "Schmied",
+      "x": 1410,
+      "y": 1120,
+      "c": "#77503c",
+      "h": "#4f362a",
+      "interaction": "forge"
+    },
+    {
+      "id": "lia",
+      "name": "Lia",
+      "role": "Händlerin",
+      "x": 1610,
+      "y": 1420,
+      "c": "#695e9b",
+      "h": "#835da5",
+      "interaction": "shop"
+    },
+    {
+      "id": "teo",
+      "name": "Teo",
+      "role": "Lehrer",
+      "x": 950,
+      "y": 1510,
+      "c": "#52769a",
+      "h": "#d7bd78",
+      "interaction": "class_trainer"
+    },
+    {
+      "id": "guard",
+      "name": "Rovan",
+      "role": "Wache",
+      "x": 1780,
+      "y": 1050,
+      "c": "#677194",
+      "h": "#c8b486",
+      "interaction": "dialog"
+    }
+  ],
+  "field": [
+    {
+      "id": "farmer",
+      "name": "Maro",
+      "role": "Bauer",
+      "x": 1450,
+      "y": 1450,
+      "c": "#8a6c45",
+      "h": "#7a542f",
+      "interaction": "dialog"
+    }
+  ],
+  "meadow": [
+    {
+      "id": "ranger",
+      "name": "Selin",
+      "role": "Waldläuferin",
+      "x": 1200,
+      "y": 1650,
+      "c": "#4f7b58",
+      "h": "#6b4d2f",
+      "interaction": "dialog"
+    }
+  ],
+  "forest": [
+    {
+      "id": "hunter",
+      "name": "Kael",
+      "role": "Jäger",
+      "x": 1450,
+      "y": 1200,
+      "c": "#536b4e",
+      "h": "#47372a",
+      "interaction": "dialog"
+    }
+  ],
+  "marsh": [
+    {
+      "id": "hermit",
+      "name": "Oren",
+      "role": "Einsiedler",
+      "x": 980,
+      "y": 2050,
+      "c": "#596a63",
+      "h": "#a1a18d",
+      "interaction": "dialog"
+    }
+  ],
+  "ruins": [
+    {
+      "id": "scholar",
+      "name": "Neris",
+      "role": "Forscherin",
+      "x": 900,
+      "y": 820,
+      "c": "#6d658a",
+      "h": "#b0a4ce",
+      "interaction": "dialog"
+    }
+  ],
+  "mine": [
+    {
+      "id": "miner",
+      "name": "Brom",
+      "role": "Bergmann",
+      "x": 1100,
+      "y": 900,
+      "c": "#7a5a44",
+      "h": "#5e4635",
+      "interaction": "dialog"
+    }
+  ],
+  "cave": [
+    {
+      "id": "seer",
+      "name": "Asha",
+      "role": "Kristallseherin",
+      "x": 850,
+      "y": 950,
+      "c": "#665b93",
+      "h": "#d2c7e8",
+      "interaction": "dialog"
+    }
+  ]
+}

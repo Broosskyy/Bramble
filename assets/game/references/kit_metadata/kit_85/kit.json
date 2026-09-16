@@ -1,0 +1,243 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 85,
+  "kit": "leather_armor_pose_layers",
+  "category": "armor",
+  "asset_count": 8,
+  "assets": [
+    {
+      "index": 0,
+      "name": "male_idle",
+      "file": "frames/00_male_idle.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "head": [
+          256,
+          138
+        ],
+        "hand_left": [
+          180,
+          300
+        ],
+        "hand_right": [
+          332,
+          300
+        ],
+        "alignment_requires_artist_check": true
+      }
+    },
+    {
+      "index": 1,
+      "name": "male_walk",
+      "file": "frames/01_male_walk.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "head": [
+          256,
+          138
+        ],
+        "hand_left": [
+          180,
+          300
+        ],
+        "hand_right": [
+          332,
+          300
+        ],
+        "alignment_requires_artist_check": true
+      }
+    },
+    {
+      "index": 2,
+      "name": "male_run",
+      "file": "frames/02_male_run.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "head": [
+          256,
+          138
+        ],
+        "hand_left": [
+          180,
+          300
+        ],
+        "hand_right": [
+          332,
+          300
+        ],
+        "alignment_requires_artist_check": true
+      }
+    },
+    {
+      "index": 3,
+      "name": "male_hit",
+      "file": "frames/03_male_hit.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "head": [
+          256,
+          138
+        ],
+        "hand_left": [
+          180,
+          300
+        ],
+        "hand_right": [
+          332,
+          300
+        ],
+        "alignment_requires_artist_check": true
+      }
+    },
+    {
+      "index": 4,
+      "name": "female_idle",
+      "file": "frames/04_female_idle.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "head": [
+          256,
+          138
+        ],
+        "hand_left": [
+          180,
+          300
+        ],
+        "hand_right": [
+          332,
+          300
+        ],
+        "alignment_requires_artist_check": true
+      }
+    },
+    {
+      "index": 5,
+      "name": "female_walk",
+      "file": "frames/05_female_walk.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "head": [
+          256,
+          138
+        ],
+        "hand_left": [
+          180,
+          300
+        ],
+        "hand_right": [
+          332,
+          300
+        ],
+        "alignment_requires_artist_check": true
+      }
+    },
+    {
+      "index": 6,
+      "name": "female_run",
+      "file": "frames/06_female_run.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "head": [
+          256,
+          138
+        ],
+        "hand_left": [
+          180,
+          300
+        ],
+        "hand_right": [
+          332,
+          300
+        ],
+        "alignment_requires_artist_check": true
+      }
+    },
+    {
+      "index": 7,
+      "name": "female_hit",
+      "file": "frames/07_female_hit.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "root": [
+          256,
+          464
+        ],
+        "head": [
+          256,
+          138
+        ],
+        "hand_left": [
+          180,
+          300
+        ],
+        "hand_right": [
+          332,
+          300
+        ],
+        "alignment_requires_artist_check": true
+      }
+    }
+  ],
+  "canvas_px": [
+    512,
+    512
+  ],
+  "root_pivot_px": [
+    256,
+    464
+  ],
+  "weapons_baked_into_character": false,
+  "notes": "Socket positions are production suggestions and require a final artist calibration per frame."
+}

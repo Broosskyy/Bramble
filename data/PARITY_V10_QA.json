@@ -1,0 +1,29 @@
+{
+  "build": "V10 Web Import + Online Hardening",
+  "missing_scene_refs": [],
+  "json_errors": [],
+  "portable_content_files": [
+    "bramble_content_registry.json",
+    "classes.json",
+    "enemies.json",
+    "input_actions.json",
+    "items.json",
+    "maps.json",
+    "network_protocol.json",
+    "npcs.json",
+    "portals.json",
+    "quests.json",
+    "skills.json"
+  ],
+  "all_workchat_asset_inventory_present": true,
+  "static_gdscript_files": 33,
+  "stale_direct_field_hits": [
+    "loot_pickup.gd:state.gold",
+    "loot_pickup.gd:state.hp",
+    "loot_pickup.gd:state.level"
+  ],
+  "runtime_tested_in_godot": false,
+  "godot_binary_available": false,
+  "note": "Static assembly/reference validation only in this environment.",
+  "semicolon_compound_scan_hits": []
+}

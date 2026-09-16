@@ -1,0 +1,76 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 76,
+  "kit": "inventory_equipment_character_ui",
+  "category": "ui",
+  "asset_count": 6,
+  "assets": [
+    {
+      "name": "inventory_panel",
+      "file": "inventory_panel.png",
+      "size_px": [
+        530,
+        521
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "equipment_panel",
+      "file": "equipment_panel.png",
+      "size_px": [
+        518,
+        512
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "character_stats_panel",
+      "file": "character_stats_panel.png",
+      "size_px": [
+        517,
+        539
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "item_detail_tooltip",
+      "file": "item_detail_tooltip.png",
+      "size_px": [
+        520,
+        509
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": false,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "item_comparison_panel",
+      "file": "item_comparison_panel.png",
+      "size_px": [
+        522,
+        445
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    },
+    {
+      "name": "loot_pickup_panel",
+      "file": "loot_pickup_panel.png",
+      "size_px": [
+        510,
+        491
+      ],
+      "true_alpha": true,
+      "nine_slice_candidate": true,
+      "suggested_border_px": 36
+    }
+  ],
+  "style": "original BRAMBLE mobile fantasy MMORPG; dark charcoal, warm brown, antique gold"
+}

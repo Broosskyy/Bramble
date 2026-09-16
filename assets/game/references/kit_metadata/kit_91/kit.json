@@ -1,0 +1,163 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 91,
+  "kit": "melee_slash_vfx_sequence",
+  "category": "vfx_sequence",
+  "asset_count": 8,
+  "assets": [
+    {
+      "index": 0,
+      "name": "glint",
+      "file": "frames/00_glint.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "pivot": [
+          256,
+          256
+        ],
+        "blend_mode": "additive_or_alpha"
+      }
+    },
+    {
+      "index": 1,
+      "name": "arc_start",
+      "file": "frames/01_arc_start.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "pivot": [
+          256,
+          256
+        ],
+        "blend_mode": "additive_or_alpha"
+      }
+    },
+    {
+      "index": 2,
+      "name": "arc_grow",
+      "file": "frames/02_arc_grow.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "pivot": [
+          256,
+          256
+        ],
+        "blend_mode": "additive_or_alpha"
+      }
+    },
+    {
+      "index": 3,
+      "name": "slash_peak",
+      "file": "frames/03_slash_peak.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "pivot": [
+          256,
+          256
+        ],
+        "blend_mode": "additive_or_alpha"
+      }
+    },
+    {
+      "index": 4,
+      "name": "impact_peak",
+      "file": "frames/04_impact_peak.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "pivot": [
+          256,
+          256
+        ],
+        "blend_mode": "additive_or_alpha"
+      }
+    },
+    {
+      "index": 5,
+      "name": "burst",
+      "file": "frames/05_burst.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "pivot": [
+          256,
+          256
+        ],
+        "blend_mode": "additive_or_alpha"
+      }
+    },
+    {
+      "index": 6,
+      "name": "arc_fade",
+      "file": "frames/06_arc_fade.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "pivot": [
+          256,
+          256
+        ],
+        "blend_mode": "additive_or_alpha"
+      }
+    },
+    {
+      "index": 7,
+      "name": "motes_fade",
+      "file": "frames/07_motes_fade.png",
+      "size_px": [
+        512,
+        512
+      ],
+      "sockets": {
+        "pivot": [
+          256,
+          256
+        ],
+        "blend_mode": "additive_or_alpha"
+      }
+    }
+  ],
+  "canvas_px": [
+    512,
+    512
+  ],
+  "root_pivot_px": null,
+  "weapons_baked_into_character": false,
+  "notes": "Socket positions are production suggestions and require a final artist calibration per frame.",
+  "animation": {
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "duration_per_frame_ms": 70,
+    "fps": 14.29,
+    "loop": false,
+    "peak_frames": [
+      3,
+      4
+    ]
+  }
+}

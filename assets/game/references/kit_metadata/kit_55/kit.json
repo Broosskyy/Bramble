@@ -1,0 +1,107 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 55,
+  "name": "base_female_8_directions",
+  "purpose": "unarmed female base turnaround",
+  "kind": "sprite_views",
+  "style_lock": "canonical early BRAMBLE kits 07-10 and original gameplay HUD",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "front",
+      "file": "front.png",
+      "source_bbox": [
+        74,
+        18,
+        338,
+        504
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "front_right",
+      "file": "front_right.png",
+      "source_bbox": [
+        461,
+        18,
+        743,
+        507
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "right",
+      "file": "right.png",
+      "source_bbox": [
+        811,
+        26,
+        1097,
+        508
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back_right",
+      "file": "back_right.png",
+      "source_bbox": [
+        1188,
+        18,
+        1467,
+        509
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back",
+      "file": "back.png",
+      "source_bbox": [
+        68,
+        512,
+        315,
+        988
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "back_left",
+      "file": "back_left.png",
+      "source_bbox": [
+        432,
+        512,
+        713,
+        987
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "left",
+      "file": "left.png",
+      "source_bbox": [
+        819,
+        514,
+        1107,
+        991
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "front_left",
+      "file": "front_left.png",
+      "source_bbox": [
+        1186,
+        512,
+        1469,
+        1001
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

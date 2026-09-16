@@ -1,0 +1,56 @@
+{
+  "number": 29,
+  "name": "world_system_ui",
+  "source": "master.png",
+  "grid": [
+    2,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "world_map",
+      "file": "world_map.png",
+      "source_rect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "gutter_px": 60
+    },
+    {
+      "id": "dialogue",
+      "file": "dialogue.png",
+      "source_rect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "gutter_px": 71
+    },
+    {
+      "id": "shop",
+      "file": "shop.png",
+      "source_rect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "gutter_px": 37
+    },
+    {
+      "id": "settings",
+      "file": "settings.png",
+      "source_rect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "gutter_px": 82
+    }
+  ]
+}

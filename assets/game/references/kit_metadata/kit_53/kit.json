@@ -1,0 +1,112 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 53,
+  "name": "dungeon_raid_entrances",
+  "style_lock": "canonical kits 01-06",
+  "camera": "fixed oblique/isometric approximately 35 degrees",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "cellar_entrance",
+      "file": "cellar_entrance.png",
+      "role": "abandoned cellar stair entrance",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        35,
+        112,
+        506,
+        496
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "copper_mine_entrance",
+      "file": "copper_mine_entrance.png",
+      "role": "timber supported mine entrance",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        532,
+        63,
+        1016,
+        488
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "ruin_doorway",
+      "file": "ruin_doorway.png",
+      "role": "mossy ancient ruin doorway",
+      "source_cell": [
+        2,
+        0
+      ],
+      "source_bbox": [
+        1027,
+        40,
+        1517,
+        507
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "crystal_cave_entrance",
+      "file": "crystal_cave_entrance.png",
+      "role": "blue crystal cave entrance",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        18,
+        508,
+        519,
+        971
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "root_forest_entrance",
+      "file": "root_forest_entrance.png",
+      "role": "root covered forest dungeon entrance",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        518,
+        506,
+        1026,
+        975
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "nightfall_raid_gate",
+      "file": "nightfall_raid_gate.png",
+      "role": "dark stone raid gate",
+      "source_cell": [
+        2,
+        1
+      ],
+      "source_bbox": [
+        1029,
+        519,
+        1519,
+        972
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "number": 35,
+  "name": "specialist_wings",
+  "source": "master.png",
+  "grid": [
+    2,
+    2
+  ],
+  "alpha_verified": true,
+  "assets": [
+    {
+      "id": "moss_guardian",
+      "file": "moss_guardian.png",
+      "source_rect": [
+        0,
+        0,
+        768,
+        512
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "ember_knight",
+      "file": "ember_knight.png",
+      "source_rect": [
+        768,
+        0,
+        1536,
+        512
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "moon_weaver",
+      "file": "moon_weaver.png",
+      "source_rect": [
+        0,
+        512,
+        768,
+        1024
+      ],
+      "gutter_px": 0
+    },
+    {
+      "id": "crystal_keeper",
+      "file": "crystal_keeper.png",
+      "source_rect": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "gutter_px": 0
+    }
+  ]
+}

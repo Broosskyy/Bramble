@@ -1,0 +1,16 @@
+{
+  "target": "Godot 4.7.2",
+  "scene": "res://scenes/main.tscn",
+  "start_world": "Hainweiler",
+  "referenced_production_assets": 40,
+  "missing_referenced_assets": [],
+  "player_animation_registry": true,
+  "equipment_registry": true,
+  "complete_workchat_inventory": true,
+  "asset_gallery_enabled": true,
+  "notes": [
+    "Main scene now visibly composes terrain, paths, buildings, trees, props, NPCs and monsters.",
+    "Asset Gallery shows the deduplicated work-chat master inventory in pages.",
+    "Godot binary was not available in this environment, so runtime launch validation must occur in Godot 4.7.2."
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "project": "BRAMBLE",
+  "kit_number": 50,
+  "name": "water_riverbank_crossings",
+  "style_lock": "canonical kits 01-06",
+  "camera": "fixed oblique/isometric approximately 35 degrees",
+  "format": "PNG RGBA",
+  "assets": [
+    {
+      "id": "riverbank_straight",
+      "file": "riverbank_straight.png",
+      "role": "straight grassy riverbank",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_bbox": [
+        42,
+        108,
+        500,
+        441
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "riverbank_inner_curve",
+      "file": "riverbank_inner_curve.png",
+      "role": "inner curved riverbank",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_bbox": [
+        572,
+        29,
+        957,
+        474
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "riverbank_outer_curve",
+      "file": "riverbank_outer_curve.png",
+      "role": "outer curved riverbank",
+      "source_cell": [
+        2,
+        0
+      ],
+      "source_bbox": [
+        1039,
+        26,
+        1469,
+        473
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "shallow_ford",
+      "file": "shallow_ford.png",
+      "role": "shallow water ford with stepping stones",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_bbox": [
+        71,
+        507,
+        456,
+        955
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "wooden_footbridge",
+      "file": "wooden_footbridge.png",
+      "role": "short wooden footbridge",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_bbox": [
+        551,
+        500,
+        985,
+        958
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    },
+    {
+      "id": "pond_edge_endcap",
+      "file": "pond_edge_endcap.png",
+      "role": "pond edge and reed end cap",
+      "source_cell": [
+        2,
+        1
+      ],
+      "source_bbox": [
+        1056,
+        524,
+        1479,
+        964
+      ],
+      "transparent_padding_px": 24,
+      "component_isolation_verified": true
+    }
+  ]
+}

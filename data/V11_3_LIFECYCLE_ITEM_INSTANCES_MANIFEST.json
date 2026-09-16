@@ -1,0 +1,18 @@
+{
+  "version": "V11.3",
+  "name": "Auth Session Character Lifecycle + Item Instances + Audit",
+  "mobile_first": true,
+  "changes": [
+    "Authenticated join pipeline gates gameplay until world_joined.",
+    "Reconnect resumes stable session/character identity without trusting mobile secrets.",
+    "Non-stackable equipment can receive stable item instance IDs and ownership validation.",
+    "Server-side transaction audit foundation records identity context and domain actions.",
+    "Existing ENet/Godot gameplay, prediction, combat, loot and V11.2 persistence boundaries retained."
+  ],
+  "next": [
+    "Move audit persistence behind PostgreSQL adapter/outbox.",
+    "Add character selection/create/delete contracts and account limits.",
+    "Convert remaining equipment/content paths to instance-first representation.",
+    "Add idempotency keys/version checks to inventory/economy mutations."
+  ]
+}
