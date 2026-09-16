@@ -392,7 +392,7 @@ def main() -> int:
         if args.milestone.startswith("m03.1"):
             m03_1_capture()
             m03_1_multiplayer_e2e()
-        if args.milestone.startswith("m04.1"):
+        if args.milestone.replace("_", ".").startswith("m04.1"):
             m04_1_capture()
             measure_snapshot_payload()
             m03_1_multiplayer_e2e()

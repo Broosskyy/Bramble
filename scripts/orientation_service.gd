@@ -12,8 +12,19 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(_refresh)
 	_refresh()
 
+func force_refresh() -> void:
+	var size := _current_size()
+	mode = Mode.PORTRAIT if size.y > size.x else Mode.LANDSCAPE
+	orientation_changed.emit(mode_name())
+
+func _current_size() -> Vector2i:
+	var win := get_window()
+	if win and win.size.x > 0 and win.size.y > 0:
+		return win.size
+	return Vector2i(get_viewport().get_visible_rect().size)
+
 func _refresh() -> void:
-	var size := get_viewport().get_visible_rect().size
+	var size := _current_size()
 	var next := Mode.PORTRAIT if size.y > size.x else Mode.LANDSCAPE
 	if next != mode:
 		mode = next

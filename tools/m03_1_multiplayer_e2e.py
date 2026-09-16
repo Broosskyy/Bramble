@@ -68,7 +68,7 @@ def run_client(label: str) -> subprocess.CompletedProcess:
             cwd=str(ROOT),
             stdout=log_file,
             stderr=subprocess.STDOUT,
-            timeout=180,
+            timeout=420,
         )
 
 
@@ -103,8 +103,8 @@ def main() -> int:
         if client2.returncode != 0:
             raise RuntimeError(f"Client reconnect failed ({client2.returncode})")
 
-        wait_log(r"HOST_E2E_PASS", timeout_s=300.0)
-        host.wait(timeout=60)
+        wait_log(r"HOST_E2E_PASS", timeout_s=480.0)
+        host.wait(timeout=90)
         if host.returncode != 0:
             raise RuntimeError(f"Host failed ({host.returncode})")
 

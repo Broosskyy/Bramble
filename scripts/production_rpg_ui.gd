@@ -120,14 +120,23 @@ func hide_panel() -> void:
 
 func show_panel() -> void:
 	visible = true
+	_apply_layout(_viewport_portrait())
 	_refresh()
-	_apply_layout(_portrait_mode)
 
 func select_item(item_id: String) -> void:
 	_selected_item_id = item_id
-	if _portrait_mode:
+	if _viewport_portrait():
 		_portrait_tab = PortraitTab.DETAIL
 	_refresh()
+
+func _viewport_portrait() -> bool:
+	var size := get_viewport().get_visible_rect().size
+	var win := get_window()
+	if win:
+		var ws := win.size
+		if ws.x > 0 and ws.y > 0:
+			size = ws
+	return size.y > size.x
 
 func _build_ui() -> void:
 	_root = Control.new()
@@ -235,11 +244,11 @@ func _build_portrait_panel() -> Control:
 	top.add_child(bars)
 	_portrait_identity = _label("Hüter · Lv 1", 15)
 	bars.add_child(_portrait_identity)
-	_portrait_hp = _bar(Color("#c44"))
+	_portrait_hp = _bar(Color("#c44"), 220.0)
 	bars.add_child(_portrait_hp)
-	_portrait_mp = _bar(Color("#58a"))
+	_portrait_mp = _bar(Color("#58a"), 220.0)
 	bars.add_child(_portrait_mp)
-	_portrait_xp = _bar(Color("#7a5"))
+	_portrait_xp = _bar(Color("#7a5"), 220.0)
 	bars.add_child(_portrait_xp)
 	_portrait_tab_row = HBoxContainer.new()
 	_portrait_tab_row.add_theme_constant_override("separation", 6)
@@ -368,16 +377,19 @@ func _apply_layout(portrait: bool) -> void:
 	_landscape.visible = not portrait
 	_portrait.visible = portrait
 	if portrait:
-		_portrait.size = vp
-		_portrait.position = Vector2.ZERO
+		_portrait.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_portrait.set_offsets_preset(Control.PRESET_FULL_RECT)
 	else:
-		_landscape.size = vp
-		_landscape.position = Vector2.ZERO
+		_landscape.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_landscape.set_offsets_preset(Control.PRESET_FULL_RECT)
 		var shell := _landscape.get_child(0) as Control
 		if shell:
 			shell.position = Vector2(maxf(24.0, (vp.x - 920.0) * 0.5), maxf(24.0, (vp.y - 520.0) * 0.5))
 
 func _refresh(_view: Dictionary = {}) -> void:
+	var portrait := _viewport_portrait()
+	if portrait != _portrait_mode:
+		_apply_layout(portrait)
 	var cs = get_tree().get_first_node_in_group("character_state_service")
 	if cs == null:
 		return
@@ -746,9 +758,10 @@ func _label(text: String, size: int) -> Label:
 	l.add_theme_color_override("font_color", Color("#f0e8d8"))
 	return l
 
-func _bar(color: Color) -> ProgressBar:
+func _bar(color: Color, width: float = 180.0) -> ProgressBar:
 	var bar := ProgressBar.new()
-	bar.custom_minimum_size = Vector2(180, 12)
+	bar.custom_minimum_size = Vector2(width, 12)
+	bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	bar.show_percentage = false
 	var bg := StyleBoxFlat.new()
 	bg.bg_color = Color(0.08, 0.07, 0.06, 0.85)

@@ -107,7 +107,7 @@ func _capture_live(args: PackedStringArray) -> void:
 	get_window().size = Vector2i(1080, 1920)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS)
 	await _wait_frames(1.2)
@@ -115,7 +115,7 @@ func _capture_live(args: PackedStringArray) -> void:
 	if "gameplay" in args:
 		get_window().size = Vector2i(1920, 1080)
 		if orient:
-			orient._refresh()
+			orient.force_refresh()
 		await _wait_frames(1)
 		_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
 		await _wait_frames(1.2)
@@ -146,7 +146,7 @@ func _capture_m02_2(args: PackedStringArray) -> void:
 	get_window().size = Vector2i(1080, 1920)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS)
 	await _wait_frames(1.2)
@@ -165,7 +165,7 @@ func _walk_qa_path() -> void:
 	get_window().size = Vector2i(1920, 1080)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	var path := [
 		BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS,
 		Vector2(120, 70),
@@ -192,7 +192,7 @@ func _capture_m02_1() -> void:
 	get_window().size = Vector2i(1080, 1920)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS)
 	await _wait_frames(1.2)
@@ -209,7 +209,7 @@ func _capture_shots(args: PackedStringArray) -> void:
 		get_window().size = Vector2i(1080, 1920)
 		var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 		if orient:
-			orient._refresh()
+			orient.force_refresh()
 		await _wait_frames(2)
 		_shot("portrait_world.png")
 	get_tree().quit()
@@ -350,7 +350,7 @@ func _capture_m03(args: PackedStringArray) -> void:
 	get_window().size = Vector2i(1080, 1920)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
 	enemy = _nearest_enemy()
@@ -414,7 +414,7 @@ func _m03_multiplayer_shot() -> void:
 	get_window().size = Vector2i(1920, 1080)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS)
 	await _wait_seconds(1.0)
@@ -458,7 +458,7 @@ func _capture_m03_1(_args: PackedStringArray) -> void:
 	get_window().size = Vector2i(1080, 1920)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_move_player(BrambleWorldPresentationConfig.WILDS_CAMERA_FOCUS)
 	await _wait_seconds(1.2)
@@ -649,12 +649,12 @@ func _capture_m04(_args: PackedStringArray) -> void:
 	get_window().size = Vector2i(1080, 1920)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_shot_m04("gameplay_portrait.png")
 	get_window().size = Vector2i(1920, 1080)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(1)
 	if cs:
 		for _i in range(3):
@@ -668,7 +668,7 @@ func _capture_m04(_args: PackedStringArray) -> void:
 		ui.hide_panel()
 	get_window().size = Vector2i(1080, 1920)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	if ui:
 		ui.show_inventory()
@@ -680,7 +680,7 @@ func _capture_m04(_args: PackedStringArray) -> void:
 		_shot_m04("character_portrait.png")
 	get_window().size = Vector2i(1920, 1080)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(1)
 	if ui:
 		ui.show_character()
@@ -707,12 +707,23 @@ func _capture_m04(_args: PackedStringArray) -> void:
 	_shot_m04("skillbar_landscape.png")
 	get_window().size = Vector2i(1080, 1920)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_shot_m04("skillbar_portrait.png")
 	if cs:
 		cs.save_now()
 	get_tree().quit()
+
+func _await_orientation(portrait: bool) -> void:
+	get_window().size = Vector2i(1080, 1920) if portrait else Vector2i(1920, 1080)
+	for _i in range(10):
+		await _wait_frames(2)
+	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
+	if orient:
+		orient.force_refresh()
+	var ui = get_tree().get_first_node_in_group("production_rpg_ui")
+	if ui and ui.has_method("_apply_layout"):
+		ui._apply_layout(portrait)
 
 func _shot_m04_1(filename: String) -> void:
 	var img := get_viewport().get_texture().get_image()
@@ -732,50 +743,34 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
 	var player := get_node_or_null("Player") as BramblePlayerController
 
-	get_window().size = Vector2i(1920, 1080)
-	await _wait_frames(2)
+	await _await_orientation(false)
 	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
 	await _wait_seconds(1.0)
 	_shot_m04_1("01_gameplay_landscape.png")
 
-	get_window().size = Vector2i(1080, 1920)
-	if orient:
-		orient._refresh()
-	await _wait_frames(2)
+	await _await_orientation(true)
 	_shot_m04_1("02_gameplay_portrait.png")
 
-	get_window().size = Vector2i(1920, 1080)
-	if orient:
-		orient._refresh()
-	await _wait_frames(1)
+	await _await_orientation(false)
 	if ui:
 		ui.show_inventory()
 		await _wait_seconds(1.0)
 		_shot_m04_1("03_inventory_landscape.png")
 
-	get_window().size = Vector2i(1080, 1920)
-	if orient:
-		orient._refresh()
-	await _wait_frames(2)
+	await _await_orientation(true)
 	if ui:
 		ui.show_inventory()
 		await _wait_seconds(1.0)
 		_shot_m04_1("04_inventory_portrait.png")
 		ui.hide_panel()
 
-	get_window().size = Vector2i(1920, 1080)
-	if orient:
-		orient._refresh()
-	await _wait_frames(1)
+	await _await_orientation(false)
 	if ui:
 		ui.show_character()
 		await _wait_seconds(1.0)
 		_shot_m04_1("05_character_landscape.png")
 
-	get_window().size = Vector2i(1080, 1920)
-	if orient:
-		orient._refresh()
-	await _wait_frames(2)
+	await _await_orientation(true)
 	if ui:
 		ui.show_character()
 		await _wait_seconds(1.0)
@@ -788,7 +783,7 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 		await _wait_seconds(0.8)
 	get_window().size = Vector2i(1920, 1080)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(1)
 	if ui:
 		ui.show_character()
@@ -797,7 +792,7 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 
 	get_window().size = Vector2i(1080, 1920)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	if ui:
 		ui.show_character()
@@ -811,7 +806,7 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 
 	get_window().size = Vector2i(1920, 1080)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(1)
 	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
 	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
@@ -823,7 +818,7 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 
 	get_window().size = Vector2i(1080, 1920)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_shot_m04_1("11_skillbar_portrait.png")
 
@@ -833,7 +828,7 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 		await _wait_seconds(0.4)
 	get_window().size = Vector2i(1920, 1080)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(1)
 	_shot_m04_1("12_skill_cooldown.png")
 
@@ -846,7 +841,7 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 
 	get_window().size = Vector2i(1080, 1920)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_shot_m04_1("14_level_up_portrait.png")
 
@@ -854,13 +849,13 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 	await _wait_seconds(1.5)
 	get_window().size = Vector2i(1920, 1080)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(1)
 	_shot_m04_1("15_canopy_fade_landscape.png")
 
 	get_window().size = Vector2i(1080, 1920)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(2)
 	_shot_m04_1("16_canopy_fade_portrait.png")
 
@@ -870,7 +865,7 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 		ui.hide_panel()
 	get_window().size = Vector2i(1920, 1080)
 	if orient:
-		orient._refresh()
+		orient.force_refresh()
 	await _wait_frames(1)
 	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS)
 	await _wait_seconds(0.8)
