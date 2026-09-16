@@ -227,9 +227,17 @@ func equip_from_inventory(item_id: String) -> Dictionary:
 	var slot := String(item.get("allowed_slot", ""))
 	if slot == "":
 		return {"ok": false, "reason": "not_equipment"}
-	return equip_item(item_id, slot)
+	var peer_id := local_peer_id()
+	var pa := get_tree().get_first_node_in_group("player_authority") as BramblePlayerAuthority
+	var instance_id := ""
+	if pa:
+		for stack in pa.ensure_peer(peer_id).get("inventory", []):
+			if String(stack.get("id", stack.get("item_id", ""))) == item_id:
+				instance_id = String(stack.get("instance_id", ""))
+				break
+	return equip_item(item_id, slot, instance_id)
 
-func equip_item(item_id: String, m04_slot: String) -> Dictionary:
+func equip_item(item_id: String, m04_slot: String, instance_id := "") -> Dictionary:
 	var peer_id := local_peer_id()
 	var inv := get_tree().get_first_node_in_group("inventory_service") as BrambleInventoryService
 	var equip := get_tree().get_first_node_in_group("equipment_service") as BrambleEquipmentService
@@ -241,22 +249,25 @@ func equip_item(item_id: String, m04_slot: String) -> Dictionary:
 		return {"ok": false, "reason": "unknown_item"}
 	if int(get_character_view().get("level", 1)) < int(item.get("required_level", 1)):
 		return {"ok": false, "reason": "level_too_low"}
-	if not inv.owns(peer_id, item_id, 1):
+	var instances := get_tree().get_first_node_in_group("item_instance_service") as BrambleItemInstanceService
+	if instance_id != "" and (instances == null or instances.find_owned(peer_id, instance_id).is_empty()):
+		return {"ok": false, "reason": "instance_not_owned"}
+	if instance_id == "" and not inv.owns(peer_id, item_id, 1):
 		return {"ok": false, "reason": "not_owned"}
 	var auth_slot := String(M04_TO_AUTHORITY_SLOT.get(m04_slot, m04_slot))
 	var pa := get_tree().get_first_node_in_group("player_authority") as BramblePlayerAuthority
 	var state := pa.ensure_peer(peer_id)
 	var eq: Dictionary = state.get("equipment", {})
 	var previous := _equipped_item_id(eq.get(auth_slot, ""))
-	if not inv.remove_item(peer_id, item_id, 1):
+	if not equip.equip(peer_id, auth_slot, item_id, instance_id):
+		return {"ok": false, "reason": "equip_rejected"}
+	# EquipmentService validates ownership, so consumption must happen after its
+	# validation/commit rather than before it.
+	var removed := inv.remove_instance(peer_id, instance_id) if instance_id != "" else inv.remove_item(peer_id, item_id, 1)
+	if not removed:
 		return {"ok": false, "reason": "remove_failed"}
 	if previous != "":
 		inv.add_item(peer_id, previous, 1)
-	if not equip.equip(peer_id, auth_slot, item_id):
-		inv.add_item(peer_id, item_id, 1)
-		if previous != "":
-			inv.remove_item(peer_id, previous, 1)
-		return {"ok": false, "reason": "equip_rejected"}
 	_apply_equipment_visuals()
 	_recalculate(peer_id)
 	_sync_game_state()

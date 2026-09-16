@@ -41,6 +41,16 @@ func remove_item(peer_id:int,item_id:String,qty:int=1,transaction_id:String="")-
     if remaining>0:return _reject(peer_id,"insufficient_quantity")
     state["inventory"]=inv;_commit(peer_id,state);_remember(transaction_id,true);return true
 
+func remove_instance(peer_id:int,instance_id:String)->bool:
+    if instance_id=="":return _reject(peer_id,"invalid_instance_id")
+    var pa:=get_tree().get_first_node_in_group("player_authority") as BramblePlayerAuthority
+    if pa==null:return _reject(peer_id,"authority_unavailable")
+    var state:=pa.ensure_peer(peer_id);var inv:Array=state.get("inventory",[])
+    for i in range(inv.size()-1,-1,-1):
+        if String(inv[i].get("instance_id",""))!=instance_id:continue
+        inv.remove_at(i);state["inventory"]=inv;_commit(peer_id,state);return true
+    return _reject(peer_id,"instance_not_owned")
+
 func count(peer_id:int,item_id:String)->int:
     var pa:=get_tree().get_first_node_in_group("player_authority") as BramblePlayerAuthority
     if pa==null:return 0

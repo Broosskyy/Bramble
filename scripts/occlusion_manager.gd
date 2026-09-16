@@ -1,9 +1,22 @@
 class_name BrambleOcclusionManager
 extends Node
 
-@export var enabled := true
+@export var enabled := true:
+	set(value):
+		enabled = value
+		if not value and is_inside_tree():
+			_restore_occluders()
 
 var _alpha_state: Dictionary = {}
+
+func _restore_occluders() -> void:
+	for node in get_tree().get_nodes_in_group("occluder"):
+		if node is CanvasItem:
+			var item := node as CanvasItem
+			var color := item.modulate
+			color.a = 1.0
+			item.modulate = color
+	_alpha_state.clear()
 
 func _process(delta: float) -> void:
 	if not enabled:
@@ -43,7 +56,7 @@ func _update_occluder(item: CanvasItem, focus_points: Array[Vector2], delta: flo
 		var under_canopy := focus_pos.y > canopy_top - 24.0 and focus_pos.y < foot_y + 12.0
 		var within_x := absf(focus_pos.x - host.global_position.x) <= half_w + 18.0
 		var within_radius := focus_pos.distance_to(host.global_position) <= fade_radius
-		if behind and within_x and (under_canopy or within_radius):
+		if behind and ((within_x and under_canopy) or within_radius):
 			covers = true
 			break
 

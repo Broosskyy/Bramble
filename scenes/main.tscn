@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3]
+[gd_scene load_steps=65 format=3]
 
 [ext_resource path="res://scripts/bootstrap.gd" type="Script" id="1"]
 [ext_resource path="res://scripts/game_state.gd" type="Script" id="2"]
@@ -66,6 +66,7 @@
 [ext_resource path="res://scripts/occlusion_manager.gd" type="Script" id="62"]
 [ext_resource path="res://scripts/world_camera_controller.gd" type="Script" id="63"]
 [ext_resource path="res://scripts/production_hud.gd" type="Script" id="64"]
+[ext_resource path="res://scripts/footpoint_sort.gd" type="Script" id="65"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape_player"]
 radius = 18.0
@@ -282,6 +283,9 @@ z_index = 4
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 script = ExtResource("63")
+
+[node name="FootpointSort" type="Node" parent="Player"]
+script = ExtResource("65")
 
 [node name="ProductionHUD" type="CanvasLayer" parent="."]
 process_mode = 3

@@ -67,6 +67,8 @@ func _ready() -> void:
 		call_deferred("_capture_m04", args)
 	elif _has_arg("--m04_1-capture"):
 		call_deferred("_capture_m04_1", args)
+	elif _has_arg("--m04_2-capture"):
+		call_deferred("_capture_m04_2", args)
 	elif _has_arg("--measure-snapshot"):
 		call_deferred("_measure_snapshot")
 	elif _arg_value("--m03_1-e2e", "") != "":
@@ -486,11 +488,12 @@ func _m03_1_e2e_host() -> void:
 	var e2e = _ensure_e2e("host")
 	await _wait_seconds(2.0)
 	var saw_client := false
-	for _i in range(80):
+	var client_deadline := Time.get_ticks_msec() + 120000
+	while Time.get_ticks_msec() < client_deadline:
 		if e2e and e2e.connection_events() >= 1:
 			saw_client = true
 			break
-		await _wait_frames(5)
+		await _wait_seconds(0.25)
 	if not saw_client:
 		if e2e:
 			e2e.log_line("FAIL client_not_connected")
@@ -498,10 +501,11 @@ func _m03_1_e2e_host() -> void:
 		return
 	if e2e:
 		e2e.log_line("client_connected")
-	for _i in range(80):
+	var remote_deadline := Time.get_ticks_msec() + 120000
+	while Time.get_ticks_msec() < remote_deadline:
 		if e2e and (e2e.has_remote_seen() or e2e.remote_avatar_count() >= 1):
 			break
-		await _wait_frames(5)
+		await _wait_seconds(0.25)
 	if e2e:
 		e2e.log_line("host_remote_avatars=%d" % e2e.remote_avatar_count())
 	await _e2e_nudge(Vector2(70, 0))
@@ -521,10 +525,11 @@ func _m03_1_e2e_host() -> void:
 	await _e2e_combat_sanity(e2e)
 	if e2e:
 		e2e.log_line("waiting_client_disconnect")
-	for _i in range(120):
+	var disconnect_deadline := Time.get_ticks_msec() + 120000
+	while Time.get_ticks_msec() < disconnect_deadline:
 		if e2e and e2e.remote_avatar_count() == 0:
 			break
-		await _wait_frames(5)
+		await _wait_seconds(0.25)
 	if e2e:
 		e2e.log_line("disconnect_cleanup remotes=%d active=%d" % [
 			e2e.remote_avatar_count(),
@@ -534,13 +539,14 @@ func _m03_1_e2e_host() -> void:
 		e2e.log_line("waiting_reconnect")
 	var events_at_wait: int = e2e.connection_events() if e2e else 0
 	var saw_reconnect := false
-	for _i in range(160):
+	var reconnect_deadline := Time.get_ticks_msec() + 180000
+	while Time.get_ticks_msec() < reconnect_deadline:
 		if e2e and e2e.connection_events() > events_at_wait and e2e.active_remote_peers() >= 1:
 			await _wait_seconds(1.5)
 			if e2e.remote_avatar_count() <= 1 and e2e.active_remote_peers() <= 1:
 				saw_reconnect = true
 				break
-		await _wait_frames(5)
+		await _wait_seconds(0.25)
 	if e2e:
 		e2e.log_line("reconnect_remote_count=%d events=%d" % [
 			e2e.remote_avatar_count(),
@@ -716,14 +722,14 @@ func _capture_m04(_args: PackedStringArray) -> void:
 
 func _await_orientation(portrait: bool) -> void:
 	get_window().size = Vector2i(1080, 1920) if portrait else Vector2i(1920, 1080)
-	for _i in range(10):
-		await _wait_frames(2)
+	await _wait_frames(3)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
 		orient.force_refresh()
 	var ui = get_tree().get_first_node_in_group("production_rpg_ui")
 	if ui and ui.has_method("_apply_layout"):
 		ui._apply_layout(portrait)
+	await _wait_frames(2)
 
 func _shot_m04_1(filename: String) -> void:
 	var img := get_viewport().get_texture().get_image()
@@ -873,6 +879,170 @@ func _capture_m04_1(_args: PackedStringArray) -> void:
 
 	if cs:
 		cs.save_now()
+	get_tree().quit()
+
+func _shot_m04_2(filename: String) -> void:
+	var img := get_viewport().get_texture().get_image()
+	var path := ProjectSettings.globalize_path("res://artifacts/m04_2/%s" % filename)
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+	img.save_png(path)
+	print("M04.2 screenshot saved: ", path)
+
+func _capture_m04_2(_args: PackedStringArray) -> void:
+	await _wait_frames(10)
+	_ensure_dir("res://artifacts/m04_2/")
+	var cs = get_tree().get_first_node_in_group("character_state_service")
+	var ui = get_tree().get_first_node_in_group("production_rpg_ui")
+	var hud = get_tree().get_first_node_in_group("production_hud")
+	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
+	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	var occlusion = get_tree().get_first_node_in_group("occlusion_manager")
+	var player := get_node_or_null("Player") as BramblePlayerController
+
+	await _await_orientation(false)
+	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS)
+	await _wait_frames(8)
+	_shot_m04_2("01_gameplay_landscape.png")
+	_shot_m04_2("03_clean_hud_landscape.png")
+
+	await _await_orientation(true)
+	await _wait_frames(3)
+	_shot_m04_2("02_gameplay_portrait.png")
+	_shot_m04_2("04_clean_hud_portrait.png")
+
+	await _await_orientation(false)
+	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
+	var enemy := _nearest_enemy()
+	if enemy and targeting:
+		_move_player(enemy.global_position + Vector2(-82, 12))
+		targeting.set_target(enemy)
+	await _wait_frames(8)
+	_shot_m04_2("05_combat_landscape.png")
+	_shot_m04_2("07_target_panel.png")
+	_shot_m04_2("08_skillbar_landscape.png")
+
+	await _await_orientation(true)
+	await _wait_frames(3)
+	_shot_m04_2("06_combat_portrait.png")
+	_shot_m04_2("09_skillbar_portrait.png")
+
+	await _await_orientation(false)
+	if runtime and player and targeting and enemy:
+		targeting.set_target(enemy)
+		var skill_result: Dictionary = runtime.resolve_skill(player, 0, targeting.get_target_entity_id())
+		if not bool(skill_result.get("ok", false)):
+			push_error("M04.2 skill staging failed: %s" % skill_result)
+			get_tree().quit(1)
+			return
+	await _wait_frames(2)
+	_shot_m04_2("10_skill_cooldown.png")
+
+	if ui:
+		ui.show_inventory()
+	await _wait_frames(2)
+	_shot_m04_2("11_inventory_landscape.png")
+
+	await _await_orientation(true)
+	if ui:
+		ui.show_inventory()
+	await _wait_frames(2)
+	_shot_m04_2("12_inventory_portrait.png")
+
+	await _await_orientation(false)
+	if ui:
+		ui.show_inventory()
+		ui.select_item("rusty_blade")
+	await _wait_frames(2)
+	_shot_m04_2("13_inventory_item_selected.png")
+
+	if ui:
+		ui.show_character()
+	await _wait_frames(2)
+	_shot_m04_2("14_character_landscape.png")
+
+	await _await_orientation(true)
+	if ui:
+		ui.show_character()
+	await _wait_frames(2)
+	_shot_m04_2("15_character_portrait.png")
+
+	await _await_orientation(false)
+	if cs:
+		cs.add_loot("forest_blade", 1)
+		cs.add_loot("leather_vest", 1)
+		var weapon_result: Dictionary = cs.equip_from_inventory("forest_blade")
+		var armor_result: Dictionary = cs.equip_from_inventory("leather_vest")
+		if not bool(weapon_result.get("ok", false)) or not bool(armor_result.get("ok", false)):
+			push_error("M04.2 equipment staging failed: %s / %s" % [weapon_result, armor_result])
+			get_tree().quit(1)
+			return
+	if ui:
+		ui.show_equipment()
+	await _wait_frames(2)
+	_shot_m04_2("16_equipment_landscape.png")
+
+	await _await_orientation(true)
+	if ui:
+		ui.show_equipment()
+	await _wait_frames(2)
+	_shot_m04_2("17_equipment_portrait.png")
+	if ui:
+		ui.show_inventory()
+		ui.select_item("rusty_blade")
+	await _wait_frames(2)
+	_shot_m04_2("18_equipment_comparison.png")
+
+	if ui:
+		ui.hide_panel()
+	await _await_orientation(false)
+	if cs:
+		var view: Dictionary = cs.get_character_view()
+		var remaining := maxi(1, int(view.get("xp_to_next_level", 100)) - int(view.get("xp", 0)))
+		cs.grant_xp(remaining)
+	if hud and hud.has_method("show_level_up") and cs:
+		hud.show_level_up(int(cs.get_character_view().get("level", 1)), {"stat_points": 2, "skill_points": 1})
+	await _wait_frames(1)
+	_shot_m04_2("19_level_up_landscape.png")
+
+	await _await_orientation(true)
+	if hud and hud.has_method("show_level_up") and cs:
+		hud.show_level_up(int(cs.get_character_view().get("level", 1)), {"stat_points": 2, "skill_points": 1})
+	await _wait_frames(1)
+	_shot_m04_2("20_level_up_portrait.png")
+	if hud and hud.level_up_root:
+		hud.level_up_root.visible = false
+
+	await _await_orientation(false)
+	if targeting:
+		targeting.clear_target()
+	if occlusion:
+		occlusion.enabled = false
+	var canopy_focus := Vector2(720, 150)
+	_move_player(canopy_focus)
+	await _wait_frames(8)
+	_shot_m04_2("21_canopy_before_fade.png")
+	if occlusion:
+		occlusion.enabled = true
+	await _wait_frames(12)
+	_shot_m04_2("22_canopy_active_fade.png")
+	enemy = _nearest_enemy()
+	if enemy and targeting:
+		targeting.set_target(enemy)
+	await _wait_frames(4)
+	_shot_m04_2("23_canopy_combat_readability.png")
+
+	_shot_m04_2("24_navigation_landscape.png")
+	_shot_m04_2("26_minimap.png")
+	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS)
+	if targeting:
+		targeting.clear_target()
+	await _wait_frames(8)
+	_shot_m04_2("27_final_gameplay_landscape.png")
+
+	await _await_orientation(true)
+	await _wait_frames(3)
+	_shot_m04_2("25_navigation_portrait.png")
+	_shot_m04_2("28_final_gameplay_portrait.png")
 	get_tree().quit()
 
 func _measure_snapshot() -> void:

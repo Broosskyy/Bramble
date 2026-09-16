@@ -1,16 +1,18 @@
 class_name BrambleProductionHud
 extends CanvasLayer
 
-const HUD_STATS_SIZE := Vector2(260, 92)
-const HUD_QUEST_SIZE := Vector2(300, 70)
-const HUD_MINIMAP_SIZE := Vector2(132, 104)
-const HUD_JOY_SIZE := Vector2(136, 136)
-const HUD_ATTACK_SIZE := Vector2(84, 84)
-const HUD_SKILL_SIZE := Vector2(58, 58)
+const BrambleUiStyle = preload("res://scripts/bramble_ui_style.gd")
+
+const HUD_STATS_SIZE := Vector2(300, 124)
+const HUD_QUEST_SIZE := Vector2(300, 106)
+const HUD_MINIMAP_SIZE := Vector2(148, 148)
+const HUD_JOY_SIZE := Vector2(148, 148)
+const HUD_ATTACK_SIZE := Vector2(104, 104)
+const HUD_SKILL_SIZE := Vector2(70, 70)
 
 var stats_root: Control
 var stats_panel: TextureRect
-var portrait_icon: TextureRect
+var portrait_icon: Sprite2D
 var level_badge: Label
 var hp_bar: ProgressBar
 var mp_bar: ProgressBar
@@ -43,8 +45,12 @@ var level_up_rewards: Label
 
 var toast_time := 0.0
 var level_up_time := 0.0
+var _targeting_service = null
+var _runtime_service = null
+var _character_service = null
 
 func _ready() -> void:
+	print("BRAMBLE production HUD ready")
 	add_to_group("production_hud")
 	_build_ui()
 	_bind_touch()
@@ -54,50 +60,61 @@ func _ready() -> void:
 		state.player_stats_changed.connect(_on_stats_changed)
 		state.toast_requested.connect(show_toast)
 		state._emit_all()
-	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
-	if targeting:
-		targeting.target_changed.connect(_on_target_changed)
-	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
-	if runtime:
-		runtime.skill_cooldown_changed.connect(_on_skill_cooldown)
-	var cs = get_tree().get_first_node_in_group("character_state_service")
-	if cs:
-		cs.character_changed.connect(_on_character_changed)
-		cs.level_up.connect(_on_level_up)
-		_on_character_changed(cs.get_character_view())
+	_bind_runtime_services()
+	call_deferred("_bind_runtime_services")
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
 		orient.orientation_changed.connect(_apply_layout)
 		_apply_layout(orient.mode_name())
 
+func _bind_runtime_services() -> void:
+	if not is_instance_valid(_targeting_service):
+		_targeting_service = get_tree().get_first_node_in_group("combat_targeting_service")
+		if _targeting_service:
+			if not _targeting_service.target_changed.is_connected(_on_target_changed):
+				_targeting_service.target_changed.connect(_on_target_changed)
+			_on_target_changed(_targeting_service.get_target_state())
+	if not is_instance_valid(_runtime_service):
+		_runtime_service = get_tree().get_first_node_in_group("combat_runtime_service")
+		if _runtime_service and not _runtime_service.skill_cooldown_changed.is_connected(_on_skill_cooldown):
+			_runtime_service.skill_cooldown_changed.connect(_on_skill_cooldown)
+	if not is_instance_valid(_character_service):
+		_character_service = get_tree().get_first_node_in_group("character_state_service")
+		if _character_service:
+			if not _character_service.character_changed.is_connected(_on_character_changed):
+				_character_service.character_changed.connect(_on_character_changed)
+			if not _character_service.level_up.is_connected(_on_level_up):
+				_character_service.level_up.connect(_on_level_up)
+			_on_character_changed(_character_service.get_character_view())
+
 func _build_ui() -> void:
 	stats_root = _fixed_panel(HUD_STATS_SIZE)
+	stats_root.clip_contents = true
 	add_child(stats_root)
 	stats_panel = _scaled_tex("ui/hud/player_status_panel.png", HUD_STATS_SIZE)
 	stats_root.add_child(stats_panel)
-	portrait_icon = TextureRect.new()
+	portrait_icon = Sprite2D.new()
 	portrait_icon.texture = BrambleWorldPresentationConfig.game_tex("characters/base/male/directions/front.png")
-	portrait_icon.position = Vector2(8, 8)
-	portrait_icon.custom_minimum_size = Vector2(52, 52)
-	portrait_icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
-	portrait_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	portrait_icon.position = Vector2(52, 55)
+	portrait_icon.scale = Vector2.ONE * 0.135
+	portrait_icon.z_index = 2
 	stats_root.add_child(portrait_icon)
 	level_badge = Label.new()
-	level_badge.position = Vector2(8, 58)
-	level_badge.custom_minimum_size = Vector2(52, 16)
+	level_badge.position = Vector2(18, 88)
+	level_badge.custom_minimum_size = Vector2(68, 24)
 	level_badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level_badge.add_theme_font_size_override("font_size", 12)
+	level_badge.add_theme_font_size_override("font_size", 15)
 	level_badge.add_theme_color_override("font_color", Color("#ffe6a0"))
 	stats_root.add_child(level_badge)
-	hp_bar = _styled_bar(Vector2(72, 28), Vector2(178, 14), Color("#c44"))
+	hp_bar = _styled_bar(Vector2(106, 42), Vector2(174, 16), BrambleUiStyle.HP)
 	stats_root.add_child(hp_bar)
-	mp_bar = _styled_bar(Vector2(72, 46), Vector2(178, 12), Color("#58a"))
+	mp_bar = _styled_bar(Vector2(106, 64), Vector2(174, 14), BrambleUiStyle.MP)
 	stats_root.add_child(mp_bar)
-	xp_bar = _styled_bar(Vector2(72, 62), Vector2(178, 10), Color("#7a5"))
+	xp_bar = _styled_bar(Vector2(106, 84), Vector2(174, 12), BrambleUiStyle.XP)
 	stats_root.add_child(xp_bar)
 	stats_label = Label.new()
-	stats_label.position = Vector2(72, 8)
-	stats_label.add_theme_font_size_override("font_size", 12)
+	stats_label.position = Vector2(106, 17)
+	stats_label.add_theme_font_size_override("font_size", 16)
 	stats_label.add_theme_color_override("font_color", Color("#f0e8d8"))
 	stats_root.add_child(stats_label)
 
@@ -106,47 +123,56 @@ func _build_ui() -> void:
 	var quest_bg := _scaled_tex("ui/quests/quest_tracker_panel.png", HUD_QUEST_SIZE)
 	quest_root.add_child(quest_bg)
 	quest_title = Label.new()
-	quest_title.position = Vector2(14, 8)
-	quest_title.add_theme_font_size_override("font_size", 13)
+	quest_title.position = Vector2(72, 18)
+	quest_title.add_theme_font_size_override("font_size", 15)
 	quest_title.add_theme_color_override("font_color", Color("#ffe6a0"))
 	quest_root.add_child(quest_title)
 	quest_text = Label.new()
-	quest_text.position = Vector2(14, 28)
-	quest_text.size = Vector2(272, 34)
+	quest_text.position = Vector2(72, 43)
+	quest_text.size = Vector2(210, 52)
 	quest_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	quest_text.add_theme_font_size_override("font_size", 11)
+	quest_text.add_theme_font_size_override("font_size", 13)
 	quest_root.add_child(quest_text)
 
-	target_root = _fixed_panel(Vector2(240, 56))
+	target_root = _fixed_panel(Vector2(280, 118))
 	target_root.visible = false
 	add_child(target_root)
-	var target_bg := _scaled_tex("ui/target/target_status_panel.png", Vector2(240, 56))
+	var target_bg := _scaled_tex("ui/target/target_status_panel.png", Vector2(280, 118))
 	if target_bg.texture == null:
 		target_bg.texture = BrambleWorldPresentationConfig.game_tex("ui/quests/quest_tracker_panel.png")
 	target_root.add_child(target_bg)
 	target_name = Label.new()
-	target_name.position = Vector2(12, 6)
-	target_name.add_theme_font_size_override("font_size", 13)
+	target_name.position = Vector2(72, 34)
+	target_name.size = Vector2(196, 24)
+	target_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	target_name.add_theme_font_size_override("font_size", 16)
 	target_root.add_child(target_name)
 	target_hp = ProgressBar.new()
-	target_hp.position = Vector2(12, 26)
-	target_hp.size = Vector2(216, 12)
+	target_hp.position = Vector2(30, 78)
+	target_hp.size = Vector2(220, 13)
 	target_hp.show_percentage = false
+	var target_fill := StyleBoxFlat.new()
+	target_fill.bg_color = BrambleUiStyle.HP
+	target_fill.set_corner_radius_all(6)
+	target_hp.add_theme_stylebox_override("fill", target_fill)
 	target_root.add_child(target_hp)
 	target_status = Label.new()
-	target_status.position = Vector2(12, 40)
-	target_status.add_theme_font_size_override("font_size", 10)
+	target_status.position = Vector2(72, 56)
+	target_status.size = Vector2(196, 20)
+	target_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	target_status.add_theme_font_size_override("font_size", 12)
 	target_root.add_child(target_status)
 
 	minimap_root = _fixed_panel(HUD_MINIMAP_SIZE)
 	add_child(minimap_root)
-	var mini_bg := _scaled_tex("ui/map/kit62_minimap_bezel.png", HUD_MINIMAP_SIZE)
-	minimap_root.add_child(mini_bg)
 	minimap_view = load("res://scripts/runtime_minimap.gd").new()
-	minimap_view.render_size = Vector2i(96, 72)
-	minimap_view.position = Vector2(18, 18)
-	minimap_view.size = HUD_MINIMAP_SIZE - Vector2(36, 36)
+	minimap_view.render_size = Vector2i(96, 96)
+	minimap_view.position = Vector2(26, 26)
+	minimap_view.size = Vector2(96, 96)
 	minimap_root.add_child(minimap_view)
+	var mini_bg := _scaled_tex("ui/map/kit62_minimap_bezel.png", HUD_MINIMAP_SIZE)
+	mini_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	minimap_root.add_child(mini_bg)
 
 	touch_root = _fixed_panel(HUD_JOY_SIZE)
 	add_child(touch_root)
@@ -162,6 +188,7 @@ func _build_ui() -> void:
 		touch_root.add_child(b)
 
 	combat_root = Control.new()
+	combat_root.size = Vector2(340, 174)
 	add_child(combat_root)
 	attack_btn = TextureButton.new()
 	attack_btn.ignore_texture_size = true
@@ -169,11 +196,13 @@ func _build_ui() -> void:
 	attack_btn.texture_normal = BrambleWorldPresentationConfig.game_tex("ui/hud/primary_attack_button.png")
 	attack_btn.custom_minimum_size = HUD_ATTACK_SIZE
 	attack_btn.size = HUD_ATTACK_SIZE
+	attack_btn.tooltip_text = "Primärangriff"
 	combat_root.add_child(attack_btn)
 	for i in range(3):
 		var slot := TextureButton.new()
 		slot.name = "Skill%d" % (i + 1)
 		slot.ignore_texture_size = true
+		slot.stretch_mode = TextureButton.STRETCH_SCALE
 		slot.custom_minimum_size = HUD_SKILL_SIZE
 		slot.size = HUD_SKILL_SIZE
 		slot.texture_normal = BrambleWorldPresentationConfig.game_tex("ui/skills/skill_button.png")
@@ -183,8 +212,9 @@ func _build_ui() -> void:
 		skill_btns.append(slot)
 		var icon := TextureRect.new()
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		icon.custom_minimum_size = Vector2(40, 40)
-		icon.position = Vector2(9, 9)
+		icon.custom_minimum_size = Vector2(48, 48)
+		icon.size = Vector2(48, 48)
+		icon.position = Vector2(11, 11)
 		icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		slot.add_child(icon)
@@ -194,7 +224,7 @@ func _build_ui() -> void:
 		cd.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		cd.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		cd.set_anchors_preset(Control.PRESET_FULL_RECT)
-		cd.add_theme_font_size_override("font_size", 14)
+		cd.add_theme_font_size_override("font_size", 18)
 		cd.add_theme_color_override("font_color", Color("#ffd35a"))
 		slot.add_child(cd)
 		skill_cd_labels.append(cd)
@@ -270,20 +300,25 @@ func _build_level_up() -> void:
 func _build_nav() -> void:
 	nav_root = Control.new()
 	add_child(nav_root)
-	for spec in [["Tasche", "inventory"], ["Held", "character"], ["Quest", "quest"], ["Sozial", "social"]]:
+	var specs := [
+		["Tasche", "inventory", "items/misc/supply_pouch.png"],
+		["Held", "character", "characters/base/male/directions/front.png"],
+		["Quest", "quest", "items/misc/specialist_card.png"],
+		["Sozial", "social", ""],
+	]
+	for spec in specs:
 		var b := Button.new()
 		b.text = spec[0]
 		b.name = spec[1]
-		b.custom_minimum_size = Vector2(72, 44)
-		b.add_theme_font_size_override("font_size", 12)
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color(0.10, 0.08, 0.06, 0.88)
-		style.border_color = Color("#c8a56a")
-		style.set_border_width_all(2)
-		style.set_corner_radius_all(8)
-		b.add_theme_stylebox_override("normal", style)
-		b.add_theme_stylebox_override("hover", style)
-		b.add_theme_stylebox_override("pressed", style)
+		b.custom_minimum_size = Vector2(88, 58)
+		b.size = Vector2(88, 58)
+		b.expand_icon = true
+		b.add_theme_constant_override("icon_max_width", 32)
+		if spec[2] != "":
+			b.icon = BrambleUiStyle.texture(spec[2])
+		else:
+			b.text = "◆ Sozial"
+		BrambleUiStyle.apply_button(b)
 		b.pressed.connect(func(): _on_nav(spec[1]))
 		nav_root.add_child(b)
 
@@ -338,33 +373,31 @@ func _apply_layout(mode: String) -> void:
 	var portrait := mode == "portrait"
 	var vp := get_viewport().get_visible_rect().size
 	var m := BrambleWorldPresentationConfig.HUD_SAFE_MARGIN
-	var joy_h := BrambleWorldPresentationConfig.HUD_JOYSTICK_ZONE_HEIGHT
 	var stats_h := HUD_STATS_SIZE.y
 	var quest_h := HUD_QUEST_SIZE.y
 
 	if portrait:
-		stats_root.position = Vector2(m, 48)
-		quest_root.position = Vector2(m, 48 + stats_h + 10)
-		quest_root.size = Vector2(280, 64)
-		target_root.position = Vector2(m, 48 + stats_h + quest_h + 18)
-		minimap_root.position = Vector2(vp.x - HUD_MINIMAP_SIZE.x - m, 44)
-		touch_root.position = Vector2(m, vp.y - HUD_JOY_SIZE.y - m)
-		combat_root.position = Vector2(vp.x - 132, vp.y - joy_h + 4)
+		stats_root.position = Vector2(m, m + 20)
+		quest_root.position = Vector2(m, m + 20 + stats_h + 10)
+		target_root.position = Vector2((vp.x - 280) * 0.5, m + stats_h + 8)
+		minimap_root.position = Vector2(vp.x - HUD_MINIMAP_SIZE.x - m, m + 18)
+		touch_root.position = Vector2(m, vp.y - HUD_JOY_SIZE.y - 88)
+		combat_root.position = Vector2(vp.x - 338 - m, vp.y - 250)
 	else:
 		stats_root.position = Vector2(m, m)
 		quest_root.position = Vector2(m, m + stats_h + 8)
-		quest_root.size = HUD_QUEST_SIZE
-		target_root.position = Vector2(vp.x * 0.5 - 120, m)
+		target_root.position = Vector2(vp.x * 0.5 - 140, m)
 		minimap_root.position = Vector2(vp.x - HUD_MINIMAP_SIZE.x - m, m)
 		var joy_y := vp.y - HUD_JOY_SIZE.y - m
 		if joy_y < quest_root.position.y + quest_h + 12:
 			joy_y = quest_root.position.y + quest_h + 12
 		touch_root.position = Vector2(m, joy_y)
-		combat_root.position = Vector2(vp.x - 132, vp.y - HUD_ATTACK_SIZE.y - m)
+		combat_root.position = Vector2(vp.x - 338 - m, vp.y - 174 - m)
 
-	attack_btn.position = Vector2(0, 0)
+	attack_btn.position = Vector2(232, 60)
+	var skill_positions := [Vector2(0, 66), Vector2(76, 26), Vector2(152, 58)]
 	for i in range(skill_btns.size()):
-		skill_btns[i].position = Vector2(-62 * (i + 1), 14)
+		skill_btns[i].position = skill_positions[i]
 	_layout_nav(portrait, vp)
 	_layout_level_up()
 
@@ -372,15 +405,15 @@ func _layout_nav(portrait: bool, vp: Vector2) -> void:
 	if nav_root == null:
 		return
 	var m := BrambleWorldPresentationConfig.HUD_SAFE_MARGIN
-	var y := vp.y - 52 - m
-	var x := vp.x * 0.5 - 150
+	var y := vp.y - 68 - m
+	var x := vp.x * 0.5 - 182
 	if portrait:
-		y = vp.y - 58 - m
-		x = vp.x * 0.5 - 150
+		y = vp.y - 68 - m
+		x = vp.x * 0.5 - 182
 	for i in range(nav_root.get_child_count()):
 		var b := nav_root.get_child(i) as Control
 		if b:
-			b.position = Vector2(x + i * 76, y)
+			b.position = Vector2(x + i * 92, y)
 
 func _layout_level_up() -> void:
 	if level_up_root:
@@ -437,6 +470,7 @@ func _on_character_changed(view: Dictionary) -> void:
 				sid = String(view.get("skillbar", [])[i])
 			var skill := db.skill_by_id("adventurer", sid) if sid != "" else {}
 			var icon_path := String(skill.get("icon", "ui/skills/skill_button.png"))
+			skill_icons[i].visible = sid != ""
 			if icon_path.length() <= 2:
 				skill_icons[i].texture = BrambleWorldPresentationConfig.game_tex("ui/skills/skill_button.png")
 			else:
@@ -471,6 +505,8 @@ func _on_nav(kind: String) -> void:
 			show_toast("Sozial · bald verfügbar")
 
 func _process(delta: float) -> void:
+	if not is_instance_valid(_targeting_service) or not is_instance_valid(_runtime_service) or not is_instance_valid(_character_service):
+		_bind_runtime_services()
 	if toast_time > 0.0:
 		toast_time -= delta
 		if toast_time <= 0.0:
