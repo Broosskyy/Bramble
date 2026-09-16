@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 610.88 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5060
+
+BRAMBLE V11 domains: identity, session, character, world, combat, skills, npc, inventory, equipment, progression, loot, quest, party, social, liveops, economy, shop, trade
+BRAMBLE · Godot 4.7.2 · M03 Playable Combat Loop
+M03.1 E2E: host_start peer=1 port=27841
+M03.1 E2E: configure role=host local_peer=1
+M03.1 E2E: snapshot #1 players=1 remotes=0

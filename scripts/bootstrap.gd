@@ -18,6 +18,22 @@ func _cli_args() -> PackedStringArray:
 func _has_arg(name: String) -> bool:
 	return name in OS.get_cmdline_user_args() or name in OS.get_cmdline_args()
 
+func _arg_value(prefix: String, default: String = "") -> String:
+	for arg in _cli_args():
+		if arg.begins_with(prefix + "="):
+			return String(arg.get_slice("=", 1))
+		if arg == prefix:
+			var idx := _cli_args().find(prefix)
+			if idx >= 0 and idx + 1 < _cli_args().size():
+				return String(_cli_args()[idx + 1])
+	return default
+
+func _parse_port() -> int:
+	var raw := _arg_value("--port", "27840")
+	if raw.is_valid_int():
+		return int(raw)
+	return 27840
+
 func _ready() -> void:
 	print("BRAMBLE · Godot 4.7.2 · M03 Playable Combat Loop")
 	var legacy := get_node_or_null("Village") as Node2D
@@ -44,6 +60,10 @@ func _ready() -> void:
 		call_deferred("_smoke_test")
 	elif _has_arg("--m03-capture"):
 		call_deferred("_capture_m03", args)
+	elif _has_arg("--m03_1-capture"):
+		call_deferred("_capture_m03_1", args)
+	elif _arg_value("--m03_1-e2e", "") != "":
+		call_deferred("_run_m03_1_e2e", _arg_value("--m03_1-e2e", ""))
 	elif _has_arg("--m02_2-capture"):
 		call_deferred("_capture_m02_2", args)
 	elif _has_arg("--m02_1-capture"):
@@ -231,6 +251,7 @@ func _ensure_m03_services() -> void:
 	_add_service_if_missing("combat_targeting_service", "res://scripts/combat_targeting_service.gd", "CombatTargetingService")
 	_add_service_if_missing("combat_runtime_service", "res://scripts/combat_runtime_service.gd", "CombatRuntimeService")
 	_add_service_if_missing("remote_player_service", "res://scripts/remote_player_service.gd", "RemotePlayerService")
+	_add_service_if_missing("multiplayer_e2e_service", "res://scripts/multiplayer_e2e_service.gd", "MultiplayerE2EService")
 
 func _add_service_if_missing(group: String, script_path: String, node_name: String) -> void:
 	if get_tree().get_first_node_in_group(group):
@@ -239,19 +260,47 @@ func _add_service_if_missing(group: String, script_path: String, node_name: Stri
 	node.name = node_name
 	add_child(node)
 
+func _ensure_e2e(role: String):
+	var e2e = get_tree().get_first_node_in_group("multiplayer_e2e_service")
+	if e2e and e2e.has_method("configure"):
+		e2e.configure(role)
+	return e2e
+
 func _handle_network_args(args: PackedStringArray) -> void:
 	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
 	if net == null:
 		return
+	if _has_arg("--no-lobby"):
+		net.skip_character_lobby = true
+	var port := _parse_port()
 	if _has_arg("--host"):
-		net.host()
+		var err := net.host(port)
+		if err == OK:
+			call_deferred("_host_self_join")
+		else:
+			push_error("BRAMBLE host failed on port %d err=%d" % [port, err])
 	elif _has_arg("--join"):
 		var all := _cli_args()
 		var idx := all.find("--join")
 		var address := "127.0.0.1"
 		if idx >= 0 and idx + 1 < all.size():
 			address = String(all[idx + 1])
-		net.join(address)
+		var err := net.join(address, port)
+		if err != OK:
+			push_error("BRAMBLE join failed address=%s port=%d err=%d" % [address, port, err])
+
+func _host_self_join() -> void:
+	var sync := get_tree().get_first_node_in_group("join_sync_service") as BrambleJoinSyncService
+	if sync == null:
+		return
+	var peer_id := multiplayer.get_unique_id()
+	sync.host_accept_join(peer_id, {
+		"credentials": {"method": "guest"},
+		"character_lobby": false,
+	})
+	var e2e := get_tree().get_first_node_in_group("multiplayer_e2e_service")
+	if e2e:
+		e2e.log_line("host_start peer=%d port=%d" % [peer_id, _parse_port()])
 
 func _capture_m03(args: PackedStringArray) -> void:
 	await _wait_frames(40)
@@ -376,3 +425,192 @@ func _shot_m03(filename: String) -> void:
 	var path := ProjectSettings.globalize_path(rel)
 	img.save_png(path)
 	print("M03 screenshot saved: ", path)
+
+func _shot_m03_1(filename: String) -> void:
+	var img := get_viewport().get_texture().get_image()
+	var rel := "res://artifacts/m03_1/%s" % filename
+	var path := ProjectSettings.globalize_path(rel)
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+	img.save_png(path)
+	print("M03.1 screenshot saved: ", path)
+
+func _capture_m03_1(_args: PackedStringArray) -> void:
+	await _wait_frames(40)
+	_ensure_dir("res://artifacts/m03_1/")
+	get_window().size = Vector2i(1920, 1080)
+	await _wait_frames(2)
+	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS)
+	await _wait_seconds(1.2)
+	_shot_m03_1("landscape_world_final.png")
+	get_window().size = Vector2i(1080, 1920)
+	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	_move_player(BrambleWorldPresentationConfig.WILDS_CAMERA_FOCUS)
+	await _wait_seconds(1.2)
+	_shot_m03_1("portrait_world_final.png")
+	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
+	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	var enemy := _nearest_enemy()
+	if enemy and targeting:
+		targeting.set_target(enemy)
+	await _wait_seconds(1.0)
+	_shot_m03_1("portrait_combat_final.png")
+	get_tree().quit()
+
+func _run_m03_1_e2e(role: String) -> void:
+	_ensure_dir("res://artifacts/m03_1/")
+	if role == "host":
+		await _m03_1_e2e_host()
+	elif role == "client":
+		await _m03_1_e2e_client()
+	else:
+		push_error("Unknown m03_1-e2e role: %s" % role)
+		get_tree().quit(1)
+
+func _m03_1_e2e_host() -> void:
+	var e2e = _ensure_e2e("host")
+	await _wait_seconds(2.0)
+	var saw_client := false
+	for _i in range(80):
+		if e2e and e2e.connection_events() >= 1:
+			saw_client = true
+			break
+		await _wait_frames(5)
+	if not saw_client:
+		if e2e:
+			e2e.log_line("FAIL client_not_connected")
+		get_tree().quit(1)
+		return
+	if e2e:
+		e2e.log_line("client_connected")
+	for _i in range(80):
+		if e2e and (e2e.has_remote_seen() or e2e.remote_avatar_count() >= 1):
+			break
+		await _wait_frames(5)
+	if e2e:
+		e2e.log_line("host_remote_avatars=%d" % e2e.remote_avatar_count())
+	await _e2e_nudge(Vector2(70, 0))
+	await _wait_seconds(0.8)
+	await _e2e_nudge(Vector2(-70, 0))
+	await _wait_seconds(0.8)
+	if e2e:
+		e2e.log_line("host_movement_complete")
+	await _wait_seconds(2.0)
+	get_window().size = Vector2i(1920, 1080)
+	await _wait_frames(2)
+	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS + Vector2(30, 0))
+	await _wait_seconds(1.0)
+	_shot_m03_1("host_with_client.png")
+	if e2e:
+		e2e.log_line("screenshot host_with_client.png")
+	await _e2e_combat_sanity(e2e)
+	if e2e:
+		e2e.log_line("waiting_client_disconnect")
+	for _i in range(120):
+		if e2e and e2e.remote_avatar_count() == 0:
+			break
+		await _wait_frames(5)
+	if e2e:
+		e2e.log_line("disconnect_cleanup remotes=%d active=%d" % [
+			e2e.remote_avatar_count(),
+			e2e.active_remote_peers(),
+		])
+	if e2e:
+		e2e.log_line("waiting_reconnect")
+	var events_at_wait: int = e2e.connection_events() if e2e else 0
+	var saw_reconnect := false
+	for _i in range(160):
+		if e2e and e2e.connection_events() > events_at_wait and e2e.active_remote_peers() >= 1:
+			await _wait_seconds(1.5)
+			if e2e.remote_avatar_count() <= 1 and e2e.active_remote_peers() <= 1:
+				saw_reconnect = true
+				break
+		await _wait_frames(5)
+	if e2e:
+		e2e.log_line("reconnect_remote_count=%d events=%d" % [
+			e2e.remote_avatar_count(),
+			e2e.connection_events(),
+		])
+		if not saw_reconnect:
+			e2e.log_line("FAIL reconnect_not_observed")
+			get_tree().quit(1)
+			return
+		if e2e.remote_avatar_count() > 1:
+			e2e.log_line("FAIL duplicate_remote_avatars")
+			get_tree().quit(1)
+			return
+		e2e.log_line("reconnect_ok")
+		e2e.log_line("HOST_E2E_PASS")
+	get_tree().call_deferred("quit")
+
+func _m03_1_e2e_client() -> void:
+	var e2e = _ensure_e2e("client")
+	if e2e:
+		e2e.log_line("client_start peer=%d" % multiplayer.get_unique_id())
+	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
+	for _i in range(80):
+		if net and net.session_id != "":
+			break
+		await _wait_frames(5)
+	if e2e:
+		e2e.log_line("world_joined session=%s peer=%d" % [
+			net.session_id if net else "",
+			multiplayer.get_unique_id(),
+		])
+	for _i in range(80):
+		if e2e and (e2e.has_remote_seen() or e2e.remote_avatar_count() >= 1):
+			break
+		await _wait_frames(5)
+	if e2e:
+		e2e.log_line("client_remote_avatars=%d" % e2e.remote_avatar_count())
+	await _wait_seconds(1.0)
+	await _e2e_nudge(Vector2(-60, 15))
+	await _wait_seconds(0.8)
+	await _e2e_nudge(Vector2(60, -15))
+	await _wait_seconds(0.8)
+	if e2e:
+		e2e.log_line("client_movement_complete")
+	get_window().size = Vector2i(1920, 1080)
+	await _wait_frames(2)
+	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS + Vector2(-30, 0))
+	await _wait_seconds(1.0)
+	_shot_m03_1("client_with_host.png")
+	if e2e:
+		e2e.log_line("screenshot client_with_host.png")
+		e2e.log_line("CLIENT_E2E_PASS")
+	get_tree().call_deferred("quit")
+
+func _e2e_nudge(offset: Vector2) -> void:
+	var player := get_node_or_null("Player") as Node2D
+	if player:
+		player.global_position += offset
+	var pa := get_tree().get_first_node_in_group("player_authority") as BramblePlayerAuthority
+	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
+	if pa and player:
+		var peer_id := multiplayer.get_unique_id()
+		var s := pa.ensure_peer(peer_id)
+		s["x"] = player.global_position.x
+		s["y"] = player.global_position.y
+		s["dir_x"] = offset.x
+	if net and net.mode != "offline" and offset.length_squared() > 0.01:
+		var dir := offset.normalized()
+		net.send_intent("move", {"direction_x": dir.x, "direction_y": dir.y})
+
+func _e2e_combat_sanity(e2e) -> void:
+	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
+	var player := get_node_or_null("Player") as BramblePlayerController
+	var enemy := _nearest_enemy()
+	if enemy == null or targeting == null or runtime == null or player == null:
+		if e2e:
+			e2e.log_line("combat_sanity_skipped missing_components")
+		return
+	_move_player(enemy.global_position + Vector2(-70, 0))
+	await _wait_seconds(0.8)
+	targeting.set_target(enemy)
+	runtime.resolve_basic_attack(player, targeting.get_target_entity_id())
+	await _wait_seconds(0.6)
+	if e2e:
+		e2e.log_line("combat_sanity host_attack_ok snapshots=%d" % e2e.snapshot_count())

@@ -29,8 +29,9 @@ func _update_occluder(item: CanvasItem, player_pos: Vector2, delta: float) -> vo
 	var canopy_h := float(host.get_meta("occlusion_height", 96.0))
 	var canopy_top := foot_y - canopy_h
 
-	var behind := player_pos.y < foot_y - BrambleWorldPresentationConfig.OCCLUSION_MIN_PLAYER_DEPTH
-	var under_canopy := player_pos.y > canopy_top
+	var min_depth := float(host.get_meta("occlusion_min_depth", BrambleWorldPresentationConfig.OCCLUSION_MIN_PLAYER_DEPTH))
+	var behind := player_pos.y < foot_y - min_depth
+	var under_canopy := player_pos.y > canopy_top and player_pos.y < foot_y + 6.0
 	var within_x := absf(player_pos.x - host.global_position.x) <= half_w
 	var covers := behind and under_canopy and within_x
 

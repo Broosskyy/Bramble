@@ -1,0 +1,8 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 610.88 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5060
+
+BRAMBLE V11 domains: identity, session, character, world, combat, skills, npc, inventory, equipment, progression, loot, quest, party, social, liveops, economy, shop, trade
+BRAMBLE ┬À Godot 4.7.2 ┬À M03 Playable Combat Loop
+M03.1 screenshot saved: C:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03_1/landscape_world_final.png
+M03.1 screenshot saved: C:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03_1/portrait_world_final.png
+M03.1 screenshot saved: C:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03_1/portrait_combat_final.png

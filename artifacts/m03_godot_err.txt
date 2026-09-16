@@ -1,0 +1,7 @@
+ERROR: Couldn't create an ENet host.
+   at: _create (modules/enet/enet_connection.cpp:319)
+   GDScript backtrace (most recent call first):
+       [0] host (res://scripts/network_session.gd:27)
+       [1] _m03_multiplayer_shot (res://scripts/bootstrap.gd:337)
+       [2] _capture_m03 (res://scripts/bootstrap.gd:302)
+       [3] _wait_seconds (res://scripts/bootstrap.gd:197)

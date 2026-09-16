@@ -121,14 +121,18 @@ func _elevation_zone(rect_pos: Vector2, rect_size: Vector2, level: int, zone_nam
 
 func _build_base_canvas() -> void:
 	var cfg := BrambleWorldPresentationConfig
-	_fill_tiles(
-		"world/terrain/materials/grass_repeat_256.png",
+	TilePlacer.fill_grid_variated(
+		ground,
+		[
+			"world/terrain/materials/grass_repeat_256.png",
+			"world/terrain/materials/dirt_repeat_256.png",
+			"world/terrain/materials/grass_repeat_256.png",
+		],
 		cfg.WORLD_FILL_ORIGIN,
 		cfg.WORLD_FILL_COLS,
 		cfg.WORLD_FILL_ROWS,
 		cfg.SCALE_TERRAIN,
-		TilePlacer.Layer.GROUND,
-		MapRegistry.Cell.MEADOW
+		TilePlacer.Layer.GROUND
 	)
 
 func _build_terrain_variation() -> void:
@@ -175,19 +179,20 @@ func _build_river() -> void:
 	var sc_r := BrambleWorldPresentationConfig.SCALE_ROAD
 	var river_y := 300.0
 	var water_step := TilePlacer.tile_step("world/terrain/materials/water_repeat_256.png", sc_w)
-	var bank_step := TilePlacer.tile_step("world/roads/riverbank_straight.png", sc_r * 0.92)
-	for x in range(-5, 10):
-		var pos := Vector2(-560 + x * water_step, river_y)
+	var bank_scale := sc_r * 0.92
+	var start_x := -560.0
+	var cols := 15
+	for x in range(cols):
+		var pos := Vector2(start_x + x * water_step, river_y)
 		TilePlacer.place(water, "world/terrain/materials/water_repeat_256.png", pos, sc_w, TilePlacer.Layer.WATER, 0, 4.0)
 		_paint_map(pos, MapRegistry.Cell.WATER, 3)
 		_solid_rect(pos + Vector2(0, 8), Vector2(water_step * 0.92, 72))
-	for x in range(-5, 10):
-		var bank_pos := Vector2(-560 + x * bank_step, river_y - 52)
-		_place(water, "world/roads/riverbank_straight.png", bank_pos, sc_r * 0.92, 8.0)
+		var bank_pos := Vector2(start_x + x * water_step, river_y - 52)
+		TilePlacer.place(water, "world/roads/riverbank_straight.png", bank_pos, bank_scale, TilePlacer.Layer.WATER, 1, 3.0)
 		_paint_map(bank_pos, MapRegistry.Cell.WATER)
-	_place(water, "world/roads/river_edge.png", Vector2(-560 - bank_step * 0.5, river_y - 18), sc_r * 0.88, 6.0)
-	_place(water, "world/roads/pond_edge_endcap.png", Vector2(-560 + 9 * bank_step, river_y - 18), sc_r * 0.88, 6.0)
-	_place(water, "world/roads/river_corner.png", Vector2(680, river_y - 20), sc_r * 0.9, 6.0)
+	var end_x := start_x + float(cols - 1) * water_step
+	_place(water, "world/roads/river_edge.png", Vector2(start_x - water_step * 0.5, river_y - 18), sc_r * 0.88, 6.0)
+	_place(water, "world/roads/pond_edge_endcap.png", Vector2(end_x + water_step * 0.5, river_y - 18), sc_r * 0.88, 6.0)
 	_place(objects, "world/buildings/stream_bridge.png", Vector2(200, river_y - 8), BrambleWorldPresentationConfig.SCALE_PROP_LARGE, 22.0)
 
 func _build_village() -> void:
@@ -253,11 +258,13 @@ func _build_transition() -> void:
 func _build_wilds() -> void:
 	var tr := BrambleWorldPresentationConfig.SCALE_TREE
 	_place(objects, "world/buildings/ruined_arch.png", Vector2(720, 40), BrambleWorldPresentationConfig.SCALE_PROP_LARGE, 38.0, false, 0, 52.0, 100.0)
-	for pos in [Vector2(620, -60), Vector2(780, 180), Vector2(860, 60), Vector2(680, 220)]:
-		_place(objects, "world/buildings/red_oak.png", pos, tr, 72.0, true, 0, 42.0, 116.0)
+	for pos in [Vector2(560, -40), Vector2(780, 180), Vector2(860, 60), Vector2(700, 210)]:
+		var half_w := 34.0 if pos.x < 650.0 else 42.0
+		var canopy := 96.0 if pos.x < 650.0 else 116.0
+		_place(objects, "world/buildings/red_oak.png", pos, tr * (0.88 if pos.x < 650.0 else 1.0), 72.0, true, 0, half_w, canopy)
 		_solid_circle(pos + Vector2(0, 66), 28.0)
 		_paint_map(pos, MapRegistry.Cell.WILDS)
-	_place(objects, "world/buildings/apple_tree.png", Vector2(820, -40), tr * 0.9, 66.0, true, 0, 38.0, 104.0)
+	_place(objects, "world/buildings/apple_tree.png", Vector2(820, -40), tr * 0.9, 66.0, true, 0, 34.0, 96.0)
 	_solid_circle(Vector2(820, 26), 24.0)
 
 func _add_npc(id: String, name_text: String, role_text: String, pos: Vector2, production_path: String) -> void:

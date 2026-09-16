@@ -8,7 +8,7 @@ M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifact
 M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_skill.png
 M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_loot.png
 M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_quest_complete.png
-oot.png
-M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_quest_complete.png
 M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/portrait_combat.png
 M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/portrait_loot.png
+M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/multiplayer_two_players.png
+loot.png

@@ -9,6 +9,7 @@ signal character_operation_result(operation:String,result:Dictionary)
 signal world_join_received(state:Dictionary)
 var mode:="offline"
 var port:=27840
+var skip_character_lobby:=false
 var seq:=0
 var reconnect_token:=""
 var session_id:=""
@@ -19,7 +20,7 @@ func _ready()->void:
     multiplayer.peer_disconnected.connect(_peer_disconnected)
     multiplayer.connected_to_server.connect(func():
         mode="client";mode_changed.emit(mode)
-        _rpc_request_join.rpc_id(1,{"reconnect_token":reconnect_token,"credentials":{"method":"guest"},"character_lobby":reconnect_token==""})
+        _rpc_request_join.rpc_id(1,{"reconnect_token":reconnect_token,"credentials":{"method":"guest"},"character_lobby":not skip_character_lobby and reconnect_token==""})
     )
     multiplayer.connection_failed.connect(close)
     multiplayer.server_disconnected.connect(close)

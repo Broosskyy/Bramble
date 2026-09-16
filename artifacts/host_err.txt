@@ -1,0 +1,6 @@
+ERROR: RPC 'receive_world_join' on yourself is not allowed by selected mode.
+   at: rpcp (modules/multiplayer/scene_rpc_interface.cpp:489)
+   GDScript backtrace (most recent call first):
+       [0] _join_character (res://scripts/join_sync_service.gd:70)
+       [1] host_accept_join (res://scripts/join_sync_service.gd:27)
+       [2] _host_self_join (res://scripts/bootstrap.gd:297)

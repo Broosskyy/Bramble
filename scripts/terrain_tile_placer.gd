@@ -47,6 +47,39 @@ static func fill_grid(
 		for y in range(rows):
 			place(parent, path, snapped_origin + Vector2(x * step, y * step), scale_value, layer)
 
+static func fill_grid_variated(
+	parent: Node2D,
+	paths: Array,
+	origin: Vector2,
+	cols: int,
+	rows: int,
+	scale_value: float,
+	layer: Layer = Layer.GROUND
+) -> void:
+	var step := BrambleWorldPresentationConfig.tile_step(String(paths[0]), scale_value)
+	var snapped_origin := Vector2(snapped(origin.x, 1.0), snapped(origin.y, 1.0))
+	for x in range(cols):
+		for y in range(rows):
+			var pos := snapped_origin + Vector2(x * step, y * step)
+			var idx := _tile_hash(x, y) % paths.size()
+			var sp := place(parent, String(paths[idx]), pos, scale_value, layer)
+			if _tile_hash(x, y) % 2 == 0:
+				sp.flip_h = true
+			if _tile_hash(y, x) % 3 == 0:
+				sp.flip_v = true
+			if _tile_hash(x + 7, y + 3) % 5 == 0:
+				place(
+					parent,
+					"world/terrain/overlays/overlay_grass_clumps_256.png",
+					pos + Vector2(0, -6),
+					scale_value * 0.34,
+					Layer.OVERLAY,
+					_tile_hash(x, y) % 3
+				)
+
+static func _tile_hash(x: int, y: int) -> int:
+	return absi((x * 73856093) ^ (y * 19349663))
+
 static func tile_step(path: String, scale_value: float) -> float:
 	return BrambleWorldPresentationConfig.tile_step(path, scale_value)
 

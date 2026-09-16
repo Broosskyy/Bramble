@@ -67,7 +67,11 @@ func _join_character(peer_id:int,character_id:String,resumed:bool)->void:
     if audit:audit.record("session","world_join",state,{"map":state.get("map","village"),"resumed":resumed})
     var payload={"token":String(session.get("reconnect_token","")),"session_id":String(session.get("session_id","")),"character_id":character_id,"players":pa.snapshot() if pa else [],"protocol":"bramble-v11.5"}
     var net:=get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
-    if net:net.receive_world_join.rpc_id(peer_id,payload)
+    if net:
+        if peer_id == multiplayer.get_unique_id():
+            net.receive_world_join(payload)
+        else:
+            net.receive_world_join.rpc_id(peer_id,payload)
 func _send_list(peer_id:int)->void:
     var ctx:Dictionary=auth_context.get(peer_id,{});var claim:Dictionary=ctx.get("claim",{});var characters:=get_tree().get_first_node_in_group("character_service") as BrambleCharacterService;var list:=characters.list_characters(String(claim.get("account_id",""))) if characters else []
     var net:=get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession

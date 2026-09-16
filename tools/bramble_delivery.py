@@ -124,6 +124,39 @@ def live_capture(include_gameplay: bool = True) -> dict[str, Path]:
     return expected
 
 
+M031_DIR = ROOT / "artifacts" / "m03_1"
+
+
+def m03_1_capture() -> dict[str, Path]:
+    M031_DIR.mkdir(parents=True, exist_ok=True)
+    result = run_godot(["--m03_1-capture"], timeout=600)
+    out = result.stdout + result.stderr
+    if result.returncode != 0:
+        raise DeliveryError(f"M03.1 capture failed (exit {result.returncode}):\n{out}")
+    expected = {
+        "landscape_world_final": M031_DIR / "landscape_world_final.png",
+        "portrait_world_final": M031_DIR / "portrait_world_final.png",
+        "portrait_combat_final": M031_DIR / "portrait_combat_final.png",
+    }
+    for label, path in expected.items():
+        wait_for_png(path)
+        validate_png(path, label)
+    print("M03.1 visual capture: PASS")
+    return expected
+
+
+def m03_1_multiplayer_e2e() -> None:
+    script = ROOT / "tools" / "m03_1_multiplayer_e2e.py"
+    result = run([sys.executable, str(script)], cwd=ROOT, timeout=600)
+    out = result.stdout + result.stderr
+    if result.returncode != 0:
+        raise DeliveryError(f"M03.1 multiplayer E2E failed:\n{out}")
+    log_path = M031_DIR / "multiplayer_e2e.log"
+    if not log_path.exists():
+        raise DeliveryError("Missing multiplayer_e2e.log")
+    print("M03.1 multiplayer E2E: PASS")
+
+
 def git(*args: str, check: bool = True) -> str:
     result = run(["git", *args], check=check)
     return (result.stdout or "").strip()
@@ -264,7 +297,7 @@ def main() -> int:
     parser.add_argument("--skip-gameplay", action="store_true")
     parser.add_argument(
         "--known-issues",
-        default="Grass repeat seams; river edge polish; VISUAL_FOUNDATION_LOCKED=false",
+        default="Full MMO combat replication deferred to Authority milestone",
         help="Comma-separated known issues",
     )
     args = parser.parse_args()
@@ -283,6 +316,9 @@ def main() -> int:
 
         captures = live_capture(include_gameplay=not args.skip_gameplay)
         report["capture"] = "PASS"
+        if args.milestone.startswith("m03.1"):
+            m03_1_capture()
+            m03_1_multiplayer_e2e()
 
         if args.capture_only:
             write_live_build(

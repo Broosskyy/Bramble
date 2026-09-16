@@ -20,7 +20,18 @@ func _send_snapshot()->void:
     var registry:=get_tree().get_first_node_in_group("network_entity_registry") as BrambleNetworkEntityRegistry
     if pa==null or registry==null:
         return
-    _rpc_snapshot.rpc({"players":pa.snapshot(),"enemies":registry.enemy_snapshot()})
+    var snapshot:={"players":pa.snapshot(),"enemies":registry.enemy_snapshot()}
+    _rpc_snapshot.rpc(snapshot)
+    var remote_players = get_tree().get_first_node_in_group("remote_player_service")
+    if remote_players and remote_players.has_method("sync_players"):
+        remote_players.sync_players(snapshot.get("players",[]), multiplayer.get_unique_id())
+    var e2e := get_tree().get_first_node_in_group("multiplayer_e2e_service")
+    if e2e and e2e.has_method("note_snapshot"):
+        var remote_count := 0
+        for s in snapshot.get("players", []):
+            if int(s.get("peer_id", -1)) != multiplayer.get_unique_id() and bool(s.get("connected", true)):
+                remote_count += 1
+        e2e.note_snapshot(snapshot.get("players", []).size(), remote_count)
 
 @rpc("authority","call_remote","unreliable")
 func _rpc_snapshot(snapshot:Dictionary)->void:
@@ -32,6 +43,13 @@ func _rpc_snapshot(snapshot:Dictionary)->void:
     var remote_players = get_tree().get_first_node_in_group("remote_player_service")
     if remote_players and remote_players.has_method("sync_players"):
         remote_players.sync_players(snapshot.get("players",[]), local_id)
+    var e2e := get_tree().get_first_node_in_group("multiplayer_e2e_service")
+    if e2e and e2e.has_method("note_snapshot"):
+        var remote_count := 0
+        for s in snapshot.get("players", []):
+            if int(s.get("peer_id", -1)) != local_id and bool(s.get("connected", true)):
+                remote_count += 1
+        e2e.note_snapshot(snapshot.get("players", []).size(), remote_count)
     _apply_enemies(snapshot.get("enemies",[]))
 
 func _apply_enemies(arr:Array)->void:
