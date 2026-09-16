@@ -29,6 +29,9 @@ func _rpc_snapshot(snapshot:Dictionary)->void:
     for s in snapshot.get("players",[]):
         if int(s.get("peer_id",-1))==local_id and prediction:
             prediction.reconcile(s)
+    var remote_players = get_tree().get_first_node_in_group("remote_player_service")
+    if remote_players and remote_players.has_method("sync_players"):
+        remote_players.sync_players(snapshot.get("players",[]), local_id)
     _apply_enemies(snapshot.get("enemies",[]))
 
 func _apply_enemies(arr:Array)->void:

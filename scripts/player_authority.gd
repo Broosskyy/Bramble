@@ -18,7 +18,7 @@ func _process(delta:float)->void:
         if not states.has(int(reconnect_tokens[token])):reconnect_tokens.erase(token)
 func ensure_peer(peer_id:int,seed:Dictionary={})->Dictionary:
     if states.has(peer_id):return states[peer_id]
-    var s={"peer_id":peer_id,"x":0.0,"y":360.0,"hp":100,"max_hp":100,"level":1,"job":1,"class_id":"adventurer","gold":0,"xp":0,"jxp":0,"reputation":0,
+    var s={"peer_id":peer_id,"x":BrambleWorldPresentationConfig.PLAYER_SPAWN.x,"y":BrambleWorldPresentationConfig.PLAYER_SPAWN.y,"hp":100,"max_hp":100,"level":1,"job":1,"class_id":"adventurer","gold":0,"xp":0,"jxp":0,"reputation":0,
         "stats":{"str":1,"dex":1,"int":1,"vit":1},"inventory":[],"equipment":{"weapon":"starter_sword"},"upgrade":{},"quest_index":0,"counters":{},"loot_pity":0,"kills":0,
         "event":{"pumpkins":0,"runs":0,"bossWins":0},"raids":{"runs":0,"wins":0,"bestTime":0},"instant":{"runs":0,"wins":0,"bestWave":0},"pets":[],"active_pet":"","specialists":[],"active_specialist":"","map":"village","connected":true,"last_processed_seq":0}
     for k in seed.keys():s[k]=seed[k]
@@ -27,7 +27,7 @@ func update_position(peer_id:int,pos:Vector2,seq:int)->void:
     var s: Dictionary = ensure_peer(peer_id);s["x"]=pos.x;s["y"]=pos.y;s["last_processed_seq"]=maxi(int(s.get("last_processed_seq",0)),seq);state_changed.emit(peer_id,s)
 func damage(peer_id:int,amount:int)->void:
     var s: Dictionary = ensure_peer(peer_id);s["hp"]=maxi(0,int(s.get("hp",100))-amount)
-    if int(s["hp"])<=0:s["hp"]=int(s.get("max_hp",100));s["x"]=0.0;s["y"]=360.0;s["map"]="village"
+    if int(s["hp"])<=0:s["hp"]=int(s.get("max_hp",100));s["x"]=BrambleWorldPresentationConfig.PLAYER_SPAWN.x;s["y"]=BrambleWorldPresentationConfig.PLAYER_SPAWN.y;s["map"]="village"
     state_changed.emit(peer_id,s)
 func heal(peer_id:int,amount:int)->void:
     var s: Dictionary = ensure_peer(peer_id);s["hp"]=mini(int(s.get("max_hp",100)),int(s.get("hp",100))+amount);state_changed.emit(peer_id,s)

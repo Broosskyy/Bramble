@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 610.88 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5060
+
+BRAMBLE V11 domains: identity, session, character, world, combat, skills, npc, inventory, equipment, progression, loot, quest, party, social, liveops, economy, shop, trade
+BRAMBLE · Godot 4.7.2 · M03 Playable Combat Loop
+M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_target.png
+M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_combat.png
+M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_skill.png
+M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_loot.png
+M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_quest_complete.png
+oot.png
+M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/landscape_quest_complete.png
+M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/portrait_combat.png
+M03 screenshot saved: c:/Users/manue/Downloads/BRAMBLE_NEW/BRAMBLE_GAME/artifacts/m03/portrait_loot.png

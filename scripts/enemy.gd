@@ -13,6 +13,8 @@ extends CharacterBody2D
 @export var gold_reward := 4
 @export var aggro_range := 280.0
 @export var attack_range := 58.0
+@export var respawn_delay := 8.0
+@export var loot_table_id := "moorling_common"
 
 var hp := 34
 var spawn_position := Vector2.ZERO
@@ -23,21 +25,26 @@ var _sprite_frames: SpriteFrames
 var _dir_textures: Dictionary = {}
 var _direction := "front"
 var _state := "idle"
+var _dead := false
+var _respawn_timer := 0.0
+var _last_attacker: Node = null
+var _collision: CollisionShape2D
 
 func _ready() -> void:
 	add_to_group("enemy")
 	hp = max_hp
 	spawn_position = global_position
-	var enemy_authority:=get_tree().get_first_node_in_group("enemy_authority_service") as BrambleEnemyAuthorityService
-	if enemy_authority:enemy_authority.register_enemy(self)
+	var enemy_authority := get_tree().get_first_node_in_group("enemy_authority_service") as BrambleEnemyAuthorityService
+	if enemy_authority:
+		enemy_authority.register_enemy(self)
 	collision_layer = 2
-	collision_mask = 1
+	collision_mask = 1 | 4
 
-	var collider := CollisionShape2D.new()
+	_collision = CollisionShape2D.new()
 	var shape := CircleShape2D.new()
 	shape.radius = 22.0
-	collider.shape = shape
-	add_child(collider)
+	_collision.shape = shape
+	add_child(_collision)
 
 	if use_production_assets and enemy_id == "moorling":
 		_setup_moorling_visual()
@@ -58,21 +65,12 @@ func _ready() -> void:
 	label.visible = not use_production_assets
 	add_child(label)
 
-	var hp_back := ColorRect.new()
-	hp_back.name = "HpBack"
-	hp_back.position = Vector2(-36, -68)
-	hp_back.size = Vector2(72, 7)
-	hp_back.color = Color(0.05,0.05,0.05,0.8)
-	hp_back.visible = false
-	add_child(hp_back)
+	var registry := get_tree().get_first_node_in_group("network_entity_registry") as BrambleNetworkEntityRegistry
+	if registry:
+		registry.register(self)
 
-	var hp_fill := ColorRect.new()
-	hp_fill.name = "HpFill"
-	hp_fill.position = Vector2(-34, -66)
-	hp_fill.size = Vector2(68, 3)
-	hp_fill.color = Color("#d35e51")
-	hp_fill.visible = false
-	add_child(hp_fill)
+func is_combat_alive() -> bool:
+	return not _dead and hp > 0
 
 func _setup_legacy_visual() -> void:
 	var sprite := Sprite2D.new()
@@ -146,59 +144,74 @@ func _set_presentation_state(next: String) -> void:
 	_visual.play(next)
 
 func _physics_process(delta: float) -> void:
+	if _dead:
+		_respawn_timer -= delta
+		if _respawn_timer <= 0.0:
+			_respawn()
+		return
+
 	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
-	if net and net.mode == "client":return
+	if net and net.mode == "client":
+		return
+
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
 	hit_flash = maxf(0.0, hit_flash - delta)
 
 	if _visual:
-		_visual.modulate = Color(1.5,1.5,1.5,1.0) if hit_flash > 0.0 else Color.WHITE
+		_visual.modulate = Color(1.5, 1.5, 1.5, 1.0) if hit_flash > 0.0 else Color.WHITE
 	elif has_node("Sprite"):
 		var sprite := get_node("Sprite") as Sprite2D
-		sprite.modulate = Color(1.5,1.5,1.5,1.0) if hit_flash > 0.0 else Color.WHITE
+		sprite.modulate = Color(1.5, 1.5, 1.5, 1.0) if hit_flash > 0.0 else Color.WHITE
 
 	var player := get_tree().get_first_node_in_group("player") as CharacterBody2D
 	if player == null:
 		return
 
-	var d := global_position.distance_to(player.global_position)
-	var hp_back := get_node_or_null("HpBack") as CanvasItem
-	var hp_fill := get_node_or_null("HpFill") as CanvasItem
-	if use_production_assets and hp_back and hp_fill:
-		var targeted := d <= aggro_range * 0.65
-		var in_combat := d <= aggro_range or hp < max_hp
-		var show_hp := targeted or in_combat
-		hp_back.visible = show_hp
-		hp_fill.visible = show_hp
+	var game_state := get_tree().get_first_node_in_group("game_state") as BrambleGameState
+	if game_state and game_state.is_dead:
+		velocity = Vector2.ZERO
+		return
 
-	var enemy_authority:=get_tree().get_first_node_in_group("enemy_authority_service") as BrambleEnemyAuthorityService
+	var d := global_position.distance_to(player.global_position)
+	var enemy_authority := get_tree().get_first_node_in_group("enemy_authority_service") as BrambleEnemyAuthorityService
+
 	if d <= aggro_range:
-		if enemy_authority:enemy_authority.set_state(self,"chase" if d > attack_range else "attack",multiplayer.get_unique_id())
+		if enemy_authority:
+			enemy_authority.set_state(self, "chase" if d > attack_range else "attack", multiplayer.get_unique_id())
 		if _visual:
 			var dir := _vector_to_direction(global_position.direction_to(player.global_position))
 			_apply_direction(dir)
 		if d > attack_range:
-			velocity = global_position.direction_to(player.global_position) * move_speed
-			move_and_slide()
+			var desired := global_position.direction_to(player.global_position) * move_speed
+			velocity = _slide_with_collision(desired)
 			if _visual and _state != "hit":
 				_set_presentation_state("idle")
 		else:
 			velocity = Vector2.ZERO
-			if attack_cooldown <= 0.0 and (enemy_authority==null or enemy_authority.can_attack(self,1.15)):
+			if attack_cooldown <= 0.0 and (enemy_authority == null or enemy_authority.can_attack(self, 1.15)):
 				attack_cooldown = 1.15
 				if _visual:
 					_set_presentation_state("attack")
 				var pa := get_tree().get_first_node_in_group("player_authority") as BramblePlayerAuthority
-				if net and net.mode == "host" and pa:pa.damage(multiplayer.get_unique_id(), attack_damage)
-				else:
-					var state := get_tree().get_first_node_in_group("game_state") as BrambleGameState
-					if state:state.damage_player(attack_damage)
+				if net and net.mode == "host" and pa:
+					pa.damage(multiplayer.get_unique_id(), attack_damage)
+					if game_state:
+						game_state.damage_player(attack_damage)
+						var visual := player.get_node_or_null("Visual") as BramblePlayerVisual
+						if visual:
+							visual.play_hit()
+				elif game_state:
+					game_state.damage_player(attack_damage)
+					var visual := player.get_node_or_null("Visual") as BramblePlayerVisual
+					if visual:
+						visual.play_hit()
 	else:
-		if enemy_authority:enemy_authority.set_state(self,"return")
+		if enemy_authority:
+			enemy_authority.set_state(self, "return")
 		var home_dist := global_position.distance_to(spawn_position)
 		if home_dist > 14.0:
-			velocity = global_position.direction_to(spawn_position) * move_speed * 0.55
-			move_and_slide()
+			var desired := global_position.direction_to(spawn_position) * move_speed * 0.55
+			velocity = _slide_with_collision(desired)
 			if _visual and _state != "hit":
 				_apply_direction(_vector_to_direction(velocity))
 				_set_presentation_state("idle")
@@ -206,6 +219,11 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 			if _visual and _state != "hit" and _state != "attack":
 				_set_presentation_state("idle")
+
+func _slide_with_collision(desired: Vector2) -> Vector2:
+	velocity = desired
+	move_and_slide()
+	return velocity
 
 func _vector_to_direction(v: Vector2) -> String:
 	if v.length_squared() <= 0.02:
@@ -215,31 +233,54 @@ func _vector_to_direction(v: Vector2) -> String:
 	var mapping := ["right", "front", "left", "back"]
 	return mapping[quad]
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, attacker: Node = null) -> void:
+	if _dead:
+		return
+	if attacker:
+		_last_attacker = attacker
 	hp -= amount
 	hit_flash = 0.10
 	if _visual:
 		_set_presentation_state("hit")
-	var fill := get_node_or_null("HpFill") as ColorRect
-	if fill:
-		fill.size.x = 68.0 * clamp(float(hp) / float(max_hp), 0.0, 1.0)
 	if hp <= 0:
 		_die()
 
 func _exit_tree() -> void:
-	var enemy_authority:=get_tree().get_first_node_in_group("enemy_authority_service") as BrambleEnemyAuthorityService
-	if enemy_authority:enemy_authority.unregister_enemy(self)
+	var enemy_authority := get_tree().get_first_node_in_group("enemy_authority_service") as BrambleEnemyAuthorityService
+	if enemy_authority:
+		enemy_authority.unregister_enemy(self)
+	var registry := get_tree().get_first_node_in_group("network_entity_registry") as BrambleNetworkEntityRegistry
+	if registry:
+		registry.unregister(self)
 
 func _die() -> void:
+	if _dead:
+		return
+	_dead = true
+	_state = "dead"
+	velocity = Vector2.ZERO
 	if _visual:
 		_set_presentation_state("defeated")
-		await get_tree().create_timer(0.45).timeout
-	var state := get_tree().get_first_node_in_group("game_state") as BrambleGameState
-	if state:
-		state.register_enemy_kill(enemy_id, xp_reward, gold_reward)
+	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
+	if runtime and runtime.has_method("handle_enemy_death"):
+		runtime.handle_enemy_death(self, _last_attacker)
+	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	if targeting and targeting.has_method("get_target") and targeting.get_target() == self:
+		if targeting.has_method("clear_target"):
+			targeting.clear_target()
+	visible = false
+	if _collision:
+		_collision.disabled = true
+	_respawn_timer = respawn_delay
 
-	var loot := BrambleLootPickup.new()
-	loot.gold_amount = gold_reward
-	loot.global_position = global_position
-	get_parent().add_child(loot)
-	queue_free()
+func _respawn() -> void:
+	_dead = false
+	_state = "idle"
+	hp = max_hp
+	global_position = spawn_position
+	visible = true
+	if _collision:
+		_collision.disabled = false
+	if _visual:
+		_apply_direction("front")
+		_set_presentation_state("idle")

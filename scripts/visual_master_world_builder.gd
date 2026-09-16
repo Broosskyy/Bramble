@@ -292,6 +292,7 @@ func _add_enemy(pos: Vector2) -> void:
 func _build_monsters() -> void:
 	_add_enemy(Vector2(650, 110))
 	_add_enemy(Vector2(760, 170))
+	_add_enemy(Vector2(700, 140))
 
 func _build_portals() -> void:
 	_place(objects, "world/portals/portal_arch_active.png", Vector2(540, 120), BrambleWorldPresentationConfig.SCALE_PORTAL, 40.0)

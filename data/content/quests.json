@@ -10,12 +10,12 @@
   {
     "id": "q01",
     "index": 1,
-    "title": "Die ersten Monster",
+    "title": "Moorling-Jagd",
     "type": "kill",
-    "target": "slime",
-    "count": 5,
-    "counter": "slimeKills",
-    "text": "Besiege 5 Schleime auf den Östlichen Feldern."
+    "target": "moorling",
+    "count": 3,
+    "counter": "moorlingKills",
+    "text": "Besiege 3 Moorlings auf den Östlichen Feldern."
   },
   {
     "id": "q02",

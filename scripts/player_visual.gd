@@ -103,6 +103,9 @@ func set_state(state: String) -> void:
 	if animation != state:
 		play(state)
 
+func play_hit() -> void:
+	show_hit()
+
 func show_hit() -> void:
 	if not use_production_assets or _hit_texture == null:
 		set_state("hit")

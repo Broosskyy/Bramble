@@ -26,6 +26,11 @@ var dialogue_text: Label
 var toast: Label
 var attack_btn: TextureButton
 var skill_btns: Array[TextureButton] = []
+var target_root: Control
+var target_name: Label
+var target_hp: ProgressBar
+var target_status: Label
+var skill_cd_label: Label
 
 var toast_time := 0.0
 
@@ -37,8 +42,15 @@ func _ready() -> void:
 	if state:
 		state.quest_changed.connect(_on_quest_changed)
 		state.player_stats_changed.connect(_on_stats_changed)
+		state.inventory_changed.connect(_on_inventory_changed)
 		state.toast_requested.connect(show_toast)
 		state._emit_all()
+	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	if targeting:
+		targeting.target_changed.connect(_on_target_changed)
+	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
+	if runtime:
+		runtime.skill_cooldown_changed.connect(_on_skill_cooldown)
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
 		orient.orientation_changed.connect(_apply_layout)
@@ -80,6 +92,25 @@ func _build_ui() -> void:
 	quest_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	quest_text.add_theme_font_size_override("font_size", 10)
 	quest_root.add_child(quest_text)
+
+	target_root = _fixed_panel(Vector2(220, 52))
+	target_root.visible = false
+	add_child(target_root)
+	var target_bg := _scaled_tex("ui/quests/quest_tracker_panel.png", Vector2(220, 52))
+	target_root.add_child(target_bg)
+	target_name = Label.new()
+	target_name.position = Vector2(12, 6)
+	target_name.add_theme_font_size_override("font_size", 11)
+	target_root.add_child(target_name)
+	target_hp = ProgressBar.new()
+	target_hp.position = Vector2(12, 24)
+	target_hp.size = Vector2(196, 10)
+	target_hp.show_percentage = false
+	target_root.add_child(target_hp)
+	target_status = Label.new()
+	target_status.position = Vector2(12, 36)
+	target_status.add_theme_font_size_override("font_size", 9)
+	target_root.add_child(target_status)
 
 	minimap_root = _fixed_panel(HUD_MINIMAP_SIZE)
 	add_child(minimap_root)
@@ -137,6 +168,11 @@ func _build_ui() -> void:
 		slot.add_child(num)
 		combat_root.add_child(slot)
 		skill_btns.append(slot)
+	skill_cd_label = Label.new()
+	skill_cd_label.visible = false
+	skill_cd_label.add_theme_font_size_override("font_size", 10)
+	skill_cd_label.add_theme_color_override("font_color", Color("#ffd35a"))
+	combat_root.add_child(skill_cd_label)
 
 	dialogue = PanelContainer.new()
 	dialogue.visible = false
@@ -203,6 +239,7 @@ func _apply_layout(mode: String) -> void:
 		stats_root.position = Vector2(m, 48)
 		quest_root.position = Vector2(m, 48 + stats_h + 10)
 		quest_root.size = Vector2(280, 64)
+		target_root.position = Vector2(m, 48 + stats_h + quest_h + 18)
 		minimap_root.position = Vector2(vp.x - HUD_MINIMAP_SIZE.x - m, 44)
 		touch_root.position = Vector2(m, vp.y - HUD_JOY_SIZE.y - m)
 		combat_root.position = Vector2(vp.x - 112, vp.y - joy_h + 6)
@@ -210,6 +247,7 @@ func _apply_layout(mode: String) -> void:
 		stats_root.position = Vector2(m, m)
 		quest_root.position = Vector2(m, m + stats_h + 8)
 		quest_root.size = HUD_QUEST_SIZE
+		target_root.position = Vector2(m, m + stats_h + quest_h + 14)
 		minimap_root.position = Vector2(vp.x - HUD_MINIMAP_SIZE.x - m, m)
 		var joy_y := vp.y - HUD_JOY_SIZE.y - m
 		if joy_y < quest_root.position.y + quest_h + 12:
@@ -220,6 +258,42 @@ func _apply_layout(mode: String) -> void:
 	attack_btn.position = Vector2(0, 0)
 	for i in range(skill_btns.size()):
 		skill_btns[i].position = Vector2(-50 * (i + 1), 18)
+	skill_cd_label.position = Vector2(-50, 62)
+
+func _on_target_changed(state: Dictionary) -> void:
+	var valid := bool(state.get("valid", false))
+	target_root.visible = valid
+	if not valid:
+		return
+	target_name.text = String(state.get("name", "Target"))
+	target_hp.max_value = maxi(1, int(state.get("max_hp", 1)))
+	target_hp.value = int(state.get("hp", 0))
+	var dist := float(state.get("distance", 0.0))
+	target_status.text = "HP %d/%d · %.0fm" % [int(state.get("hp", 0)), int(state.get("max_hp", 0)), dist]
+
+func _on_inventory_changed(items: Array) -> void:
+	var herbs := 0
+	var ores := 0
+	for item in items:
+		if String(item) == "herb":
+			herbs += 1
+		elif String(item) == "ore":
+			ores += 1
+	var state := get_tree().get_first_node_in_group("game_state") as BrambleGameState
+	if state == null:
+		return
+	stats_label.text = "LV %d  XP %d  %d G  H:%d O:%d" % [state.level, state.xp, state.gold, herbs, ores]
+
+func _on_skill_cooldown(_slot: int, remaining: float, _total: float) -> void:
+	if remaining <= 0.0:
+		skill_cd_label.visible = false
+		if skill_btns.size() > 0:
+			skill_btns[0].modulate = Color(0.92, 0.86, 0.72, 0.95)
+		return
+	skill_cd_label.visible = true
+	skill_cd_label.text = "✦ %.1fs" % remaining
+	if skill_btns.size() > 0:
+		skill_btns[0].modulate = Color(0.55, 0.55, 0.55, 0.85)
 
 func _process(delta: float) -> void:
 	if toast_time > 0.0:
@@ -236,7 +310,11 @@ func _on_stats_changed(hp: int, max_hp: int, level: int, xp: int, gold: int) -> 
 	hp_bar.value = hp
 	mp_bar.max_value = 100
 	mp_bar.value = clampi(100 - level * 3, 35, 100)
-	stats_label.text = "LV %d  XP %d  %d G" % [level, xp, gold]
+	var state := get_tree().get_first_node_in_group("game_state") as BrambleGameState
+	if state:
+		_on_inventory_changed(state.inventory)
+	else:
+		stats_label.text = "LV %d  XP %d  %d G" % [level, xp, gold]
 
 func show_dialogue(title: String, text: String) -> void:
 	dialogue_title.text = title
