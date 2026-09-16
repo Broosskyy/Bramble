@@ -1,8 +1,8 @@
 BRAMBLE LIVE BUILD
 
 Milestone: m03.1
-Commit: (pending)
-Date: 2026-09-16 14:36:53 UTC
+Commit: f0bb2bb6cf175b6a57e3901c4fed2e86aa1c5f33
+Date: 2026-09-16 14:36:56 UTC
 Godot: 4.7.2
 Main Scene: res://scenes/main.tscn
 Runtime Test: PASS
