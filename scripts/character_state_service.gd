@@ -35,10 +35,10 @@ func _ready() -> void:
 	level_up.connect(_on_level_up)
 	call_deferred("_bootstrap_local_character")
 
-func _on_level_up(new_level: int, _rewards: Dictionary) -> void:
-	var gs := get_tree().get_first_node_in_group("game_state") as BrambleGameState
-	if gs:
-		gs.toast_requested.emit("LEVEL UP · Level %d" % new_level)
+func _on_level_up(new_level: int, rewards: Dictionary) -> void:
+	var hud := get_tree().get_first_node_in_group("production_hud") as BrambleProductionHud
+	if hud:
+		hud.show_level_up(new_level, rewards)
 
 func local_peer_id() -> int:
 	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession

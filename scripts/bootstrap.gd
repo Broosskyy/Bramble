@@ -65,6 +65,10 @@ func _ready() -> void:
 		call_deferred("_capture_m03_1", args)
 	elif _has_arg("--m04-capture"):
 		call_deferred("_capture_m04", args)
+	elif _has_arg("--m04_1-capture"):
+		call_deferred("_capture_m04_1", args)
+	elif _has_arg("--measure-snapshot"):
+		call_deferred("_measure_snapshot")
 	elif _arg_value("--m03_1-e2e", "") != "":
 		call_deferred("_run_m03_1_e2e", _arg_value("--m03_1-e2e", ""))
 	elif _has_arg("--m02_2-capture"):
@@ -708,4 +712,191 @@ func _capture_m04(_args: PackedStringArray) -> void:
 	_shot_m04("skillbar_portrait.png")
 	if cs:
 		cs.save_now()
+	get_tree().quit()
+
+func _shot_m04_1(filename: String) -> void:
+	var img := get_viewport().get_texture().get_image()
+	var rel := "res://artifacts/m04_1/%s" % filename
+	var path := ProjectSettings.globalize_path(rel)
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+	img.save_png(path)
+	print("M04.1 screenshot saved: ", path)
+
+func _capture_m04_1(_args: PackedStringArray) -> void:
+	await _wait_frames(40)
+	_ensure_dir("res://artifacts/m04_1/")
+	var cs = get_tree().get_first_node_in_group("character_state_service")
+	var ui = get_tree().get_first_node_in_group("production_rpg_ui")
+	var hud = get_tree().get_first_node_in_group("production_hud") as BrambleProductionHud
+	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
+	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
+	var player := get_node_or_null("Player") as BramblePlayerController
+
+	get_window().size = Vector2i(1920, 1080)
+	await _wait_frames(2)
+	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
+	await _wait_seconds(1.0)
+	_shot_m04_1("01_gameplay_landscape.png")
+
+	get_window().size = Vector2i(1080, 1920)
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	_shot_m04_1("02_gameplay_portrait.png")
+
+	get_window().size = Vector2i(1920, 1080)
+	if orient:
+		orient._refresh()
+	await _wait_frames(1)
+	if ui:
+		ui.show_inventory()
+		await _wait_seconds(1.0)
+		_shot_m04_1("03_inventory_landscape.png")
+
+	get_window().size = Vector2i(1080, 1920)
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	if ui:
+		ui.show_inventory()
+		await _wait_seconds(1.0)
+		_shot_m04_1("04_inventory_portrait.png")
+		ui.hide_panel()
+
+	get_window().size = Vector2i(1920, 1080)
+	if orient:
+		orient._refresh()
+	await _wait_frames(1)
+	if ui:
+		ui.show_character()
+		await _wait_seconds(1.0)
+		_shot_m04_1("05_character_landscape.png")
+
+	get_window().size = Vector2i(1080, 1920)
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	if ui:
+		ui.show_character()
+		await _wait_seconds(1.0)
+		_shot_m04_1("06_character_portrait.png")
+		ui.hide_panel()
+
+	if cs:
+		cs.equip_from_inventory("forest_blade")
+		cs.equip_from_inventory("leather_vest")
+		await _wait_seconds(0.8)
+	get_window().size = Vector2i(1920, 1080)
+	if orient:
+		orient._refresh()
+	await _wait_frames(1)
+	if ui:
+		ui.show_character()
+		await _wait_seconds(0.8)
+		_shot_m04_1("07_equipment_landscape.png")
+
+	get_window().size = Vector2i(1080, 1920)
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	if ui:
+		ui.show_character()
+		await _wait_seconds(0.8)
+		_shot_m04_1("08_equipment_portrait.png")
+		ui.show_inventory()
+		ui.select_item("rusty_blade")
+		await _wait_seconds(0.8)
+		_shot_m04_1("09_item_comparison.png")
+		ui.hide_panel()
+
+	get_window().size = Vector2i(1920, 1080)
+	if orient:
+		orient._refresh()
+	await _wait_frames(1)
+	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
+	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	var enemy := _nearest_enemy()
+	if enemy and targeting:
+		targeting.set_target(enemy)
+	await _wait_seconds(0.8)
+	_shot_m04_1("10_skillbar_landscape.png")
+
+	get_window().size = Vector2i(1080, 1920)
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	_shot_m04_1("11_skillbar_portrait.png")
+
+	if runtime and player and enemy and targeting:
+		targeting.set_target(enemy)
+		runtime.resolve_skill(player, 0, targeting.get_target_entity_id())
+		await _wait_seconds(0.4)
+	get_window().size = Vector2i(1920, 1080)
+	if orient:
+		orient._refresh()
+	await _wait_frames(1)
+	_shot_m04_1("12_skill_cooldown.png")
+
+	if cs:
+		for _i in range(4):
+			cs.grant_xp(50)
+			await _wait_seconds(0.15)
+	await _wait_seconds(0.5)
+	_shot_m04_1("13_level_up_landscape.png")
+
+	get_window().size = Vector2i(1080, 1920)
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	_shot_m04_1("14_level_up_portrait.png")
+
+	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
+	await _wait_seconds(1.5)
+	get_window().size = Vector2i(1920, 1080)
+	if orient:
+		orient._refresh()
+	await _wait_frames(1)
+	_shot_m04_1("15_canopy_fade_landscape.png")
+
+	get_window().size = Vector2i(1080, 1920)
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	_shot_m04_1("16_canopy_fade_portrait.png")
+
+	if hud:
+		hud.level_up_root.visible = false
+	if ui:
+		ui.hide_panel()
+	get_window().size = Vector2i(1920, 1080)
+	if orient:
+		orient._refresh()
+	await _wait_frames(1)
+	_move_player(BrambleWorldPresentationConfig.VILLAGE_CAMERA_FOCUS)
+	await _wait_seconds(0.8)
+	_shot_m04_1("17_clean_gameplay_no_debug.png")
+
+	if cs:
+		cs.save_now()
+	get_tree().quit()
+
+func _measure_snapshot() -> void:
+	await _wait_frames(20)
+	var pa := get_tree().get_first_node_in_group("player_authority") as BramblePlayerAuthority
+	if pa == null:
+		push_error("snapshot measure failed: no player_authority")
+		get_tree().quit(1)
+		return
+	var registry := get_tree().get_first_node_in_group("network_entity_registry") as BrambleNetworkEntityRegistry
+	var lite := {"players": pa.snapshot_lite(), "enemies": registry.enemy_snapshot() if registry else []}
+	var full := {"players": pa.snapshot(), "enemies": registry.enemy_snapshot() if registry else []}
+	var lite_bytes := JSON.stringify(lite).to_utf8_buffer().size()
+	var full_bytes := JSON.stringify(full).to_utf8_buffer().size()
+	print("SNAPSHOT_LITE_BYTES=%d" % lite_bytes)
+	print("SNAPSHOT_FULL_BYTES=%d" % full_bytes)
+	var f := FileAccess.open("res://artifacts/m04_1/snapshot_payload.txt", FileAccess.WRITE)
+	if f:
+		f.store_line("snapshot_lite_bytes=%d" % lite_bytes)
+		f.store_line("snapshot_full_bytes=%d" % full_bytes)
+		f.close()
 	get_tree().quit()

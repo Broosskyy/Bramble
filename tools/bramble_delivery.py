@@ -183,6 +183,53 @@ def m04_capture() -> None:
     print("M04 visual capture: PASS")
 
 
+M04_1_DIR = ROOT / "artifacts" / "m04_1"
+
+
+def m04_1_capture() -> None:
+    M04_1_DIR.mkdir(parents=True, exist_ok=True)
+    result = run_godot(["--m04_1-capture"], timeout=900)
+    out = result.stdout + result.stderr
+    if result.returncode != 0:
+        raise DeliveryError(f"M04.1 capture failed (exit {result.returncode}):\n{out}")
+    expected = [
+        "01_gameplay_landscape.png",
+        "02_gameplay_portrait.png",
+        "03_inventory_landscape.png",
+        "04_inventory_portrait.png",
+        "05_character_landscape.png",
+        "06_character_portrait.png",
+        "07_equipment_landscape.png",
+        "08_equipment_portrait.png",
+        "09_item_comparison.png",
+        "10_skillbar_landscape.png",
+        "11_skillbar_portrait.png",
+        "12_skill_cooldown.png",
+        "13_level_up_landscape.png",
+        "14_level_up_portrait.png",
+        "15_canopy_fade_landscape.png",
+        "16_canopy_fade_portrait.png",
+        "17_clean_gameplay_no_debug.png",
+    ]
+    for name in expected:
+        wait_for_png(M04_1_DIR / name)
+        validate_png(M04_1_DIR / name, name)
+    print("M04.1 visual capture: PASS")
+
+
+def measure_snapshot_payload() -> int:
+    result = run_godot(["--measure-snapshot"], timeout=120)
+    out = result.stdout + result.stderr
+    if result.returncode != 0:
+        raise DeliveryError(f"Snapshot measure failed (exit {result.returncode}):\n{out}")
+    match = re.search(r"SNAPSHOT_LITE_BYTES=(\d+)", out)
+    if not match:
+        raise DeliveryError(f"Snapshot measure missing payload line:\n{out}")
+    lite_bytes = int(match.group(1))
+    print(f"Snapshot lite payload: {lite_bytes} bytes")
+    return lite_bytes
+
+
 def git(*args: str, check: bool = True) -> str:
     result = run(["git", *args], check=check)
     return (result.stdout or "").strip()
@@ -345,7 +392,11 @@ def main() -> int:
         if args.milestone.startswith("m03.1"):
             m03_1_capture()
             m03_1_multiplayer_e2e()
-        if args.milestone.startswith("m04"):
+        if args.milestone.startswith("m04.1"):
+            m04_1_capture()
+            measure_snapshot_payload()
+            m03_1_multiplayer_e2e()
+        elif args.milestone.startswith("m04"):
             m04_capture()
 
         if args.capture_only:

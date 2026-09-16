@@ -259,9 +259,11 @@ func _build_wilds() -> void:
 	var tr := BrambleWorldPresentationConfig.SCALE_TREE
 	_place(objects, "world/buildings/ruined_arch.png", Vector2(720, 40), BrambleWorldPresentationConfig.SCALE_PROP_LARGE, 38.0, false, 0, 52.0, 100.0)
 	for pos in [Vector2(560, -40), Vector2(780, 180), Vector2(860, 60), Vector2(700, 210)]:
-		var half_w := 34.0 if pos.x < 650.0 else 42.0
-		var canopy := 96.0 if pos.x < 650.0 else 116.0
-		_place(objects, "world/buildings/red_oak.png", pos, tr * (0.88 if pos.x < 650.0 else 1.0), 72.0, true, 0, half_w, canopy)
+		var half_w := 48.0 if pos.x < 650.0 else 58.0
+		var canopy := 148.0 if pos.x < 650.0 else 168.0
+		var sp := _place(objects, "world/buildings/red_oak.png", pos, tr * (0.88 if pos.x < 650.0 else 1.0), 72.0, true, 0, half_w, canopy)
+		if sp:
+			sp.set_meta("occlusion_fade_radius", half_w * 3.2)
 		_solid_circle(pos + Vector2(0, 66), 28.0)
 		_paint_map(pos, MapRegistry.Cell.WILDS)
 	_place(objects, "world/buildings/apple_tree.png", Vector2(820, -40), tr * 0.9, 66.0, true, 0, 34.0, 96.0)

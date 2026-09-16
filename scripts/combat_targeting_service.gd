@@ -121,6 +121,12 @@ func clear_target() -> void:
 func get_target() -> Node2D:
 	return _target if _target and is_instance_valid(_target) else null
 
+func get_target_position() -> Vector2:
+	var target := get_target()
+	if target:
+		return target.global_position
+	return Vector2.ZERO
+
 func get_target_entity_id() -> int:
 	var registry := get_tree().get_first_node_in_group("network_entity_registry") as BrambleNetworkEntityRegistry
 	var target := get_target()

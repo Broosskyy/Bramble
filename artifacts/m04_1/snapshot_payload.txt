@@ -1,0 +1,2 @@
+snapshot_lite_bytes=1315
+snapshot_full_bytes=3085
