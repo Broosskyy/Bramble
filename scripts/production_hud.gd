@@ -31,6 +31,7 @@ var target_name: Label
 var target_hp: ProgressBar
 var target_status: Label
 var skill_cd_label: Label
+var nav_root: Control
 
 var toast_time := 0.0
 
@@ -51,6 +52,10 @@ func _ready() -> void:
 	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
 	if runtime:
 		runtime.skill_cooldown_changed.connect(_on_skill_cooldown)
+	var cs = get_tree().get_first_node_in_group("character_state_service")
+	if cs:
+		cs.character_changed.connect(_on_character_changed)
+		_on_character_changed(cs.get_character_view())
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
 		orient.orientation_changed.connect(_apply_layout)
@@ -194,6 +199,18 @@ func _build_ui() -> void:
 	toast = Label.new()
 	toast.visible = false
 	add_child(toast)
+	_build_nav()
+
+func _build_nav() -> void:
+	nav_root = Control.new()
+	add_child(nav_root)
+	for spec in [["Inv", "inventory"], ["Chr", "character"], ["Qst", "quest"], ["Soc", "social"]]:
+		var b := Button.new()
+		b.text = spec[0]
+		b.name = spec[1]
+		b.custom_minimum_size = Vector2(54, 34)
+		b.pressed.connect(func(): _on_nav(spec[1]))
+		nav_root.add_child(b)
 
 func _fixed_panel(panel_size: Vector2) -> Control:
 	var root := Control.new()
@@ -258,7 +275,22 @@ func _apply_layout(mode: String) -> void:
 	attack_btn.position = Vector2(0, 0)
 	for i in range(skill_btns.size()):
 		skill_btns[i].position = Vector2(-50 * (i + 1), 18)
-	skill_cd_label.position = Vector2(-50, 62)
+		skill_cd_label.position = Vector2(-50, 62)
+	_layout_nav(portrait, vp)
+
+func _layout_nav(portrait: bool, vp: Vector2) -> void:
+	if nav_root == null:
+		return
+	var m := BrambleWorldPresentationConfig.HUD_SAFE_MARGIN
+	var y := vp.y - 42 - m
+	var x := vp.x * 0.5 - 120
+	if portrait:
+		y = vp.y - 52 - m
+		x = vp.x * 0.5 - 120
+	for i in range(nav_root.get_child_count()):
+		var b := nav_root.get_child(i) as Control
+		if b:
+			b.position = Vector2(x + i * 62, y)
 
 func _on_target_changed(state: Dictionary) -> void:
 	var valid := bool(state.get("valid", false))
@@ -284,16 +316,63 @@ func _on_inventory_changed(items: Array) -> void:
 		return
 	stats_label.text = "LV %d  XP %d  %d G  H:%d O:%d" % [state.level, state.xp, state.gold, herbs, ores]
 
-func _on_skill_cooldown(_slot: int, remaining: float, _total: float) -> void:
-	if remaining <= 0.0:
-		skill_cd_label.visible = false
-		if skill_btns.size() > 0:
-			skill_btns[0].modulate = Color(0.92, 0.86, 0.72, 0.95)
+func _on_skill_cooldown(slot: int, remaining: float, _total: float) -> void:
+	if slot < 0 or slot >= skill_btns.size():
 		return
-	skill_cd_label.visible = true
-	skill_cd_label.text = "✦ %.1fs" % remaining
-	if skill_btns.size() > 0:
-		skill_btns[0].modulate = Color(0.55, 0.55, 0.55, 0.85)
+	if remaining <= 0.0:
+		skill_btns[slot].modulate = Color(0.92, 0.86, 0.72, 0.95)
+		if slot == 0:
+			skill_cd_label.visible = false
+		return
+	if slot == 0:
+		skill_cd_label.visible = true
+		skill_cd_label.text = "✦ %.1fs" % remaining
+	skill_btns[slot].modulate = Color(0.55, 0.55, 0.55, 0.85)
+
+func _on_character_changed(view: Dictionary) -> void:
+	if view.is_empty():
+		return
+	hp_bar.max_value = int(view.get("max_hp", 100))
+	hp_bar.value = int(view.get("hp", 100))
+	mp_bar.max_value = int(view.get("max_mp", 40))
+	mp_bar.value = int(view.get("mp", 40))
+	var herbs := 0
+	var ores := 0
+	for entry in view.get("inventory", []):
+		if String(entry.get("item_id", "")) == "herb":
+			herbs += int(entry.get("quantity", 0))
+		elif String(entry.get("item_id", "")) == "ore":
+			ores += int(entry.get("quantity", 0))
+	stats_label.text = "LV %d  XP %d/%d  %d G  H:%d O:%d" % [
+		int(view.get("level", 1)),
+		int(view.get("xp", 0)),
+		int(view.get("xp_to_next_level", 100)),
+		int(view.get("gold", 0)),
+		herbs,
+		ores,
+	]
+	var db := get_tree().get_first_node_in_group("content_db") as BrambleContentDB
+	if db:
+		for i in range(mini(skill_btns.size(), 3)):
+			var sid := ""
+			if i < view.get("skillbar", []).size():
+				sid = String(view.get("skillbar", [])[i])
+			var skill := db.skill_by_id("adventurer", sid) if sid != "" else {}
+			var label := skill_btns[i].get_child(0) as Label
+			if label:
+				label.text = String(skill.get("display_name", sid if sid != "" else str(i + 1))).substr(0, 1)
+
+func _on_nav(kind: String) -> void:
+	var ui = get_tree().get_first_node_in_group("production_rpg_ui")
+	match kind:
+		"inventory":
+			if ui: ui.toggle_inventory()
+		"character":
+			if ui: ui.toggle_character()
+		"quest":
+			show_toast("Quest-Tracker aktiv")
+		"social":
+			show_toast("Sozial · bald verfügbar")
 
 func _process(delta: float) -> void:
 	if toast_time > 0.0:
@@ -306,15 +385,15 @@ func _on_quest_changed(title: String, text: String) -> void:
 	quest_text.text = text
 
 func _on_stats_changed(hp: int, max_hp: int, level: int, xp: int, gold: int) -> void:
+	var cs = get_tree().get_first_node_in_group("character_state_service")
+	if cs:
+		_on_character_changed(cs.get_character_view())
+		return
 	hp_bar.max_value = max_hp
 	hp_bar.value = hp
 	mp_bar.max_value = 100
 	mp_bar.value = clampi(100 - level * 3, 35, 100)
-	var state := get_tree().get_first_node_in_group("game_state") as BrambleGameState
-	if state:
-		_on_inventory_changed(state.inventory)
-	else:
-		stats_label.text = "LV %d  XP %d  %d G" % [level, xp, gold]
+	stats_label.text = "LV %d  XP %d  %d G" % [level, xp, gold]
 
 func show_dialogue(title: String, text: String) -> void:
 	dialogue_title.text = title

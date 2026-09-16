@@ -17,7 +17,7 @@ func equip(peer_id:int,slot:String,item_id:String,instance_id:String="")->bool:
         if owned.is_empty() or String(owned.get("item_id",owned.get("id","")))!=item_id:return _reject(peer_id,"instance_not_owned")
     elif not inv.owns(peer_id,item_id,1):return _reject(peer_id,"item_not_owned")
     elif _requires_instance(item_id):return _reject(peer_id,"instance_required")
-    if not _slot_accepts(slot,String(item.get("type",""))):return _reject(peer_id,"slot_type_mismatch")
+    if not _slot_accepts(slot, item):return _reject(peer_id,"slot_type_mismatch")
     var pa:=get_tree().get_first_node_in_group("player_authority") as BramblePlayerAuthority
     if pa==null:return _reject(peer_id,"authority_unavailable")
     var s:=pa.ensure_peer(peer_id);var eq:Dictionary=s.get("equipment",{});eq[slot]={"item_id":item_id,"instance_id":instance_id} if instance_id!="" else item_id;s["equipment"]=eq;_commit(peer_id,s);_audit(peer_id,"equip",{"slot":slot,"item_id":item_id,"instance_id":instance_id});return true
@@ -29,7 +29,12 @@ func unequip(peer_id:int,slot:String)->bool:
 func _requires_instance(item_id:String)->bool:
     var instances:=get_tree().get_first_node_in_group("item_instance_service") as BrambleItemInstanceService
     return instances!=null and instances._requires_instance(item_id)
-func _slot_accepts(slot:String,item_type:String)->bool:
+func _slot_accepts(slot:String,item:Dictionary)->bool:
+    var allowed:=String(item.get("allowed_slot",""))
+    var slot_map:Dictionary={"weapon":"weapon","chest":"armor","hands":"gloves","feet":"boots","head":"head","accessory":"accessory_1","offhand":"accessory_2"}
+    if allowed!="":
+        return String(slot_map.get(slot,slot))==allowed
+    var item_type:=String(item.get("type",""))
     if slot in ["weapon","offhand"]:return item_type in ["weapon","offhand"]
     if slot=="accessory":return item_type in ["accessory","ring","amulet"]
     return item_type in ["armor",slot]

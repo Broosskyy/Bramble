@@ -137,7 +137,7 @@ func use_skill(slot: int) -> void:
 		return
 	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
 	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
-	if runtime and not runtime.skill_ready() and (net == null or net.mode == "offline"):
+	if runtime and not runtime.skill_ready(slot) and (net == null or net.mode == "offline"):
 		return
 	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
 	var target_id: int = targeting.get_target_entity_id() if targeting else 0

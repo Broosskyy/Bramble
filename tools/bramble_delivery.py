@@ -157,6 +157,32 @@ def m03_1_multiplayer_e2e() -> None:
     print("M03.1 multiplayer E2E: PASS")
 
 
+def m04_capture() -> None:
+    M04_DIR = ROOT / "artifacts" / "m04"
+    M04_DIR.mkdir(parents=True, exist_ok=True)
+    result = run_godot(["--m04-capture"], timeout=900)
+    out = result.stdout + result.stderr
+    if result.returncode != 0:
+        raise DeliveryError(f"M04 capture failed (exit {result.returncode}):\n{out}")
+    expected = [
+        "gameplay_landscape.png",
+        "gameplay_portrait.png",
+        "inventory_landscape.png",
+        "inventory_portrait.png",
+        "character_landscape.png",
+        "character_portrait.png",
+        "equipment_comparison.png",
+        "equipment_equipped.png",
+        "skillbar_landscape.png",
+        "skillbar_portrait.png",
+        "level_up.png",
+    ]
+    for name in expected:
+        wait_for_png(M04_DIR / name)
+        validate_png(M04_DIR / name, name)
+    print("M04 visual capture: PASS")
+
+
 def git(*args: str, check: bool = True) -> str:
     result = run(["git", *args], check=check)
     return (result.stdout or "").strip()
@@ -319,6 +345,8 @@ def main() -> int:
         if args.milestone.startswith("m03.1"):
             m03_1_capture()
             m03_1_multiplayer_e2e()
+        if args.milestone.startswith("m04"):
+            m04_capture()
 
         if args.capture_only:
             write_live_build(

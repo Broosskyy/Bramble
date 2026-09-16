@@ -69,4 +69,17 @@ Do not claim completion if any required step failed.
 - Do not delete local working changes because of GitHub auth failures  
 - Production assets under `assets/` must remain versioned  
 
+## Continuous Visual QA (M04+)
+
+`VISUAL_FOUNDATION_LOCKED` does not mean final visual quality. Every gameplay milestone must:
+
+- visually polish the systems it touches
+- avoid new prototype/debug UI in production paths
+- preserve Player/Target readability during combat
+- fix obvious local visual regressions encountered in touched areas
+- validate Landscape and Portrait layouts
+- generate fresh live screenshots for touched systems
+
+Do not reopen locked foundations for ordinary polish. Future maps should mix dense decorative areas with open movement/combat/interaction spaces instead of covering the entire playable area with decorative assets.
+
 See also: `docs/workflow/GITHUB_DELIVERY_WORKFLOW.md`

@@ -20,7 +20,7 @@ func _send_snapshot()->void:
     var registry:=get_tree().get_first_node_in_group("network_entity_registry") as BrambleNetworkEntityRegistry
     if pa==null or registry==null:
         return
-    var snapshot:={"players":pa.snapshot(),"enemies":registry.enemy_snapshot()}
+    var snapshot:={"players":pa.snapshot_lite(),"enemies":registry.enemy_snapshot()}
     _rpc_snapshot.rpc(snapshot)
     var remote_players = get_tree().get_first_node_in_group("remote_player_service")
     if remote_players and remote_players.has_method("sync_players"):

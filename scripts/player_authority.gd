@@ -51,3 +51,19 @@ func snapshot()->Array:
     var arr:Array=[]
     for id in states.keys():arr.append(states[id].duplicate(true))
     return arr
+
+func snapshot_lite()->Array:
+    var arr:Array=[]
+    for id in states.keys():
+        var s:Dictionary=states[id]
+        arr.append({
+            "peer_id": id,
+            "x": float(s.get("x", 0.0)),
+            "y": float(s.get("y", 360.0)),
+            "dir_x": float(s.get("dir_x", 0.0)),
+            "connected": bool(s.get("connected", true)),
+            "hp": int(s.get("hp", 100)),
+            "max_hp": int(s.get("max_hp", 100)),
+            "level": int(s.get("level", 1)),
+        })
+    return arr

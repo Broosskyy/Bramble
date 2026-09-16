@@ -11,12 +11,14 @@ var npcs:Dictionary={}
 var portals:Array=[]
 var network_protocol:Dictionary={}
 var registry:Dictionary={}
+var progression:Dictionary={}
 
 func _ready()->void:
     add_to_group("content_db")
     classes=_load_dict("classes.json")
     skills=_load_dict("skills.json")
     items=_load_dict("items.json")
+    progression=_load_dict("character_progression.json")
     quests=_load_array("quests.json")
     enemies=_load_dict("enemies.json")
     maps=_load_dict("maps.json")
@@ -41,3 +43,15 @@ func map_data(id:String)->Dictionary:return maps.get(id,{})
 func quest_data(index:int)->Dictionary:
     if index<0 or index>=quests.size():return {}
     return quests[index]
+func progression_config()->Dictionary:return progression
+func skill_by_id(class_id:String,skill_id:String)->Dictionary:
+    for skill in class_skills(class_id):
+        if String(skill.get("id",""))==skill_id:return skill
+    return {}
+func rarity_color(rarity:String)->Color:
+    match String(rarity).to_upper():
+        "UNCOMMON":return Color("#7ecf7a")
+        "RARE":return Color("#6db5ff")
+        "EPIC":return Color("#c88cff")
+        "LEGENDARY":return Color("#ffb84d")
+        _:return Color("#d8d0c0")

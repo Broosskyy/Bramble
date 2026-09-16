@@ -46,15 +46,23 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 func pickup(body: Node) -> void:
 	if not body.is_in_group("player"):
 		return
+	var cs = get_tree().get_first_node_in_group("character_state_service")
 	var state := get_tree().get_first_node_in_group("game_state") as BrambleGameState
-	if state == null:
-		queue_free()
-		return
-	if item_id != "":
-		state.add_inventory_item(item_id)
-		state.toast_requested.emit("+%s" % item_id)
-	if gold_amount > 0:
-		state.gold += gold_amount
-		state.player_stats_changed.emit(state.hp, state.max_hp, state.level, state.xp, state.gold)
-		state.toast_requested.emit("+%d Gold" % gold_amount)
+	if cs:
+		if item_id != "":
+			cs.add_loot(item_id, 1)
+			if state:
+				state.toast_requested.emit("+%s" % item_id)
+		if gold_amount > 0:
+			cs.add_loot("", 0, gold_amount)
+			if state:
+				state.toast_requested.emit("+%d Gold" % gold_amount)
+	elif state:
+		if item_id != "":
+			state.add_inventory_item(item_id)
+			state.toast_requested.emit("+%s" % item_id)
+		if gold_amount > 0:
+			state.gold += gold_amount
+			state.player_stats_changed.emit(state.hp, state.max_hp, state.level, state.xp, state.gold)
+			state.toast_requested.emit("+%d Gold" % gold_amount)
 	queue_free()

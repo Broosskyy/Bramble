@@ -4,6 +4,7 @@ extends Node2D
 
 func _enter_tree() -> void:
 	_ensure_m03_services()
+	_ensure_m04_services()
 
 func _cli_args() -> PackedStringArray:
 	var merged: PackedStringArray = []
@@ -62,6 +63,8 @@ func _ready() -> void:
 		call_deferred("_capture_m03", args)
 	elif _has_arg("--m03_1-capture"):
 		call_deferred("_capture_m03_1", args)
+	elif _has_arg("--m04-capture"):
+		call_deferred("_capture_m04", args)
 	elif _arg_value("--m03_1-e2e", "") != "":
 		call_deferred("_run_m03_1_e2e", _arg_value("--m03_1-e2e", ""))
 	elif _has_arg("--m02_2-capture"):
@@ -252,6 +255,12 @@ func _ensure_m03_services() -> void:
 	_add_service_if_missing("combat_runtime_service", "res://scripts/combat_runtime_service.gd", "CombatRuntimeService")
 	_add_service_if_missing("remote_player_service", "res://scripts/remote_player_service.gd", "RemotePlayerService")
 	_add_service_if_missing("multiplayer_e2e_service", "res://scripts/multiplayer_e2e_service.gd", "MultiplayerE2EService")
+
+func _ensure_m04_services() -> void:
+	_add_service_if_missing("stat_pipeline_service", "res://scripts/stat_pipeline_service.gd", "StatPipelineService")
+	_add_service_if_missing("character_state_service", "res://scripts/character_state_service.gd", "CharacterStateService")
+	_add_service_if_missing("production_equipment_visual", "res://scripts/production_equipment_visual.gd", "ProductionEquipmentVisual")
+	_add_service_if_missing("production_rpg_ui", "res://scripts/production_rpg_ui.gd", "ProductionRpgUi")
 
 func _add_service_if_missing(group: String, script_path: String, node_name: String) -> void:
 	if get_tree().get_first_node_in_group(group):
@@ -614,3 +623,89 @@ func _e2e_combat_sanity(e2e) -> void:
 	await _wait_seconds(0.6)
 	if e2e:
 		e2e.log_line("combat_sanity host_attack_ok snapshots=%d" % e2e.snapshot_count())
+
+func _shot_m04(filename: String) -> void:
+	var img := get_viewport().get_texture().get_image()
+	var rel := "res://artifacts/m04/%s" % filename
+	var path := ProjectSettings.globalize_path(rel)
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+	img.save_png(path)
+	print("M04 screenshot saved: ", path)
+
+func _capture_m04(_args: PackedStringArray) -> void:
+	await _wait_frames(40)
+	_ensure_dir("res://artifacts/m04/")
+	var cs = get_tree().get_first_node_in_group("character_state_service")
+	var ui = get_tree().get_first_node_in_group("production_rpg_ui")
+	get_window().size = Vector2i(1920, 1080)
+	await _wait_frames(2)
+	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
+	await _wait_seconds(1.0)
+	_shot_m04("gameplay_landscape.png")
+	get_window().size = Vector2i(1080, 1920)
+	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	_shot_m04("gameplay_portrait.png")
+	get_window().size = Vector2i(1920, 1080)
+	if orient:
+		orient._refresh()
+	await _wait_frames(1)
+	if cs:
+		for _i in range(3):
+			cs.grant_xp(40)
+			await _wait_seconds(0.2)
+		_shot_m04("level_up.png")
+	if ui:
+		ui.show_inventory()
+		await _wait_seconds(1.0)
+		_shot_m04("inventory_landscape.png")
+		ui.hide_panel()
+	get_window().size = Vector2i(1080, 1920)
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	if ui:
+		ui.show_inventory()
+		await _wait_seconds(1.0)
+		_shot_m04("inventory_portrait.png")
+		ui.hide_panel()
+		ui.show_character()
+		await _wait_seconds(1.0)
+		_shot_m04("character_portrait.png")
+	get_window().size = Vector2i(1920, 1080)
+	if orient:
+		orient._refresh()
+	await _wait_frames(1)
+	if ui:
+		ui.show_character()
+		await _wait_seconds(1.0)
+		_shot_m04("character_landscape.png")
+	if cs:
+		cs.equip_from_inventory("forest_blade")
+		await _wait_seconds(0.8)
+		_shot_m04("equipment_equipped.png")
+		if ui:
+			ui.show_inventory()
+			ui.select_item("rusty_blade")
+			await _wait_seconds(0.6)
+			_shot_m04("equipment_comparison.png")
+			ui.hide_panel()
+	_move_player(BrambleWorldPresentationConfig.COMBAT_CAMERA_FOCUS)
+	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
+	var player := get_node_or_null("Player") as BramblePlayerController
+	var enemy := _nearest_enemy()
+	if enemy and targeting:
+		targeting.set_target(enemy)
+	await _wait_seconds(0.8)
+	_shot_m04("skillbar_landscape.png")
+	get_window().size = Vector2i(1080, 1920)
+	if orient:
+		orient._refresh()
+	await _wait_frames(2)
+	_shot_m04("skillbar_portrait.png")
+	if cs:
+		cs.save_now()
+	get_tree().quit()

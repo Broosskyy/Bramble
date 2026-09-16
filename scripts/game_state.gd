@@ -60,8 +60,15 @@ func talk_to_npc(npc_id: String, npc_name: String) -> String:
 			return "Lina: Noch nicht. Besiege drei Moorlings am östlichen Feldrand."
 	return "%s: Willkommen in Hainweiler." % npc_name
 
-func register_enemy_kill(enemy_id: String, xp_reward: int, _gold_reward: int) -> void:
-	add_xp(xp_reward)
+func register_enemy_kill(enemy_id: String, xp_reward: int, gold_reward: int) -> void:
+	var cs = get_tree().get_first_node_in_group("character_state_service")
+	if cs:
+		cs.grant_xp(xp_reward)
+		if gold_reward > 0:
+			cs.add_loot("", 0, gold_reward)
+	else:
+		add_xp(xp_reward)
+		gold += gold_reward
 	if enemy_id == "moorling" and quest_stage == 1:
 		moorling_kills += 1
 		if moorling_kills >= 3:
@@ -71,6 +78,9 @@ func register_enemy_kill(enemy_id: String, xp_reward: int, _gold_reward: int) ->
 	player_stats_changed.emit(hp, max_hp, level, xp, gold)
 
 func add_inventory_item(item_id: String) -> void:
+	var cs = get_tree().get_first_node_in_group("character_state_service")
+	if cs and cs.add_loot(item_id, 1):
+		return
 	inventory.append(item_id)
 	inventory_changed.emit(inventory.duplicate())
 
