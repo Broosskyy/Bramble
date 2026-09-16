@@ -87,7 +87,7 @@ Milestone folders (`artifacts/m02_2/`, etc.) are preserved separately.
 `tools/bramble_delivery.py`
 
 ```powershell
-python tools/bramble_delivery.py `
+py -3 tools/bramble_delivery.py `
   --milestone m02.2 `
   --message "feat(m02.2): visual production pass and delivery workflow"
 ```

@@ -29,14 +29,16 @@ L. Verify remote SHA matches local HEAD
 
 ## Delivery Command
 
+On Windows use the Python launcher:
+
 ```powershell
-python tools/bramble_delivery.py --milestone mXX --message "feat(mXX): description"
+py -3 tools/bramble_delivery.py --milestone mXX --message "feat(mXX): description"
 ```
 
 Capture only (no commit):
 
 ```powershell
-python tools/bramble_delivery.py --capture-only
+py -3 tools/bramble_delivery.py --capture-only
 ```
 
 ## Commit Convention
