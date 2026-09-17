@@ -1,0 +1,6 @@
+node_count=76
+average_fps=60.00
+average_draw_calls=90.00
+renderer=NVIDIA GeForce RTX 5060
+sprite3d_count=17
+spatial_mesh_count=20
