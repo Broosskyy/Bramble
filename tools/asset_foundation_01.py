@@ -14,7 +14,7 @@ import os
 import re
 import shutil
 import zipfile
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
@@ -25,6 +25,7 @@ ASSET_IMPORT = PROJECT_ROOT / "_asset_import"
 ASSET_WORK = PROJECT_ROOT / "_asset_work"
 ASSET_GAME = PROJECT_ROOT / "assets" / "game"
 CATALOG = ASSET_GAME / "_catalog"
+SEMANTIC_OVERRIDES = CATALOG / "SEMANTIC_OVERRIDES.json"
 
 SKIP_EXTRACT_NAMES = {".ds_store", "thumbs.db", "desktop.ini"}
 SKIP_COPY_EXTENSIONS = {".py"}  # tooling inside kits, not game assets
@@ -65,6 +66,7 @@ class FileRecord:
     status: str = "pending"
     notes: str = ""
     copy_to_production: bool = False
+    semantic_alias: bool = False
 
 
 def sha256_file(path: Path) -> str:
@@ -254,7 +256,7 @@ def classify_file(rec: FileRecord) -> None:
         m = FRAME_RE.match(rec.filename)
         if m:
             rec.frame = m.group(1)
-            rec.animation_state = m.group(2)
+            rec.animation_state = re.sub(r"_\d{2}$", "", m.group(2))
         return
 
     # --- directions ---
@@ -607,24 +609,12 @@ def map_canonical_path(rec: FileRecord) -> str:
 
 
 def _map_master_path(rec: FileRecord, kit_num: Optional[int], kit_name: str, entity: str, fn: str) -> str:
-    kn = kit_name.lower()
-    if entity in MONSTER_ENTITIES:
-        return f"monsters/{entity}/master.png"
-    if entity in NPC_ENTITIES or "merchant" in kn or "blacksmith" in kn:
-        role = entity or ("merchant" if "merchant" in kn else "blacksmith")
-        return f"npcs/{role}/master.png"
-    if "specialist" in kn:
-        return f"characters/specialists/{entity}/master.png"
-    if "base_male" in kn or "base_female" in kn:
-        g = "female" if "female" in kn else "male"
-        return f"characters/base/{g}/master.png"
-    if any(x in kn for x in ("vfx", "slash", "magic")):
-        return f"combat/vfx/{kn}/master.png"
-    if any(x in kn for x in ("hud", "menu", "ui", "inventory", "quest", "raid", "touch", "combat_hud")):
-        return f"references/masters/ui/kit_{kit_num:02d}_{kit_name}_master.png" if kit_num else f"references/masters/ui/{fn}"
-    if any(x in kn for x in ("terrain", "road", "water", "building", "village", "cliff", "elevation", "portal", "dungeon")):
-        return f"references/masters/world/kit_{kit_num:02d}_{kit_name}_master.png" if kit_num else f"references/masters/world/{fn}"
-    return f"references/masters/kit_{kit_num:02d}_{kit_name}_master.png" if kit_num else f"references/masters/{fn}"
+    """Route composite masters to provenance storage, never runtime identity."""
+    kit_part = f"kit_{kit_num:02d}" if kit_num else "kit_unknown"
+    role = Path(fn).stem.lower()
+    source_role = "master" if role in {"master", "source_master"} else role
+    identity = kit_name or entity or "unclassified"
+    return f"references/source_sheets/{kit_part}_{identity}_{source_role}.png"
 
 
 def enrich_record(rec: FileRecord) -> None:
@@ -642,10 +632,49 @@ def enrich_record(rec: FileRecord) -> None:
             parts = PurePosixPath(rec.canonical_path).parts
             rec.category = parts[0] if parts else ""
             rec.subcategory = parts[1] if len(parts) > 1 else ""
-            rec.asset_type = rec.classification
+            rec.asset_type = "SOURCE_SHEET" if rec.classification == "MASTER" else rec.classification
             rec.status = "cataloged"
     else:
         rec.status = "skipped"
+
+
+def load_semantic_overrides() -> dict[str, dict]:
+    """Load reviewed semantic corrections that supersede source naming."""
+    if not SEMANTIC_OVERRIDES.is_file():
+        return {}
+    payload = json.loads(SEMANTIC_OVERRIDES.read_text(encoding="utf-8"))
+    overrides = payload.get("overrides", {})
+    if not isinstance(overrides, dict):
+        raise RuntimeError("SEMANTIC_OVERRIDES.json: overrides must be an object")
+    return overrides
+
+
+def apply_semantic_override(rec: FileRecord, overrides: dict[str, dict]) -> None:
+    """Apply evidence-backed identity without trusting kit folders or filenames."""
+    override = overrides.get(rec.source_path.replace("\\", "/"))
+    if not override:
+        return
+
+    canonical_path = str(override.get("canonical_path", "")).replace("\\", "/")
+    asset_type = str(override.get("asset_type", ""))
+    if not canonical_path or not asset_type:
+        raise RuntimeError(f"Incomplete semantic override for {rec.source_path}")
+
+    rec.canonical_path = canonical_path
+    rec.classification = asset_type
+    rec.asset_type = asset_type
+    parts = PurePosixPath(canonical_path).parts
+    rec.category = parts[0] if parts else ""
+    rec.subcategory = parts[1] if len(parts) > 1 else ""
+    rec.entity_name = str(override.get("entity_name", ""))
+    rec.direction = str(override.get("direction", ""))
+    rec.animation_state = str(override.get("animation_state", ""))
+    rec.copy_to_production = True
+    rec.semantic_alias = bool(override.get("duplicate_alias", False))
+    rec.status = "cataloged"
+    note = str(override.get("notes", "")).strip()
+    verification = str(override.get("verification", "")).strip()
+    rec.notes = f"{verification}: {note}" if verification else note
 
 
 def resolve_path_collisions(records: list[FileRecord]) -> None:
@@ -664,21 +693,41 @@ def resolve_path_collisions(records: list[FileRecord]) -> None:
             by_hash[r.sha256].append(r)
         if len(by_hash) == 1:
             # identical content — keep first, mark others as duplicate
-            primary = group[0]
-            for r in group[1:]:
+            primary = next((r for r in group if not r.semantic_alias), group[0])
+            for r in group:
+                if r is primary:
+                    continue
                 r.status = "duplicate_of_primary"
                 r.notes = f"same as {primary.canonical_path}"
                 r.copy_to_production = False
             continue
-        # different content — disambiguate with kit prefix
+        # Different content must never share a destination. Prefer semantic
+        # source filenames; add archive identity only when those still clash.
+        candidate_stems = [
+            f"kit{r.source_kit or 0:02d}_{Path(r.source_path).stem}"
+            for r in group
+        ]
+        candidate_counts = Counter(candidate_stems)
         for r in group:
             kit = r.source_kit or 0
-            stem = Path(path).stem
+            source_stem = Path(r.source_path).stem
+            stem = f"kit{kit:02d}_{source_stem}"
+            if candidate_counts[stem] > 1:
+                archive = re.sub(r"[^a-z0-9]+", "_", Path(r.source_zip).stem.lower()).strip("_")
+                stem = f"{archive}_{source_stem}"
+            if any(
+                other is not r
+                and other.sha256 != r.sha256
+                and Path(other.source_path).stem == source_stem
+                and other.source_zip == r.source_zip
+                for other in group
+            ):
+                stem = f"{stem}_{r.sha256[:8]}"
             suffix = Path(path).suffix
-            parent = str(Path(path).parent)
-            new_path = f"{parent}/kit{kit:02d}_{stem}{suffix}"
+            parent = str(PurePosixPath(path).parent)
+            new_path = f"{parent}/{stem}{suffix}"
             r.canonical_path = new_path
-            r.notes = "path collision resolved with kit prefix"
+            r.notes = "path collision resolved with source identity"
 
 
 def copy_production_files(records: list[FileRecord]) -> set[str]:
@@ -712,7 +761,11 @@ def build_animation_matrix(records: list[FileRecord], entity_type: str) -> dict:
     entities: dict[str, dict] = defaultdict(lambda: defaultdict(lambda: defaultdict(str)))
 
     for r in records:
-        if r.classification not in {"PRODUCTION_DIRECTION", "PRODUCTION_FRAME", "PRODUCTION_SINGLE", "MASTER", "SOURCE_SHEET"}:
+        if r.classification not in {
+            "PRODUCTION_DIRECTION", "PRODUCTION_FRAME", "PRODUCTION_SINGLE",
+            "DIRECTIONAL_SPRITE", "ANIMATION_FRAME", "ACTION_ASSET",
+            "MASTER", "SOURCE_SHEET",
+        }:
             continue
         entity = r.entity_name
         if not entity:
@@ -751,9 +804,9 @@ def build_animation_matrix(records: list[FileRecord], entity_type: str) -> dict:
 
         if r.classification == "SOURCE_SHEET" or r.classification == "MASTER":
             mark = "SHEET_ONLY"
-        elif r.classification == "PRODUCTION_FRAME":
+        elif r.classification in {"PRODUCTION_FRAME", "ANIMATION_FRAME"}:
             mark = "PARTIAL" if not r.direction else "AVAILABLE"
-        elif r.classification == "PRODUCTION_DIRECTION":
+        elif r.classification in {"PRODUCTION_DIRECTION", "DIRECTIONAL_SPRITE"}:
             mark = "AVAILABLE"
         else:
             mark = "PARTIAL"
@@ -799,6 +852,7 @@ def _matrix_cell(records, entity, direction, state, entity_type) -> str:
     found_dir = False
     found_sheet = False
     found_partial = False
+    frame_count = 0
     for r in records:
         ent = r.entity_name
         if entity_type == "player":
@@ -839,26 +893,28 @@ def _matrix_cell(records, entity, direction, state, entity_type) -> str:
                 st = "hit"
             elif "defeat" in fn:
                 st = "defeated"
-            elif r.classification == "PRODUCTION_DIRECTION":
+            elif r.classification in {"PRODUCTION_DIRECTION", "DIRECTIONAL_SPRITE"}:
                 st = "idle"
 
-        dir_match = (d == direction) or (direction == "*" and d == "*") or (d == direction)
         if direction != "*" and d != direction:
-            # also match if only state files without direction
-            if d != "*":
-                continue
+            continue
+        if direction == "*" and d != "*":
+            continue
         st_match = st == state or (state == "idle" and st in ("idle", "idle_ready", ""))
         if st_match or (state in fn):
-            if r.classification == "PRODUCTION_DIRECTION" and direction != "*" and d == direction:
+            if r.classification in {"PRODUCTION_DIRECTION", "DIRECTIONAL_SPRITE"} and direction != "*" and d == direction:
                 found_dir = True
-            elif r.classification == "PRODUCTION_FRAME":
+            elif r.classification in {"PRODUCTION_FRAME", "ANIMATION_FRAME"}:
                 found_partial = True
-            elif r.classification == "PRODUCTION_DIRECTION":
+                frame_count += 1
+            elif r.classification in {"PRODUCTION_DIRECTION", "DIRECTIONAL_SPRITE"}:
                 found_dir = True
-            elif r.classification == "PRODUCTION_SINGLE" and state in fn:
+            elif r.classification in {"PRODUCTION_SINGLE", "ACTION_ASSET"} and state in fn:
                 found_partial = True
 
     if found_dir:
+        return "AVAILABLE"
+    if direction == "*" and frame_count >= 2:
         return "AVAILABLE"
     if found_partial:
         return "PARTIAL"
@@ -921,7 +977,11 @@ def write_world_readiness(records: list[FileRecord], path: Path) -> None:
             if path_match or (r.classification == "SOURCE_SHEET" and kw_match):
                 if r.classification == "SOURCE_SHEET":
                     sheet_only[cat] += 1
-                elif r.classification in {"PRODUCTION_SINGLE", "PRODUCTION_DIRECTION", "PRODUCTION_FRAME", "MASTER"}:
+                elif r.classification in {
+                    "PRODUCTION_SINGLE", "PRODUCTION_DIRECTION", "PRODUCTION_FRAME",
+                    "WORLD_ASSET", "DIRECTIONAL_SPRITE", "ANIMATION_FRAME",
+                    "ACTION_ASSET", "MASTER",
+                }:
                     counts[cat] += 1
 
     lines = [
@@ -1000,6 +1060,12 @@ def main() -> None:
 
     zips = sorted([p for p in ASSET_IMPORT.glob("*.zip")])
     print(f"Found {len(zips)} ZIP archives")
+    semantic_overrides_text = (
+        SEMANTIC_OVERRIDES.read_text(encoding="utf-8")
+        if SEMANTIC_OVERRIDES.is_file()
+        else ""
+    )
+    semantic_overrides = load_semantic_overrides()
 
     if ASSET_GAME.exists():
         print("Rebuilding assets/game (catalog + production copies) ...")
@@ -1007,6 +1073,8 @@ def main() -> None:
     ASSET_GAME.mkdir(parents=True)
 
     CATALOG.mkdir(parents=True, exist_ok=True)
+    if semantic_overrides_text:
+        SEMANTIC_OVERRIDES.write_text(semantic_overrides_text, encoding="utf-8")
 
     # Phase 1 — extract
     if ASSET_WORK.exists():
@@ -1048,6 +1116,7 @@ def main() -> None:
                 size=size,
             )
             enrich_record(rec)
+            apply_semantic_override(rec, semantic_overrides)
             all_records.append(rec)
 
     print(f"Indexed {len(all_records)} source files")
@@ -1131,7 +1200,7 @@ def main() -> None:
     (CATALOG / "DUPLICATES.md").write_text("\n".join(dup_lines), encoding="utf-8")
 
     # SOURCE_SHEETS.md
-    sheets = [r for r in all_records if r.classification == "SOURCE_SHEET"]
+    sheets = [r for r in all_records if r.classification in {"SOURCE_SHEET", "MASTER"}]
     sl = ["# Source Sheets", "", "Do NOT use as single in-game sprites without slicing.", "", f"Total: {len(sheets)}", ""]
     for r in sorted(sheets, key=lambda x: x.source_path):
         sl.append(f"- `{r.canonical_path}` ← `{r.source_zip}:{r.source_path}`")

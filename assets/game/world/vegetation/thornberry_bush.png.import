@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bv6ijyyq7wpn1"
-path="res://.godot/imported/kit21_back.png-bff1b4a9d34e52118d23c70bdea1731d.ctex"
+uid="uid://oal7m6ychidw"
+path="res://.godot/imported/thornberry_bush.png-8b862ddffea1b833eba8b1751df79ecb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/monsters/moorling/directions/kit21_back.png"
-dest_files=["res://.godot/imported/kit21_back.png-bff1b4a9d34e52118d23c70bdea1731d.ctex"]
+source_file="res://assets/game/world/vegetation/thornberry_bush.png"
+dest_files=["res://.godot/imported/thornberry_bush.png-8b862ddffea1b833eba8b1751df79ecb.ctex"]
 
 [params]
 

@@ -1,6 +1,11 @@
 {
   "number": 21,
-  "name": "moorling_directions",
+  "source_label": "moorling_directions",
+  "semantic_identity": "nebelbruch_vegetation",
+  "classification": "REFERENCE_ONLY",
+  "verification": "CONFIRMED_MISLABELED_ALIAS",
+  "canonical_source_sheet": "references/source_sheets/kit_11_nebelbruch_vegetation.png",
+  "runtime_ready": false,
   "source": "master.png",
   "grid": [
     2,
@@ -9,7 +14,8 @@
   "alpha_verified": true,
   "assets": [
     {
-      "id": "front",
+      "id": "swamp_willow",
+      "source_label": "front",
       "file": "front.png",
       "source_rect": [
         0,
@@ -20,7 +26,8 @@
       "gutter_px": 7
     },
     {
-      "id": "right",
+      "id": "marsh_reeds",
+      "source_label": "right",
       "file": "right.png",
       "source_rect": [
         687,
@@ -31,7 +38,8 @@
       "gutter_px": 10
     },
     {
-      "id": "back",
+      "id": "glow_stump",
+      "source_label": "back",
       "file": "back.png",
       "source_rect": [
         0,
@@ -42,7 +50,8 @@
       "gutter_px": 61
     },
     {
-      "id": "left",
+      "id": "thornberry_bush",
+      "source_label": "left",
       "file": "left.png",
       "source_rect": [
         687,
@@ -52,5 +61,6 @@
       ],
       "gutter_px": 36
     }
-  ]
+  ],
+  "notes": "Source naming is false; content and hash match kit 11 Nebelbruch vegetation."
 }

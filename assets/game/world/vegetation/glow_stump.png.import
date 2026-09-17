@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://oal7m6ychidw"
-path="res://.godot/imported/kit21_left.png-b5a6993cfa2301b8864e25c225ad94ed.ctex"
+uid="uid://bv6ijyyq7wpn1"
+path="res://.godot/imported/glow_stump.png-479df76d621ff69e3cdfbfedd0a8d1bc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/monsters/moorling/directions/kit21_left.png"
-dest_files=["res://.godot/imported/kit21_left.png-b5a6993cfa2301b8864e25c225ad94ed.ctex"]
+source_file="res://assets/game/world/vegetation/glow_stump.png"
+dest_files=["res://.godot/imported/glow_stump.png-479df76d621ff69e3cdfbfedd0a8d1bc.ctex"]
 
 [params]
 

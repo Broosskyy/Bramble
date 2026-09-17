@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3d27t5mbqr4m"
-path="res://.godot/imported/kit_29_world_system_ui_master.png-41abdd5feda951008ee2a7047db61a0a.ctex"
+uid="uid://gpit57nin2ja"
+path="res://.godot/imported/kit_70_moorling_idle_attack_source.png-0898a3bbd4f852820994399f2625926b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/references/masters/ui/kit_29_world_system_ui_master.png"
-dest_files=["res://.godot/imported/kit_29_world_system_ui_master.png-41abdd5feda951008ee2a7047db61a0a.ctex"]
+source_file="res://assets/game/references/source_sheets/kit_70_moorling_idle_attack_source.png"
+dest_files=["res://.godot/imported/kit_70_moorling_idle_attack_source.png-0898a3bbd4f852820994399f2625926b.ctex"]
 
 [params]
 

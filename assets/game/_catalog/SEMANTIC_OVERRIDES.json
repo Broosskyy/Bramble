@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "purpose": "Evidence-backed corrections applied after filename/folder heuristics.",
+  "classifications": [
+    "SOURCE_SHEET",
+    "EXTRACTED_ASSET",
+    "WORLD_ASSET",
+    "DIRECTIONAL_SPRITE",
+    "ANIMATION_FRAME",
+    "ACTION_ASSET",
+    "UI_ASSET",
+    "REFERENCE_ONLY"
+  ],
+  "overrides": {
+    "BRAMBLE_21_29/21_moorling_directions/master.png": {
+      "canonical_path": "references/source_sheets/kit_11_nebelbruch_vegetation.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "nebelbruch_vegetation",
+      "runtime_ready": false,
+      "duplicate_alias": true,
+      "verification": "CONFIRMED",
+      "notes": "Exact duplicate of kit 11 vegetation sheet; source folder name is incorrect."
+    },
+    "BRAMBLE_21_29/21_moorling_directions/front.png": {
+      "canonical_path": "world/vegetation/swamp_willow.png",
+      "asset_type": "WORLD_ASSET",
+      "semantic_identity": "swamp_willow",
+      "runtime_ready": true,
+      "verification": "CONFIRMED",
+      "notes": "Extracted from the mislabeled kit 21 vegetation source sheet."
+    },
+    "BRAMBLE_21_29/21_moorling_directions/right.png": {
+      "canonical_path": "world/vegetation/marsh_reeds.png",
+      "asset_type": "WORLD_ASSET",
+      "semantic_identity": "marsh_reeds",
+      "runtime_ready": true,
+      "verification": "CONFIRMED",
+      "notes": "Extracted from the mislabeled kit 21 vegetation source sheet."
+    },
+    "BRAMBLE_21_29/21_moorling_directions/back.png": {
+      "canonical_path": "world/vegetation/glow_stump.png",
+      "asset_type": "WORLD_ASSET",
+      "semantic_identity": "glow_stump",
+      "runtime_ready": true,
+      "verification": "CONFIRMED",
+      "notes": "Extracted from the mislabeled kit 21 vegetation source sheet."
+    },
+    "BRAMBLE_21_29/21_moorling_directions/left.png": {
+      "canonical_path": "world/vegetation/thornberry_bush.png",
+      "asset_type": "WORLD_ASSET",
+      "semantic_identity": "thornberry_bush",
+      "runtime_ready": true,
+      "verification": "CONFIRMED",
+      "notes": "Extracted from the mislabeled kit 21 vegetation source sheet."
+    },
+    "BRAMBLE_21_29/21_moorling_directions/kit.json": {
+      "canonical_path": "references/kit_metadata/kit_21/kit.json",
+      "asset_type": "REFERENCE_ONLY",
+      "semantic_identity": "nebelbruch_vegetation",
+      "entity_name": "nebelbruch_vegetation",
+      "runtime_ready": false,
+      "verification": "CONFIRMED",
+      "notes": "Preserved source metadata with false labels explicitly deprecated."
+    },
+    "BRAMBLE_54_63/60_moorling_directions_actions/master.png": {
+      "canonical_path": "references/source_sheets/kit_60_moorling_directions_actions.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "moorling_directions_actions",
+      "runtime_ready": false,
+      "verification": "CONFIRMED",
+      "notes": "Canonical Moorling provenance sheet; extracted children are runtime identity."
+    },
+    "BRAMBLE_64_73/70_moorling_idle_attack/source_master.png": {
+      "canonical_path": "references/source_sheets/kit_70_moorling_idle_attack_source.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "moorling_idle_attack",
+      "runtime_ready": false,
+      "verification": "CONFIRMED",
+      "notes": "Moorling animation provenance; individual frames are runtime identity."
+    },
+    "BRAMBLE_64_73/71_moorling_hit_defeated/source_master.png": {
+      "canonical_path": "references/source_sheets/kit_71_moorling_hit_defeated_source.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "moorling_hit_defeated",
+      "runtime_ready": false,
+      "verification": "CONFIRMED",
+      "notes": "Moorling animation provenance; individual frames are runtime identity."
+    },
+    "BRAMBLE_21_29/25_hud_frames/master.png": {
+      "canonical_path": "references/source_sheets/kit_13_alte_ruinen.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "alte_ruinen",
+      "runtime_ready": false,
+      "duplicate_alias": true,
+      "verification": "CONFIRMED",
+      "notes": "Exact duplicate of kit 13 ruins sheet; not a HUD master."
+    },
+    "BRAMBLE_21_29/26_menu_frames/master.png": {
+      "canonical_path": "references/source_sheets/kit_14_kupfermine.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "kupfermine",
+      "runtime_ready": false,
+      "duplicate_alias": true,
+      "verification": "CONFIRMED",
+      "notes": "Exact duplicate of kit 14 mine sheet; not a menu master."
+    },
+    "BRAMBLE_21_29/27_touch_controls/master.png": {
+      "canonical_path": "references/source_sheets/kit_15_kristallhoehle.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "kristallhoehle",
+      "runtime_ready": false,
+      "duplicate_alias": true,
+      "verification": "CONFIRMED",
+      "notes": "Exact duplicate of kit 15 crystal-cave sheet; not touch controls."
+    },
+    "BRAMBLE_21_29/28_raid_loot_ui/master.png": {
+      "canonical_path": "references/source_sheets/kit_17_loot_chests.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "loot_chests",
+      "runtime_ready": false,
+      "duplicate_alias": true,
+      "verification": "CONFIRMED",
+      "notes": "Exact duplicate of kit 17 loot-chest sheet; not UI."
+    },
+    "BRAMBLE_21_29/29_world_system_ui/master.png": {
+      "canonical_path": "references/source_sheets/kit_18_region_monsters.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "region_monsters",
+      "runtime_ready": false,
+      "duplicate_alias": true,
+      "verification": "CONFIRMED",
+      "notes": "Exact duplicate of kit 18 monster sheet; not UI."
+    },
+    "BRAMBLE_21_29/inventory_portrait_concept.png": {
+      "canonical_path": "references/source_sheets/kit_12_nebelbruch_landmarks.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "nebelbruch_landmarks",
+      "runtime_ready": false,
+      "duplicate_alias": true,
+      "verification": "CONFIRMED",
+      "notes": "Exact duplicate of kit 12 landmark sheet; not an inventory concept."
+    },
+    "BRAMBLE_21_29/mooring_action_poses_master.png": {
+      "canonical_path": "references/source_sheets/kit_16_world_transitions.png",
+      "asset_type": "SOURCE_SHEET",
+      "semantic_identity": "world_transitions",
+      "runtime_ready": false,
+      "duplicate_alias": true,
+      "verification": "CONFIRMED",
+      "notes": "Exact duplicate of kit 16 world-transition sheet; not Moorling action art."
+    }
+  }
+}

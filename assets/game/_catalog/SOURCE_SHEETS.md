@@ -2,7 +2,7 @@
 
 Do NOT use as single in-game sprites without slicing.
 
-Total: 54
+Total canonical files: 57
 
 - `references/source_sheets/kit_01_terrain_meadow_earth.png` ← `BRAMBLE_10_Asset_Kits.zip:BRAMBLE_10_Asset_Kits/01_terrain_meadow_earth.png`
 - `references/source_sheets/kit_02_terrain_paths_transitions.png` ← `BRAMBLE_10_Asset_Kits.zip:BRAMBLE_10_Asset_Kits/02_terrain_paths_transitions.png`
@@ -33,8 +33,11 @@ Total: 54
 - `references/source_sheets/kit_67_atlas_4x2_512.png` ← `BRAMBLE_ANIMATION_KITS_64_73.zip:BRAMBLE_64_73/67_female_run_damage/atlas_4x2_512.png`
 - `references/source_sheets/kit_68_atlas_4x2_512.png` ← `BRAMBLE_ANIMATION_KITS_64_73.zip:BRAMBLE_64_73/68_blacksmith_idle_greet/atlas_4x2_512.png`
 - `references/source_sheets/kit_69_atlas_4x2_512.png` ← `BRAMBLE_ANIMATION_KITS_64_73.zip:BRAMBLE_64_73/69_merchant_idle_talk/atlas_4x2_512.png`
+- `references/source_sheets/kit_60_moorling_directions_actions.png` ← `BRAMBLE_54_63.zip:BRAMBLE_54_63/60_moorling_directions_actions/master.png`
 - `references/source_sheets/kit_70_atlas_4x2_512.png` ← `BRAMBLE_ANIMATION_KITS_64_73.zip:BRAMBLE_64_73/70_moorling_idle_attack/atlas_4x2_512.png`
+- `references/source_sheets/kit_70_moorling_idle_attack_source.png` ← `BRAMBLE_ANIMATION_KITS_64_73.zip:BRAMBLE_64_73/70_moorling_idle_attack/source_master.png`
 - `references/source_sheets/kit_71_atlas_4x2_512.png` ← `BRAMBLE_ANIMATION_KITS_64_73.zip:BRAMBLE_64_73/71_moorling_hit_defeated/atlas_4x2_512.png`
+- `references/source_sheets/kit_71_moorling_hit_defeated_source.png` ← `BRAMBLE_ANIMATION_KITS_64_73.zip:BRAMBLE_64_73/71_moorling_hit_defeated/source_master.png`
 - `references/source_sheets/kit_72_atlas_4x2_512.png` ← `BRAMBLE_ANIMATION_KITS_64_73.zip:BRAMBLE_64_73/72_copper_mole_idle_attack/atlas_4x2_512.png`
 - `references/source_sheets/kit_73_atlas_4x2_512.png` ← `BRAMBLE_ANIMATION_KITS_64_73.zip:BRAMBLE_64_73/73_copper_mole_hit_defeated/atlas_4x2_512.png`
 - `references/source_sheets/kit_84_atlas_4x2_512.png` ← `BRAMBLE_KITS_84_93.zip:BRAMBLE_84_93/84_forest_armor_pose_layers/atlas_4x2_512.png`

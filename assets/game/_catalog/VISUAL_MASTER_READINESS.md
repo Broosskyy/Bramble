@@ -62,7 +62,7 @@ Technical world presentation reference: `assets/game/references/WORLD_CAMERA_SPE
 
 ## 7. Monster Asset Candidates
 
-- `monsters/moorling/directions/kit21_front.png` — VISUAL_MASTER_ADJUST
+- `monsters/moorling/directions/kit60_front.png` — VISUAL_MASTER_ADJUST
 - `monsters/moorling/actions/idle.png` — VISUAL_MASTER_ADJUST
 - `monsters/moorling/actions/attack.png` — VISUAL_MASTER_ADJUST
 - `monsters/moorling/actions/hit.png` — VISUAL_MASTER_ADJUST
@@ -109,9 +109,9 @@ Technical world presentation reference: `assets/game/references/WORLD_CAMERA_SPE
 ## 12. Visual Inconsistencies
 
 - Player locomotion frames are not direction-bound; visual masters show direction-specific gameplay
-- Moorling has kit-prefixed direction duplicates (`kit21_` vs `kit60_`) from source kit overlap
-- Some kit-21 preview concepts overlap hashes with unrelated sheets (see DUPLICATES.md)
-- Vegetation/props from early kits remain SOURCE_SHEET until sliced
+- Kit 21 was falsely labeled as Moorling: its four extracted children are world vegetation, now under `world/vegetation/`
+- Eight source records use false semantic names for exact copies of kits 11–18; corrected aliases are recorded in `SEMANTIC_OVERRIDES.json`
+- Vegetation/props from early kits remain SOURCE_SHEET except the four verified kit-21 extractions
 - Hub master implies higher NPC/player density than current single-sprite exports
 
 ## 13. Missing Asset Families (vs Visual Masters)
@@ -130,7 +130,7 @@ Use **male** base player, **moorling** monster, **merchant** NPC, village slice:
 Player:     characters/base/male/directions/front.png
             characters/base/male/animations/walk/walk_a.png
             characters/animations/male/attack_melee/02_male_swing.png
-Monster:    monsters/moorling/directions/kit21_front.png
+Monster:    monsters/moorling/directions/kit60_front.png
             monsters/moorling/actions/attack.png
 NPC:        npcs/merchant/directions/front.png
 Building:   world/buildings/cottage.png

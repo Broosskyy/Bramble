@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnfu8gepqcxkx"
-path="res://.godot/imported/kit21_right.png-594f36eb071e68188ea73d07433616d2.ctex"
+uid="uid://t6y301vthdkv"
+path="res://.godot/imported/kit_60_moorling_directions_actions.png-eec762059230cf960e1d6900c469672b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/monsters/moorling/directions/kit21_right.png"
-dest_files=["res://.godot/imported/kit21_right.png-594f36eb071e68188ea73d07433616d2.ctex"]
+source_file="res://assets/game/references/source_sheets/kit_60_moorling_directions_actions.png"
+dest_files=["res://.godot/imported/kit_60_moorling_directions_actions.png-eec762059230cf960e1d6900c469672b.ctex"]
 
 [params]
 

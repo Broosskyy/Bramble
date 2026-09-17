@@ -1,5 +1,10 @@
 # Runtime Asset Mapping
 
+> Historical recovery snapshot. Its `assets/game/` deployment status and
+> migration phases are obsolete: the canonical library now exists. Use
+> `docs/art/BRAMBLE_ASSET_CATALOG_INTEGRITY_AUDIT.md` and
+> `assets/game/_catalog/` for current asset truth.
+
 **Runtime source:** `BRAMBLE_GODOT_4_7_2_PARITY_V10_3R_RUNTIME_ASSETS.zip`  
 **Canonical catalog:** `GAME_ASSET_CATALOG_V2.zip` (955 indexed files, kits 1–93)  
 **Target canonical library:** `assets/game/` (NOT YET DEPLOYED)

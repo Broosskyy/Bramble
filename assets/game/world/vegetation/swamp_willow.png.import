@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0iqxajcob7vh"
-path="res://.godot/imported/kit71_master.png-1b0dd3a9d85c6c2c8576bbf72ccca327.ctex"
+uid="uid://budw76ry2i35m"
+path="res://.godot/imported/swamp_willow.png-4906435fd9d8741ab731aefd1a965de6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/monsters/moorling/kit71_master.png"
-dest_files=["res://.godot/imported/kit71_master.png-1b0dd3a9d85c6c2c8576bbf72ccca327.ctex"]
+source_file="res://assets/game/world/vegetation/swamp_willow.png"
+dest_files=["res://.godot/imported/swamp_willow.png-4906435fd9d8741ab731aefd1a965de6.ctex"]
 
 [params]
 

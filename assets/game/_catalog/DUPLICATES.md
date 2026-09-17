@@ -2,6 +2,24 @@
 
 Exact duplicate groups: 8
 
+## Integrity resolution
+
+All eight groups are confirmed source-label errors, not interchangeable
+runtime assets. The `BRAMBLE_21_29.zip` aliases now resolve to the canonical
+source-sheet identity held by the matching kit 11–18 record:
+
+- `21_moorling_directions/master.png` → kit 11 Nebelbruch vegetation
+- `inventory_portrait_concept.png` → kit 12 Nebelbruch landmarks
+- `25_hud_frames/master.png` → kit 13 Alte Ruinen
+- `26_menu_frames/master.png` → kit 14 Kupfermine
+- `27_touch_controls/master.png` → kit 15 Kristallhöhle
+- `mooring_action_poses_master.png` → kit 16 world transitions
+- `28_raid_loot_ui/master.png` → kit 17 loot chests
+- `29_world_system_ui/master.png` → kit 18 region monsters
+
+The duplicate aliases are retained in provenance mappings but are not retained
+as separately named canonical files. See `SEMANTIC_OVERRIDES.json`.
+
 ## Group 1 (2 files, sha256 `ba9b32728ec526a0...`)
 - `BRAMBLE_21_29.zip` → `BRAMBLE_21_29/21_moorling_directions/master.png`
 - `BRAMBLE_KITS_11_20.zip` → `BRAMBLE_KITS_11_20/11_nebelbruch_vegetation/sheet.png`
