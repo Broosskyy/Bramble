@@ -26,8 +26,8 @@ spike.
 
 ## Repository recovery
 
-- Verified `HEAD`: `0bdd722f55899b660d234bdeda461550684f7804`
-- Verified `origin/main`: `0bdd722f55899b660d234bdeda461550684f7804`
+- Verified spike-start `HEAD`: `0bdd722f55899b660d234bdeda461550684f7804`
+- Verified spike-start `origin/main`: `0bdd722f55899b660d234bdeda461550684f7804`
 - Verified clean pre-M04.3 baseline: the same SHA.
 - M04.3 production changes were already uncommitted when this spike began.
 - Preserved modified files:
@@ -44,13 +44,27 @@ spike.
 
 ### Interrupted M04.3 classification
 
-- World scale/composition changes: **COMPLETE in code**, not delivered.
+- Scale implementation and shared world anchors: **COMPLETE in code**, not
+  delivered.
+- Village, transition, wilds, and combat-space recomposition: **PARTIAL**;
+  runtime evidence retains rectangular terrain boundaries, crowding, and
+  overlap.
 - NPC scale and label adaptation: **COMPLETE in code**.
 - M04.3 automated capture path: **COMPLETE in code**.
-- Required M04.3 screenshots: **COMPLETE as files**.
+- Required M04.3 screenshot filenames: **COMPLETE as files**, but capture
+  quality is **PARTIAL**. Five groups are byte-identical rather than
+  independent evidence: `01/03/05`, `02/04/06`, `19/21`, `26/28`, and
+  `27/29`.
+- Canopy behavior: **COMPLETE** in the available normal/faded/combat evidence.
+- NPC interaction verification: **NOT STARTED**; the captures move near Lina
+  and Ferro but do not invoke interaction or show dialogue.
+- Final visual acceptance: **BROKEN**; final portrait evidence retains abrupt
+  terrain seams, and the final captures duplicate earlier states.
 - Production smoke: **PARTIAL**; runtime reached the world, HUD, authority,
   and snapshot loop without script errors, but dedicated bootstrap did not
   honor the requested automatic shutdown.
+- Snapshot/E2E delivery evidence: **NOT STARTED**; `snapshot_payload.txt` and a
+  retained M03.1 E2E result are absent.
 - M04.3 milestone documentation: **NOT STARTED**.
 - Commit/push/remote delivery: **NOT STARTED**.
 - Overall M04.3 WIP: **PARTIAL**, not safe to include in an M04.25 commit.
