@@ -5,6 +5,9 @@
 # Import cache (not sidecar *.import files next to assets)
 .import/
 
+# Runtime evidence is versioned as source PNGs; editor-generated imports are not.
+artifacts/**/*.import
+
 # OS / IDE
 .DS_Store
 Thumbs.db

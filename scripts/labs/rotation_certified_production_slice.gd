@@ -2,6 +2,7 @@ extends Node3D
 
 const GAME := "res://assets/game/"
 const LAB := "res://assets/labs/m04_26/"
+const COMPLETION_DIR := "res://artifacts/m04_26_completion"
 const DIR_NAMES := [
 	"front", "front_right", "right", "back_right",
 	"back", "back_left", "left", "front_left"
@@ -11,10 +12,10 @@ const CAMERA_LEFT := -10.0
 const CAMERA_RIGHT := 80.0
 const SPAWN := Vector3(0.0, 0.8, 8.0)
 const BUILDING_POS := Vector3(-6.2, 0.0, -3.2)
-const TREE_POS := Vector3(5.2, 0.0, -1.0)
+const TREE_POS := Vector3(8.0, 0.0, 0.3)
 const NPC_POS := Vector3(-2.0, 0.0, -0.8)
 const MONSTER_POS := Vector3(5.7, 0.0, 6.2)
-const LANDMARK_POS := Vector3(0.0, 0.0, -9.2)
+const LANDMARK_POS := Vector3(3.5, 0.0, -4.3)
 
 var player: CharacterBody3D
 var body_sprite: Sprite3D
@@ -26,6 +27,8 @@ var monster_sprite: Sprite3D
 var camera: Camera3D
 var target_ring: MeshInstance3D
 var damage_label: Label3D
+var reward_label: Label3D
+var attack_vfx: Sprite3D
 var dialogue_panel: PanelContainer
 var interaction_prompt: Label
 var status_label: Label
@@ -34,6 +37,8 @@ var mobile_hint: Label
 var roof_parts: Array[MeshInstance3D] = []
 var canopy_parts: Array[MeshInstance3D] = []
 var canopy_materials: Array[StandardMaterial3D] = []
+var canopy_sprites: Array[Sprite3D] = []
+var _material_cache: Dictionary = {}
 var camera_yaw := deg_to_rad(CAMERA_CENTER)
 var camera_pitch := deg_to_rad(40.0)
 var camera_size := 14.0
@@ -48,6 +53,9 @@ var action_state := "EXPLORE"
 var _last_direction := ""
 var _damage_time := 0.0
 var _attack_time := 0.0
+var _movement_phase := 0.0
+var _monster_health := 24
+var _monster_defeated := false
 var _fps_samples: Array[float] = []
 var _draw_samples: Array[int] = []
 var _frame_ms_samples: Array[float] = []
@@ -65,7 +73,10 @@ func _ready() -> void:
 	_build_hud()
 	_set_equipped(true)
 	var args := OS.get_cmdline_user_args()
-	if "--m04_26-capture" in args:
+	if "--m04_26-completion-capture" in args:
+		capture_running = true
+		call_deferred("_capture_completion_evidence")
+	elif "--m04_26-capture" in args:
 		capture_running = true
 		call_deferred("_capture_evidence")
 	elif "--m04_26-profile" in args:
@@ -107,7 +118,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera_yaw = clampf(camera_yaw - event.relative.x * 0.007, deg_to_rad(CAMERA_LEFT), deg_to_rad(CAMERA_RIGHT))
 		camera_pitch = clampf(camera_pitch - event.relative.y * 0.004, deg_to_rad(34.0), deg_to_rad(48.0))
 	elif event is InputEventScreenDrag:
-		camera_yaw = clampf(camera_yaw - event.relative.x * 0.006, deg_to_rad(CAMERA_LEFT), deg_to_rad(CAMERA_RIGHT))
+		if _is_safe_camera_drag(event.position):
+			camera_yaw = clampf(camera_yaw - event.relative.x * 0.006, deg_to_rad(CAMERA_LEFT), deg_to_rad(CAMERA_RIGHT))
 	elif event is InputEventMagnifyGesture:
 		camera_size = clampf(camera_size / event.factor, 10.0, 18.0)
 	elif event is InputEventKey and event.pressed:
@@ -170,8 +182,9 @@ func _build_production_building() -> void:
 	host.name = "WayfarerHall_LIMITED_ROTATION_READY"
 	host.position = BUILDING_POS
 	add_child(host)
-	_box(host, Vector3(5.9, 0.55, 4.9), Vector3(0.0, 0.28, 0.0), Color("#74644f"))
-	_box(host, Vector3(5.5, 3.25, 4.5), Vector3(0.0, 1.9, 0.0), Color("#d9b778"))
+	_box(host, Vector3(6.15, 0.58, 5.1), Vector3(0.0, 0.28, 0.0), Color("#665d50"))
+	_box(host, Vector3(5.5, 3.25, 4.5), Vector3(0.0, 1.9, 0.0), Color("#e7c988"))
+	_box(host, Vector3(5.72, 0.38, 4.7), Vector3(0.0, 0.72, 0.0), Color("#9b8260"))
 	for x in [-2.55, 0.0, 2.55]:
 		_box(host, Vector3(0.18, 3.2, 0.22), Vector3(x, 2.0, 2.31), Color("#694026"))
 		_box(host, Vector3(0.18, 3.2, 0.22), Vector3(x, 2.0, -2.31), Color("#694026"))
@@ -180,25 +193,47 @@ func _build_production_building() -> void:
 		_box(host, Vector3(0.22, 3.2, 0.18), Vector3(2.81, 2.0, z), Color("#694026"))
 	_box(host, Vector3(1.15, 2.15, 0.22), Vector3(0.0, 1.35, 2.34), Color("#70412b"))
 	_box(host, Vector3(0.82, 0.14, 0.28), Vector3(0.0, 2.5, 2.42), Color("#d8a84a"))
+	for side in [-1.0, 1.0]:
+		_box(host, Vector3(2.35, 0.16, 0.18), Vector3(side * 1.38, 3.42, 2.38), Color("#704326"), Vector3(0.0, 0.0, deg_to_rad(side * 24.0)))
+		_box(host, Vector3(0.18, 0.18, 3.35), Vector3(side * 2.86, 2.0, 0.0), Color("#704326"), Vector3(deg_to_rad(28.0), 0.0, 0.0))
+		_box(host, Vector3(0.18, 0.18, 3.35), Vector3(side * 2.86, 2.0, 0.0), Color("#704326"), Vector3(deg_to_rad(-28.0), 0.0, 0.0))
 	for x in [-1.75, 1.75]:
 		_add_window(host, Vector3(x, 2.05, 2.35), Vector3(0.0, 0.0, 0.0))
 	for z in [-1.25, 1.25]:
 		_add_window(host, Vector3(2.84, 2.05, z), Vector3(0.0, deg_to_rad(90.0), 0.0))
 		_add_window(host, Vector3(-2.84, 2.05, z), Vector3(0.0, deg_to_rad(90.0), 0.0))
-	var roof_mat := _material(Color("#386f70"))
-	roof_mat.albedo_texture = load(GAME + "world/terrain/materials/cobble_repeat_256.png")
-	roof_mat.uv1_scale = Vector3(2.5, 2.0, 1.0)
+	var roof_mat := _material(Color("#225557"))
+	roof_mat.roughness = 0.78
 	for side in [-1.0, 1.0]:
 		var roof := _box(host, Vector3(3.8, 0.3, 5.3), Vector3(side * 1.55, 4.28, 0.0), Color.WHITE, Vector3(0.0, 0.0, deg_to_rad(-side * 31.0)))
 		roof.material_override = roof_mat.duplicate()
 		roof_parts.append(roof)
-	_box(host, Vector3(0.75, 2.1, 0.8), Vector3(-1.7, 4.75, -0.65), Color("#88745b"))
+		for row in range(5):
+			var row_x: float = side * (0.58 + float(row) * 0.58)
+			var row_y: float = 5.02 - float(row) * 0.36
+			_box(host, Vector3(0.06, 0.07, 5.36), Vector3(row_x, row_y, 0.0), Color("#183f41"))
+	_box(host, Vector3(0.22, 0.22, 5.55), Vector3(0.0, 5.25, 0.0), Color("#d49b4f"))
+	for side in [-1.0, 1.0]:
+		_box(host, Vector3(0.18, 0.22, 5.48), Vector3(side * 3.18, 3.35, 0.0), Color("#d49b4f"))
+	_box(host, Vector3(0.78, 2.15, 0.84), Vector3(-1.7, 4.75, -0.65), Color("#88745b"))
+	_box(host, Vector3(0.96, 0.22, 1.02), Vector3(-1.7, 5.86, -0.65), Color("#5c4f43"))
 	_box(host, Vector3(2.2, 0.18, 0.75), Vector3(0.0, 0.64, 2.75), Color("#8a5833"))
 	for x in [-0.9, -0.3, 0.3, 0.9]:
 		_box(host, Vector3(0.12, 0.42, 0.12), Vector3(x, 0.85, 2.75), Color("#5f3d25"))
 	for x in [-1.9, -1.45, 1.45, 1.9]:
 		var flower := _sphere(host, Vector3(x, 1.45, 2.48), Vector3(0.22, 0.18, 0.22), Color("#e47c48"))
 		flower.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	for x in [-0.48, 0.48]:
+		var lantern := _sphere(host, Vector3(x, 2.38, 2.56), Vector3(0.12, 0.2, 0.1), Color("#ffd86b"), _emissive_material(Color("#ffd86b")))
+		lantern.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	for z in [-1.35, 1.35]:
+		_box(host, Vector3(0.2, 2.75, 0.2), Vector3(2.94, 2.05, z), Color("#633c25"))
+		_box(host, Vector3(0.2, 2.75, 0.2), Vector3(-2.94, 2.05, z), Color("#633c25"))
+		_box(host, Vector3(0.24, 0.34, 1.25), Vector3(2.98, 1.32, z), Color("#8a5833"))
+		_box(host, Vector3(0.24, 0.34, 1.25), Vector3(-2.98, 1.32, z), Color("#8a5833"))
+	for x in [-2.35, 2.35]:
+		for z in [-1.9, 1.9]:
+			_box(host, Vector3(0.42, 0.42, 0.42), Vector3(x, 0.62, z), Color("#a99b7d"))
 	_add_static_box(host, Vector3(5.9, 3.7, 4.9), Vector3(0.0, 1.85, 0.0))
 	var door_label := Label3D.new()
 	door_label.text = "Wayfarer Hall"
@@ -213,32 +248,16 @@ func _build_production_building() -> void:
 
 func _build_production_tree() -> void:
 	var host := Node3D.new()
-	host.name = "AmberOak_FULL_ROTATION_READY"
+	host.name = "AmberOak_LIMITED_ROTATION_READY"
 	host.position = TREE_POS
 	add_child(host)
-	_cylinder(host, Vector3(0.0, 1.8, 0.0), 0.48, 0.72, 3.6, Color("#6f4527"))
-	for branch in [
-		[Vector3(-0.45, 3.2, 0.0), Vector3(0.0, 0.0, deg_to_rad(-45.0))],
-		[Vector3(0.45, 3.35, 0.2), Vector3(deg_to_rad(20.0), 0.0, deg_to_rad(45.0))],
-		[Vector3(0.0, 3.45, -0.45), Vector3(deg_to_rad(-45.0), 0.0, 0.0)]
-	]:
-		var limb := _cylinder(host, branch[0], 0.24, 0.34, 2.0, Color("#704526"))
-		limb.rotation = branch[1]
-	for item in [
-		[Vector3(0.0, 5.0, 0.0), Vector3(2.2, 1.55, 2.0), Color("#b74734")],
-		[Vector3(-1.55, 4.65, 0.1), Vector3(1.6, 1.25, 1.45), Color("#d55b36")],
-		[Vector3(1.5, 4.7, 0.2), Vector3(1.65, 1.3, 1.5), Color("#ca4d36")],
-		[Vector3(-0.6, 4.6, -1.35), Vector3(1.55, 1.2, 1.4), Color("#e07b37")],
-		[Vector3(0.7, 4.7, 1.35), Vector3(1.5, 1.15, 1.45), Color("#d86633")],
-		[Vector3(-0.1, 5.75, -0.2), Vector3(1.5, 1.05, 1.4), Color("#a83b35")]
-	]:
-		var mat := _material(item[2])
-		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		var crown := _sphere(host, item[0], item[1], item[2], mat)
-		canopy_parts.append(crown)
-		canopy_materials.append(mat)
-	for pos in [Vector3(-0.65, 0.18, 0.2), Vector3(0.55, 0.2, 0.45), Vector3(0.2, 0.16, -0.6)]:
-		_sphere(host, pos, Vector3(0.45, 0.25, 0.38), Color("#84715d"))
+	var painted_crown := _sprite(GAME + "world/buildings/red_oak.png", 0.0112, true)
+	painted_crown.name = "CanonicalRedOakSingleControlledBillboard"
+	painted_crown.position = Vector3(0.0, 2.85, 0.0)
+	painted_crown.render_priority = 1
+	host.add_child(painted_crown)
+	canopy_sprites.append(painted_crown)
+	_add_contact_shadow(host, 0.82, 0.03)
 	_add_static_cylinder(host, 0.76, 2.6, Vector3(0.0, 1.3, 0.0))
 
 
@@ -247,14 +266,28 @@ func _build_landmark() -> void:
 	host.name = "BrambleWaystoneLandmark"
 	host.position = LANDMARK_POS
 	add_child(host)
-	_box(host, Vector3(4.6, 0.35, 3.2), Vector3(0.0, 0.18, 0.0), Color("#756c5e"))
+	_box(host, Vector3(5.0, 0.35, 3.6), Vector3(0.0, 0.18, 0.0), Color("#625d58"))
+	_box(host, Vector3(4.15, 0.28, 2.75), Vector3(0.0, 0.46, 0.0), Color("#968b78"))
 	for x in [-1.45, 1.45]:
-		_box(host, Vector3(0.72, 3.8, 0.72), Vector3(x, 2.05, 0.0), Color("#8d826c"), Vector3(0.0, 0.0, deg_to_rad(x * 4.0)))
-	_box(host, Vector3(3.65, 0.68, 0.78), Vector3(0.0, 4.0, 0.0), Color("#8d826c"))
-	var crystal := _sphere(host, Vector3(0.0, 2.25, 0.0), Vector3(0.62, 1.35, 0.42), Color("#54d9cf"), _emissive_material(Color("#54d9cf")))
+		_box(host, Vector3(0.78, 3.9, 0.78), Vector3(x, 2.35, 0.0), Color("#776f65"), Vector3(0.0, 0.0, deg_to_rad(x * 4.0)))
+		_box(host, Vector3(0.95, 0.18, 0.95), Vector3(x, 1.1, 0.0), Color("#d3a94f"))
+	_box(host, Vector3(3.75, 0.72, 0.82), Vector3(0.0, 4.35, 0.0), Color("#776f65"))
+	_box(host, Vector3(4.05, 0.16, 1.0), Vector3(0.0, 4.75, 0.0), Color("#d3a94f"))
+	var crystal := _sphere(host, Vector3(0.0, 2.55, 0.0), Vector3(0.7, 1.5, 0.46), Color("#54d9cf"), _emissive_material(Color("#54d9cf")))
 	crystal.rotation_degrees.z = 45.0
+	var halo_mesh := TorusMesh.new()
+	halo_mesh.inner_radius = 1.05
+	halo_mesh.outer_radius = 1.18
+	halo_mesh.rings = 32
+	halo_mesh.ring_segments = 8
+	var halo := MeshInstance3D.new()
+	halo.mesh = halo_mesh
+	halo.position = Vector3(0.0, 2.55, 0.12)
+	halo.rotation_degrees.x = 90.0
+	halo.material_override = _emissive_material(Color("#8ff3df"))
+	host.add_child(halo)
 	for x in [-2.1, 2.1]:
-		var banner := _box(host, Vector3(0.62, 1.8, 0.08), Vector3(x, 2.55, 0.45), Color("#315c78"))
+		var banner := _box(host, Vector3(0.72, 1.95, 0.08), Vector3(x, 2.7, 0.45), Color("#315c78"))
 		banner.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
@@ -307,7 +340,7 @@ func _build_characters() -> void:
 	hat_sprite.position = Vector3(0.0, 1.2, -0.024)
 	hat_sprite.render_priority = 2
 	player.add_child(hat_sprite)
-	weapon_sprite = _sprite(GAME + "characters/equipment/weapons/melee/short_sword.png", 0.00235, true)
+	weapon_sprite = _sprite(GAME + "characters/equipment/weapons/melee/short_sword.png", 0.00265, true)
 	weapon_sprite.name = "DirectionalWeapon"
 	weapon_sprite.render_priority = 3
 	add_child(weapon_sprite)
@@ -317,6 +350,7 @@ func _build_characters() -> void:
 	npc_sprite.position = NPC_POS + Vector3(0.0, 1.22, 0.0)
 	add_child(npc_sprite)
 	_add_contact_shadow_at(NPC_POS, 0.46)
+	_add_static_cylinder(self, 0.42, 1.5, NPC_POS + Vector3(0.0, 0.75, 0.0))
 	_add_nameplate("Lina  ·  Wayfinder", NPC_POS + Vector3(0.0, 2.75, 0.0), Color("#ffe6a0"))
 	var quest := Label3D.new()
 	quest.text = "!"
@@ -345,6 +379,13 @@ func _build_characters() -> void:
 	target_ring.material_override = _emissive_material(Color("#ffd35a"))
 	target_ring.visible = false
 	add_child(target_ring)
+	attack_vfx = _sprite(GAME + "combat/vfx/melee_slash_sequence/frames/03_slash_peak.png", 0.0048, true)
+	attack_vfx.name = "CanonicalMeleeSlashImpact"
+	attack_vfx.position = MONSTER_POS + Vector3(0.0, 1.2, -0.08)
+	attack_vfx.modulate = Color(1.0, 1.0, 1.0, 0.0)
+	attack_vfx.visible = false
+	attack_vfx.render_priority = 6
+	add_child(attack_vfx)
 	damage_label = Label3D.new()
 	damage_label.text = "12  HIT!"
 	damage_label.position = MONSTER_POS + Vector3(0.0, 3.15, 0.0)
@@ -355,6 +396,16 @@ func _build_characters() -> void:
 	damage_label.outline_size = 10
 	damage_label.visible = false
 	add_child(damage_label)
+	reward_label = Label3D.new()
+	reward_label.text = "MOORLING DEFEATED\n+18 XP   ·   LEAF MOTE"
+	reward_label.position = MONSTER_POS + Vector3(0.0, 3.55, 0.0)
+	reward_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	reward_label.font_size = 34
+	reward_label.pixel_size = 0.006
+	reward_label.modulate = Color("#ffe18a")
+	reward_label.outline_size = 10
+	reward_label.visible = false
+	add_child(reward_label)
 
 
 func _build_camera() -> void:
@@ -491,9 +542,18 @@ func _update_directional_presentation() -> void:
 		armor_sprite.frame = frame_index
 		hat_sprite.frame = frame_index
 		_last_direction = direction
-	npc_sprite.texture = load(GAME + "npcs/merchant/directions/%s.png" % _relative_direction(Vector3(0.0, 0.0, 1.0), camera_yaw))
-	var monster_direction := _nearest_four_direction(_relative_direction(Vector3(-1.0, 0.0, -0.2), camera_yaw))
-	monster_sprite.texture = load(GAME + "monsters/moorling/directions/kit60_%s.png" % monster_direction)
+	var npc_facing := player.global_position - NPC_POS
+	npc_facing.y = 0.0
+	if npc_facing.length_squared() < 0.01:
+		npc_facing = Vector3(0.0, 0.0, 1.0)
+	npc_sprite.texture = load(GAME + "npcs/merchant/directions/%s.png" % _relative_direction(npc_facing.normalized(), camera_yaw))
+	if _monster_defeated:
+		monster_sprite.texture = load(GAME + "monsters/moorling/actions/defeated.png")
+	elif _damage_time > 0.0:
+		monster_sprite.texture = load(GAME + "monsters/moorling/actions/hit.png")
+	else:
+		var monster_direction := _nearest_four_direction(_relative_direction(Vector3(-1.0, 0.0, -0.2), camera_yaw))
+		monster_sprite.texture = load(GAME + "monsters/moorling/directions/kit60_%s.png" % monster_direction)
 
 
 func _update_equipment_attachment() -> void:
@@ -514,7 +574,11 @@ func _update_equipment_attachment() -> void:
 	var camera_right := Vector3(cos(camera_yaw), 0.0, -sin(camera_yaw))
 	var camera_forward := Vector3(-sin(camera_yaw), 0.0, -cos(camera_yaw))
 	weapon_sprite.global_position = player.global_position + camera_right * float(data[0]) + Vector3.UP * float(data[1]) + camera_forward * 0.04
-	weapon_sprite.rotation_degrees.z = float(data[2]) + (-36.0 * sin(_attack_time * PI) if _attack_time > 0.0 else 0.0)
+	var attack_swing := 0.0
+	if _attack_time > 0.0:
+		var attack_progress := 1.0 - _attack_time
+		attack_swing = lerpf(-58.0, 46.0, smoothstep(0.0, 1.0, attack_progress))
+	weapon_sprite.rotation_degrees.z = float(data[2]) + attack_swing
 	weapon_sprite.render_priority = int(data[3])
 	weapon_sprite.visible = true
 
@@ -539,6 +603,10 @@ func _update_occlusion(delta: float) -> void:
 		var color := mat.albedo_color
 		color.a = move_toward(color.a, tree_alpha, delta * 3.5)
 		mat.albedo_color = color
+	for sprite in canopy_sprites:
+		var color := sprite.modulate
+		color.a = move_toward(color.a, tree_alpha, delta * 3.5)
+		sprite.modulate = color
 	var roof_cover := _point_covers_player(BUILDING_POS, 3.2)
 	for roof in roof_parts:
 		var mat := roof.material_override as StandardMaterial3D
@@ -559,6 +627,9 @@ func _point_covers_player(point: Vector3, radius: float) -> bool:
 
 
 func _update_feedback(delta: float) -> void:
+	if target_ring.visible:
+		var pulse := 1.0 + sin(Time.get_ticks_msec() * 0.008) * 0.07
+		target_ring.scale = Vector3(pulse, pulse, pulse)
 	if _damage_time > 0.0:
 		_damage_time -= delta
 		damage_label.visible = true
@@ -566,12 +637,38 @@ func _update_feedback(delta: float) -> void:
 		var color := damage_label.modulate
 		color.a = clampf(_damage_time * 2.5, 0.0, 1.0)
 		damage_label.modulate = color
-		monster_sprite.modulate = Color(1.5, 1.1, 1.1, 1.0)
+		monster_sprite.modulate = Color(1.55, 1.05, 1.05, 1.0)
+		var knockback := clampf(_damage_time * 2.0, 0.0, 1.0)
+		monster_sprite.position = MONSTER_POS + Vector3(0.18 * knockback, 1.08, 0.12 * knockback)
+		attack_vfx.visible = true
+		var vfx_color := attack_vfx.modulate
+		vfx_color.a = clampf(_damage_time * 2.8, 0.0, 1.0)
+		attack_vfx.modulate = vfx_color
+		attack_vfx.scale = Vector3.ONE * (1.0 + (0.65 - _damage_time) * 0.45)
 	else:
 		damage_label.visible = false
-		monster_sprite.modulate = Color.WHITE
+		attack_vfx.visible = false
+		if not _monster_defeated:
+			monster_sprite.modulate = Color.WHITE
+			monster_sprite.position = MONSTER_POS + Vector3(0.0, 1.08, 0.0)
 	if _attack_time > 0.0:
 		_attack_time = maxf(0.0, _attack_time - delta * 2.4)
+		var anticipation := sin((1.0 - _attack_time) * PI)
+		var camera_forward := Vector3(-sin(camera_yaw), 0.0, -cos(camera_yaw))
+		var lean := camera_forward * (0.16 * anticipation) + Vector3(0.0, -0.04 * anticipation, 0.0)
+		body_sprite.position = Vector3(0.0, 1.2, 0.0) + lean
+		armor_sprite.position = Vector3(0.0, 1.2, -0.012) + lean
+		hat_sprite.position = Vector3(0.0, 1.2, -0.024) + lean
+	else:
+		body_sprite.position = Vector3(0.0, 1.2, 0.0)
+		armor_sprite.position = Vector3(0.0, 1.2, -0.012)
+		hat_sprite.position = Vector3(0.0, 1.2, -0.024)
+	if action_state == "MOVEMENT":
+		_movement_phase += delta * 9.0
+		var bob := sin(_movement_phase) * 0.035
+		body_sprite.position.y += bob
+		armor_sprite.position.y += bob
+		hat_sprite.position.y += bob
 
 
 func _update_hud() -> void:
@@ -602,14 +699,61 @@ func _set_equipped(value: bool) -> void:
 
 
 func _attack() -> void:
+	if _monster_defeated:
+		action_state = "TARGET DEFEATED · REWARD SECURED"
+		return
 	target_active = true
 	combat_active = true
 	target_ring.visible = true
 	_damage_time = 0.65
 	_attack_time = 1.0
+	_monster_health = maxi(0, _monster_health - 12)
 	damage_label.position = MONSTER_POS + Vector3(0.0, 3.15, 0.0)
 	damage_label.modulate = Color("#fff2a6")
+	damage_label.text = "12  HIT!"
 	action_state = "STRIKE · 12 DAMAGE"
+	if _monster_health == 0:
+		_monster_defeated = true
+		damage_label.text = "DEFEATED!"
+		reward_label.visible = true
+		target_ring.visible = false
+		monster_sprite.modulate = Color(0.48, 0.48, 0.48, 0.55)
+		monster_sprite.rotation_degrees.z = 78.0
+		action_state = "VICTORY · +18 XP · LEAF MOTE"
+
+
+func _reset_monster() -> void:
+	_monster_health = 24
+	_monster_defeated = false
+	_damage_time = 0.0
+	_attack_time = 0.0
+	monster_sprite.visible = true
+	monster_sprite.modulate = Color.WHITE
+	monster_sprite.position = MONSTER_POS + Vector3(0.0, 1.08, 0.0)
+	monster_sprite.rotation_degrees = Vector3.ZERO
+	target_ring.visible = false
+	reward_label.visible = false
+	attack_vfx.visible = false
+	damage_label.visible = false
+	damage_label.modulate = Color("#fff2a6")
+	action_state = "EXPLORE"
+
+
+func _reset_capture_state() -> void:
+	_reset_monster()
+	target_active = false
+	combat_active = false
+	interaction_active = false
+	if dialogue_panel:
+		dialogue_panel.visible = false
+
+
+func _is_safe_camera_drag(position: Vector2) -> bool:
+	var viewport_size := get_viewport().get_visible_rect().size
+	if viewport_size.x <= 0.0 or viewport_size.y <= 0.0:
+		return false
+	var normalized := Vector2(position.x / viewport_size.x, position.y / viewport_size.y)
+	return normalized.y > 0.12 and normalized.y < 0.68 and normalized.x > 0.28
 
 
 func _sprite(path: String, pixel_size: float, billboard: bool) -> Sprite3D:
@@ -623,15 +767,20 @@ func _sprite(path: String, pixel_size: float, billboard: bool) -> Sprite3D:
 	return sprite
 
 
-func _material(color: Color) -> StandardMaterial3D:
+func _material(color: Color, cached := true) -> StandardMaterial3D:
+	var key := color.to_html(true)
+	if cached and _material_cache.has(key):
+		return _material_cache[key]
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = color
 	mat.roughness = 0.88
+	if cached:
+		_material_cache[key] = mat
 	return mat
 
 
 func _emissive_material(color: Color) -> StandardMaterial3D:
-	var mat := _material(color)
+	var mat := _material(color, false)
 	mat.emission_enabled = true
 	mat.emission = color
 	mat.emission_energy_multiplier = 1.5
@@ -655,8 +804,8 @@ func _sphere(parent: Node3D, pos: Vector3, scale_value: Vector3, color: Color, o
 	var mesh := SphereMesh.new()
 	mesh.radius = 0.5
 	mesh.height = 1.0
-	mesh.radial_segments = 16
-	mesh.rings = 8
+	mesh.radial_segments = 12
+	mesh.rings = 6
 	item.mesh = mesh
 	item.position = pos
 	item.scale = scale_value
@@ -698,7 +847,7 @@ func _add_path(pos: Vector3, size: Vector2, yaw: float) -> void:
 	path.mesh = plane
 	path.position = pos
 	path.rotation.y = yaw
-	var mat := _material(Color("#eee0ad"))
+	var mat := _material(Color("#eee0ad"), false)
 	mat.albedo_texture = load(GAME + "world/terrain/materials/cobble_repeat_256.png")
 	mat.uv1_scale = Vector3(maxf(1.0, size.x / 2.0), maxf(1.0, size.y / 2.0), 1.0)
 	path.material_override = mat
@@ -712,10 +861,10 @@ func _add_fence_segment(pos: Vector3, yaw: float) -> void:
 	host.rotation_degrees.y = yaw
 	add_child(host)
 	for x in [-1.0, 1.0]:
-		_box(host, Vector3(0.18, 1.35, 0.18), Vector3(x, 0.68, 0.0), Color("#664127"))
-		_sphere(host, Vector3(x, 1.42, 0.0), Vector3(0.15, 0.2, 0.15), Color("#d1a04c"))
+		_box(host, Vector3(0.18, 1.35, 0.18), Vector3(x, 0.68, 0.0), Color("#664127")).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		_sphere(host, Vector3(x, 1.42, 0.0), Vector3(0.15, 0.2, 0.15), Color("#d1a04c")).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	for y in [0.48, 0.95]:
-		_box(host, Vector3(2.2, 0.14, 0.14), Vector3(0.0, y, 0.0), Color("#81512c"))
+		_box(host, Vector3(2.2, 0.14, 0.14), Vector3(0.0, y, 0.0), Color("#81512c")).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
 func _add_rock(pos: Vector3, scale_value: float) -> void:
@@ -723,8 +872,8 @@ func _add_rock(pos: Vector3, scale_value: float) -> void:
 	host.position = pos
 	host.rotation_degrees.y = pos.x * 11.0
 	add_child(host)
-	_sphere(host, Vector3(0.0, 0.35 * scale_value, 0.0), Vector3(1.2, 0.68, 0.9) * scale_value, Color("#77746c"))
-	_sphere(host, Vector3(0.55, 0.2, 0.2), Vector3(0.55, 0.4, 0.5) * scale_value, Color("#918a78"))
+	_sphere(host, Vector3(0.0, 0.35 * scale_value, 0.0), Vector3(1.2, 0.68, 0.9) * scale_value, Color("#77746c")).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_sphere(host, Vector3(0.55, 0.2, 0.2), Vector3(0.55, 0.4, 0.5) * scale_value, Color("#918a78")).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
 func _add_ground_collision(size: Vector3) -> void:
@@ -770,7 +919,7 @@ func _add_contact_shadow(parent: Node3D, radius: float, y: float) -> void:
 	disc.radial_segments = 28
 	shadow.mesh = disc
 	shadow.position.y = y
-	var mat := _material(Color(0.05, 0.08, 0.04, 0.55))
+	var mat := _material(Color(0.05, 0.08, 0.04, 0.55), false)
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	shadow.material_override = mat
 	shadow.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -810,8 +959,109 @@ func _profile_and_quit() -> void:
 	_draw_samples.clear()
 	_frame_ms_samples.clear()
 	await _wait_frames(240)
-	_write_performance_report()
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(COMPLETION_DIR))
+	_write_performance_report(COMPLETION_DIR + "/performance_after.txt")
 	print("M04.26_PROFILE PASS")
+	get_tree().quit()
+
+
+func _capture_completion_evidence() -> void:
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(COMPLETION_DIR))
+	await _set_viewport(Vector2i(1280, 720))
+
+	_reset_capture_state()
+	await _stage(BUILDING_POS + Vector3(2.0, 0.8, 5.8), CAMERA_LEFT, 12.5, Vector3(-0.3, 0.0, -1.0), "BUILDING · LEFT")
+	await _shot_to(COMPLETION_DIR, "01_building_left.png")
+	camera_yaw = deg_to_rad(CAMERA_CENTER)
+	await _wait_frames(5)
+	await _shot_to(COMPLETION_DIR, "02_building_center.png")
+	camera_yaw = deg_to_rad(CAMERA_RIGHT)
+	await _wait_frames(5)
+	await _shot_to(COMPLETION_DIR, "03_building_right.png")
+
+	_reset_capture_state()
+	await _stage(TREE_POS + Vector3(-3.0, 0.8, 4.5), CAMERA_LEFT, 11.8, Vector3(0.4, 0.0, -1.0), "TREE · LEFT")
+	await _shot_to(COMPLETION_DIR, "04_tree_left.png")
+	camera_yaw = deg_to_rad(CAMERA_CENTER)
+	await _wait_frames(5)
+	await _shot_to(COMPLETION_DIR, "05_tree_center.png")
+	camera_yaw = deg_to_rad(CAMERA_RIGHT)
+	await _wait_frames(5)
+	await _shot_to(COMPLETION_DIR, "06_tree_right.png")
+	await _stage(TREE_POS + Vector3(-0.7, 0.8, -1.0), CAMERA_LEFT, 11.0, Vector3(0.0, 0.0, 1.0), "TREE · OCCLUSION")
+	await _wait_frames(24)
+	await _shot_to(COMPLETION_DIR, "07_tree_occlusion.png")
+
+	_reset_capture_state()
+	await _stage(Vector3(0.0, 0.8, 3.5), CAMERA_CENTER, 10.5, _facing_for_view("front"), "EQUIPMENT · FRONT")
+	await _shot_to(COMPLETION_DIR, "08_equipment_front.png")
+	character_facing = _facing_for_view("right")
+	await _wait_frames(6)
+	await _shot_to(COMPLETION_DIR, "09_equipment_side.png")
+	character_facing = _facing_for_view("back")
+	await _wait_frames(6)
+	await _shot_to(COMPLETION_DIR, "10_equipment_back.png")
+	action_state = "MOVEMENT"
+	character_facing = _facing_for_view("front_right")
+	await _wait_frames(6)
+	await _shot_to(COMPLETION_DIR, "11_equipment_movement.png")
+
+	_reset_capture_state()
+	await _stage(MONSTER_POS + Vector3(-3.0, 0.8, 0.8), CAMERA_CENTER, 10.8, MONSTER_POS - (MONSTER_POS + Vector3(-3.0, 0.8, 0.8)), "ATTACK · ANTICIPATION")
+	_attack()
+	await _wait_frames(7)
+	await _shot_to(COMPLETION_DIR, "12_equipment_attack.png")
+	_reset_capture_state()
+	camera_yaw = deg_to_rad(CAMERA_LEFT)
+	await _wait_frames(5)
+	await _shot_to(COMPLETION_DIR, "13_monster_left_camera.png")
+	camera_yaw = deg_to_rad(CAMERA_RIGHT)
+	await _wait_frames(5)
+	await _shot_to(COMPLETION_DIR, "14_monster_right_camera.png")
+	camera_yaw = deg_to_rad(CAMERA_CENTER)
+	target_ring.visible = true
+	action_state = "TARGET ACQUIRED"
+	await _wait_frames(5)
+	await _shot_to(COMPLETION_DIR, "15_combat_target.png")
+	_attack()
+	await _wait_frames(2)
+	await _shot_to(COMPLETION_DIR, "16_combat_hit.png")
+	await _wait_frames(10)
+	await _shot_to(COMPLETION_DIR, "17_combat_active.png")
+	_attack()
+	await _wait_frames(48)
+	await _shot_to(COMPLETION_DIR, "18_combat_defeat_reward.png")
+
+	_reset_capture_state()
+	await _stage(NPC_POS + Vector3(2.25, 0.8, 1.05), CAMERA_CENTER, 10.8, NPC_POS - (NPC_POS + Vector3(2.25, 0.8, 1.05)), "NPC · APPROACH")
+	await _shot_to(COMPLETION_DIR, "19_npc_approach.png")
+	interaction_active = true
+	dialogue_panel.visible = true
+	action_state = "NPC · INTERACTION"
+	await _wait_frames(5)
+	await _shot_to(COMPLETION_DIR, "20_npc_interaction.png")
+	interaction_active = false
+	dialogue_panel.visible = false
+
+	_reset_capture_state()
+	await _stage(SPAWN, CAMERA_CENTER, 18.0, LANDMARK_POS - SPAWN, "SPAWN · LANDMARK")
+	await _shot_to(COMPLETION_DIR, "21_landmark_from_spawn.png")
+	_reset_capture_state()
+	await _stage(Vector3(0.0, 0.8, 3.5), CAMERA_CENTER, 10.5, _facing_for_view("front"), "PROGRESSION · BEFORE")
+	_set_equipped(false)
+	await _wait_frames(4)
+	await _shot_to(COMPLETION_DIR, "22_progression_before.png")
+	_set_equipped(true)
+	action_state = "PROGRESSION · AFTER"
+	await _wait_frames(4)
+	await _shot_to(COMPLETION_DIR, "23_progression_after.png")
+
+	_reset_monster()
+	await _stage(Vector3(0.0, 0.8, 2.8), CAMERA_CENTER, 13.5, Vector3(0.0, 0.0, -1.0), "AMBERWAY · COMPLETE")
+	await _shot_to(COMPLETION_DIR, "24_final_gameplay_landscape.png")
+	await _set_viewport(Vector2i(720, 1280))
+	await _shot_to(COMPLETION_DIR, "25_final_gameplay_portrait.png")
+	print("M04.26_COMPLETION_CAPTURE PASS")
 	get_tree().quit()
 
 
@@ -966,9 +1216,13 @@ func _set_viewport(size: Vector2i) -> void:
 
 
 func _shot(filename: String) -> void:
+	await _shot_to("res://artifacts/m04_26", filename)
+
+
+func _shot_to(directory: String, filename: String) -> void:
 	await RenderingServer.frame_post_draw
 	var image := get_viewport().get_texture().get_image()
-	var path := ProjectSettings.globalize_path("res://artifacts/m04_26/%s" % filename)
+	var path := ProjectSettings.globalize_path("%s/%s" % [directory, filename])
 	var error := image.save_png(path)
 	if error != OK:
 		push_error("M04.26 screenshot failed: %s (%s)" % [path, error])
@@ -981,18 +1235,52 @@ func _wait_frames(count: int) -> void:
 		await get_tree().process_frame
 
 
-func _write_performance_report() -> void:
+func _write_performance_report(path := "res://artifacts/m04_26/performance.txt") -> void:
 	var avg_fps := _average_float(_fps_samples)
 	var avg_draws := _average_int(_draw_samples)
 	var avg_frame_ms := _average_float(_frame_ms_samples)
-	var text := "real_device_test=NOT AVAILABLE\nnode_count=%d\naverage_fps=%.2f\naverage_frame_process_ms=%.3f\naverage_draw_calls=%.2f\nmaterial_count_estimate=%d\ntransparent_elements=%d\nshadow_casters=%d\nrenderer=%s\ncamera_yaw_range_degrees=%d\n" % [
+	var counts := _render_resource_counts()
+	var text := "real_device_test=BLOCKED BY REAL DEVICE\nnode_count=%d\naverage_fps=%.2f\naverage_frame_process_ms=%.3f\naverage_draw_calls=%.2f\nunique_materials=%d\ntransparent_geometry=%d\nshadow_casters=%d\nmesh_instances=%d\nsprite3d_instances=%d\nrenderer=%s\ncamera_yaw_range_degrees=%d\n" % [
 		get_tree().get_node_count(), avg_fps, avg_frame_ms, avg_draws,
-		58, 15, 42, RenderingServer.get_video_adapter_name(),
+		counts.materials, counts.transparent, counts.shadows,
+		counts.meshes, counts.sprites, RenderingServer.get_video_adapter_name(),
 		int(CAMERA_RIGHT - CAMERA_LEFT)
 	]
-	var file := FileAccess.open("res://artifacts/m04_26/performance.txt", FileAccess.WRITE)
+	var file := FileAccess.open(path, FileAccess.WRITE)
 	if file:
 		file.store_string(text)
+
+
+func _render_resource_counts() -> Dictionary:
+	var material_ids := {}
+	var transparent := 0
+	var shadows := 0
+	var meshes := 0
+	var sprites := 0
+	for node in find_children("*", "GeometryInstance3D", true, false):
+		var geometry := node as GeometryInstance3D
+		if geometry == null:
+			continue
+		if geometry.cast_shadow != GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:
+			shadows += 1
+		if geometry is Sprite3D:
+			sprites += 1
+			transparent += 1
+		if geometry is MeshInstance3D:
+			meshes += 1
+			var mesh_instance := geometry as MeshInstance3D
+			var material := mesh_instance.material_override as BaseMaterial3D
+			if material:
+				material_ids[material.get_instance_id()] = true
+				if material.transparency != BaseMaterial3D.TRANSPARENCY_DISABLED:
+					transparent += 1
+	return {
+		"materials": material_ids.size(),
+		"transparent": transparent,
+		"shadows": shadows,
+		"meshes": meshes,
+		"sprites": sprites
+	}
 
 
 func _average_float(values: Array[float]) -> float:

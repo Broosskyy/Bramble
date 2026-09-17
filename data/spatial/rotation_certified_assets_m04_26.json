@@ -22,18 +22,19 @@
       "certification": "LIMITED_ROTATION_READY"
     },
     "m04_26_amber_oak": {
-      "representation_type": "SPATIAL_GEOMETRY",
-      "supported_yaw_degrees": [-180, 180],
+      "representation_type": "BILLBOARD",
+      "supported_yaw_degrees": [-45, 45],
       "ground_pivot": [0.0, 0.0, 0.0],
       "world_scale": 1.0,
       "footprint": [1.4, 1.4],
       "collision": "trunk_capsule",
       "occlusion_group": "canopy",
       "fade_behavior": "camera_line_of_sight",
-      "shadow_policy": "trunk_and_canopy_cast",
-      "lod_policy": "cluster_reduce_then_impostor",
-      "mobile_budget": {"draw_calls": 12, "transparent_layers": 0},
-      "certification": "FULL_ROTATION_READY"
+      "shadow_policy": "contact_blob_only",
+      "lod_policy": "single_controlled_impostor",
+      "mobile_budget": {"draw_calls": 12, "transparent_layers": 1},
+      "certification": "LIMITED_ROTATION_READY",
+      "source_provenance": "canonical red_oak art; one controlled billboard, no duplicated cross-plane"
     },
     "m04_26_wayfarer_equipment": {
       "representation_type": "DIRECTIONAL_SPRITE",
@@ -52,8 +53,9 @@
         "front", "front_right", "right", "back_right",
         "back", "back_left", "left", "front_left"
       ],
-      "states": ["idle", "movement"],
-      "attack_state": "PARTIAL"
+      "states": ["idle"],
+      "movement_state": "PARTIAL_ATTACHMENT_VALIDATED_POSE_ART_MISSING",
+      "attack_state": "PARTIAL_PRESENTATION_VALIDATED_POSE_ART_MISSING"
     },
     "moorling_kit60": {
       "representation_type": "DIRECTIONAL_SPRITE",
@@ -68,7 +70,9 @@
       "lod_policy": "atlas_mip",
       "mobile_budget": {"draw_calls": 2, "transparent_layers": 2},
       "certification": "FIXED_VIEW_ONLY",
-      "directions": ["front", "right", "back", "left"]
+      "directions": ["front", "right", "back", "left"],
+      "movement_state": "BLOCKED_BY_MISSING_SOURCE_ASSET",
+      "directional_combat_state": "BLOCKED_BY_MISSING_SOURCE_ASSET"
     }
   }
 }

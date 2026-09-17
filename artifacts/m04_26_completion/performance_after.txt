@@ -1,0 +1,12 @@
+real_device_test=BLOCKED BY REAL DEVICE
+node_count=261
+average_fps=60.00
+average_frame_process_ms=16.741
+average_draw_calls=282.00
+unique_materials=45
+transparent_geometry=24
+shadow_casters=92
+mesh_instances=189
+sprite3d_instances=18
+renderer=NVIDIA GeForce RTX 5060
+camera_yaw_range_degrees=90
