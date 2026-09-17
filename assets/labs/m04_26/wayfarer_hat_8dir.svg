@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2448" height="524" viewBox="0 0 2448 524">
+  <defs>
+    <style>
+      .cap{fill:#315c4b;stroke:#1b3029;stroke-width:5;stroke-linejoin:round}
+      .band{fill:#75482f;stroke:#39251c;stroke-width:4;stroke-linejoin:round}
+      .trim{fill:#d5a649;stroke:#563d22;stroke-width:3}
+      .feather{fill:#d9813a;stroke:#6b3822;stroke-width:3}
+    </style>
+  </defs>
+  <g transform="translate(0 0)">
+    <path class="cap" d="M91 130 Q105 65 153 55 Q202 65 216 130 Q184 114 153 116 Q122 114 91 130 Z"/>
+    <path class="band" d="M91 125 Q153 106 216 125 L211 145 Q153 126 96 145 Z"/>
+    <path class="trim" d="M147 113 L159 113 L159 139 L147 139 Z"/>
+    <path class="feather" d="M190 87 Q229 48 217 102 Q208 125 191 128 Z"/>
+  </g>
+  <g transform="translate(306 0)">
+    <path class="cap" d="M99 130 Q111 70 158 58 Q203 70 218 132 Q184 114 151 117 Q124 116 99 130 Z"/>
+    <path class="band" d="M99 125 Q157 108 218 127 L213 146 Q157 128 103 145 Z"/>
+    <path class="trim" d="M155 115 L167 115 L167 140 L155 140 Z"/>
+    <path class="feather" d="M197 90 Q235 52 222 105 Q214 126 198 130 Z"/>
+  </g>
+  <g transform="translate(612 0)">
+    <path class="cap" d="M117 130 Q128 75 164 61 Q194 78 204 134 Q170 116 139 119 Z"/>
+    <path class="band" d="M117 127 Q160 109 204 129 L199 146 Q158 130 121 145 Z"/>
+    <path class="trim" d="M162 117 L173 117 L173 141 L162 141 Z"/>
+    <path class="feather" d="M186 92 Q222 58 209 108 Q202 128 187 131 Z"/>
+  </g>
+  <g transform="translate(918 0)">
+    <path class="cap" d="M101 132 Q114 70 158 59 Q204 72 217 133 Q185 117 151 118 Q124 117 101 132 Z"/>
+    <path class="band" d="M101 127 Q158 109 217 129 L212 147 Q158 130 105 146 Z"/>
+    <path class="trim" d="M150 116 L162 116 L162 142 L150 142 Z"/>
+    <path class="feather" d="M111 92 Q75 55 88 108 Q95 128 111 131 Z"/>
+  </g>
+  <g transform="translate(1224 0)">
+    <path class="cap" d="M91 132 Q106 65 153 54 Q201 65 216 132 Q184 116 153 117 Q122 116 91 132 Z"/>
+    <path class="band" d="M91 127 Q153 108 216 127 L211 147 Q153 128 96 147 Z"/>
+    <path class="trim" d="M147 115 L159 115 L159 141 L147 141 Z"/>
+    <path class="feather" d="M116 88 Q77 49 89 103 Q98 126 115 129 Z"/>
+  </g>
+  <g transform="translate(1530 0)">
+    <path class="cap" d="M89 133 Q102 72 148 59 Q192 70 205 132 Q182 117 155 118 Q121 117 89 133 Z"/>
+    <path class="band" d="M89 129 Q148 109 205 127 L201 146 Q147 130 94 147 Z"/>
+    <path class="trim" d="M144 116 L156 116 L156 142 L144 142 Z"/>
+    <path class="feather" d="M99 92 Q63 55 76 108 Q83 128 99 131 Z"/>
+  </g>
+  <g transform="translate(1836 0)">
+    <path class="cap" d="M102 134 Q112 78 142 61 Q178 75 189 130 L167 119 Q136 116 102 134 Z"/>
+    <path class="band" d="M102 129 Q146 109 189 127 L185 145 Q148 130 107 146 Z"/>
+    <path class="trim" d="M133 117 L144 117 L144 141 L133 141 Z"/>
+    <path class="feather" d="M120 92 Q84 58 97 108 Q104 128 119 131 Z"/>
+  </g>
+  <g transform="translate(2142 0)">
+    <path class="cap" d="M88 132 Q103 70 148 58 Q195 70 207 130 Q182 116 155 117 Q121 114 88 132 Z"/>
+    <path class="band" d="M88 127 Q149 108 207 125 L203 145 Q149 128 93 146 Z"/>
+    <path class="trim" d="M139 115 L151 115 L151 140 L139 140 Z"/>
+    <path class="feather" d="M109 90 Q71 52 84 105 Q92 126 109 130 Z"/>
+  </g>
+</svg>

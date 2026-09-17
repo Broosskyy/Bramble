@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2448" height="524" viewBox="0 0 2448 524">
+  <defs>
+    <style>
+      .cloth{fill:#315c4b;stroke:#1b3029;stroke-width:5;stroke-linejoin:round}
+      .trim{fill:#d5a649;stroke:#563d22;stroke-width:4;stroke-linejoin:round}
+      .leather{fill:#75482f;stroke:#39251c;stroke-width:5;stroke-linejoin:round}
+      .leaf{fill:#6f9a52;stroke:#294734;stroke-width:3}
+    </style>
+  </defs>
+  <!-- front -->
+  <g transform="translate(0 0)">
+    <path class="cloth" d="M101 252 L124 236 L182 236 L205 252 L199 355 L107 355 Z"/>
+    <path class="leather" d="M99 258 L123 244 L118 280 L98 292 Z M207 258 L183 244 L188 280 L208 292 Z"/>
+    <path class="trim" d="M104 326 L202 326 L202 346 L104 346 Z"/>
+    <path class="leaf" d="M153 266 C137 282 141 305 153 317 C165 305 169 282 153 266 Z"/>
+  </g>
+  <!-- front-right -->
+  <g transform="translate(306 0)">
+    <path class="cloth" d="M108 250 L130 237 L184 241 L207 260 L194 355 L111 352 Z"/>
+    <path class="leather" d="M105 259 L130 244 L124 282 L103 294 Z M205 263 L183 247 L188 286 L207 299 Z"/>
+    <path class="trim" d="M109 326 L198 329 L196 348 L110 345 Z"/>
+    <path class="leaf" d="M158 267 C145 282 147 303 159 315 C170 303 173 284 158 267 Z"/>
+  </g>
+  <!-- right -->
+  <g transform="translate(612 0)">
+    <path class="cloth" d="M126 249 L153 239 L184 250 L195 272 L183 352 L132 350 L118 282 Z"/>
+    <path class="leather" d="M121 265 L146 247 L137 288 L116 299 Z M190 266 L176 250 L181 289 L198 300 Z"/>
+    <path class="trim" d="M127 326 L188 328 L186 348 L130 346 Z"/>
+    <path class="leaf" d="M158 272 C148 287 150 304 159 314 C168 302 169 286 158 272 Z"/>
+  </g>
+  <!-- back-right -->
+  <g transform="translate(918 0)">
+    <path class="cloth" d="M111 251 L135 239 L187 244 L205 266 L194 356 L108 350 Z"/>
+    <path class="leather" d="M108 260 L132 244 L126 283 L105 296 Z M202 266 L183 248 L188 287 L207 300 Z"/>
+    <path class="trim" d="M109 326 L198 330 L196 349 L110 345 Z"/>
+    <path class="leaf" d="M158 265 C142 286 144 310 160 322 C175 307 174 284 158 265 Z"/>
+  </g>
+  <!-- back -->
+  <g transform="translate(1224 0)">
+    <path class="cloth" d="M101 254 L124 238 L182 238 L205 254 L199 356 L107 356 Z"/>
+    <path class="leather" d="M99 260 L124 244 L119 282 L98 295 Z M207 260 L182 244 L187 282 L208 295 Z"/>
+    <path class="trim" d="M104 327 L202 327 L202 347 L104 347 Z"/>
+    <path class="leaf" d="M153 260 C132 285 136 314 153 327 C170 314 174 285 153 260 Z"/>
+  </g>
+  <!-- back-left -->
+  <g transform="translate(1530 0)">
+    <path class="cloth" d="M101 266 L119 244 L171 239 L195 251 L198 350 L112 356 Z"/>
+    <path class="leather" d="M104 266 L123 248 L118 287 L99 300 Z M198 260 L174 244 L180 283 L201 296 Z"/>
+    <path class="trim" d="M108 330 L197 326 L196 345 L110 349 Z"/>
+    <path class="leaf" d="M148 265 C132 284 131 307 146 322 C162 310 164 286 148 265 Z"/>
+  </g>
+  <!-- left -->
+  <g transform="translate(1836 0)">
+    <path class="cloth" d="M111 250 L142 239 L169 249 L188 282 L174 350 L123 352 L111 272 Z"/>
+    <path class="leather" d="M116 266 L130 250 L125 289 L108 300 Z M193 265 L168 247 L177 288 L198 299 Z"/>
+    <path class="trim" d="M118 328 L179 326 L176 346 L120 348 Z"/>
+    <path class="leaf" d="M148 272 C137 286 138 302 147 314 C156 304 158 287 148 272 Z"/>
+  </g>
+  <!-- front-left -->
+  <g transform="translate(2142 0)">
+    <path class="cloth" d="M99 260 L122 241 L176 237 L198 250 L195 352 L112 355 Z"/>
+    <path class="leather" d="M101 263 L123 247 L118 286 L99 299 Z M201 259 L176 244 L182 282 L203 294 Z"/>
+    <path class="trim" d="M108 329 L197 326 L196 345 L110 348 Z"/>
+    <path class="leaf" d="M148 267 C133 284 136 303 147 315 C159 303 161 282 148 267 Z"/>
+  </g>
+</svg>

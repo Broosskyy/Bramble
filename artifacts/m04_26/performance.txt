@@ -1,0 +1,10 @@
+real_device_test=NOT AVAILABLE
+node_count=228
+average_fps=60.00
+average_frame_process_ms=16.728
+average_draw_calls=344.00
+material_count_estimate=58
+transparent_elements=15
+shadow_casters=42
+renderer=NVIDIA GeForce RTX 5060
+camera_yaw_range_degrees=90

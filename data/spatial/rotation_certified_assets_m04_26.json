@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "certification_states": [
+    "FIXED_VIEW_ONLY",
+    "LIMITED_ROTATION_READY",
+    "WIDE_ROTATION_READY",
+    "FULL_ROTATION_READY"
+  ],
+  "assets": {
+    "m04_26_wayfarer_building": {
+      "representation_type": "SPATIAL_GEOMETRY",
+      "supported_yaw_degrees": [-45, 45],
+      "ground_pivot": [0.0, 0.0, 0.0],
+      "world_scale": 1.0,
+      "footprint": [5.8, 4.8],
+      "collision": "compound_box",
+      "occlusion_group": "roof",
+      "fade_behavior": "camera_line_of_sight",
+      "shadow_policy": "static_cast_receive",
+      "lod_policy": "single_mesh_proof",
+      "mobile_budget": {"draw_calls": 28, "transparent_layers": 0},
+      "certification": "LIMITED_ROTATION_READY"
+    },
+    "m04_26_amber_oak": {
+      "representation_type": "SPATIAL_GEOMETRY",
+      "supported_yaw_degrees": [-180, 180],
+      "ground_pivot": [0.0, 0.0, 0.0],
+      "world_scale": 1.0,
+      "footprint": [1.4, 1.4],
+      "collision": "trunk_capsule",
+      "occlusion_group": "canopy",
+      "fade_behavior": "camera_line_of_sight",
+      "shadow_policy": "trunk_and_canopy_cast",
+      "lod_policy": "cluster_reduce_then_impostor",
+      "mobile_budget": {"draw_calls": 12, "transparent_layers": 0},
+      "certification": "FULL_ROTATION_READY"
+    },
+    "m04_26_wayfarer_equipment": {
+      "representation_type": "DIRECTIONAL_SPRITE",
+      "supported_yaw_degrees": [-45, 45],
+      "ground_pivot": [153.0, 500.0],
+      "world_scale": 0.006,
+      "footprint": [0.8, 0.8],
+      "collision": "entity_owned",
+      "occlusion_group": "character",
+      "fade_behavior": "never",
+      "shadow_policy": "contact_blob",
+      "lod_policy": "atlas_mip",
+      "mobile_budget": {"draw_calls": 4, "transparent_layers": 4},
+      "certification": "LIMITED_ROTATION_READY",
+      "directions": [
+        "front", "front_right", "right", "back_right",
+        "back", "back_left", "left", "front_left"
+      ],
+      "states": ["idle", "movement"],
+      "attack_state": "PARTIAL"
+    },
+    "moorling_kit60": {
+      "representation_type": "DIRECTIONAL_SPRITE",
+      "supported_yaw_degrees": [-45, 45],
+      "ground_pivot": [177.0, 420.0],
+      "world_scale": 0.006,
+      "footprint": [0.9, 0.9],
+      "collision": "entity_owned",
+      "occlusion_group": "character",
+      "fade_behavior": "never",
+      "shadow_policy": "contact_blob",
+      "lod_policy": "atlas_mip",
+      "mobile_budget": {"draw_calls": 2, "transparent_layers": 2},
+      "certification": "FIXED_VIEW_ONLY",
+      "directions": ["front", "right", "back", "left"]
+    }
+  }
+}
