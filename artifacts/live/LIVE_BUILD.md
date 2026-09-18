@@ -1,13 +1,21 @@
 BRAMBLE LIVE BUILD
 
-Milestone: m04_2
-Commit: 26ab65a4f259aee8003909a56eb7853a45ac6afe
-Date: 2026-09-16 22:07:21 UTC
+Milestone: m04.30
+Commit: pending delivery
+Date: 2026-09-18
 Godot: 4.7.2
-Main Scene: res://scenes/main.tscn
-Runtime Test: PASS
-Landscape Capture: C:\Users\manue\Downloads\BRAMBLE_NEW\BRAMBLE_GAME\artifacts\live\latest_landscape.png
-Portrait Capture: C:\Users\manue\Downloads\BRAMBLE_NEW\BRAMBLE_GAME\artifacts\live\latest_portrait.png
-Gameplay Capture: C:\Users\manue\Downloads\BRAMBLE_NEW\BRAMBLE_GAME\artifacts\live\latest_gameplay.png
+Production Slice: res://scenes/world/amberway_moor_m04_30.tscn
+Main Scene Smoke: PASS
+M04.30 Smoke / Capture / Profile: PASS
+Landscape Capture: artifacts/m04_30/27_final_playable_landscape.png
+Portrait Capture: artifacts/m04_30/26_final_progression_portrait.png
+Gameplay Capture: artifacts/m04_30/32_final_combat_portrait.png
+
+The existing `artifacts/live/latest_*.png` files contain preserved,
+uncommitted M04.3 WIP and were intentionally not overwritten or staged.
+
 Known Issues:
-- Full MMO combat replication deferred to Authority milestone
+- Production decision C: painterly Hall and authored equipment action poses
+  require another focused convergence pass.
+- Android build is blocked by the missing export preset.
+- Real-device validation is blocked by unavailable ADB/device access.

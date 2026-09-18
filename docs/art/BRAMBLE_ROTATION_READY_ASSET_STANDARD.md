@@ -1,7 +1,12 @@
 # BRAMBLE Rotation-Ready Asset Standard
 
-Status: production contract candidate established by M04.26
+Status: M04.26 certification contract; direction requirements refined by M04.30
 Applies to: spatial 2.5D world presentation
+
+Direction coverage is now adaptive per
+`BRAMBLE_ANIMATION_PRODUCTION_STANDARD.md`. Certification records the art that
+actually exists per state; it does not force every entity into an
+eight-direction matrix.
 
 ## Certification
 
@@ -49,9 +54,11 @@ Each entry records:
 
 Representation: camera-facing `DIRECTIONAL_SPRITE`.
 
-- Required directions: front, front-right, right, back-right, back,
-  back-left, left, front-left.
-- Required baseline states: idle, movement, attack, cast, hit, defeated.
+- Player and SP profiles normally justify eight-direction idle coverage, but
+  each state declares its authored coverage and explicit fallback policy.
+- Required baseline capabilities are idle, movement, attack, cast when used,
+  hit, and defeated; a capability may combine authored art and approved
+  procedural augmentation without claiming nonexistent directional frames.
 - World facing is authoritative; displayed direction is world facing minus
   local camera yaw.
 - Ground pivot is the center between the feet and remains stable across frames.
@@ -102,13 +109,15 @@ Representation: directional sprite unless a specific NPC is spatial geometry.
 
 Representation: directional sprite or spatial geometry per creature.
 
-- Required directions match characters for unrestricted turning.
+- Required directions follow visual importance, supported camera range, and
+  runtime evidence. Standard monsters may use one, two, or four authored
+  directions with explicit nearest-direction fallback.
 - Required states: idle, movement, attack, hit, defeated/death.
 - Target-ring radius, hit/VFX anchor, collision, and ground pivot are explicit.
 - Four-direction sets may be certified only for a camera range where snapping
   remains acceptable.
-- Moorling kit60 remains `PARTIAL`: it has four directions and no complete
-  movement set.
+- Moorling Kit60 plus Kit70/71 remains `PARTIAL`: it has four directional
+  identity sprites and generic action cels but no authored movement cycle.
 
 ## Pets and partners
 

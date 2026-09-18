@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource path="res://scripts/world/amberway_moor_m04_30.gd" type="Script" id="1_world"]
+
+[node name="AmberwayMoorM0430" type="Node3D"]
+script = ExtResource("1_world")

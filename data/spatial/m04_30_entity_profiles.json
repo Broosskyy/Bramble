@@ -1,0 +1,182 @@
+{
+  "schema_version": 2,
+  "direction_modes": {
+    "ONE_DIRECTION": 0,
+    "TWO_DIRECTION": 1,
+    "FOUR_DIRECTION": 2,
+    "EIGHT_DIRECTION": 3,
+    "CAMERA_BILLBOARD": 4,
+    "CUSTOM": 5
+  },
+  "provenance": {
+    "moorling": "Canonical BRAMBLE Moorling: kit60 authored cardinal directions; kit70/71-derived exported idle/attack/hit/defeated cels already under assets/game/monsters/moorling. No Kit21, generated art, Visual Master, or silent mirroring.",
+    "player_body": "Canonical BRAMBLE male base authored 8-direction exports under assets/game/characters/base/male/directions.",
+    "wayfarer_equipment": "Experimental M04.26 Wayfarer proof atlases under assets/labs/m04_26. Reused read-only as explicitly cataloged experimental presentation layers; short_sword is canonical BRAMBLE equipment.",
+    "npc": "Canonical BRAMBLE merchant authored 8-direction exports."
+  },
+  "profiles": {
+    "moorling": {
+      "id": "CanonicalMoorlingAdaptive",
+      "direction_mode": 2,
+      "fallback_state": "idle",
+      "pixel_size": 0.0058,
+      "base_height": 1.08,
+      "states": {
+        "idle": {
+          "directional_frames": {
+            "front": "res://assets/game/monsters/moorling/directions/kit60_front.png",
+            "right": "res://assets/game/monsters/moorling/directions/kit60_right.png",
+            "back": "res://assets/game/monsters/moorling/directions/kit60_back.png",
+            "left": "res://assets/game/monsters/moorling/directions/kit60_left.png"
+          },
+          "motion_profile": {"bob": 0.025, "squash": 0.012}
+        },
+        "move": {
+          "directional_frames": {
+            "front": "res://assets/game/monsters/moorling/directions/kit60_front.png",
+            "right": "res://assets/game/monsters/moorling/directions/kit60_right.png",
+            "back": "res://assets/game/monsters/moorling/directions/kit60_back.png",
+            "left": "res://assets/game/monsters/moorling/directions/kit60_left.png"
+          },
+          "motion_profile": {"bob": 0.055, "squash": 0.025}
+        },
+        "attack": {
+          "direction_mode": 0,
+          "authored_generic": "res://assets/game/monsters/moorling/actions/attack.png",
+          "cel_sequence": [
+            "res://assets/game/monsters/moorling/animations/attack_01/04_attack_01.png",
+            "res://assets/game/monsters/moorling/animations/attack_02/05_attack_02.png",
+            "res://assets/game/monsters/moorling/animations/attack_03/06_attack_03.png",
+            "res://assets/game/monsters/moorling/animations/attack_04/07_attack_04.png"
+          ],
+          "motion_profile": {"anticipation": 0.15, "recoil": 0.12}
+        },
+        "hit": {
+          "direction_mode": 0,
+          "authored_generic": "res://assets/game/monsters/moorling/actions/hit.png",
+          "cel_sequence": [
+            "res://assets/game/monsters/moorling/animations/hit_01/00_hit_01.png",
+            "res://assets/game/monsters/moorling/animations/hit_02/01_hit_02.png",
+            "res://assets/game/monsters/moorling/animations/hit_03/02_hit_03.png",
+            "res://assets/game/monsters/moorling/animations/hit_04/03_hit_04.png"
+          ],
+          "motion_profile": {"recoil": 0.18, "squash": 0.04}
+        },
+        "defeated": {
+          "direction_mode": 0,
+          "authored_generic": "res://assets/game/monsters/moorling/actions/defeated.png",
+          "cel_sequence": [
+            "res://assets/game/monsters/moorling/animations/defeated_01/04_defeated_01.png",
+            "res://assets/game/monsters/moorling/animations/defeated_02/05_defeated_02.png",
+            "res://assets/game/monsters/moorling/animations/defeated_03/06_defeated_03.png",
+            "res://assets/game/monsters/moorling/animations/defeated_04/07_defeated_04.png"
+          ],
+          "motion_profile": {"defeat_tilt": 72.0, "squash": 0.08}
+        }
+      }
+    },
+    "wayfarer": {
+      "id": "WayfarerEightDirectionAdaptive",
+      "direction_mode": 3,
+      "fallback_state": "idle",
+      "pixel_size": 0.0055,
+      "base_height": 1.2,
+      "states": {
+        "idle": {
+          "directional_frames": {
+            "front": "res://assets/game/characters/base/male/directions/front.png",
+            "front_right": "res://assets/game/characters/base/male/directions/front_right.png",
+            "right": "res://assets/game/characters/base/male/directions/right.png",
+            "back_right": "res://assets/game/characters/base/male/directions/back_right.png",
+            "back": "res://assets/game/characters/base/male/directions/back.png",
+            "back_left": "res://assets/game/characters/base/male/directions/back_left.png",
+            "left": "res://assets/game/characters/base/male/directions/left.png",
+            "front_left": "res://assets/game/characters/base/male/directions/front_left.png"
+          },
+          "motion_profile": {"bob": 0.012, "squash": 0.006}
+        },
+        "move": {
+          "directional_frames": {
+            "front": "res://assets/game/characters/base/male/directions/front.png",
+            "front_right": "res://assets/game/characters/base/male/directions/front_right.png",
+            "right": "res://assets/game/characters/base/male/directions/right.png",
+            "back_right": "res://assets/game/characters/base/male/directions/back_right.png",
+            "back": "res://assets/game/characters/base/male/directions/back.png",
+            "back_left": "res://assets/game/characters/base/male/directions/back_left.png",
+            "left": "res://assets/game/characters/base/male/directions/left.png",
+            "front_left": "res://assets/game/characters/base/male/directions/front_left.png"
+          },
+          "motion_profile": {"bob": 0.04, "squash": 0.018}
+        },
+        "attack": {
+          "directional_frames": {
+            "front": "res://assets/game/characters/base/male/directions/front.png",
+            "front_right": "res://assets/game/characters/base/male/directions/front_right.png",
+            "right": "res://assets/game/characters/base/male/directions/right.png",
+            "back_right": "res://assets/game/characters/base/male/directions/back_right.png",
+            "back": "res://assets/game/characters/base/male/directions/back.png",
+            "back_left": "res://assets/game/characters/base/male/directions/back_left.png",
+            "left": "res://assets/game/characters/base/male/directions/left.png",
+            "front_left": "res://assets/game/characters/base/male/directions/front_left.png"
+          },
+          "motion_profile": {"anticipation": 0.11, "recoil": 0.07}
+        }
+      },
+      "equipment_layers": {
+        "armor": {
+          "atlas": "res://assets/labs/m04_26/wayfarer_armor_8dir.svg",
+          "hframes": 8,
+          "render_priority": 1,
+          "z_offset": -0.012,
+          "state_scale": {"idle": 1.0, "move": 1.0, "attack": 1.0}
+        },
+        "helmet": {
+          "atlas": "res://assets/labs/m04_26/wayfarer_hat_8dir.svg",
+          "hframes": 8,
+          "render_priority": 2,
+          "z_offset": -0.024,
+          "state_scale": {"idle": 1.0, "move": 1.0, "attack": 1.0}
+        },
+        "weapon": {
+          "directional_frames": {
+            "front": "res://assets/game/characters/equipment/weapons/melee/short_sword.png",
+            "front_right": "res://assets/game/characters/equipment/weapons/melee/short_sword.png",
+            "right": "res://assets/game/characters/equipment/weapons/melee/short_sword.png",
+            "back_right": "res://assets/game/characters/equipment/weapons/melee/short_sword.png",
+            "back": "res://assets/game/characters/equipment/weapons/melee/short_sword.png",
+            "back_left": "res://assets/game/characters/equipment/weapons/melee/short_sword.png",
+            "left": "res://assets/game/characters/equipment/weapons/melee/short_sword.png",
+            "front_left": "res://assets/game/characters/equipment/weapons/melee/short_sword.png"
+          },
+          "pixel_size": 0.00265,
+          "anchors": {
+            "front": [0.56, -0.18], "front_right": [0.54, -0.18],
+            "right": [0.45, -0.20], "back_right": [0.42, -0.12],
+            "back": [-0.48, -0.10], "back_left": [-0.42, -0.12],
+            "left": [-0.45, -0.20], "front_left": [-0.54, -0.18]
+          },
+          "depth_by_direction": {
+            "front": 3, "front_right": 3, "right": 3, "back_right": -1,
+            "back": -1, "back_left": -1, "left": 3, "front_left": 3
+          },
+          "rotation_by_direction": {
+            "front": -18, "front_right": -15, "right": -10, "back_right": 18,
+            "back": 20, "back_left": -18, "left": 10, "front_left": 15
+          },
+          "attack_swing_degrees": [-55, 48],
+          "state_scale": {"idle": 1.0, "move": 1.03, "attack": 1.12}
+        }
+      },
+      "equipment_loadouts": {
+        "starter_clothes": {
+          "visibility": {"helmet": false, "armor": false, "weapon": false},
+          "stats": {"attack": 8, "defense": 3}
+        },
+        "wayfarer_set": {
+          "visibility": {"helmet": true, "armor": true, "weapon": true},
+          "stats": {"attack": 14, "defense": 9}
+        }
+      }
+    }
+  }
+}
