@@ -1,7 +1,7 @@
 BRAMBLE LIVE BUILD
 
 Milestone: m04.30
-Commit: pending delivery
+Commit: 4df681f2a6e9c58409b303410899ba5b7f3e5c81
 Date: 2026-09-18
 Godot: 4.7.2
 Production Slice: res://scenes/world/amberway_moor_m04_30.tscn

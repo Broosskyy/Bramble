@@ -10,7 +10,7 @@ Production decision: **C — PRESENTATION STILL NEEDS ANOTHER CONVERGENCE PASS**
 - Starting `HEAD`: `743c71e0bc9038a669d1a950c32d596b8db012cf`
 - Starting `origin/main`: `743c71e0bc9038a669d1a950c32d596b8db012cf`
 - Branch: `main`
-- Implementation commit: pending delivery
+- Implementation commit: `4df681f2a6e9c58409b303410899ba5b7f3e5c81`
 - M04.3 WIP: preserved, uncommitted, and excluded from M04.30 staging
 - M04.30 was added as `scenes/world/amberway_moor_m04_30.tscn`; the protected
   2D `main.tscn` route was not replaced.
