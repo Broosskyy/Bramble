@@ -32,6 +32,7 @@ var body_sprite: Sprite3D
 var equipment_sprites: Dictionary = {}
 var _resolved_state := ""
 var _resolved_direction := ""
+var _resolved_texture_path := ""
 var _base_height := 1.1
 
 
@@ -72,11 +73,12 @@ func apply_presentation() -> void:
 	var state_data: Dictionary = profile.get("states", {}).get(state_name, {})
 	var direction := _resolve_direction(state_data)
 	var texture_path := _resolve_texture(state_data, direction)
-	if texture_path != "" and (_resolved_state != state_name or _resolved_direction != direction):
+	if texture_path != "" and texture_path != _resolved_texture_path:
 		body_sprite.texture = load(texture_path)
+		_resolved_texture_path = texture_path
 	_resolved_state = state_name
 	_resolved_direction = direction
-	_apply_motion(state_data)
+	_apply_motion(state_data, direction)
 	_apply_equipment(direction, state_name)
 
 
@@ -187,6 +189,12 @@ func _resolve_state(requested: String) -> String:
 
 
 func _resolve_texture(state_data: Dictionary, direction: String) -> String:
+	var equipment_sequences: Dictionary = state_data.get("equipment_cel_sequences", {})
+	var equipment_sequence: Array = equipment_sequences.get(equipment_state_id, [])
+	if not equipment_sequence.is_empty():
+		var equipment_frame := mini(int(floor(normalized_time * equipment_sequence.size())), equipment_sequence.size() - 1)
+		body_sprite.flip_h = false
+		return str(equipment_sequence[equipment_frame])
 	var directional: Dictionary = state_data.get("directional_frames", {})
 	if directional.has(direction):
 		body_sprite.flip_h = false
@@ -217,17 +225,45 @@ func _resolve_texture(state_data: Dictionary, direction: String) -> String:
 	return generic
 
 
-func _apply_motion(state_data: Dictionary) -> void:
+func _apply_motion(state_data: Dictionary, direction: String) -> void:
 	var motion: Dictionary = state_data.get("motion_profile", {})
 	var phase := normalized_time * TAU
 	var bob := sin(phase) * float(motion.get("bob", 0.0))
 	var squash := sin(phase) * float(motion.get("squash", 0.0))
 	var anticipation := sin(clampf(normalized_time / 0.28, 0.0, 1.0) * PI) * float(motion.get("anticipation", 0.0))
 	var recoil := sin(clampf((normalized_time - 0.55) / 0.3, 0.0, 1.0) * PI) * float(motion.get("recoil", 0.0))
-	position.y = bob
+	position = Vector3(anticipation - recoil, bob, 0.0)
 	scale = Vector3(1.0 + squash, 1.0 - squash - anticipation * 0.22, 1.0)
 	rotation_degrees.z = float(motion.get("defeat_tilt", 0.0)) * normalized_time
-	body_sprite.position = Vector3(anticipation - recoil, _base_height, 0.0)
+	body_sprite.position = Vector3(0.0, _base_height, 0.0)
+	if motion.has("attack_lunge"):
+		var sign_by_direction: Dictionary = motion.get("screen_sign_by_direction", {})
+		var direction_sign := float(sign_by_direction.get(direction, 1.0))
+		var windup := float(motion.get("attack_windup", 0.08))
+		var lunge := float(motion.get("attack_lunge", 0.24))
+		var lean := float(motion.get("attack_lean_degrees", 10.0))
+		var travel := 0.0
+		var body_lean := 0.0
+		if normalized_time < 0.20:
+			var t := smoothstep(0.0, 0.20, normalized_time)
+			travel = lerpf(0.0, -windup, t)
+			body_lean = lerpf(0.0, -lean * 0.55, t)
+		elif normalized_time < 0.42:
+			var t := smoothstep(0.20, 0.42, normalized_time)
+			travel = lerpf(-windup, lunge, t)
+			body_lean = lerpf(-lean * 0.55, lean, t)
+		elif normalized_time < 0.70:
+			var t := smoothstep(0.42, 0.70, normalized_time)
+			travel = lerpf(lunge, lunge * 0.42, t)
+			body_lean = lerpf(lean, lean * 0.38, t)
+		else:
+			var t := smoothstep(0.70, 1.0, normalized_time)
+			travel = lerpf(lunge * 0.42, 0.0, t)
+			body_lean = lerpf(lean * 0.38, 0.0, t)
+		position.x = travel * direction_sign
+		rotation_degrees.z = body_lean * direction_sign
+		var compression := sin(clampf(normalized_time / 0.20, 0.0, 1.0) * PI) * float(motion.get("attack_compression", 0.025))
+		scale = Vector3(1.0 + compression, 1.0 - compression, 1.0)
 
 
 func _apply_equipment(direction: String, state_name: String) -> void:
@@ -255,16 +291,40 @@ func _apply_equipment(direction: String, state_name: String) -> void:
 		var anchors: Dictionary = data.get("anchors", {})
 		var anchor: Array = anchors.get(direction, [0.0, 0.0])
 		sprite.position = Vector3(float(anchor[0]), _base_height + float(anchor[1]), float(data.get("z_offset", 0.0)))
+		if state_name == "attack":
+			var offset_times: Array = data.get("attack_offset_times", [])
+			var offset_x: Array = data.get("attack_offset_x", [])
+			var offset_y: Array = data.get("attack_offset_y", [])
+			if offset_times.size() == offset_x.size() and offset_times.size() == offset_y.size() and offset_times.size() >= 2:
+				var signs: Dictionary = data.get("attack_offset_sign_by_direction", {})
+				var offset_sign := float(signs.get(direction, 1.0))
+				sprite.position.x += _sample_float_curve(offset_times, offset_x, normalized_time) * offset_sign
+				sprite.position.y += _sample_float_curve(offset_times, offset_y, normalized_time)
 		var depths: Dictionary = data.get("depth_by_direction", {})
 		sprite.render_priority = int(depths.get(direction, data.get("render_priority", 1)))
 		var state_scale: Dictionary = data.get("state_scale", {})
 		sprite.scale = Vector3.ONE * float(state_scale.get(state_name, 1.0))
 		var base_rotations: Dictionary = data.get("rotation_by_direction", {})
 		var rotation := float(base_rotations.get(direction, 0.0))
-		if state_name == "attack":
-			var swing: Array = data.get("attack_swing_degrees", [-50.0, 45.0])
-			rotation += lerpf(float(swing[0]), float(swing[1]), smoothstep(0.18, 0.72, normalized_time))
+		if state_name == "attack" and (data.has("attack_swing_keyframes") or data.has("attack_swing_degrees")):
+			var swing_times: Array = data.get("attack_swing_times", [])
+			var swing_angles: Array = data.get("attack_swing_keyframes", [])
+			if swing_times.size() == swing_angles.size() and swing_times.size() >= 2:
+				rotation += _sample_float_curve(swing_times, swing_angles, normalized_time)
+			else:
+				var swing: Array = data.get("attack_swing_degrees", [-50.0, 45.0])
+				rotation += lerpf(float(swing[0]), float(swing[1]), smoothstep(0.18, 0.72, normalized_time))
 		sprite.rotation_degrees.z = rotation
+
+
+func _sample_float_curve(times: Array, values: Array, sample: float) -> float:
+	for index in range(1, times.size()):
+		if sample <= float(times[index]):
+			var from_time := float(times[index - 1])
+			var to_time := float(times[index])
+			var weight := inverse_lerp(from_time, to_time, sample)
+			return lerpf(float(values[index - 1]), float(values[index]), smoothstep(0.0, 1.0, weight))
+	return float(values[-1])
 
 
 func _vector3(value: Variant) -> Vector3:

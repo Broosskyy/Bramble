@@ -109,6 +109,14 @@
           "motion_profile": {"bob": 0.04, "squash": 0.018}
         },
         "attack": {
+          "equipment_cel_sequences": {
+            "starter_clothes": [
+              "res://assets/game/characters/animations/male/attack_melee/00_male_ready.png",
+              "res://assets/game/characters/animations/male/attack_melee/01_male_windup.png",
+              "res://assets/game/characters/animations/male/attack_melee/02_male_swing.png",
+              "res://assets/game/characters/animations/male/attack_melee/03_male_recover.png"
+            ]
+          },
           "directional_frames": {
             "front": "res://assets/game/characters/base/male/directions/front.png",
             "front_right": "res://assets/game/characters/base/male/directions/front_right.png",
@@ -119,7 +127,17 @@
             "left": "res://assets/game/characters/base/male/directions/left.png",
             "front_left": "res://assets/game/characters/base/male/directions/front_left.png"
           },
-          "motion_profile": {"anticipation": 0.11, "recoil": 0.07}
+          "motion_profile": {
+            "attack_windup": 0.09,
+            "attack_lunge": 0.25,
+            "attack_lean_degrees": 11.0,
+            "attack_compression": 0.025,
+            "screen_sign_by_direction": {
+              "front": 1.0, "front_right": 1.0, "right": 1.0,
+              "back_right": 1.0, "back": -1.0, "back_left": -1.0,
+              "left": -1.0, "front_left": -1.0
+            }
+          }
         }
       },
       "equipment_layers": {
@@ -163,7 +181,16 @@
             "front": -18, "front_right": -15, "right": -10, "back_right": 18,
             "back": 20, "back_left": -18, "left": 10, "front_left": 15
           },
-          "attack_swing_degrees": [-55, 48],
+          "attack_swing_times": [0.0, 0.20, 0.42, 0.70, 1.0],
+          "attack_swing_keyframes": [-8, -68, 62, 24, 0],
+          "attack_offset_times": [0.0, 0.20, 0.42, 0.70, 1.0],
+          "attack_offset_x": [0.0, -0.22, 0.30, 0.18, 0.0],
+          "attack_offset_y": [0.04, 0.24, -0.08, -0.18, 0.0],
+          "attack_offset_sign_by_direction": {
+            "front": 1.0, "front_right": 1.0, "right": 1.0,
+            "back_right": 1.0, "back": -1.0, "back_left": -1.0,
+            "left": -1.0, "front_left": -1.0
+          },
           "state_scale": {"idle": 1.0, "move": 1.03, "attack": 1.12}
         }
       },

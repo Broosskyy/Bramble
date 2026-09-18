@@ -4,6 +4,7 @@ const Presenter = preload("res://scripts/spatial/spatial_entity_presenter.gd")
 const GAME := "res://assets/game/"
 const OUTPUT_M04_30 := "res://artifacts/m04_30"
 const OUTPUT_M04_31A := "res://artifacts/m04_31a"
+const OUTPUT_M04_31B := "res://artifacts/m04_31b"
 const PROFILE_PATH := "res://data/spatial/m04_30_entity_profiles.json"
 const CAMERA_CENTER := 35.0
 const CAMERA_MIN := -10.0
@@ -71,7 +72,19 @@ func _ready() -> void:
 	_build_camera()
 	_build_hud()
 	var args := OS.get_cmdline_args() + OS.get_cmdline_user_args()
-	if "--m04_31a-capture" in args:
+	if "--m04_31b-capture" in args:
+		output_dir = OUTPUT_M04_31B
+		capture_mode = true
+		call_deferred("_capture_m04_31b_and_quit")
+	elif "--m04_31b-profile" in args:
+		output_dir = OUTPUT_M04_31B
+		capture_mode = true
+		call_deferred("_profile_and_quit")
+	elif "--m04_31b-smoke" in args:
+		output_dir = OUTPUT_M04_31B
+		capture_mode = true
+		call_deferred("_smoke_and_quit")
+	elif "--m04_31a-capture" in args:
 		output_dir = OUTPUT_M04_31A
 		capture_mode = true
 		call_deferred("_capture_m04_31a_and_quit")
@@ -724,6 +737,76 @@ func _profile_and_quit() -> void:
 	_write_profile()
 	print("M04.30_PROFILE PASS")
 	get_tree().quit()
+
+
+func _capture_m04_31b_and_quit() -> void:
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(output_dir))
+	_reset_demo_state()
+	await _set_viewport(Vector2i(1280, 720))
+	await _stage(MOORLING_SPAWNS[0] + Vector3(-2.3, 0.8, 0.2), CAMERA_CENTER, 10.5, Vector3(1, 0, 0), "idle")
+	selected = 0
+	target_active = true
+	moorlings[0].ring.visible = true
+	_apply_equipment_state("starter_clothes")
+	await _set_attack_capture(35.0, 0.42, false)
+	await _shot("01_attack_before_reference.png")
+	_apply_equipment_state("wayfarer_set")
+	level = 4
+	xp = 0
+	await _set_attack_capture(35.0, 0.16, false)
+	await _shot("02_attack_anticipation.png")
+	await _set_attack_capture(35.0, 0.34, false)
+	await _shot("03_attack_commit.png")
+	await _set_attack_capture(35.0, 0.42, true)
+	await _shot("04_attack_impact.png")
+	await _set_attack_capture(35.0, 0.62, false)
+	await _shot("05_attack_followthrough.png")
+	await _set_attack_capture(35.0, 0.86, false)
+	await _shot("06_attack_recovery.png")
+	await _set_attack_capture(0.0, 0.42, false)
+	await _shot("07_attack_front.png")
+	await _set_attack_capture(90.0, 0.42, false)
+	await _shot("08_attack_side.png")
+	await _set_attack_capture(180.0, 0.42, false)
+	await _shot("09_attack_rear.png")
+	await _stage(Vector3(0.0, 0.8, 2.8), CAMERA_CENTER, 10.5, Vector3(0, 0, 1), "idle")
+	await _shot("10_equipment_idle.png")
+	player_state = "move"
+	facing = Vector3(1, 0, 0)
+	state_time = 0.58
+	await _wait_frames(6)
+	await _shot("11_equipment_move.png")
+	await _stage(MOORLING_SPAWNS[0] + Vector3(-2.3, 0.8, 0.2), CAMERA_CENTER, 10.5, Vector3(1, 0, 0), "attack")
+	target_active = true
+	moorlings[0].ring.visible = true
+	await _set_attack_capture(35.0, 0.42, true)
+	await _shot("12_equipment_attack.png")
+	camera_zoom = 13.5
+	await _wait_frames(8)
+	await _shot("13_combat_context.png")
+	camera_yaw = deg_to_rad(CAMERA_MIN)
+	await _wait_frames(8)
+	await _shot("14_final_action_landscape.png")
+	await _set_viewport(Vector2i(720, 1280))
+	camera_yaw = deg_to_rad(CAMERA_MAX)
+	await _wait_frames(8)
+	await _shot("15_final_action_portrait.png")
+	_write_profile()
+	print("M04.31B_CAPTURE PASS screenshots=15")
+	get_tree().quit()
+
+
+func _set_attack_capture(relative_degrees: float, phase: float, show_impact: bool) -> void:
+	var angle := camera_yaw + deg_to_rad(relative_degrees)
+	facing = Vector3(sin(angle), 0.0, cos(angle)).normalized()
+	player_state = "attack"
+	attack_phase = phase
+	slash_vfx.global_position = moorlings[selected].host.global_position + Vector3.UP * 1.2
+	slash_vfx.visible = show_impact
+	damage_label.text = "-14"
+	damage_label.global_position = moorlings[selected].host.global_position + Vector3.UP * 2.5
+	damage_label.visible = show_impact
+	await _wait_frames(7)
 
 
 func _capture_m04_31a_and_quit() -> void:
