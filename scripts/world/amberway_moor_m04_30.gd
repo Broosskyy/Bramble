@@ -2,7 +2,8 @@ extends Node3D
 
 const Presenter = preload("res://scripts/spatial/spatial_entity_presenter.gd")
 const GAME := "res://assets/game/"
-const OUTPUT := "res://artifacts/m04_30"
+const OUTPUT_M04_30 := "res://artifacts/m04_30"
+const OUTPUT_M04_31A := "res://artifacts/m04_31a"
 const PROFILE_PATH := "res://data/spatial/m04_30_entity_profiles.json"
 const CAMERA_CENTER := 35.0
 const CAMERA_MIN := -10.0
@@ -35,6 +36,7 @@ var moorlings: Array[Dictionary] = []
 var loot_nodes: Array[Node3D] = []
 var roof_parts: Array[MeshInstance3D] = []
 var canopy_sprites: Array[Sprite3D] = []
+var hall_sprites: Array[Sprite3D] = []
 var hud_status: Label
 var hud_objective: Label
 var prompt: Label
@@ -57,6 +59,7 @@ var _draws: Array[int] = []
 var _frame_ms: Array[float] = []
 var _measured_fps := 0.0
 var _toast_tween: Tween
+var output_dir := OUTPUT_M04_30
 
 
 func _ready() -> void:
@@ -68,7 +71,19 @@ func _ready() -> void:
 	_build_camera()
 	_build_hud()
 	var args := OS.get_cmdline_args() + OS.get_cmdline_user_args()
-	if "--m04_30-capture" in args:
+	if "--m04_31a-capture" in args:
+		output_dir = OUTPUT_M04_31A
+		capture_mode = true
+		call_deferred("_capture_m04_31a_and_quit")
+	elif "--m04_31a-profile" in args:
+		output_dir = OUTPUT_M04_31A
+		capture_mode = true
+		call_deferred("_profile_and_quit")
+	elif "--m04_31a-smoke" in args:
+		output_dir = OUTPUT_M04_31A
+		capture_mode = true
+		call_deferred("_smoke_and_quit")
+	elif "--m04_30-capture" in args:
 		capture_mode = true
 		call_deferred("_capture_and_quit")
 	elif "--m04_30-profile" in args:
@@ -146,93 +161,71 @@ func _build_environment() -> void:
 
 func _build_area() -> void:
 	# Overscan terrain keeps every supported yaw/zoom/aspect capture inside world.
-	_plane(Vector3.ZERO, Vector2(86.0, 74.0), GAME + "world/terrain/materials/grass_repeat_256.png", Color("#88a95c"), Vector2(19.0, 17.0))
+	_plane(Vector3.ZERO, Vector2(86.0, 74.0), GAME + "world/terrain/materials/grass_repeat_256.png", Color("#83a861"), Vector2(10.5, 9.0))
 	_add_ground_collision()
-	_path(Vector3(0.0, 0.03, 2.0), Vector2(3.4, 25.0), 0.0)
-	_path(Vector3(-3.5, 0.04, -2.8), Vector2(8.0, 3.1), -8.0)
-	_path(Vector3(4.4, 0.05, 5.7), Vector2(9.0, 4.8), 7.0)
-	_path(Vector3(2.5, 0.06, -6.2), Vector2(7.0, 4.2), 0.0)
+	# Authored transparent road modules replace the rectangular tiled strips.
+	# Their planted edges, stones and irregular silhouettes preserve route clarity
+	# while making the route feel grown into the meadow.
+	_ground_art_card(GAME + "world/roads/road_vertical.png", Vector3(0.0, 0.035, 9.2), Vector2(5.2, 6.7), 0.0)
+	_ground_art_card(GAME + "world/roads/road_vertical.png", Vector3(0.0, 0.038, 4.4), Vector2(5.2, 6.7), 0.0)
+	_ground_art_card(GAME + "world/roads/road_cross.png", Vector3(0.0, 0.045, -0.8), Vector2(7.0, 7.0), 0.0)
+	_ground_art_card(GAME + "world/roads/road_horizontal.png", Vector3(-4.7, 0.042, -1.0), Vector2(7.3, 4.4), -4.0)
+	_ground_art_card(GAME + "world/roads/road_bend.png", Vector3(3.6, 0.048, 4.9), Vector2(6.1, 6.1), -8.0)
+	_ground_art_card(GAME + "world/roads/road_cobble.png", Vector3(2.8, 0.052, -5.7), Vector2(6.2, 6.2), 0.0)
 	_build_hall()
 	_build_waystone()
 	_add_world_sprite(GAME + "world/buildings/red_oak.png", OAK_POS + Vector3.UP * 2.9, 0.0112, "AmberOakCanopy", true)
 	canopy_sprites.append(get_child(get_child_count() - 1) as Sprite3D)
 	_add_static_cylinder(OAK_POS + Vector3.UP * 1.3, 0.75, 2.6)
 	for item in [
-		[GAME + "world/buildings/cottage_complete.png", Vector3(9.8, 1.9, -8.0), 0.009],
+		[GAME + "world/buildings/workshop.png", Vector3(9.8, 1.72, -8.0), 0.0085],
 		[GAME + "world/buildings/stream_bridge.png", Vector3(-0.5, 0.9, -10.5), 0.008],
 		[GAME + "world/buildings/ruined_arch.png", Vector3(10.5, 1.7, 9.4), 0.008],
-		[GAME + "world/buildings/town_fountain.png", Vector3(-8.8, 1.15, 5.6), 0.007],
-		[GAME + "world/buildings/produce_cart.png", Vector3(-7.4, 0.85, 2.5), 0.0065],
-		[GAME + "world/buildings/bench_crates.png", Vector3(-4.7, 0.7, 2.2), 0.006],
-		[GAME + "world/buildings/lantern_post.png", Vector3(2.0, 1.4, 1.0), 0.0065],
-		[GAME + "world/buildings/lantern_post.png", Vector3(2.0, 1.4, -7.7), 0.0065],
+		# House pocket: useful work/garden objects frame the entrance.
+		[GAME + "world/buildings/garden.png", Vector3(-9.1, 0.72, -2.2), 0.0062],
+		[GAME + "world/buildings/produce_cart.png", Vector3(-8.5, 0.82, 0.8), 0.0064],
+		[GAME + "world/buildings/flower_bed.png", Vector3(-3.0, 0.52, -5.5), 0.0058],
+		# Rest pocket: fountain, bench and lamp read as one destination.
+		[GAME + "world/buildings/town_fountain.png", Vector3(-8.9, 1.1, 6.0), 0.0068],
+		[GAME + "world/buildings/bench_crates.png", Vector3(-6.4, 0.68, 5.2), 0.0058],
+		[GAME + "world/buildings/lantern_post.png", Vector3(-6.6, 1.35, 7.1), 0.0062],
+		[GAME + "world/buildings/lantern_post.png", Vector3(2.2, 1.35, -7.7), 0.0062],
+		[GAME + "world/buildings/town_gate.png", Vector3(-0.4, 1.68, 13.2), 0.0090],
 	]:
 		_add_world_sprite(item[0], item[1], item[2], "AuthoredWorldProp", true)
 	for pos in [
-		Vector3(-10.2, 0.72, -5.0), Vector3(-10.0, 0.72, 1.0), Vector3(10.6, 0.72, -2.5),
-		Vector3(10.0, 0.72, 2.3), Vector3(-8.5, 0.72, 9.5), Vector3(8.8, 0.72, 11.0),
+		Vector3(-10.4, 0.72, -5.4), Vector3(-9.8, 0.72, -4.0), Vector3(10.6, 0.72, -3.0),
+		Vector3(10.2, 0.72, 1.7), Vector3(-9.3, 0.72, 9.6), Vector3(9.0, 0.72, 11.0),
 	]:
 		_add_world_sprite(GAME + "world/buildings/golden_shrubs.png", pos, 0.0072, "GoldenShrub", true)
-	for pos in [Vector3(-3.1, 0.48, 4.2), Vector3(2.8, 0.48, 2.2), Vector3(-1.9, 0.48, -6.0), Vector3(5.1, 0.48, -4.2)]:
+	for pos in [Vector3(-3.1, 0.48, 4.2), Vector3(2.8, 0.48, 2.2), Vector3(-1.9, 0.48, -6.0), Vector3(5.1, 0.48, -4.2), Vector3(-7.5, 0.48, -5.0)]:
 		_add_world_sprite(GAME + "world/terrain/overlays/overlay_grass_clumps_256.png", pos, 0.007, "GrassComposition", true)
-	for z in [-8.0, -5.5, -3.0, -0.5, 2.0, 4.5, 7.0, 9.5]:
+	for pos in [Vector3(11.8, 1.25, -5.8), Vector3(12.6, 1.1, 1.4), Vector3(-12.3, 1.2, 9.0)]:
+		_add_world_sprite(GAME + "world/buildings/apple_tree.png", pos, 0.0082, "LayeredBackgroundTree", true)
+	for pos in [Vector3(11.0, 0.7, -4.2), Vector3(10.7, 0.66, 0.1), Vector3(-11.0, 0.65, 8.2)]:
+		_add_world_sprite(GAME + "world/vegetation/thornberry_bush.png", pos, 0.0055, "ForestEdgeUnderstory", true)
+	for z in [-6.5, -4.0, 5.5, 8.0]:
 		_add_world_sprite(GAME + "world/buildings/fence_straight.png", Vector3(-12.0, 0.65, z), 0.005, "BoundaryFence", true)
 
 
 func _build_hall() -> void:
 	var host := Node3D.new()
-	host.name = "WayfarerHallMeaningfulBuilding"
+	host.name = "WayfarerHallAuthoredShallow25D"
 	host.position = HALL_POS
 	add_child(host)
-	_box(host, Vector3(6.2, 0.55, 5.1), Vector3(0.0, 0.28, 0.0), Color("#685a48"))
-	_box(host, Vector3(5.5, 3.3, 4.5), Vector3(0.0, 1.95, 0.0), Color("#e5c482"))
-	for x in [-2.55, 0.0, 2.55]:
-		_box(host, Vector3(0.18, 3.25, 0.2), Vector3(x, 2.0, 2.31), Color("#6b4025"))
-		_box(host, Vector3(0.18, 3.25, 0.2), Vector3(x, 2.0, -2.31), Color("#6b4025"))
-	for z in [-2.05, 0.0, 2.05]:
-		_box(host, Vector3(0.2, 3.25, 0.18), Vector3(-2.82, 2.0, z), Color("#6b4025"))
-		_box(host, Vector3(0.2, 3.25, 0.18), Vector3(2.82, 2.0, z), Color("#6b4025"))
-	_box(host, Vector3(1.18, 2.2, 0.24), Vector3(0.0, 1.4, 2.35), Color("#71432a"))
-	# Porch, eaves, side braces and inset windows make the volume readable at all supported yaws.
-	_box(host, Vector3(3.4, 0.18, 1.25), Vector3(0.0, 0.62, 2.85), Color("#98643a"))
-	for x in [-1.5, 1.5]:
-		_box(host, Vector3(0.16, 2.25, 0.16), Vector3(x, 1.72, 2.88), Color("#684027"))
-		_box(host, Vector3(1.5, 0.14, 0.14), Vector3(x * 0.52, 2.72, 2.5), Color("#d6a04b"), Vector3(0, 0, deg_to_rad(x * 8.0)))
-	for x in [-1.78, 1.78]:
-		_add_hall_window(host, Vector3(x, 2.15, 2.34), false)
-	for z in [-1.25, 1.25]:
-		_add_hall_window(host, Vector3(2.81, 2.15, z), true)
-		_add_hall_window(host, Vector3(-2.81, 2.15, z), true)
-	var roof_mat := _material(Color("#23575a"), false)
-	roof_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	for side in [-1.0, 1.0]:
-		var roof := _box(host, Vector3(3.8, 0.3, 5.35), Vector3(side * 1.55, 4.3, 0.0), Color.WHITE, Vector3(0.0, 0.0, deg_to_rad(-side * 31.0)))
-		roof.material_override = roof_mat.duplicate()
-		roof_parts.append(roof)
-		for row in range(5):
-			_box(host, Vector3(0.055, 0.065, 5.4), Vector3(side * (0.58 + row * 0.58), 5.02 - row * 0.36, 0.0), Color("#174244"))
-	_box(host, Vector3(0.25, 0.25, 5.6), Vector3(0.0, 5.25, 0.0), Color("#d6a04b"))
-	_box(host, Vector3(0.86, 1.85, 0.86), Vector3(-1.65, 4.88, -0.55), Color("#89745a"))
-	_box(host, Vector3(1.05, 0.2, 1.05), Vector3(-1.65, 5.82, -0.55), Color("#554940"))
-	for x in [-2.98, 2.98]:
-		_box(host, Vector3(0.18, 0.2, 5.45), Vector3(x, 3.34, 0.0), Color("#d6a04b"))
-	_add_static_box(HALL_POS + Vector3.UP * 1.85, Vector3(5.9, 3.7, 4.9))
+	# Canonical Kit45 composite: it already contains coherent walls, visible
+	# sides, roof, foundation, porch and entrance dressing. A spatial footprint
+	# and contact shadow anchor the authored shallow-2.5D presentation.
+	var hall := _add_world_sprite(GAME + "world/buildings/cottage_complete.png", HALL_POS + Vector3.UP * 2.35, 0.0104, "WayfarerHallKit45", true)
+	hall_sprites.append(hall)
+	_contact_shadow_at(HALL_POS + Vector3(0.0, 0.0, 0.15), 2.05)
+	_add_static_box(HALL_POS + Vector3.UP * 1.5, Vector3(5.2, 3.0, 4.1))
 
 
 func _build_waystone() -> void:
-	var host := Node3D.new()
-	host.name = "BrambleWaystoneLandmark"
-	host.position = WAYSTONE_POS
-	add_child(host)
-	_box(host, Vector3(5.0, 0.32, 3.6), Vector3(0.0, 0.16, 0.0), Color("#68625a"))
-	for x in [-1.45, 1.45]:
-		_box(host, Vector3(0.76, 3.9, 0.76), Vector3(x, 2.25, 0.0), Color("#777168"))
-	_box(host, Vector3(3.8, 0.7, 0.8), Vector3(0.0, 4.25, 0.0), Color("#777168"))
-	var crystal := _sphere(host, Vector3(0.0, 2.45, 0.0), Vector3(0.72, 1.45, 0.46), Color("#5be4d2"))
-	var mat := crystal.material_override as StandardMaterial3D
-	mat.emission_enabled = true
-	mat.emission = Color("#5be4d2")
-	mat.emission_energy_multiplier = 1.5
+	# Replace prototype arch geometry with the cataloged authored milestone.
+	_add_world_sprite(GAME + "world/buildings/milestone.png", WAYSTONE_POS + Vector3.UP * 1.45, 0.0085, "BrambleWaystoneKit41", true)
+	_contact_shadow_at(WAYSTONE_POS, 0.75)
 
 
 func _build_player() -> void:
@@ -596,6 +589,10 @@ func _update_occlusion(delta: float) -> void:
 		var color := mat.albedo_color
 		color.a = roof_alpha if capture_mode else move_toward(color.a, roof_alpha, delta * 3.5)
 		mat.albedo_color = color
+	for hall in hall_sprites:
+		var color := hall.modulate
+		color.a = roof_alpha if capture_mode else move_toward(color.a, roof_alpha, delta * 3.5)
+		hall.modulate = color
 
 
 func _covers_player(point: Vector3, radius: float) -> bool:
@@ -723,14 +720,71 @@ func _profile_and_quit() -> void:
 	await _wait_frames(600)
 	var elapsed_seconds := maxf(float(Time.get_ticks_usec() - started) / 1000000.0, 0.001)
 	_measured_fps = 600.0 / elapsed_seconds
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUTPUT))
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(output_dir))
 	_write_profile()
 	print("M04.30_PROFILE PASS")
 	get_tree().quit()
 
 
+func _capture_m04_31a_and_quit() -> void:
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(output_dir))
+	_reset_demo_state()
+	await _set_viewport(Vector2i(1280, 720))
+	await _stage(Vector3(0.0, 0.8, 3.5), CAMERA_CENTER, 16.0, Vector3(0, 0, -1), "idle")
+	await _shot("01_world_center_before_or_baseline.png")
+	await _stage(Vector3(0.2, 0.8, 5.5), CAMERA_CENTER, 14.5, Vector3(0, 0, -1), "move")
+	await _shot("02_ground_path_iteration.png")
+	await _stage(HALL_POS + Vector3(3.0, 0.8, 5.8), CAMERA_CENTER, 12.0, Vector3(-1, 0, -1), "idle")
+	await _shot("03_house_center.png")
+	camera_yaw = deg_to_rad(CAMERA_MIN)
+	await _wait_frames(8)
+	await _shot("04_house_left_yaw.png")
+	camera_yaw = deg_to_rad(CAMERA_MAX)
+	await _wait_frames(8)
+	await _shot("05_house_right_yaw.png")
+	await _stage(Vector3(-7.0, 0.8, 4.0), CAMERA_CENTER, 12.0, Vector3(-1, 0, 0), "idle")
+	await _shot("06_environment_cluster.png")
+	await _stage(MOORLING_SPAWNS[0] + Vector3(-3.0, 0.8, 0.5), CAMERA_CENTER, 12.0, Vector3(1, 0, 0), "idle")
+	target_active = true
+	moorlings[0].ring.visible = true
+	await _shot("07_combat_clearing.png")
+	_apply_equipment_state("wayfarer_set")
+	level = 4
+	xp = 0
+	await _stage(Vector3(0.0, 0.8, 2.8), CAMERA_CENTER, 10.5, Vector3(0, 0, 1), "idle")
+	await _shot("08_player_equipment_idle.png")
+	await _stage(MOORLING_SPAWNS[0] + Vector3(-2.3, 0.8, 0.2), CAMERA_CENTER, 10.5, Vector3(1, 0, 0), "attack")
+	selected = 0
+	target_active = true
+	moorlings[0].ring.visible = true
+	attack_phase = 0.32
+	slash_vfx.global_position = moorlings[0].host.global_position + Vector3.UP * 1.2
+	slash_vfx.visible = true
+	await _shot("09_player_equipment_attack.png")
+	_reset_demo_state()
+	_apply_equipment_state("wayfarer_set")
+	level = 4
+	xp = 0
+	await _stage(Vector3(0.0, 0.8, 3.5), CAMERA_CENTER, 16.0, Vector3(0, 0, -1), "idle")
+	await _shot("10_world_center_final.png")
+	camera_yaw = deg_to_rad(CAMERA_MIN)
+	await _wait_frames(8)
+	await _shot("11_world_left_final.png")
+	camera_yaw = deg_to_rad(CAMERA_MAX)
+	await _wait_frames(8)
+	await _shot("12_world_right_final.png")
+	camera_yaw = deg_to_rad(CAMERA_CENTER)
+	await _wait_frames(8)
+	await _shot("13_final_gameplay_landscape.png")
+	await _set_viewport(Vector2i(720, 1280))
+	await _shot("14_final_gameplay_portrait.png")
+	_write_profile()
+	print("M04.31A_CAPTURE PASS screenshots=14")
+	get_tree().quit()
+
+
 func _capture_and_quit() -> void:
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUTPUT))
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(output_dir))
 	_reset_demo_state()
 	await _set_viewport(Vector2i(1280, 720))
 	await _stage(PLAYER_SPAWN, CAMERA_CENTER, 16.5, Vector3(0, 0, -1), "idle")
@@ -929,10 +983,10 @@ func _shot(filename: String) -> void:
 	# command-line evidence generation deterministic on both GUI and headless runs.
 	await _wait_frames(2)
 	var image := get_viewport().get_texture().get_image()
-	var path := ProjectSettings.globalize_path("%s/%s" % [OUTPUT, filename])
+	var path := ProjectSettings.globalize_path("%s/%s" % [output_dir, filename])
 	var error := image.save_png(path)
-	assert(error == OK, "M04.30 screenshot failed: %s" % path)
-	print("M04.30 screenshot saved: ", path)
+	assert(error == OK, "Spatial slice screenshot failed: %s" % path)
+	print("Spatial slice screenshot saved: ", path)
 	await _wait_frames(3)
 
 
@@ -951,7 +1005,7 @@ func _write_profile() -> void:
 		counts.meshes, counts.sprites, counts.collisions, counts.animated,
 	]
 	report += "camera_yaw_absolute=-10..80\ncamera_yaw_relative=-45..45\ncamera_pitch=34..48\ncamera_zoom=10..18\nauthoritative_snapshot_contains_camera=false\nmobile_performance_claim=false\nreal_device_test=NOT RUN\n"
-	var file := FileAccess.open(OUTPUT + "/performance.txt", FileAccess.WRITE)
+	var file := FileAccess.open(output_dir + "/performance.txt", FileAccess.WRITE)
 	if file:
 		file.store_string(report)
 
@@ -1011,6 +1065,24 @@ func _path(pos: Vector3, size: Vector2, yaw: float) -> void:
 	var mat := _material(Color("#eee0ad"), false)
 	mat.albedo_texture = load(GAME + "world/terrain/materials/cobble_repeat_256.png")
 	mat.uv1_scale = Vector3(maxf(1.0, size.x / 2.0), maxf(1.0, size.y / 2.0), 1.0)
+	item.material_override = mat
+	item.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(item)
+
+
+func _ground_art_card(path: String, pos: Vector3, size: Vector2, yaw: float) -> void:
+	var item := MeshInstance3D.new()
+	item.name = "AuthoredOrganicRoad"
+	var mesh := PlaneMesh.new()
+	mesh.size = size
+	item.mesh = mesh
+	item.position = pos
+	item.rotation_degrees.y = yaw
+	var mat := _material(Color.WHITE, false)
+	mat.albedo_texture = load(path)
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	item.material_override = mat
 	item.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(item)
