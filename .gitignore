@@ -46,6 +46,11 @@ __pycache__/
 .venv/
 venv/
 
+# Local Android export output (APKs ship via GitHub Releases)
+build/
+*.apk
+*.aab
+
 # Do NOT ignore:
 # assets/          — production assets required for the game
 # artifacts/live/  — live runtime captures

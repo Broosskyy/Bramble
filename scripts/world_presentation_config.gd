@@ -4,25 +4,28 @@ extends RefCounted
 const GAME_ROOT := "res://assets/game/"
 const LEGACY_CATALOG := "res://assets/catalog_legacy/png/"
 
-# --- Scale Master (M02.1) ---
-const SCALE_PLAYER := 0.58
-const SCALE_NPC := 0.46
-const SCALE_MONSTER_SMALL := 0.52
-const SCALE_BUILDING_SMALL := 0.92
-const SCALE_BUILDING_LARGE := 1.08
-const SCALE_TREE := 0.82
+# --- Scale Master (M04.3) ---
+# Player height is the canonical 1.0 world anchor. Source art has materially
+# different native dimensions, so these values intentionally are not equal.
+const SCALE_PLAYER := 0.38
+const SCALE_NPC := 0.34
+const SCALE_NPC_LARGE := 0.38
+const SCALE_MONSTER_SMALL := 0.37
+const SCALE_BUILDING_SMALL := 1.04
+const SCALE_BUILDING_LARGE := 1.30
+const SCALE_TREE := 0.70
 const SCALE_SHRUB := 0.58
-const SCALE_PROP_SMALL := 0.50
-const SCALE_PROP_LARGE := 0.64
+const SCALE_PROP_SMALL := 0.44
+const SCALE_PROP_LARGE := 0.58
 const SCALE_TERRAIN := 0.68
-const SCALE_ROAD := 0.74
+const SCALE_ROAD := 0.64
 const SCALE_WATER := 0.70
 const SCALE_ELEVATION := 0.78
-const SCALE_PORTAL := 0.80
+const SCALE_PORTAL := 0.72
 const TILE_OVERLAP := 1.015
 const TILE_BLEED_PX := 3.5
 
-const WORLD_MAP_BOUNDS := Rect2(-520, -320, 1420, 720)
+const WORLD_MAP_BOUNDS := Rect2(-800, -460, 2200, 1040)
 const WORLD_MAP_CELL_SIZE := 24.0
 
 # Legacy aliases used by entity scripts
@@ -32,13 +35,13 @@ const MONSTER_SCALE := SCALE_MONSTER_SMALL
 const WORLD_SPRITE_SCALE := SCALE_TERRAIN
 
 # --- World anchors ---
-const PLAYER_SPAWN := Vector2(20, 55)
-const VILLAGE_CAMERA_FOCUS := Vector2(20, 55)
-const WILDS_CAMERA_FOCUS := Vector2(620, 130)
-const COMBAT_CAMERA_FOCUS := Vector2(620, 120)
-const WORLD_FILL_ORIGIN := Vector2(-1680, -1180)
-const WORLD_FILL_COLS := 22
-const WORLD_FILL_ROWS := 16
+const PLAYER_SPAWN := Vector2(-20, 225)
+const VILLAGE_CAMERA_FOCUS := Vector2(-20, 150)
+const WILDS_CAMERA_FOCUS := Vector2(820, 150)
+const COMBAT_CAMERA_FOCUS := Vector2(1110, 160)
+const WORLD_FILL_ORIGIN := Vector2(-980, -680)
+const WORLD_FILL_COLS := 15
+const WORLD_FILL_ROWS := 10
 
 const HEIGHT_H1_OFFSET := 56.0
 const HEIGHT_H2_OFFSET := 112.0
@@ -48,7 +51,7 @@ const CAMERA_OFFSET := Vector2(0, -64)
 const CAMERA_SMOOTH_SPEED := 7.0
 const CAMERA_ZOOM_LANDSCAPE := 0.94
 const CAMERA_ZOOM_PORTRAIT := 1.06
-const CAMERA_LIMITS := Rect2(-1600, -1100, 3200, 2200)
+const CAMERA_LIMITS := Rect2(-920, -620, 2480, 1480)
 
 const OCCLUSION_FADE := 0.16
 const OCCLUSION_FADE_SPEED := 9.0

@@ -253,7 +253,7 @@ y_sort_enabled = true
 [node name="Collisions" type="Node2D" parent="Village"]
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
-position = Vector2(-120,180)
+position = Vector2(-20,225)
 z_index = 20
 script = ExtResource("3")
 

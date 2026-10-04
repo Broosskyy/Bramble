@@ -21,6 +21,7 @@ Authority: execute top-to-bottom. Counts are authored output files, not content-
 - **Sheet policy / maximum / extraction:** no production sheet; source review sheet may contain at most 16 aligned cells; export each PNG directly with no crop or rescale.
 - **Target paths:** `characters/base/male/actions/melee/<direction>/<windup|commit>.png`; `characters/equipment/armor/wayfarer/actions/melee/<direction>/<windup|commit>.png`; `data/spatial/player_actions/wayfarer_melee_attack.json`.
 - **Dependencies / visual spec / card:** canonical male 8-direction body; current Wayfarer armor/helmet; canonical short sword; `VS_CHAR_01`; cards `CC_001A-C`.
+- **Expanded spec:** `docs/production/batches/BATCH_001_CREATION_CARDS.md` and `docs/production/batches/BATCH_001_IMAGE_GENERATION_HANDOFF.md`.
 - **Acceptance:** exactly 16 transparent PNGs + one valid JSON; body/armor pixels align; pivots identical; front/right commit sword in front; back starts behind; no new helmet sword recovery shadow VFX or diagonal art; normal-zoom landscape/portrait silhouette passes.
 
 ### CC_001A — Male Wayfarer melee body

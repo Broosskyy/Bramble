@@ -185,6 +185,7 @@ def m04_capture() -> None:
 
 M04_1_DIR = ROOT / "artifacts" / "m04_1"
 M04_2_DIR = ROOT / "artifacts" / "m04_2"
+M04_3_DIR = ROOT / "artifacts" / "m04_3"
 
 
 def m04_1_capture() -> None:
@@ -257,6 +258,49 @@ def m04_2_capture() -> None:
         wait_for_png(M04_2_DIR / name)
         validate_png(M04_2_DIR / name, name)
     print("M04.2 visual capture: PASS")
+
+
+def m04_3_capture() -> None:
+    M04_3_DIR.mkdir(parents=True, exist_ok=True)
+    result = run_godot(["--m04_3-capture"], timeout=1200)
+    out = result.stdout + result.stderr
+    if result.returncode != 0:
+        raise DeliveryError(f"M04.3 capture failed (exit {result.returncode}):\n{out}")
+    expected = [
+        "01_spawn_landscape.png",
+        "02_spawn_portrait.png",
+        "03_player_scale_landscape.png",
+        "04_player_scale_portrait.png",
+        "05_village_landscape.png",
+        "06_village_portrait.png",
+        "07_village_center.png",
+        "08_village_main_route.png",
+        "09_lina_interaction.png",
+        "10_ferro_interaction.png",
+        "11_building_scale.png",
+        "12_prop_scale.png",
+        "13_vegetation_scale.png",
+        "14_transition_landscape.png",
+        "15_transition_portrait.png",
+        "16_wilds_entry.png",
+        "17_wilds_combat_space_landscape.png",
+        "18_wilds_combat_space_portrait.png",
+        "19_combat_active_landscape.png",
+        "20_combat_active_portrait.png",
+        "21_target_readability.png",
+        "22_canopy_normal.png",
+        "23_canopy_faded.png",
+        "24_canopy_combat.png",
+        "25_landmark_hierarchy.png",
+        "26_clean_world_landscape.png",
+        "27_clean_world_portrait.png",
+        "28_final_gameplay_landscape.png",
+        "29_final_gameplay_portrait.png",
+    ]
+    for name in expected:
+        wait_for_png(M04_3_DIR / name)
+        validate_png(M04_3_DIR / name, name)
+    print("M04.3 visual capture: PASS")
 
 
 def measure_snapshot_payload() -> int:
@@ -434,7 +478,16 @@ def main() -> int:
         if args.milestone.startswith("m03.1"):
             m03_1_capture()
             m03_1_multiplayer_e2e()
-        if args.milestone.replace("_", ".").startswith("m04.2"):
+        if args.milestone.replace("_", ".").startswith("m04.3"):
+            m04_3_capture()
+            snapshot_bytes = measure_snapshot_payload()
+            M04_3_DIR.mkdir(parents=True, exist_ok=True)
+            (M04_3_DIR / "snapshot_payload.txt").write_text(
+                f"snapshot_lite_bytes={snapshot_bytes}\n",
+                encoding="utf-8",
+            )
+            m03_1_multiplayer_e2e()
+        elif args.milestone.replace("_", ".").startswith("m04.2"):
             m04_2_capture()
             snapshot_bytes = measure_snapshot_payload()
             M04_2_DIR.mkdir(parents=True, exist_ok=True)

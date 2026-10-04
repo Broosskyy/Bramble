@@ -69,6 +69,8 @@ func _ready() -> void:
 		call_deferred("_capture_m04_1", args)
 	elif _has_arg("--m04_2-capture"):
 		call_deferred("_capture_m04_2", args)
+	elif _has_arg("--m04_3-capture"):
+		call_deferred("_capture_m04_3", args)
 	elif _has_arg("--measure-snapshot"):
 		call_deferred("_measure_snapshot")
 	elif _arg_value("--m03_1-e2e", "") != "":
@@ -1043,6 +1045,134 @@ func _capture_m04_2(_args: PackedStringArray) -> void:
 	await _wait_frames(3)
 	_shot_m04_2("25_navigation_portrait.png")
 	_shot_m04_2("28_final_gameplay_portrait.png")
+	get_tree().quit()
+
+func _shot_m04_3(filename: String) -> void:
+	var img := get_viewport().get_texture().get_image()
+	var path := ProjectSettings.globalize_path("res://artifacts/m04_3/%s" % filename)
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+	img.save_png(path)
+	print("M04.3 screenshot saved: ", path)
+
+func _capture_m04_3(_args: PackedStringArray) -> void:
+	await _wait_frames(10)
+	_ensure_dir("res://artifacts/m04_3/")
+	var hud = get_tree().get_first_node_in_group("production_hud")
+	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
+	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	var occlusion = get_tree().get_first_node_in_group("occlusion_manager")
+	var player := get_node_or_null("Player") as BramblePlayerController
+
+	await _await_orientation(false)
+	_move_player(BrambleWorldPresentationConfig.PLAYER_SPAWN)
+	await _wait_frames(8)
+	_shot_m04_3("01_spawn_landscape.png")
+	_shot_m04_3("03_player_scale_landscape.png")
+	_shot_m04_3("05_village_landscape.png")
+
+	await _await_orientation(true)
+	await _wait_frames(4)
+	_shot_m04_3("02_spawn_portrait.png")
+	_shot_m04_3("04_player_scale_portrait.png")
+	_shot_m04_3("06_village_portrait.png")
+
+	await _await_orientation(false)
+	_move_player(BrambleVisualMasterWorldBuilder.FOUNTAIN_POS + Vector2(0, 120))
+	await _wait_frames(7)
+	_shot_m04_3("07_village_center.png")
+	_move_player(Vector2(380, 145))
+	await _wait_frames(7)
+	_shot_m04_3("08_village_main_route.png")
+
+	_move_player(BrambleVisualMasterWorldBuilder.LINA_POS + Vector2(-72, 38))
+	await _wait_frames(6)
+	_shot_m04_3("09_lina_interaction.png")
+	_move_player(BrambleVisualMasterWorldBuilder.FERRO_POS + Vector2(76, 42))
+	await _wait_frames(6)
+	_shot_m04_3("10_ferro_interaction.png")
+
+	_move_player(Vector2(-180, 30))
+	await _wait_frames(7)
+	_shot_m04_3("11_building_scale.png")
+	_move_player(Vector2(-390, 225))
+	await _wait_frames(7)
+	_shot_m04_3("12_prop_scale.png")
+	_move_player(Vector2(-650, -30))
+	await _wait_frames(7)
+	_shot_m04_3("13_vegetation_scale.png")
+
+	_move_player(Vector2(600, 165))
+	await _wait_frames(7)
+	_shot_m04_3("14_transition_landscape.png")
+	await _await_orientation(true)
+	await _wait_frames(4)
+	_shot_m04_3("15_transition_portrait.png")
+
+	await _await_orientation(false)
+	_move_player(BrambleWorldPresentationConfig.WILDS_CAMERA_FOCUS)
+	await _wait_frames(8)
+	_shot_m04_3("16_wilds_entry.png")
+	_move_player(Vector2(900, 210))
+	if targeting:
+		targeting.clear_target()
+	await _wait_frames(8)
+	_shot_m04_3("17_wilds_combat_space_landscape.png")
+	await _await_orientation(true)
+	await _wait_frames(4)
+	_shot_m04_3("18_wilds_combat_space_portrait.png")
+
+	await _await_orientation(false)
+	var enemy := _nearest_enemy()
+	if enemy and targeting:
+		_move_player(enemy.global_position + Vector2(-86, 18))
+		targeting.set_target(enemy)
+	await _wait_frames(8)
+	_shot_m04_3("19_combat_active_landscape.png")
+	_shot_m04_3("21_target_readability.png")
+	if runtime and player and targeting and enemy:
+		var skill_result: Dictionary = runtime.resolve_skill(player, 0, targeting.get_target_entity_id())
+		if not bool(skill_result.get("ok", false)):
+			push_error("M04.3 skill staging failed: %s" % skill_result)
+			get_tree().quit(1)
+			return
+	await _wait_frames(3)
+	await _await_orientation(true)
+	_shot_m04_3("20_combat_active_portrait.png")
+
+	await _await_orientation(false)
+	if targeting:
+		targeting.clear_target()
+	if occlusion:
+		occlusion.enabled = false
+	_move_player(Vector2(1240, 250))
+	await _wait_frames(8)
+	_shot_m04_3("22_canopy_normal.png")
+	if occlusion:
+		occlusion.enabled = true
+	await _wait_frames(12)
+	_shot_m04_3("23_canopy_faded.png")
+	enemy = _nearest_enemy()
+	if enemy and targeting:
+		targeting.set_target(enemy)
+	await _wait_frames(5)
+	_shot_m04_3("24_canopy_combat.png")
+
+	_move_player(Vector2(650, 175))
+	if targeting:
+		targeting.clear_target()
+	await _wait_frames(8)
+	_shot_m04_3("25_landmark_hierarchy.png")
+	_move_player(BrambleWorldPresentationConfig.PLAYER_SPAWN)
+	await _wait_frames(8)
+	_shot_m04_3("26_clean_world_landscape.png")
+	_shot_m04_3("28_final_gameplay_landscape.png")
+
+	await _await_orientation(true)
+	await _wait_frames(5)
+	_shot_m04_3("27_clean_world_portrait.png")
+	_shot_m04_3("29_final_gameplay_portrait.png")
+	if hud and hud.level_up_root:
+		hud.level_up_root.visible = false
 	get_tree().quit()
 
 func _measure_snapshot() -> void:

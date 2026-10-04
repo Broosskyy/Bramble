@@ -7,8 +7,10 @@ extends Node2D
 @export var asset_id := "npc_merchant"
 @export var use_production_assets := false
 @export var production_texture_path := ""
+@export var presentation_scale := 1.0
 
 var _pulse := 0.0
+var _label_top := -120.0
 
 func _ready() -> void:
 	add_to_group("interactable")
@@ -16,8 +18,10 @@ func _ready() -> void:
 	sprite.name = "Sprite"
 	if use_production_assets and production_texture_path != "":
 		sprite.texture = BrambleWorldPresentationConfig.game_tex(production_texture_path)
-		sprite.scale = Vector2.ONE * BrambleWorldPresentationConfig.NPC_SCALE
+		sprite.scale = Vector2.ONE * BrambleWorldPresentationConfig.NPC_SCALE * presentation_scale
 		sprite.position = Vector2(0, -62)
+		if sprite.texture:
+			_label_top = sprite.position.y - sprite.texture.get_height() * sprite.scale.y * 0.5
 	else:
 		sprite.texture = load("res://assets/catalog_legacy/png/%s.png" % asset_id)
 		sprite.scale = Vector2.ONE * 0.20
@@ -32,14 +36,14 @@ func _ready() -> void:
 	var name_label := Label.new()
 	name_label.name = "Name"
 	name_label.text = npc_name
-	name_label.position = Vector2(-48, -120)
+	name_label.position = Vector2(-48, _label_top - 24)
 	name_label.add_theme_font_size_override("font_size", 15)
 	name_label.add_theme_color_override("font_color", Color("#fff1bd"))
 	add_child(name_label)
 
 	var role_label := Label.new()
 	role_label.text = npc_role
-	role_label.position = Vector2(-45, -98)
+	role_label.position = Vector2(-45, _label_top - 4)
 	role_label.add_theme_font_size_override("font_size", 11)
 	role_label.add_theme_color_override("font_color", Color("#b9d9aa"))
 	add_child(role_label)
@@ -48,7 +52,7 @@ func _ready() -> void:
 		var quest := Label.new()
 		quest.name = "QuestMarker"
 		quest.text = "!"
-		quest.position = Vector2(-7, -154)
+		quest.position = Vector2(-7, _label_top - 56)
 		quest.add_theme_font_size_override("font_size", 27)
 		quest.add_theme_color_override("font_color", Color("#ffd35a"))
 		add_child(quest)
