@@ -95,18 +95,7 @@ func _sample_cell(world_pos: Vector2) -> int:
 	var key := "%d,%d" % [gx, gy]
 	if _grid.has(key):
 		return int(_grid[key])
-	var best: int = Cell.MEADOW
-	var best_dist: float = INF
-	for grid_key: String in _grid.keys():
-		var parts: PackedStringArray = grid_key.split(",")
-		if parts.size() != 2:
-			continue
-		var cell_pos := Vector2(float(parts[0]) * cell_size, float(parts[1]) * cell_size)
-		var dist: float = world_pos.distance_squared_to(cell_pos)
-		if dist < best_dist:
-			best_dist = dist
-			best = int(_grid[grid_key])
-	return best
+	return Cell.MEADOW
 
 func _draw_marker(img: Image, world_pos: Vector2, color: Color, radius: int) -> void:
 	var uv := world_to_uv(world_pos)

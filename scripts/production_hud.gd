@@ -49,6 +49,11 @@ var _targeting_service = null
 var _runtime_service = null
 var _character_service = null
 
+const STICK_RADIUS := 52.0
+const STICK_DEADZONE := 0.18
+var _stick_finger_id := -1
+var _stick_pressed := {"move_left": false, "move_right": false, "move_up": false, "move_down": false}
+
 func _ready() -> void:
 	print("BRAMBLE production HUD ready")
 	add_to_group("production_hud")
@@ -175,9 +180,11 @@ func _build_ui() -> void:
 	minimap_root.add_child(mini_bg)
 
 	touch_root = _fixed_panel(HUD_JOY_SIZE)
+	touch_root.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(touch_root)
 	var joy := _scaled_tex("ui/hud/kit62_virtual_joystick.png", HUD_JOY_SIZE)
 	joy.name = "JoystickBase"
+	joy.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	touch_root.add_child(joy)
 	for spec in [["Up", Vector2(46, 0)], ["Down", Vector2(46, 92)], ["Left", Vector2(0, 46)], ["Right", Vector2(92, 46)]]:
 		var b := Button.new()
@@ -185,6 +192,7 @@ func _build_ui() -> void:
 		b.position = spec[1]
 		b.size = Vector2(44, 44)
 		b.modulate = Color(1, 1, 1, 0.22)
+		b.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		touch_root.add_child(b)
 
 	combat_root = Control.new()
@@ -353,6 +361,7 @@ func _styled_bar(pos: Vector2, size: Vector2, color: Color) -> ProgressBar:
 	return bar
 
 func _bind_touch() -> void:
+	touch_root.gui_input.connect(_on_touch_root_gui_input)
 	_bind_btn(touch_root.get_node("Up"), "move_up")
 	_bind_btn(touch_root.get_node("Down"), "move_down")
 	_bind_btn(touch_root.get_node("Left"), "move_left")
@@ -369,7 +378,59 @@ func _bind_btn(button: BaseButton, action: String) -> void:
 	button.button_down.connect(func(): Input.action_press(action))
 	button.button_up.connect(func(): Input.action_release(action))
 
+func _on_touch_root_gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			if _stick_finger_id == -1:
+				_stick_finger_id = event.index
+				_apply_stick_vector(_stick_local_from_event(event))
+		elif event.index == _stick_finger_id:
+			_stick_finger_id = -1
+			_apply_stick_vector(Vector2.ZERO)
+	elif event is InputEventScreenDrag and event.index == _stick_finger_id:
+		_apply_stick_vector(_stick_local_from_event(event))
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_stick_finger_id = 0
+			_apply_stick_vector(_stick_local_from_event(event))
+		else:
+			_stick_finger_id = -1
+			_apply_stick_vector(Vector2.ZERO)
+	elif event is InputEventMouseMotion and _stick_finger_id == 0 and (event.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
+		_apply_stick_vector(_stick_local_from_event(event))
+
+func _stick_local_from_event(event: InputEvent) -> Vector2:
+	var center := touch_root.size * 0.5
+	var local := touch_root.get_global_transform_with_canvas().affine_inverse() * event.position
+	var delta := local - center
+	if delta.length() > STICK_RADIUS and STICK_RADIUS > 0.0:
+		delta = delta.normalized() * STICK_RADIUS
+	return delta / STICK_RADIUS if STICK_RADIUS > 0.0 else Vector2.ZERO
+
+func _apply_stick_vector(vec: Vector2) -> void:
+	_set_stick_action("move_right", vec.x > STICK_DEADZONE)
+	_set_stick_action("move_left", vec.x < -STICK_DEADZONE)
+	_set_stick_action("move_down", vec.y > STICK_DEADZONE)
+	_set_stick_action("move_up", vec.y < -STICK_DEADZONE)
+
+func _set_stick_action(action: String, pressed: bool) -> void:
+	if _stick_pressed.get(action, false) == pressed:
+		return
+	_stick_pressed[action] = pressed
+	if pressed:
+		Input.action_press(action)
+	else:
+		Input.action_release(action)
+
+func _release_all_stick_actions() -> void:
+	for action in _stick_pressed.keys():
+		if _stick_pressed[action]:
+			Input.action_release(action)
+			_stick_pressed[action] = false
+	_stick_finger_id = -1
+
 func _apply_layout(mode: String) -> void:
+	_release_all_stick_actions()
 	var portrait := mode == "portrait"
 	var vp := get_viewport().get_visible_rect().size
 	var m := BrambleWorldPresentationConfig.HUD_SAFE_MARGIN
