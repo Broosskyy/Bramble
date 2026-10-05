@@ -11,7 +11,17 @@ const CAT := "res://assets/catalog_legacy/png/"
 @onready var collisions: Node2D = $Collisions
 @onready var portals: Node2D = $Portals
 
+var _built := false
+
 func _ready() -> void:
+	if not visible or process_mode == Node.PROCESS_MODE_DISABLED:
+		return
+	build_on_demand()
+
+func build_on_demand() -> void:
+	if _built:
+		return
+	_built = true
 	_build_ground()
 	_build_roads()
 	_build_village()
@@ -20,7 +30,10 @@ func _ready() -> void:
 	_build_portals()
 
 func _tex(id: String) -> Texture2D:
-	return load(CAT + id + ".png") as Texture2D
+	var path := CAT + id + ".png"
+	if not ResourceLoader.exists(path):
+		return null
+	return load(path) as Texture2D
 
 func _sprite(parent: Node, id: String, pos: Vector2, scale_value: float, z := 0) -> Sprite2D:
 	var sp := Sprite2D.new()

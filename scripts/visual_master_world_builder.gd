@@ -318,6 +318,7 @@ func _build_portals() -> void:
 	var p := BramblePortal.new()
 	p.portal_name = "Nebelbruch"
 	p.destination = PORTAL_LANDING
+	p.show_marker_visual = false
 	p.position = PORTAL_POS
 	portals.add_child(p)
 

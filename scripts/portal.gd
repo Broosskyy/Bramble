@@ -3,13 +3,17 @@ extends Node2D
 
 @export var portal_name := "Östliche Felder"
 @export var destination := Vector2(900, -700)
+@export var show_marker_visual := true
 
 func _ready() -> void:
 	add_to_group("interactable")
-	var ring := Sprite2D.new()
-	ring.texture = load("res://assets/catalog_legacy/png/prop_signpost.png")
-	ring.scale = Vector2.ONE * 0.25
-	add_child(ring)
+	if show_marker_visual:
+		var marker_path := "res://assets/catalog_legacy/png/prop_signpost.png"
+		if ResourceLoader.exists(marker_path):
+			var ring := Sprite2D.new()
+			ring.texture = load(marker_path)
+			ring.scale = Vector2.ONE * 0.25
+			add_child(ring)
 
 	var label := Label.new()
 	label.text = "→ " + portal_name

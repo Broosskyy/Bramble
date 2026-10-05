@@ -23,7 +23,9 @@ func _ready() -> void:
 		if sprite.texture:
 			_label_top = sprite.position.y - sprite.texture.get_height() * sprite.scale.y * 0.5
 	else:
-		sprite.texture = load("res://assets/catalog_legacy/png/%s.png" % asset_id)
+		var legacy_path := "res://assets/catalog_legacy/png/%s.png" % asset_id
+		if ResourceLoader.exists(legacy_path):
+			sprite.texture = load(legacy_path)
 		sprite.scale = Vector2.ONE * 0.20
 		sprite.position = Vector2(0, -28)
 	add_child(sprite)

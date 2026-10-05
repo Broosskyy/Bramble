@@ -75,7 +75,9 @@ func is_combat_alive() -> bool:
 func _setup_legacy_visual() -> void:
 	var sprite := Sprite2D.new()
 	sprite.name = "Sprite"
-	sprite.texture = load("res://assets/catalog_legacy/png/%s.png" % asset_id)
+	var legacy_path := "res://assets/catalog_legacy/png/%s.png" % asset_id
+	if ResourceLoader.exists(legacy_path):
+		sprite.texture = load(legacy_path)
 	sprite.scale = Vector2.ONE * 0.18
 	sprite.position = Vector2(0, -24)
 	add_child(sprite)

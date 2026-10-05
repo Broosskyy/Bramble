@@ -16,16 +16,28 @@ func _ready() -> void:
 	add_child(shape)
 
 	var sprite := Sprite2D.new()
-	if item_id == "herb":
-		sprite.texture = load("res://assets/catalog_legacy/png/prop_herb_bundle.png") if ResourceLoader.exists("res://assets/catalog_legacy/png/prop_herb_bundle.png") else load("res://assets/catalog_legacy/png/prop_chest_closed.png")
-	elif item_id == "ore":
-		sprite.texture = load("res://assets/catalog_legacy/png/prop_ore_chunk.png") if ResourceLoader.exists("res://assets/catalog_legacy/png/prop_ore_chunk.png") else load("res://assets/catalog_legacy/png/prop_chest_closed.png")
+	var visual_path := _production_visual_path()
+	if ResourceLoader.exists(visual_path):
+		sprite.texture = load(visual_path)
 	else:
-		sprite.texture = load("res://assets/catalog_legacy/png/prop_chest_closed.png")
-	sprite.scale = Vector2.ONE * 0.09
+		var legacy_path := "res://assets/catalog_legacy/png/prop_chest_closed.png"
+		if ResourceLoader.exists(legacy_path):
+			sprite.texture = load(legacy_path)
+	sprite.scale = Vector2.ONE * 0.22
 	add_child(sprite)
 	body_entered.connect(_on_body)
 	input_event.connect(_on_input_event)
+
+func _production_visual_path() -> String:
+	match item_id:
+		"herb":
+			return "res://assets/game/items/misc/berries.png"
+		"ore":
+			return "res://assets/game/items/misc/blue_crystal.png"
+		"boss_token":
+			return "res://assets/game/items/misc/boss_token.png"
+		_:
+			return "res://assets/game/items/misc/supply_pouch.png"
 
 func _process(delta: float) -> void:
 	life -= delta

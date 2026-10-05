@@ -106,7 +106,10 @@ func _render_page() -> void:
 		texrect.custom_minimum_size = Vector2(140,110)
 		texrect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		texrect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		var tex := load("res://" + String(e.get("file",""))) as Texture2D
+		var asset_path := "res://" + String(e.get("file", ""))
+		var tex: Texture2D = null
+		if ResourceLoader.exists(asset_path):
+			tex = load(asset_path) as Texture2D
 		if tex:
 			texrect.texture = tex
 		cell.add_child(texrect)

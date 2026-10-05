@@ -42,6 +42,8 @@ func _ready() -> void:
 	if legacy:
 		legacy.visible = debug_legacy_gallery
 		legacy.process_mode = Node.PROCESS_MODE_INHERIT if debug_legacy_gallery else Node.PROCESS_MODE_DISABLED
+		if debug_legacy_gallery and legacy.has_method("build_on_demand"):
+			legacy.call("build_on_demand")
 	if production:
 		production.visible = not debug_legacy_gallery
 	var player := get_node_or_null("Player") as Node2D
@@ -84,6 +86,8 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F9:
+		if OS.has_feature("web_mobile_gate"):
+			return
 		debug_legacy_gallery = not debug_legacy_gallery
 		_ready()
 
@@ -225,12 +229,14 @@ func _move_player(pos: Vector2) -> void:
 
 func _wait_seconds(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
-	await RenderingServer.frame_post_draw
+	if DisplayServer.get_name() != "headless":
+		await RenderingServer.frame_post_draw
 
 func _wait_frames(count: int) -> void:
 	for _i in range(count):
 		await get_tree().process_frame
-	await RenderingServer.frame_post_draw
+	if DisplayServer.get_name() != "headless":
+		await RenderingServer.frame_post_draw
 
 func _ensure_dir(rel: String) -> void:
 	var path := ProjectSettings.globalize_path(rel)

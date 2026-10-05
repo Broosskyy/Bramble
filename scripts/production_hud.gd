@@ -400,12 +400,23 @@ func _on_touch_root_gui_input(event: InputEvent) -> void:
 		_apply_stick_vector(_stick_local_from_event(event))
 
 func _stick_local_from_event(event: InputEvent) -> Vector2:
-	var center := touch_root.size * 0.5
-	var local := touch_root.get_global_transform_with_canvas().affine_inverse() * event.position
-	var delta := local - center
-	if delta.length() > STICK_RADIUS and STICK_RADIUS > 0.0:
-		delta = delta.normalized() * STICK_RADIUS
-	return delta / STICK_RADIUS if STICK_RADIUS > 0.0 else Vector2.ZERO
+	var screen_position := Vector2.ZERO
+	if event is InputEventScreenTouch:
+		screen_position = event.position
+	elif event is InputEventScreenDrag:
+		screen_position = event.position
+	elif event is InputEventMouseButton:
+		screen_position = event.position
+	elif event is InputEventMouseMotion:
+		screen_position = event.position
+	else:
+		return Vector2.ZERO
+	var center: Vector2 = touch_root.size * 0.5
+	var local_position: Vector2 = touch_root.get_global_transform_with_canvas().affine_inverse() * screen_position
+	var stick_delta: Vector2 = local_position - center
+	if stick_delta.length() > STICK_RADIUS and STICK_RADIUS > 0.0:
+		stick_delta = stick_delta.normalized() * STICK_RADIUS
+	return stick_delta / STICK_RADIUS if STICK_RADIUS > 0.0 else Vector2.ZERO
 
 func _apply_stick_vector(vec: Vector2) -> void:
 	_set_stick_action("move_right", vec.x > STICK_DEADZONE)

@@ -64,6 +64,8 @@ static func game_tex(relative_path: String) -> Texture2D:
 	var path := relative_path
 	if not path.begins_with("res://"):
 		path = GAME_ROOT + relative_path.trim_prefix("/")
+	if not ResourceLoader.exists(path):
+		return null
 	return load(path) as Texture2D
 
 static func tile_step(path: String, scale_value: float) -> float:
