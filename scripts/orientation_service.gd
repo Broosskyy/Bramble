@@ -9,31 +9,41 @@ const LANDSCAPE_CANVAS := Vector2i(1280, 720)
 const PORTRAIT_CANVAS := Vector2i(720, 1280)
 
 var mode := Mode.LANDSCAPE
+var _refresh_pending := false
 
 func _ready() -> void:
 	add_to_group("orientation_service")
-	get_viewport().size_changed.connect(_refresh)
+	get_viewport().size_changed.connect(_queue_refresh)
 	call_deferred("force_refresh")
 
 func force_refresh() -> void:
+	_apply_mode_from_size(true)
+
+func _queue_refresh() -> void:
+	if _refresh_pending:
+		return
+	_refresh_pending = true
+	call_deferred("_finish_refresh")
+
+func _finish_refresh() -> void:
+	_refresh_pending = false
+	await get_tree().process_frame
+	_apply_mode_from_size(false)
+
+func _apply_mode_from_size(force_emit: bool) -> void:
 	var size := _current_size()
-	mode = Mode.PORTRAIT if size.y > size.x else Mode.LANDSCAPE
+	var next := Mode.PORTRAIT if size.y > size.x else Mode.LANDSCAPE
+	var changed := next != mode
+	mode = next
 	_apply_logical_canvas()
-	orientation_changed.emit(mode_name())
+	if changed or force_emit:
+		orientation_changed.emit(mode_name())
 
 func _current_size() -> Vector2i:
 	var win := get_window()
 	if win and win.size.x > 0 and win.size.y > 0:
 		return win.size
 	return Vector2i(get_viewport().get_visible_rect().size)
-
-func _refresh() -> void:
-	var size := _current_size()
-	var next := Mode.PORTRAIT if size.y > size.x else Mode.LANDSCAPE
-	if next != mode:
-		mode = next
-		_apply_logical_canvas()
-		orientation_changed.emit(mode_name())
 
 func _apply_logical_canvas() -> void:
 	var window := get_window()

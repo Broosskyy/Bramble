@@ -6,8 +6,11 @@ extends Control
 var _texture_rect: TextureRect
 var _image_tex: ImageTexture
 var _refresh_timer := 0.0
+var _refresh_interval := 0.12
 
 func _ready() -> void:
+	if OS.has_feature("mobile"):
+		_refresh_interval = 0.4
 	_texture_rect = TextureRect.new()
 	_texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_texture_rect.stretch_mode = TextureRect.STRETCH_SCALE
@@ -20,7 +23,7 @@ func _process(delta: float) -> void:
 	_refresh_timer -= delta
 	if _refresh_timer > 0.0:
 		return
-	_refresh_timer = 0.12
+	_refresh_timer = _refresh_interval
 	_refresh()
 
 func _refresh() -> void:
