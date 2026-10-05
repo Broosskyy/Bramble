@@ -36,18 +36,7 @@ jobs:
       - name: Install Android NDK for Godot
         run: sdkmanager "ndk;23.2.8568313"
 
-      - name: Create debug keystore
-        run: |
-          mkdir -p "$HOME/.android"
-          keytool -genkeypair -v \
-            -keystore "$HOME/.android/debug.keystore" \
-            -storepass android \
-            -alias androiddebugkey \
-            -keypass android \
-            -keyalg RSA -keysize 2048 -validity 10000 \
-            -dname "CN=Android Debug,O=Android,C=US"
-
-      - name: Import and export APK
+      - name: Export APK
         env:
           ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
         run: |
