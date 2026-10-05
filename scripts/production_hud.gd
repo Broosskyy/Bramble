@@ -401,8 +401,8 @@ func _on_touch_root_gui_input(event: InputEvent) -> void:
 
 func _stick_local_from_event(event: InputEvent) -> Vector2:
 	var center := touch_root.size * 0.5
-	var local := touch_root.get_global_transform_with_canvas().affine_inverse() * event.position
-	var delta := local - center
+	var local: Vector2 = touch_root.get_global_transform_with_canvas().affine_inverse() * event.position
+	var delta: Vector2 = local - center
 	if delta.length() > STICK_RADIUS and STICK_RADIUS > 0.0:
 		delta = delta.normalized() * STICK_RADIUS
 	return delta / STICK_RADIUS if STICK_RADIUS > 0.0 else Vector2.ZERO
