@@ -68,7 +68,7 @@ func _activate() -> void:
 	_active = true
 
 func is_active() -> bool:
-	return _active and visible
+	return _active
 
 func camera_yaw() -> float:
 	return _yaw
@@ -211,11 +211,11 @@ func _build_environment() -> void:
 
 	camera = Camera3D.new()
 	camera.name = "HybridCamera3D"
-	camera.current = true
 	camera.fov = 46.0
 	camera.near = 0.1
 	camera.far = 120.0
 	add_child(camera)
+	camera.make_current()
 
 func _build_world_geometry() -> void:
 	_static_root = Node3D.new()
