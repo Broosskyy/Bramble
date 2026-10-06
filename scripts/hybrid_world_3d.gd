@@ -5,16 +5,27 @@ extends Node3D
 # Gameplay/authority keeps using the existing planar Vector2 simulation.
 # This node is presentation only: simulation X/Y maps to 3D X/Z and Y is elevation.
 
+# Keep the same planar-to-spatial contract as Kein Name:
+# 100 simulation units == 1 rendered metre.
 const WORLD_SCALE := 0.01
-const MIN_CAMERA_DISTANCE := 8.8
-const MAX_CAMERA_DISTANCE := 21.0
-const MIN_PITCH := deg_to_rad(18.0)
-const MAX_PITCH := deg_to_rad(76.0)
-const DEFAULT_PITCH := deg_to_rad(50.0)
-const DEFAULT_DISTANCE := 14.8
-const PLAYER_BILLBOARD_PIXEL_SIZE := 0.0043
-const ENEMY_BILLBOARD_PIXEL_SIZE := 0.0045
-const NPC_BILLBOARD_PIXEL_SIZE := 0.0042
+
+# Direct port of Kein Name's HybridCameraController defaults.
+const MIN_CAMERA_DISTANCE := 9.5
+const MAX_CAMERA_DISTANCE := 22.0
+const MIN_PITCH := deg_to_rad(16.0)
+const MAX_PITCH := deg_to_rad(78.0)
+const DEFAULT_PITCH := deg_to_rad(52.0)
+const DEFAULT_DISTANCE := 16.8
+const CAMERA_FOV := 48.0
+
+# Character sizes are authored in world metres, never raw source pixels.
+# Kein Name's hero presentation uses a 2.45 m world-space sprite.
+const PLAYER_WORLD_HEIGHT := 2.45
+const NPC_WORLD_HEIGHT := 2.10
+const ENEMY_WORLD_HEIGHT := 2.35
+const LOOT_WORLD_HEIGHT := 0.70
+const PORTAL_WORLD_HEIGHT := 3.80
+const VISUAL_GROUND_MIN_SIZE := Vector2(34.0, 30.0)
 
 var camera: Camera3D
 var _camera_target := Vector3.ZERO
@@ -27,9 +38,13 @@ var _desired_camera_distance := DEFAULT_DISTANCE
 
 var _player: CharacterBody2D
 var _player_proxy: Sprite3D
+var _player_shadow: MeshInstance3D
+var _player_ground_ring: MeshInstance3D
 var _entity_proxies: Dictionary = {}
 var _static_root: Node3D
 var _dynamic_root: Node3D
+var _last_player_world_direction := Vector2(0, 1)
+var _player_view_direction := "front"
 
 var _touches: Dictionary = {}
 var _last_pinch_distance := -1.0
@@ -40,7 +55,7 @@ func _ready() -> void:
 	add_to_group("hybrid_world_3d")
 	_build_environment()
 	_build_world_geometry()
-	_build_static_billboards()
+	_build_static_world()
 	_build_dynamic_root()
 	call_deferred("_activate")
 	set_process(true)
@@ -60,8 +75,9 @@ func _activate() -> void:
 	var old_visual := _player.get_node_or_null("Visual") as CanvasItem
 	if old_visual:
 		old_visual.visible = false
+	_hide_2d_source_presentation()
 	_ensure_player_proxy()
-	_camera_target = simulation_to_world(_player.global_position, 0.75)
+	_camera_target = simulation_to_world(_player.global_position, 0.72)
 	var desired := _desired_camera_position(_camera_target)
 	camera.global_position = desired
 	camera.look_at(_camera_target, Vector3.UP)
@@ -120,11 +136,13 @@ func _process(delta: float) -> void:
 	_update_camera(delta)
 
 func _update_camera(delta: float) -> void:
-	var player_world := simulation_to_world(_player.global_position, 0.78)
+	var player_world := simulation_to_world(_player.global_position, 0.72)
 	var sim_velocity := _player.velocity
 	var look_ahead := Vector3.ZERO
-	if sim_velocity.length() > 8.0:
-		look_ahead = Vector3(sim_velocity.x, 0.0, sim_velocity.y).normalized() * minf(1.6, sim_velocity.length() * WORLD_SCALE * 0.34)
+	# Kein Name uses velocity * .00072. Preserve that rather than inventing
+	# a normalized camera offset; slow and fast movement then compose naturally.
+	if sim_velocity.length() > 10.0:
+		look_ahead = Vector3(sim_velocity.x * 0.00072, 0.0, sim_velocity.y * 0.00072)
 	var anchor := player_world + look_ahead
 	var target_alpha := 1.0 - exp(-delta * 7.5)
 	_camera_target = _camera_target.lerp(anchor, target_alpha)
@@ -193,10 +211,12 @@ func _build_environment() -> void:
 	env_node.name = "WorldEnvironment"
 	var env := Environment.new()
 	env.background_mode = Environment.BG_COLOR
-	env.background_color = Color("#8eb8c7")
+	# Kein Name Harvest Haven uses a restrained slate sky instead of a bright
+	# empty blue void. The warm geometry/light carries the readable foreground.
+	env.background_color = Color("#283247")
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	env.ambient_light_color = Color("#dbe6d1")
-	env.ambient_light_energy = 0.78
+	env.ambient_light_color = Color("#c0d6eb")
+	env.ambient_light_energy = 0.92
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	env_node.environment = env
 	add_child(env_node)
@@ -204,14 +224,22 @@ func _build_environment() -> void:
 	var sun := DirectionalLight3D.new()
 	sun.name = "Sun"
 	sun.rotation_degrees = Vector3(-55.0, -28.0, 0.0)
-	sun.light_energy = 1.25
-	sun.light_color = Color("#fff0cf")
+	sun.light_energy = 1.75
+	sun.light_color = Color("#ffd6ad")
 	sun.shadow_enabled = true
 	add_child(sun)
 
+	var fill := DirectionalLight3D.new()
+	fill.name = "CoolFill"
+	fill.rotation_degrees = Vector3(-38.0, 148.0, 0.0)
+	fill.light_energy = 0.48
+	fill.light_color = Color("#6d86b9")
+	fill.shadow_enabled = false
+	add_child(fill)
+
 	camera = Camera3D.new()
 	camera.name = "HybridCamera3D"
-	camera.fov = 46.0
+	camera.fov = CAMERA_FOV
 	camera.near = 0.1
 	camera.far = 120.0
 	add_child(camera)
@@ -224,35 +252,53 @@ func _build_world_geometry() -> void:
 
 	var bounds := BrambleWorldPresentationConfig.WORLD_MAP_BOUNDS
 	var center := bounds.position + bounds.size * 0.5
-	_add_plane(
-		"Ground",
-		simulation_to_world(center, 0.0),
-		Vector2(bounds.size.x * WORLD_SCALE, bounds.size.y * WORLD_SCALE),
-		Color("#667b42")
+	var authored_size := Vector2(bounds.size.x * WORLD_SCALE, bounds.size.y * WORLD_SCALE)
+	# Bramble's old 2D slice is much shallower than Kein Name's 32x28 m Haven.
+	# The renderer therefore carries a visual terrain apron around the gameplay
+	# bounds so the 16.8 m follow camera always stands above world, never void.
+	var ground_size := Vector2(
+		maxf(VISUAL_GROUND_MIN_SIZE.x, authored_size.x + 12.0),
+		maxf(VISUAL_GROUND_MIN_SIZE.y, authored_size.y + 18.0)
 	)
-	# Main road and village cross-road.
-	_add_box("MainRoad", simulation_to_world(Vector2(310, 140), 0.025), Vector3(14.6, 0.035, 0.86), Color("#aa8d62"))
-	_add_box("CrossRoad", simulation_to_world(Vector2(-180, -20), 0.028), Vector3(0.82, 0.04, 4.9), Color("#a98b61"))
-	# River is real world-space geometry instead of a flat background texture.
-	_add_box("River", simulation_to_world(Vector2(300, 420), 0.035), Vector3(22.0, 0.045, 1.10), Color("#3d8da2"))
-	_add_box("Bridge", simulation_to_world(Vector2(260, 420), 0.18), Vector3(1.75, 0.28, 1.35), Color("#8c6541"))
-	# Small authored height masses create actual parallax/occlusion.
-	_add_box("ShrineLedge", simulation_to_world(Vector2(-670, -390), 0.38), Vector3(3.0, 0.76, 1.75), Color("#58623d"))
-	_add_box("WildsRise", simulation_to_world(Vector2(1130, -330), 0.22), Vector3(4.2, 0.44, 1.65), Color("#5c7040"))
+	_add_plane("Ground", simulation_to_world(center, 0.0), ground_size, Color("#465044"))
 
-func _build_static_billboards() -> void:
-	# Same Bramble authored places, now positioned in the perspective world.
-	_add_landmark("world/buildings/inn.png", Vector2(-500, -105), 0.0052, 0.05)
-	_add_landmark("world/buildings/workshop.png", Vector2(-180, -130), 0.0048, 0.05)
-	_add_landmark("world/buildings/cottage.png", Vector2(220, -105), 0.0047, 0.05)
-	_add_landmark("world/buildings/town_fountain.png", Vector2(-20, 70), 0.0046, 0.03)
-	_add_landmark("world/buildings/red_oak.png", Vector2(-735, -90), 0.0050, 0.04)
-	_add_landmark("world/buildings/apple_tree.png", Vector2(465, -190), 0.0048, 0.04)
-	_add_landmark("world/buildings/town_gate.png", Vector2(585, 95), 0.0047, 0.04)
-	_add_landmark("world/portals/portal_arch_active.png", Vector2(735, 120), 0.0051, 0.04)
-	_add_landmark("world/buildings/ruined_arch.png", Vector2(1110, -185), 0.0048, 0.04)
-	for p in [Vector2(935, -190), Vector2(1320, 15), Vector2(1280, 345)]:
-		_add_landmark("world/buildings/red_oak.png", p, 0.0049, 0.04)
+	# Haven-like plaza + connected roads. These are genuine meshes so camera
+	# orbit creates parallax and scale instead of sliding a flat background.
+	_add_disc("VillagePlaza", simulation_to_world(Vector2(-20, 70), 0.055), 4.1, 0.16, Color("#55595a"))
+	_add_box("VillageRoadEW", simulation_to_world(Vector2(20, 115), 0.08), Vector3(18.6, 0.11, 2.35), Color("#4a4d50"))
+	_add_box("VillageRoadNS", simulation_to_world(Vector2(-20, 300), 0.082), Vector3(2.25, 0.11, 8.9), Color("#4a4d50"))
+	_add_box("EastApproach", simulation_to_world(Vector2(720, 125), 0.085), Vector3(7.8, 0.11, 2.15), Color("#55565a"))
+
+	# South field mass and water follow Kein Name's readable layered ground:
+	# thin geometry, no giant vertical debug blocks.
+	_add_box("SouthField", simulation_to_world(Vector2(100, 500), 0.035), Vector3(19.0, 0.055, 3.1), Color("#3a4638"))
+	for x in [-650.0, -400.0, -150.0, 100.0, 350.0, 600.0, 850.0]:
+		_add_box("Furrow", simulation_to_world(Vector2(x, 505), 0.07), Vector3(0.08, 0.025, 2.75), Color("#293528"))
+	_add_box("River", simulation_to_world(Vector2(300, 420), 0.045), Vector3(25.0, 0.035, 1.85), Color("#315b71"))
+	_add_box("Bridge", simulation_to_world(Vector2(260, 420), 0.17), Vector3(2.35, 0.24, 2.15), Color("#785a3c"))
+
+func _build_static_world() -> void:
+	# Kein Name's Haven buildings are real geometry. Use the same principle here
+	# and reserve billboards for characters, monsters and a few stylised accents.
+	_add_building("Inn", Vector2(-500, -105), 3.8, 2.85, 2.30, Color("#565160"), Color("#263048"), 0.14)
+	_add_building("Workshop", Vector2(-180, -130), 3.55, 2.75, 2.20, Color("#4a4240"), Color("#6b3528"), -0.10, true)
+	_add_building("Cottage", Vector2(220, -105), 3.45, 2.70, 2.12, Color("#4b5360"), Color("#263048"), 0.08)
+	_add_fountain(Vector2(-20, 70))
+	_add_arch("TownGate", Vector2(585, 95), 2.8, 3.0, Color("#555866"))
+	_add_arch("RuinedArch", Vector2(1110, -185), 3.0, 3.2, Color("#4b4e58"))
+
+	for spec in [
+		[Vector2(-735, -90), 1.0],
+		[Vector2(465, -190), 0.92],
+		[Vector2(935, -190), 0.94],
+		[Vector2(1320, 15), 0.90],
+		[Vector2(1280, 345), 0.96],
+		[Vector2(-690, 360), 0.90],
+		[Vector2(-420, 505), 0.82],
+	]:
+		_add_tree(spec[0], spec[1])
+
+	_add_world_billboard("world/portals/portal_arch_active.png", Vector2(735, 120), PORTAL_WORLD_HEIGHT, 0.04)
 
 func _build_dynamic_root() -> void:
 	_dynamic_root = Node3D.new()
@@ -265,34 +311,38 @@ func _ensure_player_proxy() -> void:
 	_player_proxy = Sprite3D.new()
 	_player_proxy.name = "PlayerBillboard3D"
 	_player_proxy.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_player_proxy.pixel_size = PLAYER_BILLBOARD_PIXEL_SIZE
+	_player_proxy.shaded = false
 	_player_proxy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 	_dynamic_root.add_child(_player_proxy)
+
+	_player_shadow = _disc_mesh(0.58, 0.018, Color(0.02, 0.03, 0.04, 0.42))
+	_player_shadow.name = "PlayerShadow"
+	_dynamic_root.add_child(_player_shadow)
+	_player_ground_ring = _disc_mesh(0.68, 0.010, Color(0.25, 0.68, 0.82, 0.18))
+	_player_ground_ring.name = "PlayerGroundRing"
+	_dynamic_root.add_child(_player_ground_ring)
 
 func _sync_dynamic_proxies() -> void:
 	_ensure_player_proxy()
 	_sync_player_proxy()
 	var alive_ids: Dictionary = {}
+
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		if not (enemy is Node2D):
 			continue
 		var id := enemy.get_instance_id()
 		alive_ids[id] = true
-		var proxy: Sprite3D = _entity_proxies.get(id)
-		if proxy == null:
-			proxy = Sprite3D.new()
-			proxy.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-			proxy.pixel_size = ENEMY_BILLBOARD_PIXEL_SIZE
-			proxy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-			_dynamic_root.add_child(proxy)
-			_entity_proxies[id] = proxy
-		proxy.position = simulation_to_world(enemy.global_position, 0.78)
-		proxy.visible = enemy.visible and (not enemy.has_method("is_combat_alive") or enemy.is_combat_alive())
+		var proxy := _entity_sprite(id, ENEMY_WORLD_HEIGHT)
 		var source := enemy.get_node_or_null("Visual") as AnimatedSprite2D
+		if source:
+			source.visible = false
 		if source and source.sprite_frames and source.sprite_frames.has_animation(source.animation):
-			proxy.texture = source.sprite_frames.get_frame_texture(source.animation, source.frame)
+			_set_sprite_texture_and_height(proxy, source.sprite_frames.get_frame_texture(source.animation, source.frame), ENEMY_WORLD_HEIGHT)
 		elif proxy.texture == null:
-			proxy.texture = BrambleWorldPresentationConfig.game_tex("monsters/moorling/directions/kit60_front.png")
+			_set_sprite_texture_and_height(proxy, BrambleWorldPresentationConfig.game_tex("monsters/moorling/directions/kit60_front.png"), ENEMY_WORLD_HEIGHT)
+		proxy.position = simulation_to_world(enemy.global_position, ENEMY_WORLD_HEIGHT * 0.5)
+		proxy.visible = enemy.visible and (not enemy.has_method("is_combat_alive") or enemy.is_combat_alive())
+
 	for node in get_tree().get_nodes_in_group("interactable"):
 		if not (node is Node2D):
 			continue
@@ -301,16 +351,13 @@ func _sync_dynamic_proxies() -> void:
 			continue
 		var id := node.get_instance_id()
 		alive_ids[id] = true
-		var proxy: Sprite3D = _entity_proxies.get(id)
-		if proxy == null:
-			proxy = Sprite3D.new()
-			proxy.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-			proxy.pixel_size = NPC_BILLBOARD_PIXEL_SIZE
-			proxy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-			_dynamic_root.add_child(proxy)
-			_entity_proxies[id] = proxy
-		proxy.texture = source_sprite.texture
-		proxy.position = simulation_to_world(node.global_position, 0.84)
+		var proxy := _entity_sprite(id, NPC_WORLD_HEIGHT)
+		source_sprite.visible = false
+		for child in node.get_children():
+			if child is Label:
+				child.visible = false
+		_set_sprite_texture_and_height(proxy, source_sprite.texture, NPC_WORLD_HEIGHT)
+		proxy.position = simulation_to_world(node.global_position, NPC_WORLD_HEIGHT * 0.5)
 		proxy.visible = node.visible
 
 	for node in get_tree().get_nodes_in_group("loot"):
@@ -321,16 +368,10 @@ func _sync_dynamic_proxies() -> void:
 			continue
 		var id := node.get_instance_id()
 		alive_ids[id] = true
-		var proxy: Sprite3D = _entity_proxies.get(id)
-		if proxy == null:
-			proxy = Sprite3D.new()
-			proxy.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-			proxy.pixel_size = 0.0036
-			proxy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-			_dynamic_root.add_child(proxy)
-			_entity_proxies[id] = proxy
-		proxy.texture = loot_sprite.texture
-		proxy.position = simulation_to_world(node.global_position, 0.34)
+		var proxy := _entity_sprite(id, LOOT_WORLD_HEIGHT)
+		loot_sprite.visible = false
+		_set_sprite_texture_and_height(proxy, loot_sprite.texture, LOOT_WORLD_HEIGHT)
+		proxy.position = simulation_to_world(node.global_position, LOOT_WORLD_HEIGHT * 0.5 + 0.08)
 		proxy.visible = node.visible
 
 	for id in _entity_proxies.keys():
@@ -340,29 +381,213 @@ func _sync_dynamic_proxies() -> void:
 				stale.queue_free()
 			_entity_proxies.erase(id)
 
+func _entity_sprite(id: int, _world_height: float) -> Sprite3D:
+	var proxy: Sprite3D = _entity_proxies.get(id)
+	if proxy != null:
+		return proxy
+	proxy = Sprite3D.new()
+	proxy.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	proxy.shaded = false
+	proxy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+	_dynamic_root.add_child(proxy)
+	_entity_proxies[id] = proxy
+	return proxy
+
 func _sync_player_proxy() -> void:
 	if _player_proxy == null or _player == null:
 		return
-	_player_proxy.position = simulation_to_world(_player.global_position, 0.88)
-	var source := _player.get_node_or_null("Visual") as AnimatedSprite2D
-	if source and source.sprite_frames and source.sprite_frames.has_animation(source.animation):
-		_player_proxy.texture = source.sprite_frames.get_frame_texture(source.animation, source.frame)
-		_player_proxy.flip_h = source.flip_h
-	elif _player_proxy.texture == null:
-		_player_proxy.texture = BrambleWorldPresentationConfig.game_tex("characters/base/male/directions/front.png")
+	if _player.velocity.length() > 6.0:
+		_last_player_world_direction = _player.velocity.normalized()
+	_player_view_direction = _camera_relative_direction(_last_player_world_direction)
+	var source := _player.get_node_or_null("Visual") as BramblePlayerVisual
+	var gender := source.gender if source else "male"
+	var texture := BrambleWorldPresentationConfig.game_tex("characters/base/%s/directions/%s.png" % [gender, _player_view_direction])
+	if texture == null and source and source.sprite_frames and source.sprite_frames.has_animation(source.animation):
+		texture = source.sprite_frames.get_frame_texture(source.animation, source.frame)
+	_set_sprite_texture_and_height(_player_proxy, texture, PLAYER_WORLD_HEIGHT)
+	_player_proxy.flip_h = false
+	_player_proxy.position = simulation_to_world(_player.global_position, PLAYER_WORLD_HEIGHT * 0.5)
 
-func _add_landmark(path: String, sim_position: Vector2, pixel_size: float, base_y: float) -> void:
+	if _player_shadow:
+		_player_shadow.position = simulation_to_world(_player.global_position, 0.025)
+	if _player_ground_ring:
+		_player_ground_ring.position = simulation_to_world(_player.global_position, 0.018)
+
+func _camera_relative_direction(world_direction: Vector2) -> String:
+	var c := cos(_yaw)
+	var si := sin(_yaw)
+	# Inverse of camera_relative_move(): world movement -> screen movement.
+	var screen_direction := Vector2(
+		world_direction.x * c - world_direction.y * si,
+		world_direction.x * si + world_direction.y * c
+	)
+	if screen_direction.length_squared() <= 0.0001:
+		return _player_view_direction
+	var angle := screen_direction.angle()
+	var oct := posmod(int(round(angle / (TAU / 8.0))), 8)
+	var mapping := ["right", "front_right", "front", "front_left", "left", "back_left", "back", "back_right"]
+	return mapping[oct]
+
+func _set_sprite_texture_and_height(sprite: Sprite3D, texture: Texture2D, world_height: float) -> void:
+	if sprite == null or texture == null:
+		return
+	sprite.texture = texture
+	var source_height := maxf(1.0, float(texture.get_height()))
+	sprite.pixel_size = world_height / source_height
+
+func _add_world_billboard(path: String, sim_position: Vector2, world_height: float, base_y: float) -> void:
 	var texture := BrambleWorldPresentationConfig.game_tex(path)
 	if texture == null:
 		return
 	var sprite := Sprite3D.new()
-	sprite.texture = texture
 	sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	sprite.pixel_size = pixel_size
+	sprite.shaded = false
 	sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-	var height := float(texture.get_height()) * pixel_size
-	sprite.position = simulation_to_world(sim_position, base_y + height * 0.5)
+	_set_sprite_texture_and_height(sprite, texture, world_height)
+	sprite.position = simulation_to_world(sim_position, base_y + world_height * 0.5)
 	_static_root.add_child(sprite)
+
+func _hide_2d_source_presentation() -> void:
+	var source := _player.get_node_or_null("Visual") as CanvasItem if _player else null
+	if source:
+		source.visible = false
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		var visual := enemy.get_node_or_null("Visual") as CanvasItem
+		if visual:
+			visual.visible = false
+	for node in get_tree().get_nodes_in_group("interactable"):
+		for child in node.get_children():
+			if child is CanvasItem:
+				child.visible = false
+	for node in get_tree().get_nodes_in_group("loot"):
+		var sprite := node.get_node_or_null("Sprite") as CanvasItem
+		if sprite:
+			sprite.visible = false
+
+func _add_building(node_name: String, sim_position: Vector2, width: float, depth: float, wall_height: float, wall_color: Color, roof_color: Color, yaw: float, chimney := false) -> void:
+	var root := Node3D.new()
+	root.name = node_name
+	root.position = simulation_to_world(sim_position, 0.0)
+	root.rotation.y = yaw
+	_static_root.add_child(root)
+
+	var body := _box_mesh(Vector3(width, wall_height, depth), wall_color)
+	body.position.y = wall_height * 0.5
+	root.add_child(body)
+
+	var roof := MeshInstance3D.new()
+	var roof_mesh := CylinderMesh.new()
+	roof_mesh.top_radius = 0.0
+	roof_mesh.bottom_radius = width * 0.72
+	roof_mesh.height = 1.55
+	roof_mesh.radial_segments = 4
+	roof.mesh = roof_mesh
+	roof.material_override = _material(roof_color)
+	roof.position.y = wall_height + 0.62
+	roof.rotation.y = PI * 0.25
+	roof.scale.z = depth / width
+	root.add_child(roof)
+
+	var door := _box_mesh(Vector3(0.72, 1.25, 0.10), Color("#34261f"))
+	door.position = Vector3(0, 0.625, depth * 0.5 + 0.055)
+	root.add_child(door)
+	for x in [-width * 0.30, width * 0.30]:
+		var window := _box_mesh(Vector3(0.58, 0.52, 0.11), Color("#71b8cf"))
+		window.position = Vector3(x, 1.35, depth * 0.5 + 0.06)
+		root.add_child(window)
+	if chimney:
+		var stack := _box_mesh(Vector3(0.52, 2.0, 0.52), Color("#343139"))
+		stack.position = Vector3(width * 0.28, wall_height + 0.65, -depth * 0.20)
+		root.add_child(stack)
+
+func _add_tree(sim_position: Vector2, scale_value: float) -> void:
+	var root := Node3D.new()
+	root.position = simulation_to_world(sim_position, 0.0)
+	root.scale = Vector3.ONE * scale_value
+	_static_root.add_child(root)
+
+	var trunk := MeshInstance3D.new()
+	var trunk_mesh := CylinderMesh.new()
+	trunk_mesh.top_radius = 0.16
+	trunk_mesh.bottom_radius = 0.22
+	trunk_mesh.height = 1.75
+	trunk_mesh.radial_segments = 8
+	trunk.mesh = trunk_mesh
+	trunk.material_override = _material(Color("#5b3d2a"))
+	trunk.position.y = 0.875
+	root.add_child(trunk)
+
+	for spec in [[Vector3(0, 2.0, 0), 1.15], [Vector3(-0.52, 1.85, 0.12), 0.82], [Vector3(0.48, 1.82, -0.10), 0.78]]:
+		var crown := MeshInstance3D.new()
+		var sphere := SphereMesh.new()
+		sphere.radius = spec[1]
+		sphere.height = spec[1] * 1.65
+		crown.mesh = sphere
+		crown.material_override = _material(Color("#6f844e"))
+		crown.position = spec[0]
+		root.add_child(crown)
+
+func _add_fountain(sim_position: Vector2) -> void:
+	var root := Node3D.new()
+	root.name = "TownFountain"
+	root.position = simulation_to_world(sim_position, 0.0)
+	_static_root.add_child(root)
+	var base := _cylinder_mesh(1.22, 0.30, Color("#5a5d63"))
+	base.position.y = 0.15
+	root.add_child(base)
+	var basin := _cylinder_mesh(0.95, 0.16, Color("#46505a"))
+	basin.position.y = 0.34
+	root.add_child(basin)
+	var water := _cylinder_mesh(0.78, 0.025, Color("#4c91aa"))
+	water.position.y = 0.435
+	root.add_child(water)
+	var pillar := _cylinder_mesh(0.18, 1.10, Color("#666a70"))
+	pillar.position.y = 0.88
+	root.add_child(pillar)
+
+func _add_arch(node_name: String, sim_position: Vector2, width: float, height: float, color: Color) -> void:
+	var root := Node3D.new()
+	root.name = node_name
+	root.position = simulation_to_world(sim_position, 0.0)
+	_static_root.add_child(root)
+	var pillar_size := Vector3(0.42, height, 0.62)
+	var left := _box_mesh(pillar_size, color)
+	left.position = Vector3(-width * 0.5, height * 0.5, 0)
+	root.add_child(left)
+	var right := _box_mesh(pillar_size, color)
+	right.position = Vector3(width * 0.5, height * 0.5, 0)
+	root.add_child(right)
+	var lintel := _box_mesh(Vector3(width + 0.55, 0.46, 0.72), color.lightened(0.08))
+	lintel.position = Vector3(0, height - 0.18, 0)
+	root.add_child(lintel)
+
+func _add_disc(node_name: String, world_position: Vector3, radius: float, height: float, color: Color) -> void:
+	var disc := _cylinder_mesh(radius, height, color)
+	disc.name = node_name
+	disc.position = world_position
+	_static_root.add_child(disc)
+
+func _disc_mesh(radius: float, height: float, color: Color) -> MeshInstance3D:
+	return _cylinder_mesh(radius, height, color)
+
+func _cylinder_mesh(radius: float, height: float, color: Color) -> MeshInstance3D:
+	var mesh_instance := MeshInstance3D.new()
+	var cylinder := CylinderMesh.new()
+	cylinder.top_radius = radius
+	cylinder.bottom_radius = radius
+	cylinder.height = height
+	cylinder.radial_segments = 24
+	mesh_instance.mesh = cylinder
+	mesh_instance.material_override = _material(color)
+	return mesh_instance
+
+func _box_mesh(size: Vector3, color: Color) -> MeshInstance3D:
+	var mesh_instance := MeshInstance3D.new()
+	var box := BoxMesh.new()
+	box.size = size
+	mesh_instance.mesh = box
+	mesh_instance.material_override = _material(color)
+	return mesh_instance
 
 func _add_plane(node_name: String, world_position: Vector3, size: Vector2, color: Color) -> void:
 	var mesh_instance := MeshInstance3D.new()
@@ -375,17 +600,15 @@ func _add_plane(node_name: String, world_position: Vector3, size: Vector2, color
 	_static_root.add_child(mesh_instance)
 
 func _add_box(node_name: String, world_position: Vector3, size: Vector3, color: Color) -> void:
-	var mesh_instance := MeshInstance3D.new()
+	var mesh_instance := _box_mesh(size, color)
 	mesh_instance.name = node_name
-	var box := BoxMesh.new()
-	box.size = size
-	mesh_instance.mesh = box
 	mesh_instance.position = world_position
-	mesh_instance.material_override = _material(color)
 	_static_root.add_child(mesh_instance)
 
 func _material(color: Color) -> StandardMaterial3D:
 	var material := StandardMaterial3D.new()
 	material.albedo_color = color
-	material.roughness = 0.92
+	material.roughness = 0.94
+	if color.a < 0.999:
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	return material
