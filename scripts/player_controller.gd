@@ -13,6 +13,7 @@ var attack_cooldown := 0.0
 var net_tick := 0.0
 var dash_cooldown := 0.0
 var combat_blocked := false
+var _virtual_move_vector := Vector2.ZERO
 
 func _ready() -> void:
 	add_to_group("player")
@@ -38,6 +39,7 @@ func _ready() -> void:
 func _on_player_died() -> void:
 	combat_blocked = true
 	attacking = false
+	_virtual_move_vector = Vector2.ZERO
 	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
 	if targeting:
 		targeting.clear_target()
@@ -59,9 +61,10 @@ func _physics_process(delta: float) -> void:
 
 	var input_vec := Vector2.ZERO
 	if not combat_blocked:
-		input_vec = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		input_vec = _combined_move_input()
 	velocity = input_vec * move_speed
 	move_and_slide()
+	_clamp_to_playable_world()
 
 	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
 	if net and net.mode != "offline" and input_vec.length_squared() > 0.01 and net_tick <= 0.0:
@@ -98,6 +101,31 @@ func _physics_process(delta: float) -> void:
 			visual.set_state("run")
 		else:
 			visual.set_state("idle")
+
+func set_virtual_move_vector(value: Vector2) -> void:
+	# Mobile HUD feeds a true analogue vector here. Keeping this separate from
+	# InputMap avoids synthetic key states getting stuck across touch/layout events.
+	var v := value
+	if v.length() > 1.0:
+		v = v.normalized()
+	_virtual_move_vector = Vector2.ZERO if v.length_squared() < 0.0004 else v
+
+func clear_virtual_move_vector() -> void:
+	_virtual_move_vector = Vector2.ZERO
+
+func _combined_move_input() -> Vector2:
+	var hardware := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	# Hardware input wins for desktop/dev testing. Mobile remains fully analogue.
+	if hardware.length_squared() > 0.0004:
+		return hardware
+	return _virtual_move_vector
+
+func _clamp_to_playable_world() -> void:
+	# Camera limits alone do not stop a CharacterBody2D from leaving the authored
+	# world. A small inset keeps the player/collision capsule visible at the edge.
+	var bounds := BrambleWorldPresentationConfig.WORLD_MAP_BOUNDS.grow(-24.0)
+	global_position.x = clampf(global_position.x, bounds.position.x, bounds.end.x)
+	global_position.y = clampf(global_position.y, bounds.position.y, bounds.end.y)
 
 func _sync_authority_position(net: BrambleNetworkSession) -> void:
 	if net == null or net.mode == "offline":
