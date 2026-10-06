@@ -1,0 +1,66 @@
+name: Web Mobile Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "project.godot"
+      - "export_presets.cfg"
+      - "scenes/**"
+      - "scripts/**"
+      - "assets/**"
+      - "data/**"
+      - "tools/**"
+      - ".github/workflows/web-mobile-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  export-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      GODOT_VERSION: "4.7.2"
+      GODOT_BIN: ${{ github.workspace }}/.tools/Godot_v4.7.2-stable_linux.x86_64
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot editor and web templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .tools "$HOME/.local/share/godot/export_templates/4.7.2.stable"
+          curl -L --fail --retry 4 -o .tools/godot.zip "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip"
+          curl -L --fail --retry 4 -o .tools/templates.tpz "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz"
+          unzip -q .tools/godot.zip -d .tools
+          unzip -q .tools/templates.tpz -d .tools/templates
+          mv .tools/templates/templates/* "$HOME/.local/share/godot/export_templates/4.7.2.stable/"
+          chmod +x "$GODOT_BIN"
+
+      - name: Source contract
+        run: python3 tools/validate_web_mobile_source.py
+
+      - name: Import project
+        run: |
+          "$GODOT_BIN" --headless --editor --path . --quit-after 2
+
+      - name: GDScript mobile gate
+        run: |
+          "$GODOT_BIN" --headless --path . --script tools/web_mobile_gate_test.gd
+
+      - name: Export web release
+        run: |
+          "$GODOT_BIN" --headless --path . --export-release "Web Mobile Gate" build/web/index.html
+
+      - name: Validate web artifact
+        run: python3 tools/validate_web_export.py --build-dir build/web --max-transfer-mib 48
+
+      - name: Upload playable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bramble-web-mobile
+          path: build/web
+          if-no-files-found: error
+          retention-days: 14

@@ -51,6 +51,8 @@ var _portrait_tab := PortraitTab.BAG
 var _category := "ALL"
 var _selected_item_id := ""
 var _portrait_mode := false
+var _safe_insets := Vector4.ZERO
+var _web_platform_service = null
 
 func _ready() -> void:
 	add_to_group("production_rpg_ui")
@@ -63,6 +65,18 @@ func _ready() -> void:
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
 		orient.orientation_changed.connect(func(mode: String): _apply_layout(mode == "portrait"))
+	_bind_web_platform_service()
+	call_deferred("_bind_web_platform_service")
+
+func _bind_web_platform_service() -> void:
+	if is_instance_valid(_web_platform_service):
+		return
+	_web_platform_service = get_tree().get_first_node_in_group("web_platform_service")
+	if _web_platform_service == null:
+		return
+	if not _web_platform_service.viewport_metrics_changed.is_connected(_on_viewport_metrics_changed):
+		_web_platform_service.viewport_metrics_changed.connect(_on_viewport_metrics_changed)
+	_safe_insets = _web_platform_service.safe_insets()
 
 func show_inventory() -> void:
 	_screen = Screen.INVENTORY
@@ -188,11 +202,21 @@ func _apply_layout(portrait: bool) -> void:
 	_portrait.visible = portrait
 	var vp := get_viewport().get_visible_rect().size
 	if portrait:
-		_portrait.position = Vector2(18, 34)
-		_portrait.size = Vector2(vp.x - 36, vp.y - 76)
+		var left := 18.0 + _safe_insets.x
+		var top := 24.0 + _safe_insets.y
+		var right := 18.0 + _safe_insets.z
+		var bottom := 24.0 + _safe_insets.w
+		_portrait.position = Vector2(left, top)
+		_portrait.size = Vector2(maxf(320.0, vp.x - left - right), maxf(480.0, vp.y - top - bottom))
 	else:
-		_landscape.position = Vector2((vp.x - 1180) * 0.5, (vp.y - 640) * 0.5)
-		_landscape.size = Vector2(1180, 640)
+		var available := Vector2(vp.x - _safe_insets.x - _safe_insets.z, vp.y - _safe_insets.y - _safe_insets.w)
+		var shell_size := Vector2(minf(1180.0, available.x - 24.0), minf(640.0, available.y - 24.0))
+		_landscape.position = Vector2(_safe_insets.x + (available.x - shell_size.x) * 0.5, _safe_insets.y + (available.y - shell_size.y) * 0.5)
+		_landscape.size = shell_size
+
+func _on_viewport_metrics_changed(_logical_size: Vector2, safe_insets: Vector4) -> void:
+	_safe_insets = safe_insets
+	_apply_layout(_is_portrait())
 
 func _refresh(_unused: Dictionary = {}) -> void:
 	if not visible:

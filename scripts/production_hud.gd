@@ -38,6 +38,7 @@ var target_name: Label
 var target_hp: ProgressBar
 var target_status: Label
 var nav_root: Control
+var fullscreen_btn: Button
 var level_up_root: Control
 var level_up_title: Label
 var level_up_level: Label
@@ -48,6 +49,8 @@ var level_up_time := 0.0
 var _targeting_service = null
 var _runtime_service = null
 var _character_service = null
+var _web_platform_service = null
+var _safe_insets := Vector4.ZERO
 
 const STICK_RADIUS := 52.0
 const STICK_DEADZONE := 0.18
@@ -67,10 +70,25 @@ func _ready() -> void:
 		state._emit_all()
 	_bind_runtime_services()
 	call_deferred("_bind_runtime_services")
+	_bind_web_platform_service()
+	call_deferred("_bind_web_platform_service")
 	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
 	if orient:
 		orient.orientation_changed.connect(_apply_layout)
 		_apply_layout(orient.mode_name())
+
+func _bind_web_platform_service() -> void:
+	if is_instance_valid(_web_platform_service):
+		return
+	_web_platform_service = get_tree().get_first_node_in_group("web_platform_service")
+	if _web_platform_service == null:
+		return
+	if not _web_platform_service.viewport_metrics_changed.is_connected(_on_viewport_metrics_changed):
+		_web_platform_service.viewport_metrics_changed.connect(_on_viewport_metrics_changed)
+	if not _web_platform_service.fullscreen_changed.is_connected(_on_fullscreen_changed):
+		_web_platform_service.fullscreen_changed.connect(_on_fullscreen_changed)
+	_safe_insets = _web_platform_service.safe_insets()
+	_on_fullscreen_changed(_web_platform_service.is_fullscreen())
 
 func _bind_runtime_services() -> void:
 	if not is_instance_valid(_targeting_service):
@@ -258,7 +276,20 @@ func _build_ui() -> void:
 	toast.visible = false
 	add_child(toast)
 	_build_nav()
+	_build_fullscreen_control()
 	_build_level_up()
+
+func _build_fullscreen_control() -> void:
+	fullscreen_btn = Button.new()
+	fullscreen_btn.name = "FullscreenToggle"
+	fullscreen_btn.text = "FS"
+	fullscreen_btn.tooltip_text = "Vollbild"
+	fullscreen_btn.custom_minimum_size = Vector2(48, 48)
+	fullscreen_btn.size = Vector2(48, 48)
+	fullscreen_btn.add_theme_font_size_override("font_size", 14)
+	BrambleUiStyle.apply_button(fullscreen_btn)
+	fullscreen_btn.pressed.connect(_toggle_fullscreen)
+	add_child(fullscreen_btn)
 
 func _build_level_up() -> void:
 	level_up_root = Control.new()
@@ -444,27 +475,33 @@ func _apply_layout(mode: String) -> void:
 	_release_all_stick_actions()
 	var portrait := mode == "portrait"
 	var vp := get_viewport().get_visible_rect().size
-	var m := BrambleWorldPresentationConfig.HUD_SAFE_MARGIN
+	var base_margin := BrambleWorldPresentationConfig.HUD_SAFE_MARGIN
+	var left_margin := base_margin + _safe_insets.x
+	var top_margin := base_margin + _safe_insets.y
+	var right_margin := base_margin + _safe_insets.z
+	var bottom_margin := base_margin + _safe_insets.w
 	var stats_h := HUD_STATS_SIZE.y
 	var quest_h := HUD_QUEST_SIZE.y
 
 	if portrait:
-		stats_root.position = Vector2(m, m + 20)
-		quest_root.position = Vector2(m, m + 20 + stats_h + 10)
-		target_root.position = Vector2((vp.x - 280) * 0.5, m + stats_h + 8)
-		minimap_root.position = Vector2(vp.x - HUD_MINIMAP_SIZE.x - m, m + 18)
-		touch_root.position = Vector2(m, vp.y - HUD_JOY_SIZE.y - 88)
-		combat_root.position = Vector2(vp.x - 338 - m, vp.y - 250)
+		stats_root.position = Vector2(left_margin, top_margin + 20)
+		quest_root.position = Vector2(left_margin, top_margin + 20 + stats_h + 10)
+		target_root.position = Vector2((vp.x - 280) * 0.5, top_margin + stats_h + 8)
+		fullscreen_btn.position = Vector2(vp.x - right_margin - fullscreen_btn.size.x, top_margin)
+		minimap_root.position = Vector2(vp.x - HUD_MINIMAP_SIZE.x - right_margin, top_margin + 54)
+		touch_root.position = Vector2(left_margin, vp.y - bottom_margin - HUD_JOY_SIZE.y - 70)
+		combat_root.position = Vector2(vp.x - 338 - right_margin, vp.y - bottom_margin - 232)
 	else:
-		stats_root.position = Vector2(m, m)
-		quest_root.position = Vector2(m, m + stats_h + 8)
-		target_root.position = Vector2(vp.x * 0.5 - 140, m)
-		minimap_root.position = Vector2(vp.x - HUD_MINIMAP_SIZE.x - m, m)
-		var joy_y := vp.y - HUD_JOY_SIZE.y - m
+		stats_root.position = Vector2(left_margin, top_margin)
+		quest_root.position = Vector2(left_margin, top_margin + stats_h + 8)
+		target_root.position = Vector2(vp.x * 0.5 - 140, top_margin)
+		fullscreen_btn.position = Vector2(vp.x - right_margin - fullscreen_btn.size.x, top_margin)
+		minimap_root.position = Vector2(vp.x - HUD_MINIMAP_SIZE.x - right_margin, top_margin + 54)
+		var joy_y := vp.y - HUD_JOY_SIZE.y - bottom_margin
 		if joy_y < quest_root.position.y + quest_h + 12:
 			joy_y = quest_root.position.y + quest_h + 12
-		touch_root.position = Vector2(m, joy_y)
-		combat_root.position = Vector2(vp.x - 338 - m, vp.y - 174 - m)
+		touch_root.position = Vector2(left_margin, joy_y)
+		combat_root.position = Vector2(vp.x - 338 - right_margin, vp.y - 174 - bottom_margin)
 
 	attack_btn.position = Vector2(232, 60)
 	var skill_positions := [Vector2(0, 66), Vector2(76, 26), Vector2(152, 58)]
@@ -477,10 +514,10 @@ func _layout_nav(portrait: bool, vp: Vector2) -> void:
 	if nav_root == null:
 		return
 	var m := BrambleWorldPresentationConfig.HUD_SAFE_MARGIN
-	var y := vp.y - 68 - m
+	var y := vp.y - 68 - m - _safe_insets.w
 	var x := vp.x * 0.5 - 182
 	if portrait:
-		y = vp.y - 68 - m
+		y = vp.y - 68 - m - _safe_insets.w
 		x = vp.x * 0.5 - 182
 	for i in range(nav_root.get_child_count()):
 		var b := nav_root.get_child(i) as Control
@@ -577,6 +614,8 @@ func _on_nav(kind: String) -> void:
 			show_toast("Sozial · bald verfügbar")
 
 func _process(delta: float) -> void:
+	if not is_instance_valid(_web_platform_service):
+		_bind_web_platform_service()
 	if not is_instance_valid(_targeting_service) or not is_instance_valid(_runtime_service) or not is_instance_valid(_character_service):
 		_bind_runtime_services()
 	if toast_time > 0.0:
@@ -587,6 +626,21 @@ func _process(delta: float) -> void:
 		level_up_time -= delta
 		if level_up_time <= 0.0 and level_up_root:
 			level_up_root.visible = false
+
+func _toggle_fullscreen() -> void:
+	if is_instance_valid(_web_platform_service):
+		_web_platform_service.toggle_fullscreen()
+
+func _on_fullscreen_changed(active: bool) -> void:
+	if fullscreen_btn:
+		fullscreen_btn.text = "EXIT" if active else "FS"
+		fullscreen_btn.tooltip_text = "Vollbild verlassen" if active else "Vollbild"
+
+func _on_viewport_metrics_changed(_logical_size: Vector2, safe_insets: Vector4) -> void:
+	_safe_insets = safe_insets
+	var orient := get_tree().get_first_node_in_group("orientation_service") as BrambleOrientationService
+	var mode := orient.mode_name() if orient else ("portrait" if get_viewport().get_visible_rect().size.y > get_viewport().get_visible_rect().size.x else "landscape")
+	_apply_layout(mode)
 
 func _on_quest_changed(title: String, text: String) -> void:
 	quest_title.text = title

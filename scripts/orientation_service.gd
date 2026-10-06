@@ -28,7 +28,10 @@ func _queue_refresh() -> void:
 func _finish_refresh() -> void:
 	_refresh_pending = false
 	await get_tree().process_frame
-	_apply_mode_from_size(false)
+	await get_tree().process_frame
+	# Fullscreen and mobile browser chrome often resize the canvas without
+	# changing orientation. HUD consumers still need a fresh layout.
+	_apply_mode_from_size(true)
 
 func _apply_mode_from_size(force_emit: bool) -> void:
 	var size := _current_size()
