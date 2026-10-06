@@ -12,7 +12,7 @@ extends CharacterBody2D
 @export var xp_reward := 15
 @export var gold_reward := 4
 @export var aggro_range := 280.0
-@export var attack_range := 58.0
+@export var attack_range := 82.0
 @export var respawn_delay := 8.0
 @export var loot_table_id := "moorling_common"
 
