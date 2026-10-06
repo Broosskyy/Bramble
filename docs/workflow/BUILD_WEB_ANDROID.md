@@ -68,7 +68,7 @@ job. Download the corresponding `bramble-web-<commit>` or
 
 The workflow also captures the native production scene in portrait and
 landscape. These are native runtime captures, not browser or physical-device
-evidence. The workflow creates downloadable artifacts and, after both main builds pass,
+evidence. The workflow creates downloadable artifacts and, after the main Web job passes,
 publishes the validated Web ZIP and manifest in a public prerelease tagged
 `web-<full-source-commit>`. Pull requests never publish releases. The release
 job alone has repository write permission; source builds remain read-only.

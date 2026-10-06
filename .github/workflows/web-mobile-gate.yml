@@ -1,115 +1,138 @@
 name: Web + Android Builds
-
-on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-  pull_request:
-    paths:
-      - "vercel.json"
-      - "project.godot"
-      - "export_presets.cfg"
-      - "scenes/**"
-      - "scripts/**"
-      - "assets/**"
-      - "data/**"
-      - "tools/**"
-      - ".github/actions/setup-godot/**"
-      - ".github/workflows/web-mobile-gate.yml"
-
 permissions:
   contents: read
-
 jobs:
-  build:
-    name: Build ${{ matrix.target }}
+  build-web:
+    name: Build web
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [web, android]
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-godot
-      - if: matrix.target == 'android'
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "17"
-      - if: matrix.target == 'android'
-        uses: android-actions/setup-android@v3
-        with:
-          packages: platform-tools
-      - if: matrix.target == 'android'
-        name: Install Android export dependencies
-        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
-      - if: matrix.target == 'android'
-        name: Reuse test signing key
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/bramble/debug.keystore
-          key: bramble-android-test-key-v1
-      - name: Build and validate
-        run: python3 tools/build_game.py --target "${{ matrix.target }}"
-      - if: matrix.target == 'web'
-        name: Install runtime capture dependencies
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq xvfb libgl1-mesa-dri
-      - if: matrix.target == 'web'
-        name: Capture native production runtime
-        run: |
-          rm -f artifacts/live/latest_landscape.png artifacts/live/latest_portrait.png artifacts/live/latest_gameplay.png
-          timeout 180 xvfb-run -a "$GODOT_BIN" --audio-driver Dummy --path . -- --live-capture gameplay
-          python3 - <<'PY'
-          from pathlib import Path
-          for name in ('latest_landscape.png', 'latest_portrait.png', 'latest_gameplay.png'):
-              file = Path('artifacts/live') / name
-              assert file.is_file() and file.stat().st_size > 0, file
-          PY
-      - name: Upload ready build
-        uses: actions/upload-artifact@v4
-        with:
-          name: bramble-${{ matrix.target }}-${{ github.sha }}
-          path: |
-            build/bramble-web.zip
-            build/web/**
-            build/android/Bramble.apk
-            build/build-manifest.json
-          if-no-files-found: error
-          retention-days: 30
-      - if: always()
-        name: Upload build diagnostics
-        uses: actions/upload-artifact@v4
-        with:
-          name: bramble-${{ matrix.target }}-diagnostics-${{ github.sha }}
-          path: |
-            build/logs/**
-            artifacts/live/latest_*.png
-          if-no-files-found: ignore
-          retention-days: 14
+    - uses: actions/checkout@v4
+    - uses: ./.github/actions/setup-godot
+    - name: Build and validate
+      run: python3 tools/build_game.py --target "web"
+    - name: Install runtime capture dependencies
+      run: 'sudo apt-get update -qq
 
+        sudo apt-get install -y -qq xvfb libgl1-mesa-dri
+
+        '
+    - name: Capture native production runtime
+      run: "rm -f artifacts/live/latest_landscape.png artifacts/live/latest_portrait.png artifacts/live/latest_gameplay.png\n\
+        timeout 180 xvfb-run -a \"$GODOT_BIN\" --audio-driver Dummy --path . -- --live-capture gameplay\npython3 - <<'PY'\n\
+        from pathlib import Path\nfor name in ('latest_landscape.png', 'latest_portrait.png', 'latest_gameplay.png'):\n  \
+        \  file = Path('artifacts/live') / name\n    assert file.is_file() and file.stat().st_size > 0, file\nPY\n"
+    - name: Upload ready build
+      uses: actions/upload-artifact@v4
+      with:
+        name: bramble-web-${{ github.sha }}
+        path: 'build/bramble-web.zip
+
+          build/web/**
+
+          build/android/Bramble.apk
+
+          build/build-manifest.json
+
+          '
+        if-no-files-found: error
+        retention-days: 30
+    - if: always()
+      name: Upload build diagnostics
+      uses: actions/upload-artifact@v4
+      with:
+        name: bramble-web-diagnostics-${{ github.sha }}
+        path: 'build/logs/**
+
+          artifacts/live/latest_*.png
+
+          '
+        if-no-files-found: ignore
+        retention-days: 14
+  build-android:
+    name: Build android
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./.github/actions/setup-godot
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '17'
+    - uses: android-actions/setup-android@v3
+      with:
+        packages: platform-tools
+    - name: Install Android export dependencies
+      run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+    - name: Reuse test signing key
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/bramble/debug.keystore
+        key: bramble-android-test-key-v1
+    - name: Build and validate
+      run: python3 tools/build_game.py --target "android"
+    - name: Upload ready build
+      uses: actions/upload-artifact@v4
+      with:
+        name: bramble-android-${{ github.sha }}
+        path: 'build/bramble-web.zip
+
+          build/web/**
+
+          build/android/Bramble.apk
+
+          build/build-manifest.json
+
+          '
+        if-no-files-found: error
+        retention-days: 30
+    - if: always()
+      name: Upload build diagnostics
+      uses: actions/upload-artifact@v4
+      with:
+        name: bramble-android-diagnostics-${{ github.sha }}
+        path: 'build/logs/**
+
+          artifacts/live/latest_*.png
+
+          '
+        if-no-files-found: ignore
+        retention-days: 14
   publish-web:
     name: Publish validated Web release
-    needs: build
+    needs: build-web
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: bramble-web-${{ github.sha }}
-          path: build
-      - name: Publish matching Web export
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          tag="web-$GITHUB_SHA"
-          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
-            gh release upload "$tag" build/bramble-web.zip build/build-manifest.json --repo "$GITHUB_REPOSITORY" --clobber
-          else
-            gh release create "$tag" build/bramble-web.zip build/build-manifest.json --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title "Web build ${GITHUB_SHA:0:7}" --notes "Validated Godot Web export. Source commit: $GITHUB_SHA. Device validation remains pending."
-          fi
+    - uses: actions/download-artifact@v4
+      with:
+        name: bramble-web-${{ github.sha }}
+        path: build
+    - name: Publish matching Web export
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: "set -euo pipefail\ntag=\"web-$GITHUB_SHA\"\nif gh release view \"$tag\" --repo \"$GITHUB_REPOSITORY\" > /dev/null\
+        \ 2>&1; then\n  gh release upload \"$tag\" build/bramble-web.zip build/build-manifest.json --repo \"$GITHUB_REPOSITORY\"\
+        \ --clobber\nelse\n  gh release create \"$tag\" build/bramble-web.zip build/build-manifest.json --repo \"$GITHUB_REPOSITORY\"\
+        \ --target \"$GITHUB_SHA\" --prerelease --title \"Web build ${GITHUB_SHA:0:7}\" --notes \"Validated Godot Web export.\
+        \ Source commit: $GITHUB_SHA. Device validation remains pending.\"\nfi\n"
+'on':
+  workflow_dispatch: null
+  push:
+    branches:
+    - main
+  pull_request:
+    paths:
+    - vercel.json
+    - project.godot
+    - export_presets.cfg
+    - scenes/**
+    - scripts/**
+    - assets/**
+    - data/**
+    - tools/**
+    - .github/actions/setup-godot/**
+    - .github/workflows/web-mobile-gate.yml
