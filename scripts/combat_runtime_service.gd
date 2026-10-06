@@ -34,6 +34,7 @@ func resolve_basic_attack(attacker: Node2D, target_entity_id: int = 0) -> Dictio
 	if target.has_method("take_damage"):
 		target.take_damage(damage, attacker)
 	_spawn_damage_number(target, damage, false)
+	_spawn_hit_burst(target, false)
 	combat_event.emit("basic_attack", {"target_id": _entity_id(target), "damage": damage})
 	return {"ok": true, "damage": damage, "target_id": _entity_id(target)}
 
@@ -67,6 +68,7 @@ func resolve_skill(attacker: Node2D, slot: int, target_entity_id: int = 0) -> Di
 	if target.has_method("take_damage"):
 		target.take_damage(damage, attacker)
 	_spawn_damage_number(target, damage, true)
+	_spawn_hit_burst(target, true)
 	_spawn_skill_vfx(attacker, target)
 	_skill_cd_until[slot] = float(skill.get("cooldown", skill.get("cd", _skill_cd_total[slot])))
 	skill_cooldown_changed.emit(slot, _skill_cd_until[slot], _skill_cd_total[slot])
@@ -139,19 +141,46 @@ func _spawn_damage_number(target: Node2D, damage: int, emphasized: bool) -> void
 	var label := Label.new()
 	label.text = str(damage)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.z_index = 950
-	label.add_theme_font_size_override("font_size", 30 if emphasized else 24)
+	label.z_index = 1200
+	label.size = Vector2(104, 54)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.add_theme_font_size_override("font_size", 40 if emphasized else 34)
 	label.add_theme_color_override("font_color", Color("#ffd35a") if emphasized else Color.WHITE)
-	label.add_theme_color_override("font_outline_color", Color(0.05, 0.04, 0.03, 0.95))
-	label.add_theme_constant_override("outline_size", 5)
-	label.position = target.global_position + Vector2(-18, -112)
+	label.add_theme_color_override("font_outline_color", Color(0.05, 0.04, 0.03, 0.98))
+	label.add_theme_constant_override("outline_size", 7)
+	label.position = target.global_position + Vector2(-52, -138)
 	get_tree().current_scene.add_child(label)
 	var end_position := label.position + Vector2(randf_range(-8.0, 8.0), -42.0)
 	var tween := create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(label, "position", end_position, 0.42).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(label, "modulate:a", 0.0, 0.42).set_delay(0.08)
+	tween.tween_property(label, "position", end_position, 0.52).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(label, "modulate:a", 0.0, 0.52).set_delay(0.12)
 	tween.chain().tween_callback(label.queue_free)
+
+func _spawn_hit_burst(target: Node2D, emphasized: bool) -> void:
+	if target == null or not is_instance_valid(target):
+		return
+	var root := Node2D.new()
+	root.global_position = target.global_position + Vector2(0, -64)
+	root.z_index = 1050
+	get_tree().current_scene.add_child(root)
+	var ray_count := 8 if emphasized else 6
+	var radius := 38.0 if emphasized else 28.0
+	for i in range(ray_count):
+		var line := Line2D.new()
+		line.width = 4.0 if emphasized else 3.0
+		line.default_color = Color("#ffe37a") if emphasized else Color(1.0, 0.96, 0.78, 0.95)
+		var angle := TAU * float(i) / float(ray_count)
+		var dir := Vector2(cos(angle), sin(angle))
+		line.points = PackedVector2Array([dir * 7.0, dir * radius])
+		root.add_child(line)
+	root.scale = Vector2.ONE * 0.72
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(root, "scale", Vector2.ONE * 1.18, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(root, "modulate:a", 0.0, 0.24).set_delay(0.05)
+	tween.chain().tween_callback(root.queue_free)
 
 func _spawn_skill_vfx(_attacker: Node2D, target: Node2D) -> void:
 	var fx := Sprite2D.new()
