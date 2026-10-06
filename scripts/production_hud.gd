@@ -539,7 +539,10 @@ func _on_target_changed(state: Dictionary) -> void:
 	target_hp.max_value = maxi(1, int(state.get("max_hp", 1)))
 	target_hp.value = int(state.get("hp", 0))
 	var dist := float(state.get("distance", 0.0))
-	target_status.text = "HP %d/%d · %.0fm" % [int(state.get("hp", 0)), int(state.get("max_hp", 0)), dist]
+	var player := get_tree().get_first_node_in_group("player")
+	var player_attack_range := float(player.get("attack_range")) if player else 125.0
+	var combat_state := "ANNÄHERN" if dist > player_attack_range else "IM KAMPF"
+	target_status.text = "HP %d/%d · %s" % [int(state.get("hp", 0)), int(state.get("max_hp", 0)), combat_state]
 
 func _on_inventory_changed(_items: Array) -> void:
 	var cs = get_tree().get_first_node_in_group("character_state_service")
