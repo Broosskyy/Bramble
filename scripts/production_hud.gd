@@ -294,19 +294,21 @@ func _build_fullscreen_control() -> void:
 func _build_level_up() -> void:
 	level_up_root = Control.new()
 	level_up_root.visible = false
+	level_up_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	level_up_root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(level_up_root)
 	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.25)
+	dim.color = Color(0, 0, 0, 0.10)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	level_up_root.add_child(dim)
 	var panel := PanelContainer.new()
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.set_anchors_preset(Control.PRESET_CENTER)
-	panel.offset_left = -160
-	panel.offset_top = -72
-	panel.offset_right = 160
-	panel.offset_bottom = 72
+	panel.offset_left = -145
+	panel.offset_top = -54
+	panel.offset_right = 145
+	panel.offset_bottom = 54
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.08, 0.06, 0.04, 0.88)
 	style.border_color = Color("#e8c86a")
@@ -602,7 +604,7 @@ func show_level_up(new_level: int, rewards: Dictionary = {}) -> void:
 	var skill_pts := int(rewards.get("skill_points", 1))
 	level_up_rewards.text = "+%d Stat  ·  +%d Skill" % [stat_pts, skill_pts]
 	level_up_root.visible = true
-	level_up_time = 2.8
+	level_up_time = 1.65
 
 func _on_nav(kind: String) -> void:
 	var ui = get_tree().get_first_node_in_group("production_rpg_ui")
