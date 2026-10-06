@@ -2,10 +2,13 @@ class_name BramblePlayerController
 extends CharacterBody2D
 
 @export var move_speed := 250.0
-@export var move_acceleration := 2050.0
-@export var move_deceleration := 2950.0
-@export var turn_acceleration := 3650.0
-@export var dash_speed := 720.0
+# Kein Name Harvest World uses 500 speed with 3300/4900/6200 tuning.
+# Bramble currently runs at half that simulation speed, so preserve the same
+# acceleration/deceleration/turn ratios instead of using unrelated numbers.
+@export var move_acceleration := 1650.0
+@export var move_deceleration := 2450.0
+@export var turn_acceleration := 3100.0
+@export var dash_speed := 875.0
 @export var dash_duration := 0.21
 @export var attack_range := 125.0
 @export var interact_range := 115.0
@@ -74,6 +77,7 @@ func _physics_process(delta: float) -> void:
 		attacking = false
 	net_tick = maxf(0.0, net_tick - delta)
 	dash_cooldown = maxf(0.0, dash_cooldown - delta)
+	var was_dashing := _dash_remaining > 0.0
 	_dash_remaining = maxf(0.0, _dash_remaining - delta)
 
 	var manual_input := Vector2.ZERO
@@ -99,6 +103,10 @@ func _physics_process(delta: float) -> void:
 		var dash_now := dash_speed * (1.0 - progress * 0.28)
 		velocity = _dash_direction * dash_now
 	else:
+		if was_dashing:
+			# Match Kein Name: retain 58% locomotion velocity when the dash ends
+			# instead of snapping straight into the next input sample.
+			velocity = _dash_direction * move_speed * 0.58
 		var target_velocity := input_vec * move_speed
 		var current_speed := velocity.length()
 		var target_speed := target_velocity.length()
