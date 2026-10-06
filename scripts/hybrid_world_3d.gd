@@ -293,6 +293,46 @@ func _sync_dynamic_proxies() -> void:
 			proxy.texture = source.sprite_frames.get_frame_texture(source.animation, source.frame)
 		elif proxy.texture == null:
 			proxy.texture = BrambleWorldPresentationConfig.game_tex("monsters/moorling/directions/kit60_front.png")
+	for node in get_tree().get_nodes_in_group("interactable"):
+		if not (node is Node2D):
+			continue
+		var source_sprite := node.get_node_or_null("Sprite") as Sprite2D
+		if source_sprite == null or source_sprite.texture == null:
+			continue
+		var id := node.get_instance_id()
+		alive_ids[id] = true
+		var proxy: Sprite3D = _entity_proxies.get(id)
+		if proxy == null:
+			proxy = Sprite3D.new()
+			proxy.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			proxy.pixel_size = NPC_BILLBOARD_PIXEL_SIZE
+			proxy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+			_dynamic_root.add_child(proxy)
+			_entity_proxies[id] = proxy
+		proxy.texture = source_sprite.texture
+		proxy.position = simulation_to_world(node.global_position, 0.84)
+		proxy.visible = node.visible
+
+	for node in get_tree().get_nodes_in_group("loot"):
+		if not (node is Node2D):
+			continue
+		var loot_sprite := node.get_node_or_null("Sprite") as Sprite2D
+		if loot_sprite == null or loot_sprite.texture == null:
+			continue
+		var id := node.get_instance_id()
+		alive_ids[id] = true
+		var proxy: Sprite3D = _entity_proxies.get(id)
+		if proxy == null:
+			proxy = Sprite3D.new()
+			proxy.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			proxy.pixel_size = 0.0036
+			proxy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+			_dynamic_root.add_child(proxy)
+			_entity_proxies[id] = proxy
+		proxy.texture = loot_sprite.texture
+		proxy.position = simulation_to_world(node.global_position, 0.34)
+		proxy.visible = node.visible
+
 	for id in _entity_proxies.keys():
 		if not alive_ids.has(id):
 			var stale: Sprite3D = _entity_proxies[id]
