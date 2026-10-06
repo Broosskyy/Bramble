@@ -2,6 +2,11 @@ class_name BramblePlayerController
 extends CharacterBody2D
 
 @export var move_speed := 250.0
+@export var move_acceleration := 2050.0
+@export var move_deceleration := 2950.0
+@export var turn_acceleration := 3650.0
+@export var dash_speed := 720.0
+@export var dash_duration := 0.21
 @export var attack_range := 125.0
 @export var interact_range := 115.0
 @export var auto_combat_enabled := true
@@ -19,6 +24,8 @@ var dash_cooldown := 0.0
 var combat_blocked := false
 var _virtual_move_vector := Vector2.ZERO
 var _attack_lock_remaining := 0.0
+var _dash_remaining := 0.0
+var _dash_direction := Vector2.DOWN
 
 func _ready() -> void:
 	add_to_group("player")
@@ -67,10 +74,15 @@ func _physics_process(delta: float) -> void:
 		attacking = false
 	net_tick = maxf(0.0, net_tick - delta)
 	dash_cooldown = maxf(0.0, dash_cooldown - delta)
+	_dash_remaining = maxf(0.0, _dash_remaining - delta)
 
 	var manual_input := Vector2.ZERO
 	if not combat_blocked:
-		manual_input = _combined_move_input()
+		manual_input = _camera_relative_input(_combined_move_input())
+	if Input.is_action_just_pressed("dash") and dash_cooldown <= 0.0 and not combat_blocked:
+		dash_cooldown = 1.15
+		_dash_remaining = dash_duration
+		_dash_direction = manual_input.normalized() if manual_input.length_squared() > 0.0004 else _dash_direction
 	var input_vec := manual_input
 	var combat_target := _current_combat_target()
 	var combat_direction := Vector2.ZERO
@@ -82,7 +94,23 @@ func _physics_process(delta: float) -> void:
 			input_vec = combat_direction * auto_approach_speed_multiplier
 			if input_vec.length() > 1.0:
 				input_vec = input_vec.normalized()
-	velocity = input_vec * move_speed
+	if _dash_remaining > 0.0:
+		var progress := 1.0 - (_dash_remaining / maxf(0.001, dash_duration))
+		var dash_now := dash_speed * (1.0 - progress * 0.28)
+		velocity = _dash_direction * dash_now
+	else:
+		var target_velocity := input_vec * move_speed
+		var current_speed := velocity.length()
+		var target_speed := target_velocity.length()
+		var braking := input_vec.length_squared() <= 0.0004 or target_speed < current_speed * 0.55
+		var rate := move_acceleration
+		if braking:
+			rate = move_deceleration
+		elif current_speed > 1.0 and target_speed > 1.0 and velocity.normalized().dot(target_velocity.normalized()) < 0.25:
+			rate = turn_acceleration
+		velocity = velocity.move_toward(target_velocity, rate * delta)
+		if input_vec.length_squared() <= 0.0004 and velocity.length() < 2.0:
+			velocity = Vector2.ZERO
 	move_and_slide()
 	_clamp_to_playable_world()
 
@@ -90,13 +118,11 @@ func _physics_process(delta: float) -> void:
 	if net and net.mode != "offline" and input_vec.length_squared() > 0.01 and net_tick <= 0.0:
 		net_tick = 0.10
 		net.send_intent("move", {"direction_x": input_vec.x, "direction_y": input_vec.y})
-	if Input.is_action_just_pressed("dash") and dash_cooldown <= 0.0 and not combat_blocked:
-		dash_cooldown = 1.15
-		if net and net.mode != "offline":
-			net.send_intent("dash", {"direction_x": input_vec.x, "direction_y": input_vec.y})
+	if _dash_remaining > 0.0 and net and net.mode != "offline":
+		net.send_intent("dash", {"direction_x": _dash_direction.x, "direction_y": _dash_direction.y})
 
-	var facing_vec := input_vec
-	if combat_target and manual_input.length_squared() <= 0.0004:
+	var facing_vec := velocity.normalized() if velocity.length_squared() > 4.0 else input_vec
+	if combat_target and manual_input.length_squared() <= 0.0004 and _dash_remaining <= 0.0:
 		combat_direction = global_position.direction_to(combat_target.global_position)
 		facing_vec = combat_direction
 	if absf(facing_vec.x) > 0.05 and not visual.use_production_assets:
@@ -148,6 +174,12 @@ func _combined_move_input() -> Vector2:
 	if hardware.length_squared() > 0.0004:
 		return hardware
 	return _virtual_move_vector
+
+func _camera_relative_input(screen_input: Vector2) -> Vector2:
+	var hybrid = get_tree().get_first_node_in_group("hybrid_world_3d")
+	if hybrid and hybrid.has_method("is_active") and hybrid.is_active() and hybrid.has_method("camera_relative_move"):
+		return hybrid.camera_relative_move(screen_input)
+	return screen_input
 
 func _clamp_to_playable_world() -> void:
 	# Camera limits alone do not stop a CharacterBody2D from leaving the authored
