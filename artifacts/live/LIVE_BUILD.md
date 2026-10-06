@@ -1,20 +1,32 @@
-BRAMBLE LIVE BUILD
+# BRAMBLE LIVE BUILD
 
-Milestone: m04.31b
-Commit: ae5a633cf3e768c82d6ee580af3d77a3a5847bac
-Date: 2026-09-18
-Godot: 4.7.2
-Production Slice: res://scenes/world/amberway_moor_m04_30.tscn
-Main Scene Smoke: PASS
-M04.31B Smoke / Capture / Profile: PASS
-Landscape Capture: artifacts/m04_31b/14_final_action_landscape.png
-Portrait Capture: artifacts/m04_31b/15_final_action_portrait.png
-Gameplay Capture: artifacts/m04_31b/04_attack_impact.png
+Milestone: shared Web + Android build pipeline
+Date: 2026-10-06
+Godot: 4.7.2.stable.official.ed1daf0bf
+Baseline: abf19672a315708378be3f6ecb52ac75ed3c9f1b
+Source: accompanying build-pipeline commit; exact build identity is emitted in build/build-manifest.json
+Main Scene: res://scenes/main.tscn
 
-The existing `artifacts/live/latest_*.png` files contain preserved,
-uncommitted M04.3 WIP and were intentionally not overwritten or staged.
+- Source mobile contract: PASS
+- Godot import / script parse: PASS
+- GDScript mobile gate: PASS
+- Main scene headless smoke: PASS
+- Release Web export and exported-PCK smoke: PASS
+- Web artifact/transfer audit: PASS (approximately 41.5 MiB estimated gzip)
+- Android debug APK export: PASS (ARM64 + ARMv7, approximately 87 MiB)
+- APK ZIP, package, exported launcher alias and v2/v3 signatures: PASS
+- Native runtime captures: PASS (fresh files listed below)
 
-Known Issues:
-- Decision B: exact four-direction windup/commit body + armor pack required.
-- Android build is blocked by the missing export preset.
-- Real-device validation is blocked by unavailable ADB/device access.
+| Capture | Resolution |
+|---|---|
+| artifacts/live/latest_landscape.png | 1920 × 1080 |
+| artifacts/live/latest_portrait.png | 1080 × 1920 |
+| artifacts/live/latest_gameplay.png | 1920 × 1080 |
+
+These images are actual Godot native-runtime captures under a software X11
+display. They do not constitute browser rendering or physical Android evidence.
+No gameplay migration or 3D scene promotion is claimed in this milestone.
+
+Remaining: real-browser input/fullscreen validation, physical Android install
+and performance, Kein-Name target/auto-attack migration, and separate 3D/raid
+integration. Older M04.31B spatial evidence remains in its milestone folders.

@@ -1,0 +1,37 @@
+name: Godot 4.7.2 export tools
+description: Install the pinned editor and matching Web/Android templates
+runs:
+  using: composite
+  steps:
+    - uses: actions/cache@v4
+      id: godot-cache
+      with:
+        path: |
+          .tools/Godot_v4.7.2-stable_linux.x86_64
+          ~/.local/share/godot/export_templates/4.7.2.stable
+        key: godot-4.7.2-linux-web-android-v2
+    - if: steps.godot-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        set -euo pipefail
+        mkdir -p .tools
+        curl -L --fail --retry 4 -o .tools/godot.zip "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip"
+        curl -L --fail --retry 4 -o .tools/templates.tpz "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz"
+        unzip -q .tools/godot.zip -d .tools
+        python3 - <<'PY'
+        from pathlib import Path
+        from zipfile import ZipFile
+        target = Path.home() / '.local/share/godot/export_templates/4.7.2.stable'
+        target.mkdir(parents=True, exist_ok=True)
+        required = {'version.txt', 'android_debug.apk', 'android_release.apk'}
+        with ZipFile('.tools/templates.tpz') as archive:
+            for name in archive.namelist():
+                basename = Path(name).name
+                if basename in required or (basename.startswith('web_') and basename.endswith('.zip')):
+                    (target / Path(name).name).write_bytes(archive.read(name))
+        PY
+        rm .tools/godot.zip .tools/templates.tpz
+    - shell: bash
+      run: |
+        chmod +x .tools/Godot_v4.7.2-stable_linux.x86_64
+        echo "GODOT_BIN=$GITHUB_WORKSPACE/.tools/Godot_v4.7.2-stable_linux.x86_64" >> "$GITHUB_ENV"

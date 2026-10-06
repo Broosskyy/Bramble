@@ -7,6 +7,7 @@
 
 # Runtime evidence is versioned as source PNGs; editor-generated imports are not.
 artifacts/**/*.import
+docs/**/*.import
 
 # OS / IDE
 .DS_Store
@@ -56,3 +57,9 @@ build/
 # artifacts/live/  — live runtime captures
 # artifacts/m*/    — milestone screenshots
 # docs/            — documentation
+
+# Local build tooling and signing material
+.tools/
+*.keystore
+*.jks
+export_credentials.cfg

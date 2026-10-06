@@ -1,4 +1,4 @@
-name: Web Mobile Gate
+name: Web + Android Builds
 
 on:
   workflow_dispatch:
@@ -12,56 +12,87 @@ on:
       - "assets/**"
       - "data/**"
       - "tools/**"
+      - ".github/actions/setup-godot/**"
+      - ".github/workflows/web-mobile-gate.yml"
+  pull_request:
+    paths:
+      - "project.godot"
+      - "export_presets.cfg"
+      - "scenes/**"
+      - "scripts/**"
+      - "assets/**"
+      - "data/**"
+      - "tools/**"
+      - ".github/actions/setup-godot/**"
       - ".github/workflows/web-mobile-gate.yml"
 
 permissions:
   contents: read
 
 jobs:
-  export-and-validate:
+  build:
+    name: Build ${{ matrix.target }}
     runs-on: ubuntu-latest
-    timeout-minutes: 35
-    env:
-      GODOT_VERSION: "4.7.2"
-      GODOT_BIN: ${{ github.workspace }}/.tools/Godot_v4.7.2-stable_linux.x86_64
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [web, android]
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Godot editor and web templates
-        shell: bash
+      - uses: ./.github/actions/setup-godot
+      - if: matrix.target == 'android'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - if: matrix.target == 'android'
+        uses: android-actions/setup-android@v3
+      - if: matrix.target == 'android'
+        name: Install Android export dependencies
+        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+      - if: matrix.target == 'android'
+        name: Reuse test signing key
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/bramble/debug.keystore
+          key: bramble-android-test-key-v1
+      - name: Build and validate
+        run: python3 tools/build_game.py --target "${{ matrix.target }}"
+      - if: matrix.target == 'web'
+        name: Install runtime capture dependencies
         run: |
-          set -euo pipefail
-          mkdir -p .tools "$HOME/.local/share/godot/export_templates/4.7.2.stable"
-          curl -L --fail --retry 4 -o .tools/godot.zip "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip"
-          curl -L --fail --retry 4 -o .tools/templates.tpz "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz"
-          unzip -q .tools/godot.zip -d .tools
-          unzip -q .tools/templates.tpz -d .tools/templates
-          mv .tools/templates/templates/* "$HOME/.local/share/godot/export_templates/4.7.2.stable/"
-          chmod +x "$GODOT_BIN"
-
-      - name: Source contract
-        run: python3 tools/validate_web_mobile_source.py
-
-      - name: Import project
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb libgl1-mesa-dri
+      - if: matrix.target == 'web'
+        name: Capture native production runtime
         run: |
-          "$GODOT_BIN" --headless --editor --path . --quit-after 2
-
-      - name: GDScript mobile gate
-        run: |
-          "$GODOT_BIN" --headless --path . --script tools/web_mobile_gate_test.gd
-
-      - name: Export web release
-        run: |
-          mkdir -p build/web
-          "$GODOT_BIN" --headless --path . --export-release "Web Mobile Gate" build/web/index.html
-
-      - name: Validate web artifact
-        run: python3 tools/validate_web_export.py --build-dir build/web --max-transfer-mib 48
-
-      - name: Upload playable artifact
+          rm -f artifacts/live/latest_landscape.png artifacts/live/latest_portrait.png artifacts/live/latest_gameplay.png
+          timeout 180 xvfb-run -a "$GODOT_BIN" --audio-driver Dummy --path . -- --live-capture gameplay
+          python3 - <<'PY'
+          from pathlib import Path
+          for name in ('latest_landscape.png', 'latest_portrait.png', 'latest_gameplay.png'):
+              file = Path('artifacts/live') / name
+              assert file.is_file() and file.stat().st_size > 0, file
+          PY
+      - name: Upload ready build
         uses: actions/upload-artifact@v4
         with:
-          name: bramble-web-mobile
-          path: build/web
+          name: bramble-${{ matrix.target }}-${{ github.sha }}
+          path: |
+            build/bramble-web.zip
+            build/web/**
+            build/android/Bramble.apk
+            build/build-manifest.json
           if-no-files-found: error
+          retention-days: 30
+      - if: always()
+        name: Upload build diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: bramble-${{ matrix.target }}-diagnostics-${{ github.sha }}
+          path: |
+            build/logs/**
+            artifacts/live/latest_*.png
+          if-no-files-found: ignore
           retention-days: 14
