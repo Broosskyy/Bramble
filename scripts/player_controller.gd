@@ -190,12 +190,13 @@ func basic_attack() -> void:
 		# Keeping the selected target lets the Kein-Name auto-approach take over
 		# on the next physics frame instead of wasting an attack into empty space.
 		return
-	visual.set_facing_from_velocity(global_position.direction_to(target.global_position))
+	var attack_direction := global_position.direction_to(target.global_position)
+	visual.set_facing_from_velocity(attack_direction)
 	var target_id: int = targeting.get_target_entity_id() if targeting else 0
 	attacking = true
 	attack_cooldown = attack_interval
 	_attack_lock_remaining = attack_lock_duration
-	visual.set_state("attack")
+	visual.play_attack_toward(attack_direction)
 	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
 	if net and net.mode != "offline":
 		net.send_intent("basic_attack", {"target_entity_id": target_id})
