@@ -55,6 +55,8 @@ func _ready() -> void:
 		dev_hud.visible = debug_legacy_gallery
 	if prod_hud:
 		prod_hud.visible = not debug_legacy_gallery
+	if not debug_legacy_gallery:
+		_ensure_hybrid_world()
 	var args := _cli_args()
 	_handle_network_args(args)
 	if _has_arg("--live-capture"):
@@ -95,8 +97,12 @@ func _smoke_test() -> void:
 	await _wait_frames(8)
 	for _attempt in range(60):
 		var production := get_node_or_null("VisualMasterWorld") as Node2D
+		var hybrid = get_tree().get_first_node_in_group("hybrid_world_3d")
 		var enemies := get_tree().get_nodes_in_group("enemy")
-		if production != null and production.visible and enemies.size() > 0:
+		var world_ready := production != null and production.visible
+		if hybrid and hybrid.has_method("is_active"):
+			world_ready = world_ready or hybrid.is_active()
+		if world_ready and enemies.size() > 0:
 			print("BRAMBLE smoke test: PASS")
 			get_tree().quit()
 			return
@@ -275,6 +281,17 @@ func _ensure_m04_services() -> void:
 	_add_service_if_missing("character_state_service", "res://scripts/character_state_service.gd", "CharacterStateService")
 	_add_service_if_missing("production_equipment_visual", "res://scripts/production_equipment_visual.gd", "ProductionEquipmentVisual")
 	_add_service_if_missing("production_rpg_ui", "res://scripts/production_rpg_ui.gd", "ProductionRpgUi")
+
+func _ensure_hybrid_world() -> void:
+	if get_tree().get_first_node_in_group("hybrid_world_3d"):
+		return
+	var script := load("res://scripts/hybrid_world_3d.gd")
+	if script == null:
+		push_error("BRAMBLE hybrid 3D renderer missing")
+		return
+	var world: Node = script.new()
+	world.name = "HybridWorld3D"
+	add_child(world)
 
 func _add_service_if_missing(group: String, script_path: String, node_name: String) -> void:
 	if get_tree().get_first_node_in_group(group):

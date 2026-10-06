@@ -56,11 +56,19 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_handle_pick(get_viewport().get_canvas_transform().affine_inverse() * event.position)
+		_handle_pick(_screen_to_simulation(event.position))
 	elif event is InputEventScreenTouch and event.pressed:
-		_handle_pick(get_viewport().get_canvas_transform().affine_inverse() * event.position)
+		_handle_pick(_screen_to_simulation(event.position))
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_Q:
 		_cycle_target()
+
+func _screen_to_simulation(screen_pos: Vector2) -> Vector2:
+	var hybrid = get_tree().get_first_node_in_group("hybrid_world_3d")
+	if hybrid and hybrid.has_method("is_active") and hybrid.is_active() and hybrid.has_method("screen_to_simulation"):
+		var projected: Vector2 = hybrid.screen_to_simulation(screen_pos)
+		if projected != Vector2.INF:
+			return projected
+	return get_viewport().get_canvas_transform().affine_inverse() * screen_pos
 
 func _handle_pick(world_pos: Vector2) -> void:
 	if _try_pickup_at(world_pos):
