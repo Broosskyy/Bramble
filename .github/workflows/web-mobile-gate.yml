@@ -4,18 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      - "project.godot"
-      - "export_presets.cfg"
-      - "scenes/**"
-      - "scripts/**"
-      - "assets/**"
-      - "data/**"
-      - "tools/**"
-      - ".github/actions/setup-godot/**"
-      - ".github/workflows/web-mobile-gate.yml"
   pull_request:
     paths:
+      - "vercel.json"
       - "project.godot"
       - "export_presets.cfg"
       - "scenes/**"
@@ -98,3 +89,27 @@ jobs:
             artifacts/live/latest_*.png
           if-no-files-found: ignore
           retention-days: 14
+
+  publish-web:
+    name: Publish validated Web release
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: bramble-web-${{ github.sha }}
+          path: build
+      - name: Publish matching Web export
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="web-$GITHUB_SHA"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "$tag" build/bramble-web.zip build/build-manifest.json --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" build/bramble-web.zip build/build-manifest.json --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title "Web build ${GITHUB_SHA:0:7}" --notes "Validated Godot Web export. Source commit: $GITHUB_SHA. Device validation remains pending."
+          fi

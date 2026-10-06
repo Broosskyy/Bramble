@@ -61,15 +61,37 @@ The single-threaded Web export does not require SharedArrayBuffer isolation.
 ## GitHub builds
 
 **Actions → Web + Android Builds → Run workflow** builds both targets.
-Pushes to `main` and relevant pull requests build them automatically. Web and
+Every push to `main` and relevant pull requests build them automatically. Web and
 Android are independent matrix jobs, so a failed APK does not cancel the Web
 job. Download the corresponding `bramble-web-<commit>` or
 `bramble-android-<commit>` artifact after a successful run.
 
 The workflow also captures the native production scene in portrait and
 landscape. These are native runtime captures, not browser or physical-device
-evidence. The workflow creates downloadable artifacts; it does not publish a
-website or upload to an app store.
+evidence. The workflow creates downloadable artifacts and, after both main builds pass,
+publishes the validated Web ZIP and manifest in a public prerelease tagged
+`web-<full-source-commit>`. Pull requests never publish releases. The release
+job alone has repository write permission; source builds remain read-only.
+
+## Vercel hosting
+
+Connect `Broosskyy/Bramble`, branch `main`, to Vercel with the repository root
+as Root Directory and Framework Preset **Other**. The committed `vercel.json`
+sets the build command to `python3 tools/fetch_web_release.py` and output to
+`build/web`; no Node dependency installation or Godot installation on Vercel
+is needed. Automatic Vercel deployments are enabled only for `main`.
+
+Vercel waits up to 20 minutes for the release matching its exact
+`VERCEL_GIT_COMMIT_SHA`. It verifies source identity, clean source, bundle size,
+SHA-256, required runtime files and ZIP integrity before serving the complete
+export. It never substitutes an older release. A failed/missing GitHub build
+fails the Vercel build and preserves the previous successful deployment.
+No GitHub or Vercel secret is needed by the download script because this
+repository and its Web release assets are public. `build-info.json` exposes
+the deployed source revision and checksums for diagnosis.
+
+For this deployment, the production URL is https://bramble-world.vercel.app/.
+This workflow does not upload Android builds to an app store.
 
 ## Test signing and future store release
 
