@@ -53,7 +53,7 @@ var _web_platform_service = null
 var _safe_insets := Vector4.ZERO
 
 const STICK_RADIUS := 52.0
-const STICK_DEADZONE := 0.18
+const STICK_DEADZONE := 0.12
 var _stick_finger_id := -1
 var _stick_vector := Vector2.ZERO
 
