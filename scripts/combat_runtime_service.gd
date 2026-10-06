@@ -33,6 +33,7 @@ func resolve_basic_attack(attacker: Node2D, target_entity_id: int = 0) -> Dictio
 		damage = cs.physical_attack_power()
 	if target.has_method("take_damage"):
 		target.take_damage(damage, attacker)
+	_spawn_damage_number(target, damage, false)
 	combat_event.emit("basic_attack", {"target_id": _entity_id(target), "damage": damage})
 	return {"ok": true, "damage": damage, "target_id": _entity_id(target)}
 
@@ -65,6 +66,7 @@ func resolve_skill(attacker: Node2D, slot: int, target_entity_id: int = 0) -> Di
 	var damage: int = cs.skill_power(skill)
 	if target.has_method("take_damage"):
 		target.take_damage(damage, attacker)
+	_spawn_damage_number(target, damage, true)
 	_spawn_skill_vfx(attacker, target)
 	_skill_cd_until[slot] = float(skill.get("cooldown", skill.get("cd", _skill_cd_total[slot])))
 	skill_cooldown_changed.emit(slot, _skill_cd_until[slot], _skill_cd_total[slot])
@@ -130,6 +132,26 @@ func _spawn_loot_drops(enemy: Node2D, gold_reward: int) -> void:
 		ore.gold_amount = 0
 		ore.global_position = origin + Vector2(0, 18)
 		parent.add_child(ore)
+
+func _spawn_damage_number(target: Node2D, damage: int, emphasized: bool) -> void:
+	if target == null or not is_instance_valid(target):
+		return
+	var label := Label.new()
+	label.text = str(damage)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.z_index = 950
+	label.add_theme_font_size_override("font_size", 30 if emphasized else 24)
+	label.add_theme_color_override("font_color", Color("#ffd35a") if emphasized else Color.WHITE)
+	label.add_theme_color_override("font_outline_color", Color(0.05, 0.04, 0.03, 0.95))
+	label.add_theme_constant_override("outline_size", 5)
+	label.position = target.global_position + Vector2(-18, -112)
+	get_tree().current_scene.add_child(label)
+	var end_position := label.position + Vector2(randf_range(-8.0, 8.0), -42.0)
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(label, "position", end_position, 0.42).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(label, "modulate:a", 0.0, 0.42).set_delay(0.08)
+	tween.chain().tween_callback(label.queue_free)
 
 func _spawn_skill_vfx(_attacker: Node2D, target: Node2D) -> void:
 	var fx := Sprite2D.new()

@@ -4,6 +4,10 @@ extends CharacterBody2D
 @export var move_speed := 250.0
 @export var attack_range := 125.0
 @export var interact_range := 115.0
+@export var auto_combat_enabled := true
+@export_range(0.5, 1.25, 0.05) var auto_approach_speed_multiplier := 1.0
+@export var attack_interval := 0.52
+@export var attack_lock_duration := 0.24
 
 @onready var visual: BramblePlayerVisual = $Visual
 @onready var equipment_rig: BrambleEquipmentRig = $Visual/EquipmentRig
@@ -13,6 +17,8 @@ var attack_cooldown := 0.0
 var net_tick := 0.0
 var dash_cooldown := 0.0
 var combat_blocked := false
+var _virtual_move_vector := Vector2.ZERO
+var _attack_lock_remaining := 0.0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -38,6 +44,8 @@ func _ready() -> void:
 func _on_player_died() -> void:
 	combat_blocked = true
 	attacking = false
+	_attack_lock_remaining = 0.0
+	_virtual_move_vector = Vector2.ZERO
 	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
 	if targeting:
 		targeting.clear_target()
@@ -54,14 +62,29 @@ func _on_animation_finished() -> void:
 
 func _physics_process(delta: float) -> void:
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
+	_attack_lock_remaining = maxf(0.0, _attack_lock_remaining - delta)
+	if attacking and _attack_lock_remaining <= 0.0:
+		attacking = false
 	net_tick = maxf(0.0, net_tick - delta)
 	dash_cooldown = maxf(0.0, dash_cooldown - delta)
 
-	var input_vec := Vector2.ZERO
+	var manual_input := Vector2.ZERO
 	if not combat_blocked:
-		input_vec = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		manual_input = _combined_move_input()
+	var input_vec := manual_input
+	var combat_target := _current_combat_target()
+	var combat_direction := Vector2.ZERO
+	var combat_distance := INF
+	if not combat_blocked and auto_combat_enabled and manual_input.length_squared() <= 0.0004 and combat_target:
+		combat_distance = global_position.distance_to(combat_target.global_position)
+		combat_direction = global_position.direction_to(combat_target.global_position)
+		if combat_distance > maxf(42.0, attack_range - 8.0):
+			input_vec = combat_direction * auto_approach_speed_multiplier
+			if input_vec.length() > 1.0:
+				input_vec = input_vec.normalized()
 	velocity = input_vec * move_speed
 	move_and_slide()
+	_clamp_to_playable_world()
 
 	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
 	if net and net.mode != "offline" and input_vec.length_squared() > 0.01 and net_tick <= 0.0:
@@ -72,9 +95,13 @@ func _physics_process(delta: float) -> void:
 		if net and net.mode != "offline":
 			net.send_intent("dash", {"direction_x": input_vec.x, "direction_y": input_vec.y})
 
-	if absf(input_vec.x) > 0.05 and not visual.use_production_assets:
-		visual.flip_h = input_vec.x < 0.0
-	visual.set_facing_from_velocity(input_vec)
+	var facing_vec := input_vec
+	if combat_target and manual_input.length_squared() <= 0.0004:
+		combat_direction = global_position.direction_to(combat_target.global_position)
+		facing_vec = combat_direction
+	if absf(facing_vec.x) > 0.05 and not visual.use_production_assets:
+		visual.flip_h = facing_vec.x < 0.0
+	visual.set_facing_from_velocity(facing_vec)
 
 	if not combat_blocked:
 		if Input.is_action_just_pressed("basic_attack"):
@@ -91,6 +118,11 @@ func _physics_process(delta: float) -> void:
 			elif state:
 				state.use_potion()
 
+	if not combat_blocked and auto_combat_enabled and manual_input.length_squared() <= 0.0004 and combat_target:
+		combat_distance = global_position.distance_to(combat_target.global_position)
+		if combat_distance <= attack_range and attack_cooldown <= 0.0 and not attacking:
+			basic_attack()
+
 	_sync_authority_position(net)
 
 	if not attacking and not combat_blocked:
@@ -98,6 +130,31 @@ func _physics_process(delta: float) -> void:
 			visual.set_state("run")
 		else:
 			visual.set_state("idle")
+
+func set_virtual_move_vector(value: Vector2) -> void:
+	# Mobile HUD feeds a true analogue vector here. Keeping this separate from
+	# InputMap avoids synthetic key states getting stuck across touch/layout events.
+	var v := value
+	if v.length() > 1.0:
+		v = v.normalized()
+	_virtual_move_vector = Vector2.ZERO if v.length_squared() < 0.0004 else v
+
+func clear_virtual_move_vector() -> void:
+	_virtual_move_vector = Vector2.ZERO
+
+func _combined_move_input() -> Vector2:
+	var hardware := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	# Hardware input wins for desktop/dev testing. Mobile remains fully analogue.
+	if hardware.length_squared() > 0.0004:
+		return hardware
+	return _virtual_move_vector
+
+func _clamp_to_playable_world() -> void:
+	# Camera limits alone do not stop a CharacterBody2D from leaving the authored
+	# world. A small inset keeps the player/collision capsule visible at the edge.
+	var bounds := BrambleWorldPresentationConfig.WORLD_MAP_BOUNDS.grow(-24.0)
+	global_position.x = clampf(global_position.x, bounds.position.x, bounds.end.x)
+	global_position.y = clampf(global_position.y, bounds.position.y, bounds.end.y)
 
 func _sync_authority_position(net: BrambleNetworkSession) -> void:
 	if net == null or net.mode == "offline":
@@ -119,9 +176,25 @@ func basic_attack() -> void:
 	if attacking or attack_cooldown > 0.0 or combat_blocked:
 		return
 	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	var target: Node2D = targeting.get_target() if targeting and targeting.has_method("get_target") else null
+	if target == null and targeting and targeting.has_method("target_nearest"):
+		target = targeting.target_nearest()
+	if target == null or not is_instance_valid(target):
+		return
+	if target.has_method("is_combat_alive") and not target.is_combat_alive():
+		if targeting:
+			targeting.clear_target()
+		return
+	var distance := global_position.distance_to(target.global_position)
+	if distance > attack_range:
+		# Keeping the selected target lets the Kein-Name auto-approach take over
+		# on the next physics frame instead of wasting an attack into empty space.
+		return
+	visual.set_facing_from_velocity(global_position.direction_to(target.global_position))
 	var target_id: int = targeting.get_target_entity_id() if targeting else 0
 	attacking = true
-	attack_cooldown = 0.52
+	attack_cooldown = attack_interval
+	_attack_lock_remaining = attack_lock_duration
 	visual.set_state("attack")
 	var net := get_tree().get_first_node_in_group("network_session") as BrambleNetworkSession
 	if net and net.mode != "offline":
@@ -131,6 +204,17 @@ func basic_attack() -> void:
 	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
 	if runtime:
 		runtime.resolve_basic_attack(self, target_id)
+
+func _current_combat_target() -> Node2D:
+	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+	if targeting == null or not targeting.has_method("get_target"):
+		return null
+	var target: Node2D = targeting.get_target()
+	if target == null or not is_instance_valid(target):
+		return null
+	if target.has_method("is_combat_alive") and not target.is_combat_alive():
+		return null
+	return target
 
 func use_skill(slot: int) -> void:
 	if attacking or combat_blocked:

@@ -27,6 +27,7 @@ var _direction := "front"
 var _state := "idle"
 var _dead := false
 var _respawn_timer := 0.0
+var _death_hide_timer := 0.0
 var _last_attacker: Node = null
 var _collision: CollisionShape2D
 
@@ -147,6 +148,9 @@ func _set_presentation_state(next: String) -> void:
 
 func _physics_process(delta: float) -> void:
 	if _dead:
+		_death_hide_timer = maxf(0.0, _death_hide_timer - delta)
+		if _death_hide_timer <= 0.0 and visible:
+			visible = false
 		_respawn_timer -= delta
 		if _respawn_timer <= 0.0:
 			_respawn()
@@ -158,6 +162,8 @@ func _physics_process(delta: float) -> void:
 
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
 	hit_flash = maxf(0.0, hit_flash - delta)
+	if _visual and _state == "hit" and hit_flash <= 0.0:
+		_set_presentation_state("idle")
 
 	if _visual:
 		_visual.modulate = Color(1.5, 1.5, 1.5, 1.0) if hit_flash > 0.0 else Color.WHITE
@@ -240,8 +246,8 @@ func take_damage(amount: int, attacker: Node = null) -> void:
 		return
 	if attacker:
 		_last_attacker = attacker
-	hp -= amount
-	hit_flash = 0.10
+	hp = maxi(0, hp - amount)
+	hit_flash = 0.14
 	if _visual:
 		_set_presentation_state("hit")
 	if hp <= 0:
@@ -261,6 +267,7 @@ func _die() -> void:
 	_dead = true
 	_state = "dead"
 	velocity = Vector2.ZERO
+	_death_hide_timer = 0.48
 	if _visual:
 		_set_presentation_state("defeated")
 	var runtime = get_tree().get_first_node_in_group("combat_runtime_service")
@@ -270,7 +277,6 @@ func _die() -> void:
 	if targeting and targeting.has_method("get_target") and targeting.get_target() == self:
 		if targeting.has_method("clear_target"):
 			targeting.clear_target()
-	visible = false
 	if _collision:
 		_collision.disabled = true
 	_respawn_timer = respawn_delay
@@ -278,6 +284,7 @@ func _die() -> void:
 func _respawn() -> void:
 	_dead = false
 	_state = "idle"
+	_death_hide_timer = 0.0
 	hp = max_hp
 	global_position = spawn_position
 	visible = true
