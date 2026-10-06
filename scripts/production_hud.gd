@@ -55,7 +55,7 @@ var _safe_insets := Vector4.ZERO
 const STICK_RADIUS := 52.0
 const STICK_DEADZONE := 0.18
 var _stick_finger_id := -1
-var _stick_pressed := {"move_left": false, "move_right": false, "move_up": false, "move_down": false}
+var _stick_vector := Vector2.ZERO
 
 func _ready() -> void:
 	print("BRAMBLE production HUD ready")
@@ -393,10 +393,6 @@ func _styled_bar(pos: Vector2, size: Vector2, color: Color) -> ProgressBar:
 
 func _bind_touch() -> void:
 	touch_root.gui_input.connect(_on_touch_root_gui_input)
-	_bind_btn(touch_root.get_node("Up"), "move_up")
-	_bind_btn(touch_root.get_node("Down"), "move_down")
-	_bind_btn(touch_root.get_node("Left"), "move_left")
-	_bind_btn(touch_root.get_node("Right"), "move_right")
 	attack_btn.button_down.connect(func(): Input.action_press("basic_attack"))
 	attack_btn.button_up.connect(func(): Input.action_release("basic_attack"))
 	for i in range(skill_btns.size()):
@@ -405,70 +401,76 @@ func _bind_touch() -> void:
 		slot.button_down.connect(func(): Input.action_press(action))
 		slot.button_up.connect(func(): Input.action_release(action))
 
-func _bind_btn(button: BaseButton, action: String) -> void:
-	button.button_down.connect(func(): Input.action_press(action))
-	button.button_up.connect(func(): Input.action_release(action))
-
 func _on_touch_root_gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			if _stick_finger_id == -1:
 				_stick_finger_id = event.index
-				_apply_stick_vector(_stick_local_from_event(event))
+				_apply_stick_vector(_stick_vector_from_event(event))
 		elif event.index == _stick_finger_id:
 			_stick_finger_id = -1
 			_apply_stick_vector(Vector2.ZERO)
 	elif event is InputEventScreenDrag and event.index == _stick_finger_id:
-		_apply_stick_vector(_stick_local_from_event(event))
+		_apply_stick_vector(_stick_vector_from_event(event))
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			_stick_finger_id = 0
-			_apply_stick_vector(_stick_local_from_event(event))
+			_apply_stick_vector(_stick_vector_from_event(event))
 		else:
 			_stick_finger_id = -1
 			_apply_stick_vector(Vector2.ZERO)
 	elif event is InputEventMouseMotion and _stick_finger_id == 0 and (event.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
-		_apply_stick_vector(_stick_local_from_event(event))
+		_apply_stick_vector(_stick_vector_from_event(event))
 
-func _stick_local_from_event(event: InputEvent) -> Vector2:
-	var screen_position := Vector2.ZERO
+func _stick_vector_from_event(event: InputEvent) -> Vector2:
+	var event_position := Vector2.ZERO
 	if event is InputEventScreenTouch:
-		screen_position = event.position
+		event_position = event.position
 	elif event is InputEventScreenDrag:
-		screen_position = event.position
+		event_position = event.position
 	elif event is InputEventMouseButton:
-		screen_position = event.position
+		event_position = event.position
 	elif event is InputEventMouseMotion:
-		screen_position = event.position
+		event_position = event.position
 	else:
 		return Vector2.ZERO
+
+	# gui_input normally supplies positions in this Control's local space. The
+	# previous implementation transformed that local value a second time as if it
+	# were a screen coordinate, which shifted the vector upward on mobile.
+	var local_position := event_position
+	var padded_local_rect := Rect2(Vector2(-32, -32), touch_root.size + Vector2(64, 64))
+	if not padded_local_rect.has_point(local_position):
+		# Defensive fallback for platform/input paths that still report viewport space.
+		local_position = touch_root.get_global_transform_with_canvas().affine_inverse() * event_position
+
 	var center: Vector2 = touch_root.size * 0.5
-	var local_position: Vector2 = touch_root.get_global_transform_with_canvas().affine_inverse() * screen_position
 	var stick_delta: Vector2 = local_position - center
 	if stick_delta.length() > STICK_RADIUS and STICK_RADIUS > 0.0:
 		stick_delta = stick_delta.normalized() * STICK_RADIUS
 	return stick_delta / STICK_RADIUS if STICK_RADIUS > 0.0 else Vector2.ZERO
 
 func _apply_stick_vector(vec: Vector2) -> void:
-	_set_stick_action("move_right", vec.x > STICK_DEADZONE)
-	_set_stick_action("move_left", vec.x < -STICK_DEADZONE)
-	_set_stick_action("move_down", vec.y > STICK_DEADZONE)
-	_set_stick_action("move_up", vec.y < -STICK_DEADZONE)
-
-func _set_stick_action(action: String, pressed: bool) -> void:
-	if _stick_pressed.get(action, false) == pressed:
-		return
-	_stick_pressed[action] = pressed
-	if pressed:
-		Input.action_press(action)
+	var length := minf(1.0, vec.length())
+	if length <= STICK_DEADZONE:
+		_stick_vector = Vector2.ZERO
 	else:
-		Input.action_release(action)
+		# Radial deadzone preserves the full 360° direction and analogue magnitude.
+		var magnitude := clampf((length - STICK_DEADZONE) / (1.0 - STICK_DEADZONE), 0.0, 1.0)
+		_stick_vector = vec.normalized() * magnitude
+	_send_virtual_move(_stick_vector)
+
+func _send_virtual_move(vec: Vector2) -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	if player and player.has_method("set_virtual_move_vector"):
+		player.call("set_virtual_move_vector", vec)
 
 func _release_all_stick_actions() -> void:
-	for action in _stick_pressed.keys():
-		if _stick_pressed[action]:
-			Input.action_release(action)
-			_stick_pressed[action] = false
+	_stick_vector = Vector2.ZERO
+	_send_virtual_move(Vector2.ZERO)
+	# Clear any synthetic directional actions left behind by older HUD builds.
+	for action in ["move_left", "move_right", "move_up", "move_down"]:
+		Input.action_release(action)
 	_stick_finger_id = -1
 
 func _apply_layout(mode: String) -> void:
