@@ -16,7 +16,11 @@ var _walk_frames: Array[Texture2D] = []
 var _hit_texture: Texture2D
 var _defeated_texture: Texture2D
 var _base_y := -58.0
+var _base_scale := Vector2.ONE
 var _hit_time := 0.0
+var _attack_time := 0.0
+var _attack_duration := 0.28
+var _attack_dir := Vector2.ZERO
 
 const DIR_NAMES := [
 	"front", "front_right", "right", "back_right",
@@ -40,6 +44,7 @@ func _ready() -> void:
 
 func _setup_production_visual() -> void:
 	scale = Vector2.ONE * BrambleWorldPresentationConfig.PLAYER_VISUAL_SCALE
+	_base_scale = scale
 	position = Vector2(0, -58)
 	_base_y = position.y
 	for dir_name in DIR_NAMES:
@@ -52,10 +57,11 @@ func _setup_production_visual() -> void:
 	_hit_texture = BrambleWorldPresentationConfig.game_tex("characters/base/%s/animations/hit.png" % gender)
 	_defeated_texture = BrambleWorldPresentationConfig.game_tex("characters/base/%s/animations/defeated.png" % gender)
 	sprite_frames = SpriteFrames.new()
-	for anim in ["idle", "run", "hit", "defeated"]:
+	for anim in ["idle", "run", "attack", "hit", "defeated"]:
 		sprite_frames.add_animation(anim)
 	sprite_frames.set_animation_loop("idle", true)
 	sprite_frames.set_animation_loop("run", true)
+	sprite_frames.set_animation_loop("attack", false)
 	sprite_frames.set_animation_loop("hit", false)
 	sprite_frames.set_animation_loop("defeated", false)
 	if _walk_frames.size() >= 2:
@@ -69,7 +75,17 @@ func _process(delta: float) -> void:
 			_hit_time = maxf(0.0, _hit_time - delta)
 			if _hit_time <= 0.0 and animation == "hit":
 				play("idle")
-		position.y = _base_y
+		if _attack_time > 0.0:
+			_attack_time = maxf(0.0, _attack_time - delta)
+			var phase := 1.0 - (_attack_time / maxf(0.001, _attack_duration))
+			var punch := sin(phase * PI)
+			position = Vector2(0, _base_y) + _attack_dir * (12.0 * punch)
+			scale = _base_scale * (1.0 + 0.06 * punch)
+			if _attack_time <= 0.0 and animation == "attack":
+				play("idle")
+		else:
+			position = Vector2(0, _base_y)
+			scale = _base_scale
 		return
 	var pose := semantic_pose()
 	if pose != _last_pose or flip_h != _last_flip:
@@ -103,6 +119,19 @@ func set_state(state: String) -> void:
 	if animation != state:
 		play(state)
 
+func play_attack_toward(direction: Vector2) -> void:
+	if not use_production_assets:
+		set_state("attack")
+		return
+	var dir := _vector_to_direction(direction)
+	var tex: Texture2D = _dir_textures.get(dir, _dir_textures.get("front"))
+	if tex:
+		_populate_single_frame("attack", tex)
+	_direction = dir
+	_attack_dir = direction.normalized() if direction.length_squared() > 0.001 else Vector2.ZERO
+	_attack_time = _attack_duration
+	play("attack")
+
 func play_hit() -> void:
 	show_hit()
 
@@ -125,7 +154,7 @@ func set_facing_from_velocity(input_vec: Vector2) -> void:
 		if absf(input_vec.x) > 0.05:
 			flip_h = input_vec.x < 0.0
 		return
-	if _hit_time > 0.0:
+	if _hit_time > 0.0 or _attack_time > 0.0:
 		return
 	var dir := _vector_to_direction(input_vec)
 	var moving := input_vec.length_squared() > 0.02
