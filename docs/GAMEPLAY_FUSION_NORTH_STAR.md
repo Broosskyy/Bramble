@@ -27,6 +27,10 @@ The fused game is one product, not two modes and not a 50/50 technical merge.
 
 ## Current milestone
 
-**Fusion Phase 1 — Kein Name Player Core**
+**Fusion Phase 2 — Kein Name Combat Core**
 
-Exit criteria: touch joystick moves correctly in every direction including diagonals, analogue magnitude is preserved, keyboard controls still work, the player stays inside the playable world, and the same behavior survives Web and Android builds.
+Implemented flow target: tap/click enemy -> persistent target lock -> automatic approach -> face target -> repeated basic attacks in range -> hit/damage feedback -> defeat -> XP/loot through the existing Bramble RPG/runtime services.
+
+Phase 1 remains a hard gate: touch joystick must move correctly in every direction including diagonals, analogue magnitude is preserved, keyboard controls still work, the player stays inside the playable world, and Web/Android use the same behavior.
+
+Phase 2 exit criteria: forgiving mobile target selection, no target loss while approaching, manual movement can override auto movement, no one-hit attack lock, live target HP state, visible defeat feedback, and the loop works through the existing online-ready combat/reward architecture rather than a parallel prototype system.
