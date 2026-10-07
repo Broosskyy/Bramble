@@ -581,7 +581,9 @@ func _layout_level_up() -> void:
 
 func _on_target_changed(state: Dictionary) -> void:
 	var valid := bool(state.get("valid", false))
+	var auto_attack := bool(state.get("auto_attack", false))
 	target_root.visible = valid
+	attack_btn.modulate = Color(1.08, 0.92, 0.62, 1.0) if auto_attack else Color.WHITE
 	if not valid:
 		return
 	target_name.text = String(state.get("name", "Ziel"))
@@ -590,7 +592,7 @@ func _on_target_changed(state: Dictionary) -> void:
 	var dist := float(state.get("distance", 0.0))
 	var player := get_tree().get_first_node_in_group("player")
 	var player_attack_range := float(player.get("attack_range")) if player else 125.0
-	var combat_state := "ANNÄHERN" if dist > player_attack_range else "IM KAMPF"
+	var combat_state := "AUSSER REICHWEITE" if dist > player_attack_range else ("AUTO-ANGRIFF" if auto_attack else "BEREIT")
 	target_status.text = "HP %d/%d · %s" % [int(state.get("hp", 0)), int(state.get("max_hp", 0)), combat_state]
 
 func _on_inventory_changed(_items: Array) -> void:
