@@ -562,7 +562,6 @@ func _sync_player_proxy(delta: float) -> void:
 	var attacking_now := bool(_player.get("attacking"))
 	var running := speed >= 34.0
 	var walking := speed >= 18.0 and not running
-	var speed_ratio := clampf(speed / 500.0, 0.0, 1.0)
 
 	var locomotion_phase := 0.0
 	var locomotion_offset := 0.0
@@ -665,11 +664,11 @@ func _hero_texture(gender: String, direction: String, pose: String, phase: float
 			_player_texture_cache[frame_key] = BrambleWorldPresentationConfig.game_tex(
 				"characters/base/%s/animations/%s/%s.png" % [gender, folder, frame_name]
 			)
-		var animated: Texture2D = _player_texture_cache.get(frame_key)
+		var animated := _player_texture_cache.get(frame_key) as Texture2D
 		if animated:
 			return animated
 
-	return _player_texture_cache.get(direction_key)
+	return _player_texture_cache.get(direction_key) as Texture2D
 
 func _sample_ground_height(sim_position: Vector2) -> float:
 	# Broad deterministic surfaces mirror the visible top faces. This is the
