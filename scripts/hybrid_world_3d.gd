@@ -25,7 +25,7 @@ const NPC_WORLD_HEIGHT := 2.10
 const ENEMY_WORLD_HEIGHT := 2.35
 const LOOT_WORLD_HEIGHT := 0.70
 const PORTAL_WORLD_HEIGHT := 3.80
-const VISUAL_GROUND_MIN_SIZE := Vector2(34.0, 30.0)
+const VISUAL_GROUND_MIN_SIZE := Vector2(54.0, 46.0)
 
 var camera: Camera3D
 var _camera_target := Vector3.ZERO
@@ -50,6 +50,7 @@ var _view_candidate_time := 0.0
 var _motion_time := 0.0
 var _attack_visual_remaining := 0.0
 var _was_attacking := false
+var _occluders: Array[Dictionary] = []
 
 var _touches: Dictionary = {}
 var _last_pinch_distance := -1.0
@@ -140,6 +141,7 @@ func _process(delta: float) -> void:
 	_motion_time += minf(delta, 0.05)
 	_sync_dynamic_proxies(delta)
 	_update_camera(delta)
+	_update_occluders(delta)
 
 func _update_camera(delta: float) -> void:
 	var player_world := simulation_to_world(_player.global_position, 0.72)
@@ -459,9 +461,9 @@ func _sync_player_proxy(delta: float) -> void:
 			var target: Node2D = targeting.get_target()
 			if target:
 				attack_direction = _player.global_position.direction_to(target.global_position)
-		render_position.x += attack_direction.x * WORLD_SCALE * 32.0 * punch
-		render_position.z += attack_direction.y * WORLD_SCALE * 32.0 * punch
-		visual_scale *= 1.0 + punch * 0.045
+		render_position.x += attack_direction.x * WORLD_SCALE * 48.0 * punch
+		render_position.z += attack_direction.y * WORLD_SCALE * 48.0 * punch
+		visual_scale *= 1.0 + punch * 0.070
 
 	_player_proxy.position = render_position
 	_player_proxy.scale = visual_scale
@@ -568,6 +570,7 @@ func _add_building(node_name: String, sim_position: Vector2, width: float, depth
 	var body := _box_mesh(Vector3(width, wall_height, depth), wall_color)
 	body.position.y = wall_height * 0.5
 	root.add_child(body)
+	_register_occluder(body, maxf(width, depth) * 0.56)
 
 	var roof := MeshInstance3D.new()
 	var roof_mesh := CylinderMesh.new()
@@ -581,6 +584,7 @@ func _add_building(node_name: String, sim_position: Vector2, width: float, depth
 	roof.rotation.y = PI * 0.25
 	roof.scale.z = depth / width
 	root.add_child(roof)
+	_register_occluder(roof, maxf(width, depth) * 0.62)
 
 	var door := _box_mesh(Vector3(0.72, 1.25, 0.10), Color("#34261f"))
 	door.position = Vector3(0, 0.625, depth * 0.5 + 0.055)
@@ -593,6 +597,7 @@ func _add_building(node_name: String, sim_position: Vector2, width: float, depth
 		var stack := _box_mesh(Vector3(0.52, 2.0, 0.52), Color("#343139"))
 		stack.position = Vector3(width * 0.28, wall_height + 0.65, -depth * 0.20)
 		root.add_child(stack)
+		_register_occluder(stack, 0.55)
 
 func _add_tree(sim_position: Vector2, scale_value: float) -> void:
 	var root := Node3D.new()
@@ -610,6 +615,7 @@ func _add_tree(sim_position: Vector2, scale_value: float) -> void:
 	trunk.material_override = _material(Color("#5b3d2a"))
 	trunk.position.y = 0.875
 	root.add_child(trunk)
+	_register_occluder(trunk, 0.38 * scale_value)
 
 	for spec in [[Vector3(0, 2.0, 0), 1.15], [Vector3(-0.52, 1.85, 0.12), 0.82], [Vector3(0.48, 1.82, -0.10), 0.78]]:
 		var crown := MeshInstance3D.new()
@@ -620,6 +626,7 @@ func _add_tree(sim_position: Vector2, scale_value: float) -> void:
 		crown.material_override = _material(Color("#6f844e"))
 		crown.position = spec[0]
 		root.add_child(crown)
+		_register_occluder(crown, float(spec[1]) * scale_value)
 
 func _add_fountain(sim_position: Vector2) -> void:
 	var root := Node3D.new()
@@ -648,12 +655,95 @@ func _add_arch(node_name: String, sim_position: Vector2, width: float, height: f
 	var left := _box_mesh(pillar_size, color)
 	left.position = Vector3(-width * 0.5, height * 0.5, 0)
 	root.add_child(left)
+	_register_occluder(left, 0.55)
 	var right := _box_mesh(pillar_size, color)
 	right.position = Vector3(width * 0.5, height * 0.5, 0)
 	root.add_child(right)
+	_register_occluder(right, 0.55)
 	var lintel := _box_mesh(Vector3(width + 0.55, 0.46, 0.72), color.lightened(0.08))
 	lintel.position = Vector3(0, height - 0.18, 0)
 	root.add_child(lintel)
+	_register_occluder(lintel, width * 0.55)
+
+func _register_occluder(mesh: MeshInstance3D, radius: float) -> void:
+	if mesh == null:
+		return
+	_occluders.append({"mesh": mesh, "radius": maxf(0.25, radius)})
+
+func _update_occluders(delta: float) -> void:
+	if camera == null or _occluders.is_empty():
+		return
+	var from := camera.global_position
+	var to := _camera_target
+	var segment := to - from
+	var length_sq := segment.length_squared()
+	if length_sq <= 0.0001:
+		return
+	var alpha := 1.0 - exp(-delta * 14.0)
+	for entry in _occluders:
+		var mesh := entry.get("mesh") as MeshInstance3D
+		if mesh == null or not is_instance_valid(mesh):
+			continue
+		var point := mesh.global_position
+		var t := clampf((point - from).dot(segment) / length_sq, 0.0, 1.0)
+		var closest := from + segment * t
+		var radius := float(entry.get("radius", 0.8))
+		var blocks_view := t > 0.08 and t < 0.90 and point.distance_to(closest) < radius
+		var wanted := 0.72 if blocks_view else 0.0
+		mesh.transparency = lerpf(mesh.transparency, wanted, alpha)
+
+func spawn_hit_feedback(sim_position: Vector2, damage: int, emphasized := false) -> void:
+	var root := Node3D.new()
+	root.name = "CombatFeedback3D"
+	root.position = simulation_to_world(sim_position, ENEMY_WORLD_HEIGHT + 0.30)
+	_dynamic_root.add_child(root)
+
+	var label := Label3D.new()
+	label.text = str(damage)
+	label.font_size = 42 if emphasized else 34
+	label.outline_size = 9 if emphasized else 7
+	label.modulate = Color("#ffd35a") if emphasized else Color.WHITE
+	label.outline_modulate = Color(0.04, 0.03, 0.02, 0.98)
+	label.pixel_size = 0.006
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.no_depth_test = true
+	root.add_child(label)
+
+	var spark := Label3D.new()
+	spark.text = "✦"
+	spark.font_size = 48 if emphasized else 38
+	spark.modulate = Color(1.0, 0.82, 0.34, 0.92)
+	spark.pixel_size = 0.005
+	spark.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	spark.no_depth_test = true
+	spark.position = Vector3(0, -0.22, 0)
+	root.add_child(spark)
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(root, "position:y", root.position.y + 0.72, 0.48).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(label, "modulate:a", 0.0, 0.48).set_delay(0.10)
+	tween.tween_property(spark, "scale", Vector3.ONE * 1.55, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(spark, "modulate:a", 0.0, 0.28).set_delay(0.05)
+	tween.chain().tween_callback(root.queue_free)
+
+func spawn_skill_feedback(sim_position: Vector2) -> void:
+	var root := Node3D.new()
+	root.position = simulation_to_world(sim_position, ENEMY_WORLD_HEIGHT * 0.65)
+	_dynamic_root.add_child(root)
+	var pulse := Label3D.new()
+	pulse.text = "✧"
+	pulse.font_size = 66
+	pulse.modulate = Color(0.78, 0.58, 1.0, 0.90)
+	pulse.pixel_size = 0.006
+	pulse.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	pulse.no_depth_test = true
+	root.add_child(pulse)
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(pulse, "scale", Vector3.ONE * 1.8, 0.30).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(pulse, "modulate:a", 0.0, 0.34)
+	tween.chain().tween_callback(root.queue_free)
 
 func _add_disc(node_name: String, world_position: Vector3, radius: float, height: float, color: Color) -> void:
 	var disc := _cylinder_mesh(radius, height, color)
