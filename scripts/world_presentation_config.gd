@@ -25,7 +25,10 @@ const SCALE_PORTAL := 0.72
 const TILE_OVERLAP := 1.015
 const TILE_BLEED_PX := 3.5
 
-const WORLD_MAP_BOUNDS := Rect2(-800, -460, 2200, 1040)
+# Hybrid world authority. The old 2200x1040 slice was only the legacy 2D
+# presentation and caused invisible clamps inside the larger 3D renderer.
+# Bramble now uses a genuinely larger shared simulation space.
+const WORLD_MAP_BOUNDS := Rect2(-3200, -2600, 6400, 5200)
 const WORLD_MAP_CELL_SIZE := 24.0
 
 # Legacy aliases used by entity scripts
@@ -51,7 +54,7 @@ const CAMERA_OFFSET := Vector2(0, -64)
 const CAMERA_SMOOTH_SPEED := 7.0
 const CAMERA_ZOOM_LANDSCAPE := 0.94
 const CAMERA_ZOOM_PORTRAIT := 1.06
-const CAMERA_LIMITS := Rect2(-920, -620, 2480, 1480)
+const CAMERA_LIMITS := Rect2(-3350, -2750, 6700, 5500)
 
 const OCCLUSION_FADE := 0.16
 const OCCLUSION_FADE_SPEED := 9.0

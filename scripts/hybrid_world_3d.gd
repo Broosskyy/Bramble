@@ -25,7 +25,8 @@ const NPC_WORLD_HEIGHT := 2.10
 const ENEMY_WORLD_HEIGHT := 2.35
 const LOOT_WORLD_HEIGHT := 0.70
 const PORTAL_WORLD_HEIGHT := 3.80
-const VISUAL_GROUND_MIN_SIZE := Vector2(54.0, 46.0)
+const VISUAL_GROUND_MIN_SIZE := Vector2(70.0, 58.0)
+const HYBRID_ACTOR_RADIUS := 38.0
 
 var camera: Camera3D
 var _camera_target := Vector3.ZERO
@@ -51,6 +52,7 @@ var _motion_time := 0.0
 var _attack_visual_remaining := 0.0
 var _was_attacking := false
 var _occluders: Array[Dictionary] = []
+var _hybrid_colliders: Array[Dictionary] = []
 
 var _touches: Dictionary = {}
 var _last_pinch_distance := -1.0
@@ -62,6 +64,8 @@ func _ready() -> void:
 	_build_environment()
 	_build_world_geometry()
 	_build_static_world()
+	_build_collision_model()
+	_build_visible_world_boundary()
 	_build_dynamic_root()
 	call_deferred("_activate")
 	set_process(true)
@@ -81,6 +85,10 @@ func _activate() -> void:
 	var old_visual := _player.get_node_or_null("Visual") as CanvasItem
 	if old_visual:
 		old_visual.visible = false
+	# Legacy Bramble used collision layer 4 for hidden 2D scenery. In the
+	# hybrid renderer that geometry is no longer authoritative and caused
+	# invisible walls that did not match the visible 3D world.
+	_player.collision_mask = _player.collision_mask & ~4
 	_hide_2d_source_presentation()
 	_ensure_player_proxy()
 	_camera_target = simulation_to_world(_player.global_position, 0.72)
@@ -110,6 +118,49 @@ func simulation_to_world(sim: Vector2, elevation := 0.0) -> Vector3:
 
 func world_to_simulation(world: Vector3) -> Vector2:
 	return Vector2(world.x / WORLD_SCALE, world.z / WORLD_SCALE)
+
+func resolve_simulation_position(position: Vector2) -> Vector2:
+	var bounds := BrambleWorldPresentationConfig.WORLD_MAP_BOUNDS
+	var resolved := Vector2(
+		clampf(position.x, bounds.position.x + HYBRID_ACTOR_RADIUS, bounds.end.x - HYBRID_ACTOR_RADIUS),
+		clampf(position.y, bounds.position.y + HYBRID_ACTOR_RADIUS, bounds.end.y - HYBRID_ACTOR_RADIUS)
+	)
+	for collider in _hybrid_colliders:
+		var shape := String(collider.get("shape", "box"))
+		var center: Vector2 = collider.get("center", Vector2.ZERO)
+		if shape == "circle":
+			resolved = _resolve_circle_collider(resolved, center, float(collider.get("radius", 0.0)) + HYBRID_ACTOR_RADIUS)
+		else:
+			resolved = _resolve_box_collider(
+				resolved,
+				center,
+				float(collider.get("half_width", 0.0)) + HYBRID_ACTOR_RADIUS,
+				float(collider.get("half_depth", 0.0)) + HYBRID_ACTOR_RADIUS
+			)
+	return Vector2(
+		clampf(resolved.x, bounds.position.x + HYBRID_ACTOR_RADIUS, bounds.end.x - HYBRID_ACTOR_RADIUS),
+		clampf(resolved.y, bounds.position.y + HYBRID_ACTOR_RADIUS, bounds.end.y - HYBRID_ACTOR_RADIUS)
+	)
+
+func _resolve_circle_collider(point: Vector2, center: Vector2, radius: float) -> Vector2:
+	var delta := point - center
+	var distance := delta.length()
+	if distance >= radius:
+		return point
+	if distance < 0.001:
+		return center + Vector2(radius, 0)
+	return center + delta / distance * radius
+
+func _resolve_box_collider(point: Vector2, center: Vector2, half_width: float, half_depth: float) -> Vector2:
+	var dx := point.x - center.x
+	var dy := point.y - center.y
+	if absf(dx) >= half_width or absf(dy) >= half_depth:
+		return point
+	var x_pen := half_width - absf(dx)
+	var y_pen := half_depth - absf(dy)
+	if x_pen < y_pen:
+		return Vector2(center.x + (half_width if dx >= 0.0 else -half_width), point.y)
+	return Vector2(point.x, center.y + (half_depth if dy >= 0.0 else -half_depth))
 
 func screen_to_simulation(screen_pos: Vector2) -> Vector2:
 	if camera == null:
@@ -307,25 +358,79 @@ func _build_world_geometry() -> void:
 func _build_static_world() -> void:
 	# Kein Name's Haven buildings are real geometry. Use the same principle here
 	# and reserve billboards for characters, monsters and a few stylised accents.
-	_add_building("Inn", Vector2(-500, -105), 3.8, 2.85, 2.30, Color("#565160"), Color("#263048"), 0.14)
-	_add_building("Workshop", Vector2(-180, -130), 3.55, 2.75, 2.20, Color("#4a4240"), Color("#6b3528"), -0.10, true)
-	_add_building("Cottage", Vector2(220, -105), 3.45, 2.70, 2.12, Color("#4b5360"), Color("#263048"), 0.08)
+	_add_building("GuildHall", Vector2(0, -520), 4.9, 3.5, 2.55, Color("#565160"), Color("#263048"), 0.0)
+	_add_building("Inn", Vector2(-620, -260), 3.8, 2.90, 2.30, Color("#565160"), Color("#263048"), 0.18)
+	_add_building("Workshop", Vector2(620, -220), 3.70, 2.90, 2.20, Color("#4a4240"), Color("#6b3528"), -0.16, true)
+	_add_building("WestHouse", Vector2(-720, 300), 3.30, 2.70, 2.10, Color("#4b5360"), Color("#263048"), 0.08)
+	_add_building("EastHouse", Vector2(740, 320), 3.30, 2.70, 2.10, Color("#4b5360"), Color("#263048"), -0.10)
 	_add_fountain(Vector2(-20, 70))
-	_add_arch("TownGate", Vector2(585, 95), 2.8, 3.0, Color("#555866"))
-	_add_arch("RuinedArch", Vector2(1110, -185), 3.0, 3.2, Color("#4b4e58"))
+	_add_arch("WestGate", Vector2(-1010, 650), 2.8, 3.0, Color("#555866"))
+	_add_arch("FarmArch", Vector2(0, 690), 3.0, 3.2, Color("#4b4e58"))
 
 	for spec in [
-		[Vector2(-735, -90), 1.0],
-		[Vector2(465, -190), 0.92],
-		[Vector2(935, -190), 0.94],
-		[Vector2(1320, 15), 0.90],
-		[Vector2(1280, 345), 0.96],
-		[Vector2(-690, 360), 0.90],
-		[Vector2(-420, 505), 0.82],
+		[Vector2(-1150, -100), 1.0],
+		[Vector2(-1030, 700), 0.88],
+		[Vector2(-820, 200), 0.92],
+		[Vector2(-930, 820), 0.86],
+		[Vector2(890, 500), 0.94],
+		[Vector2(1010, 940), 0.88],
+		[Vector2(1180, 800), 0.96],
+		[Vector2(1290, 1060), 0.84],
+		[Vector2(-1450, 1180), 0.90],
+		[Vector2(1480, -920), 0.92],
+		[Vector2(-1600, -1050), 0.84],
+		[Vector2(1600, 1200), 0.88],
 	]:
 		_add_tree(spec[0], spec[1])
 
 	_add_world_billboard("world/portals/portal_arch_active.png", Vector2(735, 120), PORTAL_WORLD_HEIGHT, 0.04)
+
+func _build_collision_model() -> void:
+	_hybrid_colliders.clear()
+	# Collider sizes are derived from the visible 3D geometry above. There are
+	# intentionally no hidden legacy blockers and no colliders on decorative
+	# trees/arches, following Kein Name's authored-collider approach.
+	_register_box_collider(Vector2(-620, -260), 190.0, 145.0)
+	_register_box_collider(Vector2(620, -220), 185.0, 145.0)
+	_register_box_collider(Vector2(-720, 300), 165.0, 135.0)
+	_register_box_collider(Vector2(740, 320), 165.0, 135.0)
+	_register_box_collider(Vector2(0, -520), 245.0, 175.0)
+	_register_circle_collider(Vector2(-20, 70), 122.0)
+
+	# Water is visibly non-walkable except for the bridge opening.
+	_register_box_collider(Vector2(-404, 420), 546.0, 92.0)
+	_register_box_collider(Vector2(964, 420), 586.0, 92.0)
+
+func _register_box_collider(center: Vector2, half_width: float, half_depth: float) -> void:
+	_hybrid_colliders.append({
+		"shape": "box",
+		"center": center,
+		"half_width": half_width,
+		"half_depth": half_depth,
+	})
+
+func _register_circle_collider(center: Vector2, radius: float) -> void:
+	_hybrid_colliders.append({
+		"shape": "circle",
+		"center": center,
+		"radius": radius,
+	})
+
+func _build_visible_world_boundary() -> void:
+	# The playable edge must always have a visible reason to stop. These low
+	# hedge/cliff bands sit exactly on the simulation bounds and replace the
+	# old invisible clamp.
+	var bounds := BrambleWorldPresentationConfig.WORLD_MAP_BOUNDS
+	var center := bounds.position + bounds.size * 0.5
+	var half_w := bounds.size.x * WORLD_SCALE * 0.5
+	var half_d := bounds.size.y * WORLD_SCALE * 0.5
+	var thickness := 0.55
+	var height := 1.15
+	var edge_color := Color("#344632")
+	_add_box("NorthBoundary", Vector3(center.x * WORLD_SCALE, height * 0.5, (bounds.position.y + 10.0) * WORLD_SCALE), Vector3(half_w * 2.0, height, thickness), edge_color)
+	_add_box("SouthBoundary", Vector3(center.x * WORLD_SCALE, height * 0.5, (bounds.end.y - 10.0) * WORLD_SCALE), Vector3(half_w * 2.0, height, thickness), edge_color)
+	_add_box("WestBoundary", Vector3((bounds.position.x + 10.0) * WORLD_SCALE, height * 0.5, center.y * WORLD_SCALE), Vector3(thickness, height, half_d * 2.0), edge_color)
+	_add_box("EastBoundary", Vector3((bounds.end.x - 10.0) * WORLD_SCALE, height * 0.5, center.y * WORLD_SCALE), Vector3(thickness, height, half_d * 2.0), edge_color)
 
 func _build_dynamic_root() -> void:
 	_dynamic_root = Node3D.new()

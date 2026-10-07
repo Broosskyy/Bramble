@@ -4,6 +4,9 @@ const PLAYER_RADIUS:=18.0
 func _ready()->void:add_to_group("server_collision_validator")
 func validate_motion(from:Vector2,to:Vector2)->Vector2:
     if from.distance_to(to)>85.0:to=from+from.direction_to(to)*85.0
+    var hybrid=get_tree().get_first_node_in_group("hybrid_world_3d")
+    if hybrid and hybrid.has_method("is_active") and hybrid.is_active() and hybrid.has_method("resolve_simulation_position"):
+        return hybrid.resolve_simulation_position(to)
     var space:=get_viewport().world_2d.direct_space_state
     if space==null:return to
     var shape:=CircleShape2D.new();shape.radius=PLAYER_RADIUS

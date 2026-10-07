@@ -195,8 +195,10 @@ func _camera_relative_input(screen_input: Vector2) -> Vector2:
 	return screen_input
 
 func _clamp_to_playable_world() -> void:
-	# Camera limits alone do not stop a CharacterBody2D from leaving the authored
-	# world. A small inset keeps the player/collision capsule visible at the edge.
+	var hybrid = get_tree().get_first_node_in_group("hybrid_world_3d")
+	if hybrid and hybrid.has_method("is_active") and hybrid.is_active() and hybrid.has_method("resolve_simulation_position"):
+		global_position = hybrid.resolve_simulation_position(global_position)
+		return
 	var bounds := BrambleWorldPresentationConfig.WORLD_MAP_BOUNDS.grow(-24.0)
 	global_position.x = clampf(global_position.x, bounds.position.x, bounds.end.x)
 	global_position.y = clampf(global_position.y, bounds.position.y, bounds.end.y)
@@ -230,8 +232,7 @@ func basic_attack() -> void:
 		return
 	var distance := global_position.distance_to(target.global_position)
 	if distance > attack_range:
-		# Keeping the selected target lets the Kein-Name auto-approach take over
-		# on the next physics frame instead of wasting an attack into empty space.
+		# Keep the selected target, but never move the player automatically.
 		return
 	visual.set_facing_from_velocity(global_position.direction_to(target.global_position))
 	var target_id: int = targeting.get_target_entity_id() if targeting else 0
