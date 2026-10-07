@@ -19,8 +19,14 @@ const DEFAULT_DISTANCE := 16.8
 const CAMERA_FOV := 48.0
 
 # Character sizes are authored in world metres, never raw source pixels.
-# Kein Name's hero presentation uses a 2.45 m world-space sprite.
-const PLAYER_WORLD_HEIGHT := 2.45
+# Kein Name's production scale guideline is 2.05 m for the Hero.
+const PLAYER_WORLD_HEIGHT := 2.05
+const HERO_FOOT_ANCHOR := 0.1042
+const HERO_FOOT_CLEARANCE := 0.035
+const HERO_GROUND_FALL_SPEED := 10.0
+const HERO_RUN_FPS := 12.0
+const HERO_WALK_FPS := 8.0
+const HERO_IDLE_FPS := 4.0
 const NPC_WORLD_HEIGHT := 2.10
 const ENEMY_WORLD_HEIGHT := 2.35
 const LOOT_WORLD_HEIGHT := 0.70
@@ -51,6 +57,9 @@ var _view_candidate_time := 0.0
 var _motion_time := 0.0
 var _attack_visual_remaining := 0.0
 var _was_attacking := false
+var _player_ground_height := 0.0
+var _player_ground_initialized := false
+var _player_texture_cache: Dictionary = {}
 var _occluders: Array[Dictionary] = []
 var _hybrid_colliders: Array[Dictionary] = []
 
@@ -91,7 +100,9 @@ func _activate() -> void:
 	_player.collision_mask = _player.collision_mask & ~4
 	_hide_2d_source_presentation()
 	_ensure_player_proxy()
-	_camera_target = simulation_to_world(_player.global_position, 0.72)
+	_player_ground_height = _sample_ground_height(_player.global_position)
+	_player_ground_initialized = true
+	_camera_target = simulation_to_world(_player.global_position, _player_ground_height + 0.72)
 	var desired := _desired_camera_position(_camera_target)
 	camera.global_position = desired
 	camera.look_at(_camera_target, Vector3.UP)
@@ -195,7 +206,7 @@ func _process(delta: float) -> void:
 	_update_occluders(delta)
 
 func _update_camera(delta: float) -> void:
-	var player_world := simulation_to_world(_player.global_position, 0.72)
+	var player_world := simulation_to_world(_player.global_position, _player_ground_height + 0.72)
 	var sim_velocity := _player.velocity
 	var look_ahead := Vector3.ZERO
 	# Kein Name uses velocity * .00072. Preserve that rather than inventing
@@ -528,38 +539,84 @@ func _entity_sprite(id: int, _world_height: float) -> Sprite3D:
 func _sync_player_proxy(delta: float) -> void:
 	if _player_proxy == null or _player == null:
 		return
+
 	var speed := _player.velocity.length()
 	if speed > 6.0:
 		_last_player_world_direction = _player.velocity.normalized()
 	_player_view_direction = _stable_camera_relative_direction(_last_player_world_direction, delta)
 
+	# Kein Name uses one authored walkable-surface sampler for rendering and
+	# movement. Snap immediately onto higher surfaces and ease down from them,
+	# so stairs/bridges feel planted without vertical popping on the way off.
+	var sampled_ground := _sample_ground_height(_player.global_position)
+	if not _player_ground_initialized or sampled_ground >= _player_ground_height:
+		_player_ground_height = sampled_ground
+		_player_ground_initialized = true
+	else:
+		var dt := minf(0.05, maxf(0.0, delta))
+		_player_ground_height += (sampled_ground - _player_ground_height) * (1.0 - exp(-dt * HERO_GROUND_FALL_SPEED))
+
 	var source := _player.get_node_or_null("Visual") as BramblePlayerVisual
 	var gender := source.gender if source else "male"
-	var texture := BrambleWorldPresentationConfig.game_tex("characters/base/%s/directions/%s.png" % [gender, _player_view_direction])
+	var dash_active := float(_player.get("_dash_remaining")) > 0.0
+	var attacking_now := bool(_player.get("attacking"))
+	var running := speed >= 34.0
+	var walking := speed >= 18.0 and not running
+
+	var locomotion_phase := 0.0
+	var locomotion_offset := 0.0
+	var visual_scale := Vector3.ONE
+	var visual_tilt := 0.0
+	var pose := "idle"
+
+	if dash_active:
+		pose = "dash"
+		locomotion_phase = fmod(_motion_time * 15.0, 1.0) * TAU
+		locomotion_offset = maxf(0.0, sin(locomotion_phase)) * 0.012
+		visual_scale.x = 1.035 + sin(locomotion_phase) * 0.012
+		visual_scale.y = 0.97 - sin(locomotion_phase) * 0.010
+	elif attacking_now and not running:
+		pose = "attack"
+		locomotion_phase = fmod(_motion_time * 11.0, 1.0) * TAU
+		locomotion_offset = maxf(0.0, sin(locomotion_phase)) * 0.008
+		visual_scale.x = 1.0 + sin(locomotion_phase) * 0.008
+		visual_tilt = sin(locomotion_phase) * 0.009
+	elif running:
+		pose = "run"
+		locomotion_phase = fmod(_motion_time * HERO_RUN_FPS, 1.0) * TAU
+		locomotion_offset = absf(sin(locomotion_phase)) * 0.022
+		visual_scale.y = 1.0 - absf(sin(locomotion_phase)) * 0.006
+		visual_tilt = sin(locomotion_phase) * 0.007
+	elif walking:
+		pose = "walk"
+		locomotion_phase = fmod(_motion_time * HERO_WALK_FPS, 1.0) * TAU
+		locomotion_offset = absf(sin(locomotion_phase)) * 0.014
+		visual_scale.y = 1.0 - absf(sin(locomotion_phase)) * 0.004
+		visual_tilt = sin(locomotion_phase) * 0.005
+	else:
+		pose = "idle"
+		locomotion_phase = fmod(_motion_time * HERO_IDLE_FPS, 1.0) * TAU
+		locomotion_offset = maxf(0.0, sin(locomotion_phase)) * 0.004
+
+	var texture := _hero_texture(gender, _player_view_direction, pose, locomotion_phase)
 	if texture == null and source and source.sprite_frames and source.sprite_frames.has_animation(source.animation):
 		texture = source.sprite_frames.get_frame_texture(source.animation, source.frame)
 	_set_sprite_texture_and_height(_player_proxy, texture, PLAYER_WORLD_HEIGHT)
 	_player_proxy.flip_h = false
 
-	var render_position := simulation_to_world(_player.global_position, PLAYER_WORLD_HEIGHT * 0.5)
-	var visual_scale := Vector3.ONE
-	var speed_ratio := clampf(speed / 500.0, 0.0, 1.0)
-	if speed_ratio > 0.04:
-		# The current Bramble art has authored directional stills but no 8-way
-		# run sheets. A tiny cadence keeps motion alive without changing facing.
-		var cadence := sin(_motion_time * lerpf(8.0, 13.0, speed_ratio))
-		render_position.y += absf(cadence) * 0.055 * speed_ratio
-		visual_scale.x = 1.0 + cadence * 0.018 * speed_ratio
-		visual_scale.y = 1.0 - cadence * 0.014 * speed_ratio
+	# The production PNGs contain transparent padding below the visible feet.
+	# Positioning the sprite by half its texture height therefore made the Hero
+	# float. Kein Name's alpha-derived foot anchor is 10.42% from the bottom.
+	var center_y := _player_ground_height + HERO_FOOT_CLEARANCE + PLAYER_WORLD_HEIGHT * (0.5 - HERO_FOOT_ANCHOR)
+	var render_position := simulation_to_world(_player.global_position, center_y + maxf(0.0, locomotion_offset))
 
-	var attacking_now := bool(_player.get("attacking"))
 	if attacking_now and not _was_attacking:
 		_attack_visual_remaining = 0.24
 	_was_attacking = attacking_now
 	_attack_visual_remaining = maxf(0.0, _attack_visual_remaining - delta)
 	if _attack_visual_remaining > 0.0:
-		var phase := 1.0 - (_attack_visual_remaining / 0.24)
-		var punch := sin(phase * PI)
+		var attack_phase := 1.0 - (_attack_visual_remaining / 0.24)
+		var punch := sin(attack_phase * PI)
 		var attack_direction := _last_player_world_direction
 		var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
 		if targeting and targeting.has_method("get_target"):
@@ -572,13 +629,68 @@ func _sync_player_proxy(delta: float) -> void:
 
 	_player_proxy.position = render_position
 	_player_proxy.scale = visual_scale
+	_player_proxy.rotation.z = visual_tilt
 
+	var shadow_y := _player_ground_height + 0.012
 	if _player_shadow:
-		_player_shadow.position = simulation_to_world(_player.global_position, 0.025)
-		var dash_active := float(_player.get("_dash_remaining")) > 0.0
-		_player_shadow.scale = Vector3(1.30, 1.0, 0.72) if dash_active else Vector3.ONE
+		_player_shadow.position = simulation_to_world(_player.global_position, shadow_y)
+		if dash_active:
+			_player_shadow.scale = Vector3(1.30, 1.0, 0.72)
+		elif running:
+			var contact := 1.0 - absf(sin(locomotion_phase))
+			_player_shadow.scale = Vector3(0.94 + contact * 0.08, 1.0, 0.88 + contact * 0.08)
+		else:
+			_player_shadow.scale = Vector3.ONE
 	if _player_ground_ring:
-		_player_ground_ring.position = simulation_to_world(_player.global_position, 0.018)
+		_player_ground_ring.position = simulation_to_world(_player.global_position, _player_ground_height + 0.006)
+
+func _hero_texture(gender: String, direction: String, pose: String, phase: float) -> Texture2D:
+	var direction_key := "%s:%s" % [gender, direction]
+	if not _player_texture_cache.has(direction_key):
+		_player_texture_cache[direction_key] = BrambleWorldPresentationConfig.game_tex(
+			"characters/base/%s/directions/%s.png" % [gender, direction]
+		)
+
+	# Bramble already has authored A/B locomotion frames. They are frontal
+	# cutouts, so only use them for front-facing camera-relative views; the
+	# other five octants retain the correct directional silhouette while the
+	# Kein-Name transform clip supplies gait motion.
+	var frontish := direction in ["front", "front_left", "front_right"]
+	if frontish and pose in ["run", "walk"]:
+		var folder := "run" if pose == "run" else "walk"
+		var frame_name := ("%s_a" % folder) if sin(phase) >= 0.0 else ("%s_b" % folder)
+		var frame_key := "%s:%s:%s" % [gender, folder, frame_name]
+		if not _player_texture_cache.has(frame_key):
+			_player_texture_cache[frame_key] = BrambleWorldPresentationConfig.game_tex(
+				"characters/base/%s/animations/%s/%s.png" % [gender, folder, frame_name]
+			)
+		var animated := _player_texture_cache.get(frame_key) as Texture2D
+		if animated:
+			return animated
+
+	return _player_texture_cache.get(direction_key) as Texture2D
+
+func _sample_ground_height(sim_position: Vector2) -> float:
+	# Broad deterministic surfaces mirror the visible top faces. This is the
+	# same principle as Kein Name's HybridGroundSampler: never derive feet from
+	# a single global y=0 plane when roads/bridge/plaza have authored height.
+	var height := 0.0
+	if sim_position.distance_to(Vector2(-20, 70)) <= 410.0:
+		height = maxf(height, 0.135)
+	if _inside_sim_box(sim_position, Vector2(20, 115), Vector2(930, 117.5)):
+		height = maxf(height, 0.135)
+	if _inside_sim_box(sim_position, Vector2(-20, 300), Vector2(112.5, 445)):
+		height = maxf(height, 0.137)
+	if _inside_sim_box(sim_position, Vector2(720, 125), Vector2(390, 107.5)):
+		height = maxf(height, 0.140)
+	if _inside_sim_box(sim_position, Vector2(100, 500), Vector2(950, 155)):
+		height = maxf(height, 0.0625)
+	if _inside_sim_box(sim_position, Vector2(260, 420), Vector2(117.5, 107.5)):
+		height = maxf(height, 0.290)
+	return height
+
+func _inside_sim_box(point: Vector2, center: Vector2, half_size: Vector2) -> bool:
+	return absf(point.x - center.x) <= half_size.x and absf(point.y - center.y) <= half_size.y
 
 func _stable_camera_relative_direction(world_direction: Vector2, delta: float) -> String:
 	var c := cos(_yaw)
