@@ -11,6 +11,11 @@ const PICKUP_RANGE := 72.0
 var _target: Node2D = null
 var _indicator: Node2D
 var _state_refresh := 0.0
+var _auto_attack_active := false
+var _touch_taps: Dictionary = {}
+var _mouse_down_pos := Vector2.ZERO
+var _mouse_down_ms := 0
+var _mouse_moved := false
 
 func _ready() -> void:
 	add_to_group("combat_targeting_service")
@@ -55,12 +60,59 @@ func _process(delta: float) -> void:
 		target_changed.emit(get_target_state())
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_handle_pick(_screen_to_simulation(event.position))
-	elif event is InputEventScreenTouch and event.pressed:
-		_handle_pick(_screen_to_simulation(event.position))
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			if not _world_input_allowed(event.position):
+				return
+			_mouse_down_pos = event.position
+			_mouse_down_ms = Time.get_ticks_msec()
+			_mouse_moved = false
+		else:
+			if _mouse_down_ms > 0:
+				var quick: bool = Time.get_ticks_msec() - _mouse_down_ms < 260
+				var moved: bool = _mouse_moved or event.position.distance_to(_mouse_down_pos) > 7.0
+				if quick and not moved and _world_input_allowed(event.position):
+					_handle_pick(_screen_to_simulation(event.position))
+			_mouse_down_ms = 0
+			_mouse_moved = false
+	elif event is InputEventMouseMotion and _mouse_down_ms > 0:
+		if event.position.distance_to(_mouse_down_pos) > 7.0:
+			_mouse_moved = true
+	elif event is InputEventScreenTouch:
+		if event.pressed:
+			if not _world_input_allowed(event.position):
+				return
+			_touch_taps[event.index] = {
+				"start": event.position,
+				"started_ms": Time.get_ticks_msec(),
+				"moved": false,
+			}
+		else:
+			var candidate: Dictionary = _touch_taps.get(event.index, {})
+			_touch_taps.erase(event.index)
+			if candidate.is_empty():
+				return
+			var quick: bool = Time.get_ticks_msec() - int(candidate.get("started_ms", 0)) < 260
+			var moved: bool = bool(candidate.get("moved", false))
+			var start: Vector2 = candidate.get("start", event.position)
+			moved = moved or event.position.distance_to(start) > 7.0
+			if quick and not moved and _world_input_allowed(event.position):
+				_handle_pick(_screen_to_simulation(event.position))
+	elif event is InputEventScreenDrag:
+		var candidate: Dictionary = _touch_taps.get(event.index, {})
+		if not candidate.is_empty():
+			var start: Vector2 = candidate.get("start", event.position)
+			if event.position.distance_to(start) > 7.0:
+				candidate["moved"] = true
+				_touch_taps[event.index] = candidate
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_Q:
 		_cycle_target()
+
+func _world_input_allowed(screen_position: Vector2) -> bool:
+	var hud = get_tree().get_first_node_in_group("production_hud")
+	if hud and hud.has_method("world_input_allowed_at"):
+		return bool(hud.world_input_allowed_at(screen_position))
+	return true
 
 func _screen_to_simulation(screen_pos: Vector2) -> Vector2:
 	var hybrid = get_tree().get_first_node_in_group("hybrid_world_3d")
@@ -172,15 +224,39 @@ func set_target(node: Node2D) -> void:
 	if node.has_method("is_combat_alive") and not node.is_combat_alive():
 		clear_target()
 		return
+	if node != _target:
+		# Kein Name: selecting a different target never silently starts combat.
+		_auto_attack_active = false
 	_target = node
 	_state_refresh = 0.0
 	target_changed.emit(get_target_state())
 
 func clear_target() -> void:
 	_target = null
+	_auto_attack_active = false
 	if _indicator:
 		_indicator.visible = false
 	target_changed.emit(get_target_state())
+
+func toggle_auto_attack() -> String:
+	if get_target() == null:
+		_auto_attack_active = false
+		target_changed.emit(get_target_state())
+		return "no_target"
+	_auto_attack_active = not _auto_attack_active
+	target_changed.emit(get_target_state())
+	return "started" if _auto_attack_active else "stopped"
+
+func stop_auto_attack(clear_selection := false) -> void:
+	_auto_attack_active = false
+	if clear_selection:
+		_target = null
+		if _indicator:
+			_indicator.visible = false
+	target_changed.emit(get_target_state())
+
+func is_auto_attack_active() -> bool:
+	return _auto_attack_active and get_target() != null
 
 func get_target() -> Node2D:
 	return _target if _target and is_instance_valid(_target) else null
@@ -210,6 +286,7 @@ func get_target_state() -> Dictionary:
 			"alive": false,
 			"valid": false,
 			"name": "",
+			"auto_attack": false,
 		}
 	var dist := player.global_position.distance_to(target.global_position)
 	var alive := true
@@ -225,6 +302,7 @@ func get_target_state() -> Dictionary:
 		"alive": alive,
 		"valid": alive and dist <= TARGET_RANGE,
 		"name": String(target.get("enemy_name")),
+		"auto_attack": _auto_attack_active,
 	}
 
 func _space_state() -> PhysicsDirectSpaceState2D:

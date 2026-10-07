@@ -60,6 +60,7 @@ var _stick_vector := Vector2.ZERO
 func _ready() -> void:
 	print("BRAMBLE production HUD ready")
 	add_to_group("production_hud")
+	set_process_input(true)
 	_build_ui()
 	_bind_touch()
 	var state := get_tree().get_first_node_in_group("game_state") as BrambleGameState
@@ -392,6 +393,9 @@ func _styled_bar(pos: Vector2, size: Vector2, color: Color) -> ProgressBar:
 	return bar
 
 func _bind_touch() -> void:
+	# Mouse/dev input stays on the Control itself. Real touch uses _input below
+	# so the active finger remains captured even after the thumb leaves the
+	# joystick rectangle, matching Kein Name's pointer-capture behaviour.
 	touch_root.gui_input.connect(_on_touch_root_gui_input)
 	attack_btn.button_down.connect(func(): Input.action_press("basic_attack"))
 	attack_btn.button_up.connect(func(): Input.action_release("basic_attack"))
@@ -401,7 +405,26 @@ func _bind_touch() -> void:
 		slot.button_down.connect(func(): Input.action_press(action))
 		slot.button_up.connect(func(): Input.action_release(action))
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			if _stick_finger_id == -1 and touch_root and touch_root.get_global_rect().grow(18.0).has_point(event.position):
+				_stick_finger_id = event.index
+				_apply_stick_vector(_stick_vector_from_screen(event.position))
+				get_viewport().set_input_as_handled()
+		elif event.index == _stick_finger_id:
+			_stick_finger_id = -1
+			_apply_stick_vector(Vector2.ZERO)
+			get_viewport().set_input_as_handled()
+	elif event is InputEventScreenDrag and event.index == _stick_finger_id:
+		_apply_stick_vector(_stick_vector_from_screen(event.position))
+		get_viewport().set_input_as_handled()
+
 func _on_touch_root_gui_input(event: InputEvent) -> void:
+	# Touch is globally captured in _input. Keeping it here as well would apply
+	# the same drag twice and was one of the causes of unstable mobile motion.
+	if event is InputEventScreenTouch or event is InputEventScreenDrag:
+		return
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			if _stick_finger_id == -1:
@@ -421,6 +444,14 @@ func _on_touch_root_gui_input(event: InputEvent) -> void:
 			_apply_stick_vector(Vector2.ZERO)
 	elif event is InputEventMouseMotion and _stick_finger_id == 0 and (event.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
 		_apply_stick_vector(_stick_vector_from_event(event))
+
+func _stick_vector_from_screen(screen_position: Vector2) -> Vector2:
+	var local_position := touch_root.get_global_transform_with_canvas().affine_inverse() * screen_position
+	var center: Vector2 = touch_root.size * 0.5
+	var stick_delta: Vector2 = local_position - center
+	if stick_delta.length() > STICK_RADIUS and STICK_RADIUS > 0.0:
+		stick_delta = stick_delta.normalized() * STICK_RADIUS
+	return stick_delta / STICK_RADIUS if STICK_RADIUS > 0.0 else Vector2.ZERO
 
 func _stick_vector_from_event(event: InputEvent) -> Vector2:
 	var event_position := Vector2.ZERO
@@ -472,6 +503,24 @@ func _release_all_stick_actions() -> void:
 	for action in ["move_left", "move_right", "move_up", "move_down"]:
 		Input.action_release(action)
 	_stick_finger_id = -1
+
+func camera_input_blocked_at(screen_position: Vector2) -> bool:
+	var roots: Array[Control] = []
+	for control in [touch_root, combat_root, stats_root, quest_root, minimap_root, target_root, fullscreen_btn, dialogue, level_up_root]:
+		if control is Control:
+			roots.append(control)
+	for control in roots:
+		if control.visible and control.is_visible_in_tree() and control.get_global_rect().grow(8.0).has_point(screen_position):
+			return true
+	if nav_root and nav_root.visible:
+		for child in nav_root.get_children():
+			if child is Control and child.visible and child.is_visible_in_tree():
+				if child.get_global_rect().grow(6.0).has_point(screen_position):
+					return true
+	return false
+
+func world_input_allowed_at(screen_position: Vector2) -> bool:
+	return not camera_input_blocked_at(screen_position)
 
 func _apply_layout(mode: String) -> void:
 	_release_all_stick_actions()
@@ -532,7 +581,9 @@ func _layout_level_up() -> void:
 
 func _on_target_changed(state: Dictionary) -> void:
 	var valid := bool(state.get("valid", false))
+	var auto_attack := bool(state.get("auto_attack", false))
 	target_root.visible = valid
+	attack_btn.modulate = Color(1.08, 0.92, 0.62, 1.0) if auto_attack else Color.WHITE
 	if not valid:
 		return
 	target_name.text = String(state.get("name", "Ziel"))
@@ -541,7 +592,7 @@ func _on_target_changed(state: Dictionary) -> void:
 	var dist := float(state.get("distance", 0.0))
 	var player := get_tree().get_first_node_in_group("player")
 	var player_attack_range := float(player.get("attack_range")) if player else 125.0
-	var combat_state := "ANNÄHERN" if dist > player_attack_range else "IM KAMPF"
+	var combat_state := "AUSSER REICHWEITE" if dist > player_attack_range else ("AUTO-ANGRIFF" if auto_attack else "BEREIT")
 	target_status.text = "HP %d/%d · %s" % [int(state.get("hp", 0)), int(state.get("max_hp", 0)), combat_state]
 
 func _on_inventory_changed(_items: Array) -> void:
