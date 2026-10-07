@@ -1,19 +1,16 @@
 class_name BramblePlayerController
 extends CharacterBody2D
 
-@export var move_speed := 250.0
-# Kein Name Harvest World uses 500 speed with 3300/4900/6200 tuning.
-# Bramble currently runs at half that simulation speed, so preserve the same
-# acceleration/deceleration/turn ratios instead of using unrelated numbers.
-@export var move_acceleration := 1650.0
-@export var move_deceleration := 2450.0
-@export var turn_acceleration := 3100.0
-@export var dash_speed := 875.0
+# Exact Harvest World locomotion tuning from Kein Name.
+@export var move_speed := 500.0
+@export var move_acceleration := 3300.0
+@export var move_deceleration := 4900.0
+@export var turn_acceleration := 6200.0
+@export var dash_speed := 1750.0
 @export var dash_duration := 0.21
 @export var attack_range := 125.0
 @export var interact_range := 115.0
 @export var auto_combat_enabled := true
-@export_range(0.5, 1.25, 0.05) var auto_approach_speed_multiplier := 1.0
 @export var attack_interval := 0.52
 @export var attack_lock_duration := 0.24
 
@@ -84,20 +81,15 @@ func _physics_process(delta: float) -> void:
 	if not combat_blocked:
 		manual_input = _camera_relative_input(_combined_move_input())
 	if Input.is_action_just_pressed("dash") and dash_cooldown <= 0.0 and not combat_blocked:
-		dash_cooldown = 1.15
+		dash_cooldown = 1.45
 		_dash_remaining = dash_duration
 		_dash_direction = manual_input.normalized() if manual_input.length_squared() > 0.0004 else _dash_direction
 	var input_vec := manual_input
 	var combat_target := _current_combat_target()
 	var combat_direction := Vector2.ZERO
 	var combat_distance := INF
-	if not combat_blocked and auto_combat_enabled and manual_input.length_squared() <= 0.0004 and combat_target:
-		combat_distance = global_position.distance_to(combat_target.global_position)
-		combat_direction = global_position.direction_to(combat_target.global_position)
-		if combat_distance > maxf(42.0, attack_range - 8.0):
-			input_vec = combat_direction * auto_approach_speed_multiplier
-			if input_vec.length() > 1.0:
-				input_vec = input_vec.normalized()
+	# Kein Name field combat never hijacks locomotion. Selecting an enemy and
+	# starting the attack chain does not auto-walk the Hero into range.
 	if _dash_remaining > 0.0:
 		var progress := 1.0 - (_dash_remaining / maxf(0.001, dash_duration))
 		var dash_now := dash_speed * (1.0 - progress * 0.28)
@@ -139,7 +131,15 @@ func _physics_process(delta: float) -> void:
 
 	if not combat_blocked:
 		if Input.is_action_just_pressed("basic_attack"):
-			basic_attack()
+			var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+			if targeting and targeting.has_method("toggle_auto_attack"):
+				var result: String = targeting.toggle_auto_attack()
+				if result == "no_target":
+					var state := get_tree().get_first_node_in_group("game_state") as BrambleGameState
+					if state:
+						state.toast_requested.emit("Erst einen Gegner auswählen.")
+			else:
+				basic_attack()
 		if Input.is_action_just_pressed("skill_1"):
 			use_skill(0)
 		if Input.is_action_just_pressed("interact"):
@@ -152,10 +152,13 @@ func _physics_process(delta: float) -> void:
 			elif state:
 				state.use_potion()
 
-	if not combat_blocked and auto_combat_enabled and manual_input.length_squared() <= 0.0004 and combat_target:
-		combat_distance = global_position.distance_to(combat_target.global_position)
-		if combat_distance <= attack_range and attack_cooldown <= 0.0 and not attacking:
-			basic_attack()
+	if not combat_blocked and auto_combat_enabled and combat_target:
+		var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+		var chain_active := targeting != null and targeting.has_method("is_auto_attack_active") and targeting.is_auto_attack_active()
+		if chain_active:
+			combat_distance = global_position.distance_to(combat_target.global_position)
+			if combat_distance <= attack_range and attack_cooldown <= 0.0 and not attacking:
+				basic_attack()
 
 	_sync_authority_position(net)
 
@@ -217,8 +220,6 @@ func basic_attack() -> void:
 		return
 	var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
 	var target: Node2D = targeting.get_target() if targeting and targeting.has_method("get_target") else null
-	if target == null and targeting and targeting.has_method("target_nearest"):
-		target = targeting.target_nearest()
 	if target == null or not is_instance_valid(target):
 		return
 	if target.has_method("is_combat_alive") and not target.is_combat_alive():
