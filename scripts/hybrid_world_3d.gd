@@ -170,15 +170,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT or event.button_index == MOUSE_BUTTON_LEFT:
-			_mouse_orbiting = event.pressed
-		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			if event.pressed:
+				_mouse_orbiting = not _hud_blocks_input(event.position)
+			else:
+				_mouse_orbiting = false
+		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP and not _hud_blocks_input(event.position):
 			zoom_by(-0.9)
-		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN and not _hud_blocks_input(event.position):
 			zoom_by(0.9)
 	elif event is InputEventMouseMotion and _mouse_orbiting:
 		_orbit_by(event.relative)
 	elif event is InputEventScreenTouch:
 		if event.pressed:
+			# Exactly like Kein Name's cameraGestureAllowedFromTarget(): a finger
+			# that starts on joystick/combat/HUD never becomes a camera pointer.
+			if _hud_blocks_input(event.position):
+				return
 			_touches[event.index] = event.position
 			if event.double_tap:
 				reset_follow_camera()
@@ -186,19 +193,31 @@ func _unhandled_input(event: InputEvent) -> void:
 			_touches.erase(event.index)
 			_last_pinch_distance = -1.0
 	elif event is InputEventScreenDrag:
-		var previous: Vector2 = _touches.get(event.index, event.position - event.relative)
+		# Do not adopt a drag halfway through. Only pointers that began in the
+		# world surface are allowed to orbit or pinch.
+		if not _touches.has(event.index):
+			return
+		var previous: Vector2 = _touches[event.index]
 		_touches[event.index] = event.position
 		if _touches.size() >= 2:
 			var keys := _touches.keys()
 			var a: Vector2 = _touches[keys[0]]
 			var b: Vector2 = _touches[keys[1]]
 			var pinch := a.distance_to(b)
-			if _last_pinch_distance > 0.0:
-				zoom_by((_last_pinch_distance - pinch) * 0.018)
+			if _last_pinch_distance > 0.0 and absf(pinch - _last_pinch_distance) > 3.0:
+				# Kein Name uses a very small pinch delta. Scale this to the
+				# Godot zoom-distance units without the previous jumpiness.
+				zoom_by((_last_pinch_distance - pinch) * 0.0025 * 12.0)
 			_last_pinch_distance = pinch
 		else:
 			_last_pinch_distance = -1.0
 			_orbit_by(event.position - previous)
+
+func _hud_blocks_input(screen_position: Vector2) -> bool:
+	var hud = get_tree().get_first_node_in_group("production_hud")
+	if hud and hud.has_method("camera_input_blocked_at"):
+		return bool(hud.camera_input_blocked_at(screen_position))
+	return false
 
 func _orbit_by(delta_screen: Vector2) -> void:
 	var dx := clampf(delta_screen.x, -96.0, 96.0)
