@@ -24,6 +24,7 @@ var quest_text: Label
 var minimap_root: Control
 var minimap_view: Control
 var touch_root: Control
+var stick_knob: Panel
 var combat_root: Control
 var dialogue: PanelContainer
 var dialogue_title: Label
@@ -205,6 +206,26 @@ func _build_ui() -> void:
 	joy.name = "JoystickBase"
 	joy.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	touch_root.add_child(joy)
+
+	# The old joystick sent analogue input correctly but the visible knob never
+	# moved. That makes a working mobile control feel broken. Keep a dedicated
+	# visual knob that mirrors the raw thumb displacement.
+	stick_knob = Panel.new()
+	stick_knob.name = "JoystickKnob"
+	stick_knob.size = Vector2(44, 44)
+	stick_knob.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var knob_style := StyleBoxFlat.new()
+	knob_style.bg_color = Color(0.92, 0.95, 1.0, 0.78)
+	knob_style.border_color = Color(0.16, 0.22, 0.30, 0.88)
+	knob_style.set_border_width_all(2)
+	knob_style.corner_radius_top_left = 22
+	knob_style.corner_radius_top_right = 22
+	knob_style.corner_radius_bottom_left = 22
+	knob_style.corner_radius_bottom_right = 22
+	stick_knob.add_theme_stylebox_override("panel", knob_style)
+	touch_root.add_child(stick_knob)
+	_update_stick_knob(Vector2.ZERO)
+
 	for spec in [["Up", Vector2(46, 0)], ["Down", Vector2(46, 92)], ["Left", Vector2(0, 46)], ["Right", Vector2(92, 46)]]:
 		var b := Button.new()
 		b.name = spec[0]
@@ -482,6 +503,7 @@ func _stick_vector_from_event(event: InputEvent) -> Vector2:
 	return stick_delta / STICK_RADIUS if STICK_RADIUS > 0.0 else Vector2.ZERO
 
 func _apply_stick_vector(vec: Vector2) -> void:
+	_update_stick_knob(vec)
 	var length := minf(1.0, vec.length())
 	if length <= STICK_DEADZONE:
 		_stick_vector = Vector2.ZERO
@@ -491,6 +513,21 @@ func _apply_stick_vector(vec: Vector2) -> void:
 		_stick_vector = vec.normalized() * magnitude
 	_send_virtual_move(_stick_vector)
 
+func _update_stick_knob(raw_vec: Vector2) -> void:
+	if stick_knob == null or touch_root == null:
+		return
+	var visual := raw_vec
+	if visual.length() > 1.0:
+		visual = visual.normalized()
+	var center := touch_root.size * 0.5
+	stick_knob.position = center + visual * STICK_RADIUS - stick_knob.size * 0.5
+	# Slight compression under full deflection gives a physical thumb feel
+	# without changing the actual movement vector.
+	var pressure := clampf(visual.length(), 0.0, 1.0)
+	var scale_value := lerpf(1.0, 0.92, pressure)
+	stick_knob.scale = Vector2.ONE * scale_value
+	stick_knob.pivot_offset = stick_knob.size * 0.5
+
 func _send_virtual_move(vec: Vector2) -> void:
 	var player := get_tree().get_first_node_in_group("player")
 	if player and player.has_method("set_virtual_move_vector"):
@@ -498,6 +535,7 @@ func _send_virtual_move(vec: Vector2) -> void:
 
 func _release_all_stick_actions() -> void:
 	_stick_vector = Vector2.ZERO
+	_update_stick_knob(Vector2.ZERO)
 	_send_virtual_move(Vector2.ZERO)
 	# Clear any synthetic directional actions left behind by older HUD builds.
 	for action in ["move_left", "move_right", "move_up", "move_down"]:
