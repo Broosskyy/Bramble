@@ -154,7 +154,9 @@ func _physics_process(delta: float) -> void:
 
 	if not combat_blocked and auto_combat_enabled and combat_target:
 		var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
-		var chain_active := targeting != null and targeting.has_method("is_auto_attack_active") and targeting.is_auto_attack_active()
+		var chain_active: bool = false
+		if targeting != null and targeting.has_method("is_auto_attack_active"):
+			chain_active = bool(targeting.is_auto_attack_active())
 		if chain_active:
 			combat_distance = global_position.distance_to(combat_target.global_position)
 			if combat_distance <= attack_range and attack_cooldown <= 0.0 and not attacking:
