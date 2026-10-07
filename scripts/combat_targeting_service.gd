@@ -69,8 +69,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_mouse_moved = false
 		else:
 			if _mouse_down_ms > 0:
-				var quick := Time.get_ticks_msec() - _mouse_down_ms < 260
-				var moved := _mouse_moved or event.position.distance_to(_mouse_down_pos) > 7.0
+				var quick: bool = Time.get_ticks_msec() - _mouse_down_ms < 260
+				var moved: bool = _mouse_moved or event.position.distance_to(_mouse_down_pos) > 7.0
 				if quick and not moved and _world_input_allowed(event.position):
 					_handle_pick(_screen_to_simulation(event.position))
 			_mouse_down_ms = 0
@@ -92,8 +92,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_touch_taps.erase(event.index)
 			if candidate.is_empty():
 				return
-			var quick := Time.get_ticks_msec() - int(candidate.get("started_ms", 0)) < 260
-			var moved := bool(candidate.get("moved", false))
+			var quick: bool = Time.get_ticks_msec() - int(candidate.get("started_ms", 0)) < 260
+			var moved: bool = bool(candidate.get("moved", false))
 			var start: Vector2 = candidate.get("start", event.position)
 			moved = moved or event.position.distance_to(start) > 7.0
 			if quick and not moved and _world_input_allowed(event.position):
