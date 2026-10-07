@@ -27,6 +27,11 @@ const HERO_GROUND_FALL_SPEED := 10.0
 const HERO_RUN_FPS := 12.0
 const HERO_WALK_FPS := 8.0
 const HERO_IDLE_FPS := 4.0
+const HERO_RUN_CYCLE_METERS := 1.25
+const HERO_WALK_CYCLE_METERS := 0.82
+const CAMERA_COLLISION_RADIUS_SIM := 72.0
+const CAMERA_COLLISION_MARGIN_SIM := 48.0
+const CAMERA_MIN_BOOM_RATIO := 0.22
 const NPC_WORLD_HEIGHT := 2.10
 const ENEMY_WORLD_HEIGHT := 2.35
 const LOOT_WORLD_HEIGHT := 0.70
@@ -60,6 +65,8 @@ var _was_attacking := false
 var _player_ground_height := 0.0
 var _player_ground_initialized := false
 var _player_texture_cache: Dictionary = {}
+var _locomotion_distance_m := 0.0
+var _last_player_sim_position := Vector2.ZERO
 var _occluders: Array[Dictionary] = []
 var _hybrid_colliders: Array[Dictionary] = []
 
@@ -102,6 +109,8 @@ func _activate() -> void:
 	_ensure_player_proxy()
 	_player_ground_height = _sample_ground_height(_player.global_position)
 	_player_ground_initialized = true
+	_last_player_sim_position = _player.global_position
+	_locomotion_distance_m = 0.0
 	_camera_target = simulation_to_world(_player.global_position, _player_ground_height + 0.72)
 	var desired := _desired_camera_position(_camera_target)
 	camera.global_position = desired
@@ -220,8 +229,109 @@ func _update_camera(delta: float) -> void:
 	_pitch = lerpf(_pitch, _desired_pitch, 1.0 - exp(-delta * 8.0))
 	_camera_distance = lerpf(_camera_distance, _desired_camera_distance, 1.0 - exp(-delta * 7.0))
 	var desired := _desired_camera_position(_camera_target)
-	camera.global_position = camera.global_position.lerp(desired, 1.0 - exp(-delta * 9.0))
+	var collision_desired := _camera_collision_adjusted(_camera_target, desired)
+	var wanted_distance := _camera_target.distance_to(collision_desired)
+	var current_distance := _camera_target.distance_to(camera.global_position)
+	# Mobile RPG cameras should push in quickly before a roof/wall reaches the
+	# lens, then recover more gently when the line of sight opens again.
+	var camera_rate := 19.0 if wanted_distance < current_distance else 7.5
+	camera.global_position = camera.global_position.lerp(collision_desired, 1.0 - exp(-delta * camera_rate))
 	camera.look_at(_camera_target, Vector3.UP)
+
+func _camera_collision_adjusted(target: Vector3, desired: Vector3) -> Vector3:
+	var from_sim := world_to_simulation(target)
+	var to_sim := world_to_simulation(desired)
+	var segment := to_sim - from_sim
+	var segment_length := segment.length()
+	if segment_length <= 0.001:
+		return desired
+
+	var allowed_t := 1.0
+	for collider in _hybrid_colliders:
+		if not bool(collider.get("camera_blocker", true)):
+			continue
+		var center: Vector2 = collider.get("center", Vector2.ZERO)
+		var entry_t := -1.0
+		if String(collider.get("shape", "box")) == "circle":
+			entry_t = _segment_circle_entry_t(
+				from_sim,
+				to_sim,
+				center,
+				float(collider.get("radius", 0.0)) + CAMERA_COLLISION_RADIUS_SIM
+			)
+		else:
+			entry_t = _segment_box_entry_t(
+				from_sim,
+				to_sim,
+				center,
+				float(collider.get("half_width", 0.0)) + CAMERA_COLLISION_RADIUS_SIM,
+				float(collider.get("half_depth", 0.0)) + CAMERA_COLLISION_RADIUS_SIM
+			)
+		if entry_t >= 0.0:
+			var margin_t := CAMERA_COLLISION_MARGIN_SIM / segment_length
+			allowed_t = minf(allowed_t, maxf(CAMERA_MIN_BOOM_RATIO, entry_t - margin_t))
+
+	if allowed_t >= 0.999:
+		return desired
+	return target.lerp(desired, allowed_t)
+
+func _segment_circle_entry_t(from: Vector2, to: Vector2, center: Vector2, radius: float) -> float:
+	var direction := to - from
+	var f := from - center
+	var a := direction.dot(direction)
+	if a <= 0.0001:
+		return -1.0
+	var b := 2.0 * f.dot(direction)
+	var c := f.dot(f) - radius * radius
+	var discriminant := b * b - 4.0 * a * c
+	if discriminant < 0.0:
+		return -1.0
+	var root := sqrt(discriminant)
+	var t := (-b - root) / (2.0 * a)
+	if t >= 0.0 and t <= 1.0:
+		return t
+	return -1.0
+
+func _segment_box_entry_t(from: Vector2, to: Vector2, center: Vector2, half_width: float, half_depth: float) -> float:
+	var direction := to - from
+	var min_x := center.x - half_width
+	var max_x := center.x + half_width
+	var min_y := center.y - half_depth
+	var max_y := center.y + half_depth
+	var t_min := 0.0
+	var t_max := 1.0
+
+	if absf(direction.x) < 0.0001:
+		if from.x < min_x or from.x > max_x:
+			return -1.0
+	else:
+		var tx1 := (min_x - from.x) / direction.x
+		var tx2 := (max_x - from.x) / direction.x
+		if tx1 > tx2:
+			var swap_x := tx1
+			tx1 = tx2
+			tx2 = swap_x
+		t_min = maxf(t_min, tx1)
+		t_max = minf(t_max, tx2)
+		if t_min > t_max:
+			return -1.0
+
+	if absf(direction.y) < 0.0001:
+		if from.y < min_y or from.y > max_y:
+			return -1.0
+	else:
+		var ty1 := (min_y - from.y) / direction.y
+		var ty2 := (max_y - from.y) / direction.y
+		if ty1 > ty2:
+			var swap_y := ty1
+			ty1 = ty2
+			ty2 = swap_y
+		t_min = maxf(t_min, ty1)
+		t_max = minf(t_max, ty2)
+		if t_min > t_max:
+			return -1.0
+
+	return t_min if t_min >= 0.0 and t_min <= 1.0 else -1.0
 
 func _desired_camera_position(target: Vector3) -> Vector3:
 	var horizontal := _camera_distance * cos(_pitch)
@@ -409,22 +519,24 @@ func _build_collision_model() -> void:
 	_register_circle_collider(Vector2(-20, 70), 122.0)
 
 	# Water is visibly non-walkable except for the bridge opening.
-	_register_box_collider(Vector2(-404, 420), 546.0, 92.0)
-	_register_box_collider(Vector2(964, 420), 586.0, 92.0)
+	_register_box_collider(Vector2(-404, 420), 546.0, 92.0, false)
+	_register_box_collider(Vector2(964, 420), 586.0, 92.0, false)
 
-func _register_box_collider(center: Vector2, half_width: float, half_depth: float) -> void:
+func _register_box_collider(center: Vector2, half_width: float, half_depth: float, camera_blocker := true) -> void:
 	_hybrid_colliders.append({
 		"shape": "box",
 		"center": center,
 		"half_width": half_width,
 		"half_depth": half_depth,
+		"camera_blocker": camera_blocker,
 	})
 
-func _register_circle_collider(center: Vector2, radius: float) -> void:
+func _register_circle_collider(center: Vector2, radius: float, camera_blocker := true) -> void:
 	_hybrid_colliders.append({
 		"shape": "circle",
 		"center": center,
 		"radius": radius,
+		"camera_blocker": camera_blocker,
 	})
 
 func _build_visible_world_boundary() -> void:
@@ -463,6 +575,10 @@ func _ensure_player_proxy() -> void:
 	_dynamic_root.add_child(_player_shadow)
 	_player_ground_ring = _disc_mesh(0.68, 0.010, Color(0.25, 0.68, 0.82, 0.18))
 	_player_ground_ring.name = "PlayerGroundRing"
+	# A permanent glowing disc makes a grounded Hero read like a hovering unit.
+	# Keep the node for future selection/status use, but normal locomotion uses
+	# only the contact shadow.
+	_player_ground_ring.visible = false
 	_dynamic_root.add_child(_player_ground_ring)
 
 func _sync_dynamic_proxies(delta: float) -> void:
@@ -541,6 +657,11 @@ func _sync_player_proxy(delta: float) -> void:
 		return
 
 	var speed := _player.velocity.length()
+	var moved_sim := _player.global_position.distance_to(_last_player_sim_position)
+	# Teleports/portal jumps must not advance the gait by dozens of cycles.
+	if moved_sim <= 180.0:
+		_locomotion_distance_m += moved_sim * WORLD_SCALE
+	_last_player_sim_position = _player.global_position
 	if speed > 6.0:
 		_last_player_world_direction = _player.velocity.normalized()
 	_player_view_direction = _stable_camera_relative_direction(_last_player_world_direction, delta)
@@ -583,16 +704,21 @@ func _sync_player_proxy(delta: float) -> void:
 		visual_tilt = sin(locomotion_phase) * 0.009
 	elif running:
 		pose = "run"
-		locomotion_phase = fmod(_motion_time * HERO_RUN_FPS, 1.0) * TAU
-		locomotion_offset = absf(sin(locomotion_phase)) * 0.022
-		visual_scale.y = 1.0 - absf(sin(locomotion_phase)) * 0.006
-		visual_tilt = sin(locomotion_phase) * 0.007
+		# Tie the gait to distance travelled, not wall-clock time. This keeps
+		# foot contacts synchronized during analogue acceleration/deceleration
+		# and removes the "sprite sliding over terrain" look.
+		locomotion_phase = fmod(_locomotion_distance_m / HERO_RUN_CYCLE_METERS, 1.0) * TAU
+		locomotion_offset = absf(sin(locomotion_phase)) * 0.012
+		visual_scale.x = 1.0 + absf(sin(locomotion_phase)) * 0.010
+		visual_scale.y = 1.0 - absf(sin(locomotion_phase)) * 0.008
+		visual_tilt = sin(locomotion_phase) * 0.010
 	elif walking:
 		pose = "walk"
-		locomotion_phase = fmod(_motion_time * HERO_WALK_FPS, 1.0) * TAU
-		locomotion_offset = absf(sin(locomotion_phase)) * 0.014
-		visual_scale.y = 1.0 - absf(sin(locomotion_phase)) * 0.004
-		visual_tilt = sin(locomotion_phase) * 0.005
+		locomotion_phase = fmod(_locomotion_distance_m / HERO_WALK_CYCLE_METERS, 1.0) * TAU
+		locomotion_offset = absf(sin(locomotion_phase)) * 0.008
+		visual_scale.x = 1.0 + absf(sin(locomotion_phase)) * 0.006
+		visual_scale.y = 1.0 - absf(sin(locomotion_phase)) * 0.005
+		visual_tilt = sin(locomotion_phase) * 0.007
 	else:
 		pose = "idle"
 		locomotion_phase = fmod(_motion_time * HERO_IDLE_FPS, 1.0) * TAU
