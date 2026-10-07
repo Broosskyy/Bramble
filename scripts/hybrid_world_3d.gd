@@ -45,6 +45,11 @@ var _static_root: Node3D
 var _dynamic_root: Node3D
 var _last_player_world_direction := Vector2(0, 1)
 var _player_view_direction := "front"
+var _view_candidate := ""
+var _view_candidate_time := 0.0
+var _motion_time := 0.0
+var _attack_visual_remaining := 0.0
+var _was_attacking := false
 
 var _touches: Dictionary = {}
 var _last_pinch_distance := -1.0
@@ -132,7 +137,8 @@ func zoom_by(delta: float) -> void:
 func _process(delta: float) -> void:
 	if not _active or _player == null or not is_instance_valid(_player):
 		return
-	_sync_dynamic_proxies()
+	_motion_time += minf(delta, 0.05)
+	_sync_dynamic_proxies(delta)
 	_update_camera(delta)
 
 func _update_camera(delta: float) -> void:
@@ -341,9 +347,9 @@ func _ensure_player_proxy() -> void:
 	_player_ground_ring.name = "PlayerGroundRing"
 	_dynamic_root.add_child(_player_ground_ring)
 
-func _sync_dynamic_proxies() -> void:
+func _sync_dynamic_proxies(delta: float) -> void:
 	_ensure_player_proxy()
-	_sync_player_proxy()
+	_sync_player_proxy(delta)
 	var alive_ids: Dictionary = {}
 
 	for enemy in get_tree().get_nodes_in_group("enemy"):
@@ -412,12 +418,14 @@ func _entity_sprite(id: int, _world_height: float) -> Sprite3D:
 	_entity_proxies[id] = proxy
 	return proxy
 
-func _sync_player_proxy() -> void:
+func _sync_player_proxy(delta: float) -> void:
 	if _player_proxy == null or _player == null:
 		return
-	if _player.velocity.length() > 6.0:
+	var speed := _player.velocity.length()
+	if speed > 6.0:
 		_last_player_world_direction = _player.velocity.normalized()
-	_player_view_direction = _camera_relative_direction(_last_player_world_direction)
+	_player_view_direction = _stable_camera_relative_direction(_last_player_world_direction, delta)
+
 	var source := _player.get_node_or_null("Visual") as BramblePlayerVisual
 	var gender := source.gender if source else "male"
 	var texture := BrambleWorldPresentationConfig.game_tex("characters/base/%s/directions/%s.png" % [gender, _player_view_direction])
@@ -425,27 +433,94 @@ func _sync_player_proxy() -> void:
 		texture = source.sprite_frames.get_frame_texture(source.animation, source.frame)
 	_set_sprite_texture_and_height(_player_proxy, texture, PLAYER_WORLD_HEIGHT)
 	_player_proxy.flip_h = false
-	_player_proxy.position = simulation_to_world(_player.global_position, PLAYER_WORLD_HEIGHT * 0.5)
+
+	var render_position := simulation_to_world(_player.global_position, PLAYER_WORLD_HEIGHT * 0.5)
+	var visual_scale := Vector3.ONE
+	var speed_ratio := clampf(speed / 500.0, 0.0, 1.0)
+	if speed_ratio > 0.04:
+		# The current Bramble art has authored directional stills but no 8-way
+		# run sheets. A tiny cadence keeps motion alive without changing facing.
+		var cadence := sin(_motion_time * lerpf(8.0, 13.0, speed_ratio))
+		render_position.y += absf(cadence) * 0.055 * speed_ratio
+		visual_scale.x = 1.0 + cadence * 0.018 * speed_ratio
+		visual_scale.y = 1.0 - cadence * 0.014 * speed_ratio
+
+	var attacking_now := bool(_player.get("attacking"))
+	if attacking_now and not _was_attacking:
+		_attack_visual_remaining = 0.24
+	_was_attacking = attacking_now
+	_attack_visual_remaining = maxf(0.0, _attack_visual_remaining - delta)
+	if _attack_visual_remaining > 0.0:
+		var phase := 1.0 - (_attack_visual_remaining / 0.24)
+		var punch := sin(phase * PI)
+		var attack_direction := _last_player_world_direction
+		var targeting = get_tree().get_first_node_in_group("combat_targeting_service")
+		if targeting and targeting.has_method("get_target"):
+			var target: Node2D = targeting.get_target()
+			if target:
+				attack_direction = _player.global_position.direction_to(target.global_position)
+		render_position.x += attack_direction.x * WORLD_SCALE * 32.0 * punch
+		render_position.z += attack_direction.y * WORLD_SCALE * 32.0 * punch
+		visual_scale *= 1.0 + punch * 0.045
+
+	_player_proxy.position = render_position
+	_player_proxy.scale = visual_scale
 
 	if _player_shadow:
 		_player_shadow.position = simulation_to_world(_player.global_position, 0.025)
+		var dash_active := float(_player.get("_dash_remaining")) > 0.0
+		_player_shadow.scale = Vector3(1.30, 1.0, 0.72) if dash_active else Vector3.ONE
 	if _player_ground_ring:
 		_player_ground_ring.position = simulation_to_world(_player.global_position, 0.018)
 
-func _camera_relative_direction(world_direction: Vector2) -> String:
+func _stable_camera_relative_direction(world_direction: Vector2, delta: float) -> String:
 	var c := cos(_yaw)
 	var si := sin(_yaw)
-	# Inverse of camera_relative_move(): world movement -> screen movement.
 	var screen_direction := Vector2(
 		world_direction.x * c - world_direction.y * si,
 		world_direction.x * si + world_direction.y * c
 	)
 	if screen_direction.length_squared() <= 0.0001:
 		return _player_view_direction
-	var angle := screen_direction.angle()
+	var relative_angle := screen_direction.angle()
+	var current_angle := _direction_angle(_player_view_direction)
+	var distance_from_current := absf(wrapf(relative_angle - current_angle, -PI, PI))
+	if distance_from_current < PI / 8.0 + 0.17:
+		_view_candidate = ""
+		_view_candidate_time = 0.0
+		return _player_view_direction
+
+	var next := _direction_from_angle(relative_angle)
+	if next == _player_view_direction:
+		_view_candidate = ""
+		_view_candidate_time = 0.0
+		return _player_view_direction
+	if next != _view_candidate:
+		_view_candidate = next
+		_view_candidate_time = 0.0
+	_view_candidate_time += maxf(0.0, delta)
+	if _view_candidate_time >= 0.09:
+		_player_view_direction = next
+		_view_candidate = ""
+		_view_candidate_time = 0.0
+	return _player_view_direction
+
+func _direction_from_angle(angle: float) -> String:
 	var oct := posmod(int(round(angle / (TAU / 8.0))), 8)
 	var mapping := ["right", "front_right", "front", "front_left", "left", "back_left", "back", "back_right"]
 	return mapping[oct]
+
+func _direction_angle(direction: String) -> float:
+	match direction:
+		"right": return 0.0
+		"front_right": return PI / 4.0
+		"front": return PI / 2.0
+		"front_left": return PI * 3.0 / 4.0
+		"left": return PI
+		"back_left": return -PI * 3.0 / 4.0
+		"back": return -PI / 2.0
+		"back_right": return -PI / 4.0
+	return PI / 2.0
 
 func _set_sprite_texture_and_height(sprite: Sprite3D, texture: Texture2D, world_height: float) -> void:
 	if sprite == null or texture == null:
