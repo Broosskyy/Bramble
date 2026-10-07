@@ -136,6 +136,10 @@ func _spawn_loot_drops(enemy: Node2D, gold_reward: int) -> void:
 func _spawn_damage_number(target: Node2D, damage: int, emphasized: bool) -> void:
 	if target == null or not is_instance_valid(target):
 		return
+	var hybrid = get_tree().get_first_node_in_group("hybrid_world_3d")
+	if hybrid and hybrid.has_method("is_active") and hybrid.is_active() and hybrid.has_method("spawn_hit_feedback"):
+		hybrid.spawn_hit_feedback(target.global_position, damage, emphasized)
+		return
 	var label := Label.new()
 	label.text = str(damage)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -154,6 +158,10 @@ func _spawn_damage_number(target: Node2D, damage: int, emphasized: bool) -> void
 	tween.chain().tween_callback(label.queue_free)
 
 func _spawn_skill_vfx(_attacker: Node2D, target: Node2D) -> void:
+	var hybrid = get_tree().get_first_node_in_group("hybrid_world_3d")
+	if hybrid and hybrid.has_method("is_active") and hybrid.is_active() and hybrid.has_method("spawn_skill_feedback"):
+		hybrid.spawn_skill_feedback(target.global_position)
+		return
 	var fx := Sprite2D.new()
 	fx.texture = BrambleWorldPresentationConfig.game_tex("ui/skills/skill_button.png")
 	fx.modulate = Color(1.0, 0.85, 0.35, 0.75)
