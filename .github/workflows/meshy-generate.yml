@@ -10,6 +10,7 @@ on:
   push:
     paths:
       - "meshy/jobs/*.json"
+      - ".github/workflows/meshy-generate.yml"
 
 permissions:
   contents: read
@@ -27,6 +28,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Resolve job file
         id: job
@@ -35,11 +38,11 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             JOB_FILE="${{ github.event.inputs.job_file }}"
           else
-            JOB_FILE="$(git diff-tree --no-commit-id --name-only -r "${GITHUB_SHA}" | grep '^meshy/jobs/.*\.json$' | head -n 1)"
+            JOB_FILE="meshy/jobs/base_hero_male.json"
           fi
 
-          if [ -z "$JOB_FILE" ] || [ ! -f "$JOB_FILE" ]; then
-            echo "No Meshy job JSON found."
+          if [ ! -f "$JOB_FILE" ]; then
+            echo "Meshy job file not found: $JOB_FILE"
             exit 1
           fi
 
