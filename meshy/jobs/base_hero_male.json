@@ -1,0 +1,20 @@
+{
+  "id": "base_hero_male",
+  "references": [
+    "meshy_input_pack_base_heroes.zip::base_hero_male_front.png",
+    "meshy_input_pack_base_heroes.zip::base_hero_male_side.png",
+    "meshy_input_pack_base_heroes.zip::base_hero_male_back.png",
+    "meshy_input_pack_base_heroes.zip::base_hero_male_three_quarter.png"
+  ],
+  "ai_model": "meshy-7.1",
+  "geometry_resolution": "standard",
+  "should_texture": true,
+  "enable_pbr": true,
+  "texture_resolution": "2k",
+  "should_remesh": false,
+  "pose_mode": "a-pose",
+  "image_enhancement": false,
+  "remove_lighting": true,
+  "texture_prompt": "Preserve the exact stylized fantasy RPG character design, outfit colors, materials and silhouette from the reference views. Compact mobile-game proportions, clean readable surfaces, no weapon, no added accessories.",
+  "timeout_seconds": 1800
+}
