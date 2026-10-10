@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import base64
-import io
 import json
 import mimetypes
 import os
@@ -46,8 +45,6 @@ def bytes_to_data_uri(name: str, raw: bytes) -> str:
 
 
 def reference_to_data_uri(spec: str) -> str:
-    # A reference may point directly at a repo file or at an image inside a ZIP:
-    #   meshy_input_pack_base_heroes.zip::base_hero_male_front.png
     if "::" in spec:
         archive_name, inner_name = spec.split("::", 1)
         archive = pathlib.Path(archive_name)
@@ -110,9 +107,17 @@ def main():
         "target_formats": ["glb"],
     }
 
-    texture_prompt = job.get("texture_prompt")
-    if texture_prompt:
-        payload["texture_prompt"] = texture_prompt
+    if "target_polycount" in job:
+        payload["target_polycount"] = int(job["target_polycount"])
+    if "topology" in job:
+        payload["topology"] = job["topology"]
+
+    if job.get("use_reference_images_for_texture", False):
+        payload["texture_image_urls"] = image_urls
+    else:
+        texture_prompt = job.get("texture_prompt")
+        if texture_prompt:
+            payload["texture_prompt"] = texture_prompt
 
     print(f"Submitting Meshy job '{job_id}' with {len(image_urls)} views...")
     created = request_json("POST", f"{API_BASE}/multi-image-to-3d", api_key, payload)
@@ -169,7 +174,9 @@ def main():
         "consumed_credits": final.get("consumed_credits"),
         "ai_model": payload["ai_model"],
         "geometry_resolution": payload["geometry_resolution"],
+        "texture_resolution": payload["texture_resolution"],
         "pose_mode": payload["pose_mode"],
+        "texture_reference_mode": job.get("use_reference_images_for_texture", False),
     }
     (out_dir / "result.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
