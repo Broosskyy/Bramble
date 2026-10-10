@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import base64
+import io
 import json
 import mimetypes
 import os
@@ -8,6 +9,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+import zipfile
 
 API_BASE = "https://api.meshy.ai/openapi/v1"
 TERMINAL = {"SUCCEEDED", "FAILED", "CANCELED"}
@@ -37,14 +39,33 @@ def request_json(method: str, url: str, api_key: str, payload=None):
         fail(f"Meshy network error: {exc}")
 
 
-def path_to_data_uri(path: pathlib.Path) -> str:
+def bytes_to_data_uri(name: str, raw: bytes) -> str:
+    mime, _ = mimetypes.guess_type(name)
+    mime = mime or "image/png"
+    return f"data:{mime};base64,{base64.b64encode(raw).decode('ascii')}"
+
+
+def reference_to_data_uri(spec: str) -> str:
+    # A reference may point directly at a repo file or at an image inside a ZIP:
+    #   meshy_input_pack_base_heroes.zip::base_hero_male_front.png
+    if "::" in spec:
+        archive_name, inner_name = spec.split("::", 1)
+        archive = pathlib.Path(archive_name)
+        if not archive.exists():
+            fail(f"Reference archive missing: {archive}")
+        try:
+            with zipfile.ZipFile(archive, "r") as zf:
+                raw = zf.read(inner_name)
+        except KeyError:
+            fail(f"Reference '{inner_name}' not found inside {archive}")
+        except zipfile.BadZipFile:
+            fail(f"Invalid ZIP archive: {archive}")
+        return bytes_to_data_uri(inner_name, raw)
+
+    path = pathlib.Path(spec)
     if not path.exists():
         fail(f"Reference image missing: {path}")
-
-    mime, _ = mimetypes.guess_type(path.name)
-    mime = mime or "image/png"
-    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
-    return f"data:{mime};base64,{encoded}"
+    return bytes_to_data_uri(path.name, path.read_bytes())
 
 
 def download(url: str, target: pathlib.Path):
@@ -69,10 +90,10 @@ def main():
     job_id = job["id"]
 
     refs = job.get("references", [])
-    if len(refs) < 2:
-        fail("At least two reference images are required.")
+    if not 1 <= len(refs) <= 4:
+        fail("Meshy Multi-Image requires 1 to 4 reference images.")
 
-    image_urls = [path_to_data_uri(pathlib.Path(p)) for p in refs]
+    image_urls = [reference_to_data_uri(p) for p in refs]
 
     payload = {
         "image_urls": image_urls,
@@ -80,16 +101,21 @@ def main():
         "geometry_resolution": job.get("geometry_resolution", "standard"),
         "should_texture": job.get("should_texture", True),
         "enable_pbr": job.get("enable_pbr", True),
+        "texture_resolution": job.get("texture_resolution", "2k"),
+        "should_remesh": job.get("should_remesh", False),
+        "pose_mode": job.get("pose_mode", "a-pose"),
+        "image_enhancement": job.get("image_enhancement", False),
+        "remove_lighting": job.get("remove_lighting", True),
+        "multi_view_thumbnails": True,
         "target_formats": ["glb"],
     }
 
+    texture_prompt = job.get("texture_prompt")
+    if texture_prompt:
+        payload["texture_prompt"] = texture_prompt
+
     print(f"Submitting Meshy job '{job_id}' with {len(image_urls)} views...")
-    created = request_json(
-        "POST",
-        f"{API_BASE}/multi-image-to-3d",
-        api_key,
-        payload,
-    )
+    created = request_json("POST", f"{API_BASE}/multi-image-to-3d", api_key, payload)
     task_id = created.get("result")
     if not task_id:
         fail(f"Meshy did not return a task id: {created}")
@@ -106,28 +132,19 @@ def main():
     final = None
 
     while time.time() < deadline:
-        task = request_json(
-            "GET",
-            f"{API_BASE}/multi-image-to-3d/{task_id}",
-            api_key,
-        )
+        task = request_json("GET", f"{API_BASE}/multi-image-to-3d/{task_id}", api_key)
         status = task.get("status", "UNKNOWN")
         progress = task.get("progress", 0)
         print(f"Meshy status={status} progress={progress}%")
-
         if status in TERMINAL:
             final = task
             break
-
         time.sleep(15)
 
     if final is None:
         fail(f"Timed out waiting for Meshy task {task_id}. The remote task may still be running.")
 
-    (out_dir / "task.json").write_text(
-        json.dumps(final, indent=2),
-        encoding="utf-8",
-    )
+    (out_dir / "task.json").write_text(json.dumps(final, indent=2), encoding="utf-8")
 
     if final.get("status") != "SUCCEEDED":
         fail(f"Meshy task ended with {final.get('status')}: {final.get('task_error')}")
@@ -135,7 +152,6 @@ def main():
     glb_url = (final.get("model_urls") or {}).get("glb")
     if not glb_url:
         fail("Meshy succeeded but returned no GLB URL.")
-
     download(glb_url, out_dir / f"{job_id}.glb")
 
     thumbnail = final.get("thumbnail_url")
@@ -153,6 +169,7 @@ def main():
         "consumed_credits": final.get("consumed_credits"),
         "ai_model": payload["ai_model"],
         "geometry_resolution": payload["geometry_resolution"],
+        "pose_mode": payload["pose_mode"],
     }
     (out_dir / "result.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
