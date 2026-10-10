@@ -1,0 +1,59 @@
+name: Meshy 3D Generate
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_file:
+        description: "Path to Meshy job JSON"
+        required: true
+        default: "meshy/jobs/base_hero_male.json"
+  push:
+    paths:
+      - "meshy/jobs/*.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: meshy-${{ github.ref }}-${{ github.event.inputs.job_file || github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MESHY_API_KEY: ${{ secrets.MESHY_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve job file
+        id: job
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            JOB_FILE="${{ github.event.inputs.job_file }}"
+          else
+            JOB_FILE="$(git diff-tree --no-commit-id --name-only -r "${GITHUB_SHA}" | grep '^meshy/jobs/.*\.json$' | head -n 1)"
+          fi
+
+          if [ -z "$JOB_FILE" ] || [ ! -f "$JOB_FILE" ]; then
+            echo "No Meshy job JSON found."
+            exit 1
+          fi
+
+          echo "job_file=$JOB_FILE" >> "$GITHUB_OUTPUT"
+          echo "Using job: $JOB_FILE"
+
+      - name: Generate with Meshy
+        run: |
+          python3 tools/meshy_generate.py "${{ steps.job.outputs.job_file }}"
+
+      - name: Upload generated asset
+        uses: actions/upload-artifact@v4
+        with:
+          name: meshy-${{ github.run_id }}
+          path: meshy/output/
+          if-no-files-found: error
+          retention-days: 30
