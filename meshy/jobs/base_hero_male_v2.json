@@ -1,0 +1,20 @@
+{
+  "id": "base_hero_male_v2",
+  "references": [
+    "meshy_input_pack_base_heroes.zip::base_hero_male_front.png",
+    "meshy_input_pack_base_heroes.zip::base_hero_male_side.png",
+    "meshy_input_pack_base_heroes.zip::base_hero_male_back.png",
+    "meshy_input_pack_base_heroes.zip::base_hero_male_three_quarter.png"
+  ],
+  "ai_model": "meshy-7.1",
+  "geometry_resolution": "2k",
+  "should_texture": true,
+  "enable_pbr": true,
+  "texture_resolution": "4k",
+  "should_remesh": false,
+  "pose_mode": "a-pose",
+  "image_enhancement": false,
+  "remove_lighting": true,
+  "use_reference_images_for_texture": true,
+  "timeout_seconds": 2400
+}
