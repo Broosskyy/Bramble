@@ -6,11 +6,10 @@ on:
       job_file:
         description: "Path to Meshy job JSON"
         required: true
-        default: "meshy/jobs/base_hero_male.json"
+        default: "meshy/jobs/base_hero_male_v2.json"
   push:
     paths:
       - "meshy/jobs/*.json"
-      - ".github/workflows/meshy-generate.yml"
 
 permissions:
   contents: read
@@ -38,10 +37,10 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             JOB_FILE="${{ github.event.inputs.job_file }}"
           else
-            JOB_FILE="meshy/jobs/base_hero_male.json"
+            JOB_FILE="$(git diff --name-only HEAD^ HEAD | grep '^meshy/jobs/.*\.json$' | head -n 1)"
           fi
 
-          if [ ! -f "$JOB_FILE" ]; then
+          if [ -z "$JOB_FILE" ] || [ ! -f "$JOB_FILE" ]; then
             echo "Meshy job file not found: $JOB_FILE"
             exit 1
           fi
