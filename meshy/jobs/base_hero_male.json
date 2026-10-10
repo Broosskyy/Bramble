@@ -1,0 +1,13 @@
+{
+  "id": "base_hero_male",
+  "references": [
+    "meshy/references/base_hero_male/front.jpg",
+    "meshy/references/base_hero_male/side.jpg",
+    "meshy/references/base_hero_male/back.jpg"
+  ],
+  "ai_model": "meshy-7.1",
+  "geometry_resolution": "standard",
+  "should_texture": true,
+  "enable_pbr": true,
+  "timeout_seconds": 1800
+}
