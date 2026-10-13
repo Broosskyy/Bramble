@@ -1,0 +1,10 @@
+{
+  "task_id": "01a1268a-1103-72c9-ac28-7350d29dd48c",
+  "status": "SUCCEEDED",
+  "consumed_credits": 35,
+  "ai_model": "meshy-7.1",
+  "geometry_resolution": "2k",
+  "texture_resolution": "4k",
+  "pose_mode": "a-pose",
+  "texture_reference_mode": true
+}
