@@ -9,6 +9,9 @@ import time
 import urllib.error
 import urllib.request
 import zipfile
+from io import BytesIO
+
+from PIL import Image
 
 API_BASE = "https://api.meshy.ai/openapi/v1"
 TERMINAL = {"SUCCEEDED", "FAILED", "CANCELED"}
@@ -44,7 +47,7 @@ def bytes_to_data_uri(name: str, raw: bytes) -> str:
     return f"data:{mime};base64,{base64.b64encode(raw).decode('ascii')}"
 
 
-def reference_to_data_uri(spec: str) -> str:
+def read_reference(spec: str):
     if "::" in spec:
         archive_name, inner_name = spec.split("::", 1)
         archive = pathlib.Path(archive_name)
@@ -52,17 +55,53 @@ def reference_to_data_uri(spec: str) -> str:
             fail(f"Reference archive missing: {archive}")
         try:
             with zipfile.ZipFile(archive, "r") as zf:
-                raw = zf.read(inner_name)
+                return inner_name, zf.read(inner_name)
         except KeyError:
             fail(f"Reference '{inner_name}' not found inside {archive}")
         except zipfile.BadZipFile:
             fail(f"Invalid ZIP archive: {archive}")
-        return bytes_to_data_uri(inner_name, raw)
 
     path = pathlib.Path(spec)
     if not path.exists():
         fail(f"Reference image missing: {path}")
-    return bytes_to_data_uri(path.name, path.read_bytes())
+    return path.name, path.read_bytes()
+
+
+def preprocess_reference(name: str, raw: bytes, crop=None, output_size=1024) -> bytes:
+    if crop is None:
+        return raw
+
+    if not (isinstance(crop, list) and len(crop) == 4):
+        fail(f"Invalid crop for {name}; expected [left, top, right, bottom].")
+
+    with Image.open(BytesIO(raw)) as source:
+        im = source.convert("RGB")
+        left, top, right, bottom = [int(v) for v in crop]
+        if left < 0 or top < 0 or right > im.width or bottom > im.height or right <= left or bottom <= top:
+            fail(f"Crop {crop} is outside {name} dimensions {im.width}x{im.height}.")
+
+        cropped = im.crop((left, top, right, bottom))
+        bg = cropped.getpixel((min(5, cropped.width - 1), min(5, cropped.height - 1)))
+
+        side = max(cropped.width, cropped.height)
+        canvas = Image.new("RGB", (side, side), bg)
+        x = (side - cropped.width) // 2
+        y = (side - cropped.height) // 2
+        canvas.paste(cropped, (x, y))
+
+        if output_size:
+            output_size = int(output_size)
+            canvas = canvas.resize((output_size, output_size), Image.Resampling.LANCZOS)
+
+        out = BytesIO()
+        canvas.save(out, format="PNG", optimize=True)
+        return out.getvalue()
+
+
+def reference_to_data_uri(spec: str, crop=None, output_size=1024) -> str:
+    name, raw = read_reference(spec)
+    raw = preprocess_reference(name, raw, crop=crop, output_size=output_size)
+    return bytes_to_data_uri(name.rsplit(".", 1)[0] + ".png", raw)
 
 
 def download(url: str, target: pathlib.Path):
@@ -90,7 +129,15 @@ def main():
     if not 1 <= len(refs) <= 4:
         fail("Meshy Multi-Image requires 1 to 4 reference images.")
 
-    image_urls = [reference_to_data_uri(p) for p in refs]
+    crops = job.get("reference_crops")
+    if crops is not None and len(crops) != len(refs):
+        fail("reference_crops must contain one crop per reference.")
+
+    output_size = int(job.get("reference_output_size", 1024))
+    image_urls = []
+    for idx, ref in enumerate(refs):
+        crop = crops[idx] if crops is not None else None
+        image_urls.append(reference_to_data_uri(ref, crop=crop, output_size=output_size))
 
     payload = {
         "image_urls": image_urls,
@@ -119,7 +166,7 @@ def main():
         if texture_prompt:
             payload["texture_prompt"] = texture_prompt
 
-    print(f"Submitting Meshy job '{job_id}' with {len(image_urls)} views...")
+    print(f"Submitting Meshy job '{job_id}' with {len(image_urls)} cleaned views...")
     created = request_json("POST", f"{API_BASE}/multi-image-to-3d", api_key, payload)
     task_id = created.get("result")
     if not task_id:
@@ -177,6 +224,7 @@ def main():
         "texture_resolution": payload["texture_resolution"],
         "pose_mode": payload["pose_mode"],
         "texture_reference_mode": job.get("use_reference_images_for_texture", False),
+        "reference_preprocessing": crops is not None,
     }
     (out_dir / "result.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
