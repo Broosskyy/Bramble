@@ -1,0 +1,77 @@
+name: Publish Meshy V2 Preview
+
+on:
+  push:
+    paths:
+      - ".github/workflows/meshy-publish-v2-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      MESHY_API_KEY: ${{ secrets.MESHY_API_KEY }}
+      TASK_ID: "01a1268a-1103-72c9-ac28-7350d29dd48c"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch Meshy task metadata
+        run: |
+          curl -sS --fail             -H "Authorization: Bearer $MESHY_API_KEY"             "https://api.meshy.ai/openapi/v1/multi-image-to-3d/$TASK_ID"             -o /tmp/task.json
+          python3 - <<'PY'
+          import json
+          data=json.load(open('/tmp/task.json'))
+          print("status:", data.get("status"))
+          print("credits:", data.get("consumed_credits"))
+          print("thumbnail_url:", data.get("thumbnail_url"))
+          print("thumbnail_urls:", data.get("thumbnail_urls"))
+          if data.get("status") != "SUCCEEDED":
+              raise SystemExit("Meshy task is not successful")
+          PY
+
+      - name: Download preview images
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, urllib.request
+          data=json.load(open('/tmp/task.json'))
+          out=pathlib.Path('meshy/recovered/base_hero_male_v2')
+          out.mkdir(parents=True, exist_ok=True)
+
+          urls={}
+          if data.get('thumbnail_url'):
+              urls['preview.png']=data['thumbnail_url']
+          for k,v in (data.get('thumbnail_urls') or {}).items():
+              if v:
+                  urls[f'preview_{k}.png']=v
+
+          for name,url in urls.items():
+              print("download", name)
+              urllib.request.urlretrieve(url, out/name)
+
+          result={
+              "task_id": data.get("id"),
+              "status": data.get("status"),
+              "consumed_credits": data.get("consumed_credits"),
+              "thumbnail_url": data.get("thumbnail_url"),
+              "thumbnail_urls": data.get("thumbnail_urls"),
+              "model_urls": data.get("model_urls")
+          }
+          (out/'result.json').write_text(json.dumps(result, indent=2))
+          PY
+          ls -lh meshy/recovered/base_hero_male_v2
+
+      - name: Commit previews
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add meshy/recovered/base_hero_male_v2
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore(meshy): publish base hero male v2 previews"
+          git push
