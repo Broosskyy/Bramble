@@ -6,7 +6,7 @@ on:
       job_file:
         description: "Path to Meshy job JSON"
         required: true
-        default: "meshy/jobs/base_hero_male_v2.json"
+        default: "meshy/jobs/base_hero_male_v3.json"
   push:
     paths:
       - "meshy/jobs/*.json"
@@ -47,6 +47,9 @@ jobs:
 
           echo "job_file=$JOB_FILE" >> "$GITHUB_OUTPUT"
           echo "Using job: $JOB_FILE"
+
+      - name: Install image preprocessing dependency
+        run: python3 -m pip install --disable-pip-version-check pillow
 
       - name: Generate with Meshy
         run: |
