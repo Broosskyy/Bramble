@@ -1,0 +1,47 @@
+name: Recover Meshy V2 Preview
+
+on:
+  push:
+    paths:
+      - ".github/workflows/meshy-recover-v2-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download existing Meshy V2 artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: "11674788523"
+        run: |
+          curl -L --fail             -H "Authorization: Bearer $GH_TOKEN"             -H "Accept: application/vnd.github+json"             -H "X-GitHub-Api-Version: 2022-11-28"             "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip"             -o /tmp/meshy-v2.zip
+          mkdir -p /tmp/meshy-v2
+          unzip -q /tmp/meshy-v2.zip -d /tmp/meshy-v2
+          find /tmp/meshy-v2 -maxdepth 4 -type f -print
+
+      - name: Copy previews into repository
+        run: |
+          DEST="meshy/recovered/base_hero_male_v2"
+          mkdir -p "$DEST"
+          find /tmp/meshy-v2 -type f \( -name 'preview*.png' -o -name 'result.json' -o -name 'task.json' \) -exec cp {} "$DEST/" \;
+          ls -lh "$DEST"
+
+      - name: Commit recovered previews
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add meshy/recovered/base_hero_male_v2
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore(meshy): recover base hero male v2 previews"
+          git push
